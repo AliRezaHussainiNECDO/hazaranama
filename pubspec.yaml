@@ -1,0 +1,46 @@
+name: hazaranama
+description: هزاره‌نامه — مرجع دیجیتال تاریخ، فرهنگ و حافظه‌ی جمعی مردم هزاره
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter    # فعال‌سازی واقعی locale فارسی برای ویجت‌های متریال/کوپرتینو
+  cupertino_icons: ^1.0.6
+  provider: ^6.1.2          # مدیریت وضعیت سراسری (معادل useState/useContext در نسخه‌ی وب)
+  image_picker: ^1.1.2       # انتخاب و آپلود عکس پروفایل از گالری/دوربین
+  flutter_animate: ^4.5.0    # انیمیشن‌های مدرن و یکدست در سراسر اپ
+  supabase_flutter: ^2.6.0   # اتصال واقعی به دیتابیس، Auth و Storage
+  url_launcher: ^6.3.0       # باز کردن لینک ویدیو (یوتیوب و…) در مرورگر/اپ خارجی
+  video_player: ^2.9.2       # پخش واقعی و بومی ویدیوهای آپلودشده‌ی هنرمندان، داخل خود اپ
+  firebase_core: ^3.6.0      # اتصال پایه به پروژه‌ی Firebase (پیش‌نیاز پوش نوتیفیکیشن)
+  firebase_messaging: ^15.1.3 # پوش نوتیفیکیشن واقعی (FCM) — حتی وقتی اپ بسته است
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/logo.png
+    - assets/crowns/champion_silver.png
+    - assets/crowns/sovereign_gold.png
+    - assets/crowns/emperor_imperial.png
+  # اگر فونت وزیرمتن را بعداً اضافه کردید، این بخش را از حالت کامنت خارج کنید:
+  # fonts:
+  #   - family: Vazirmatn
+  #     fonts:
+  #       - asset: assets/fonts/Vazirmatn-Regular.ttf
+  #       - asset: assets/fonts/Vazirmatn-Medium.ttf
+  #         weight: 500
+  #       - asset: assets/fonts/Vazirmatn-Bold.ttf
+  #         weight: 700
+  #       - asset: assets/fonts/Vazirmatn-ExtraBold.ttf
+  #         weight: 800

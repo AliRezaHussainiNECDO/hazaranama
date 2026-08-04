@@ -1,0 +1,12 @@
+# تنظیمات پروژه‌ی Supabase CLI — فقط برای استقرار Edge Function‌ها لازم است.
+# (خود دیتابیس/Auth از داشبورد وب Supabase مدیریت می‌شود؛ این پروژه از دیتابیس محلی استفاده نمی‌کند.)
+project_id = "kyvkqbdigezzywfarhtj"
+
+[functions.ai-gateway]
+verify_jwt = true
+
+# این تابع را کاربر صدا نمی‌زند — فقط Database Webhook داخلی خودِ Supabase آن
+# را صدا می‌زند، پس نمی‌تواند JWT کاربر داشته باشد. امنیتش با هدر مخفی
+# x-webhook-secret (داخل خود کد تابع) تأمین می‌شود.
+[functions.send-push]
+verify_jwt = false

@@ -1,0 +1,48 @@
+name: Build unsigned iOS IPA (for Sideloadly)
+
+# چون ساخت اپ iOS به Xcode روی macOS نیاز دارد و این پروژه روی ویندوز/لینوکس
+# توسعه داده می‌شود، این workflow از یک ران‌رِ macOS رایگان گیت‌هاب استفاده
+# می‌کند تا هر بار (با push یا اجرای دستی) یک IPA بدون امضا بسازد. این IPA
+# قابل نصب مستقیم روی iPhone نیست — باید با Sideloadly (که با Apple ID شما
+# امضای موقت انجام می‌دهد) نصب شود.
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: نصب بسته‌ها
+        run: flutter pub get
+
+      - name: ساخت iOS بدون امضا (Release)
+        run: flutter build ios --release --no-codesign
+
+      - name: بسته‌بندی IPA
+        run: |
+          mkdir -p Payload
+          cp -r build/ios/iphoneos/Runner.app Payload/
+          zip -r hazaranama-unsigned.ipa Payload
+        working-directory: .
+
+      - name: آپلود IPA به‌عنوان artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hazaranama-unsigned-ipa
+          path: hazaranama-unsigned.ipa
+          retention-days: 14
