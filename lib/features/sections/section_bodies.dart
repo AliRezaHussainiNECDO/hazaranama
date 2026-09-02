@@ -52,7 +52,7 @@ class TimelineBody extends StatelessWidget {
                 child: Text(_toFa(i + 1), style: TextStyle(fontSize: 46, fontWeight: FontWeight.w800, color: theme.blue.withValues(alpha: 0.08))),
               ),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                ContentMediaCover(item: it, height: 32, width: 32, radius: 10, fallback: StatIconBox(icon: icon, color: theme.blue, size: 32)),
+                ContentMediaCover(item: it, height: 32, width: 32, radius: 10, fallback: SectionMediaPlaceholder(accent: theme.blue, icon: icon, height: 32, width: 32)),
                 const SizedBox(height: 9),
                 Text(it['era'] as String, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w700, height: 1.4)),
                 const SizedBox(height: 6),
@@ -129,7 +129,7 @@ class PeopleBody extends StatelessWidget {
                   decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(20), border: Border.all(color: theme.glassBorder)),
                   clipBehavior: Clip.antiAlias,
                   child: Column(children: [
-                    ContentMediaCover(item: person, height: 44, radius: 0, fallback: Container(height: 44, color: color.withValues(alpha: 0.14))),
+                    ContentMediaCover(item: person, height: 44, radius: 0, fallback: SectionMediaPlaceholder(accent: color, icon: icon, height: 44)),
                     Transform.translate(
                       offset: const Offset(0, -27),
                       child: Stack(alignment: Alignment.center, children: [
@@ -195,16 +195,7 @@ class IncidentsBody extends StatelessWidget {
                   item: it,
                   height: 56,
                   radius: 0,
-                  fallback: Container(
-                    height: 56, width: double.infinity, color: theme.bgCardAlt,
-                    child: Center(
-                      child: Container(
-                        width: 32, height: 32,
-                        decoration: BoxDecoration(shape: BoxShape.circle, color: theme.yellow.withValues(alpha: 0.14), border: Border.all(color: theme.yellow)),
-                        child: Icon(Icons.local_fire_department, size: 15, color: theme.yellow),
-                      ),
-                    ),
-                  ),
+                  fallback: SectionMediaPlaceholder(accent: theme.yellow, icon: Icons.local_fire_department, height: 56),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 12, 15, 14),
@@ -274,20 +265,33 @@ class GridBody extends StatelessWidget {
       separatorBuilder: (_, __) => const SizedBox(height: 10),
       itemBuilder: (context, i) {
         final it = items[i];
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-          decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(16), border: Border.all(color: theme.glassBorder)),
-          child: Row(children: [
-            ContentMediaCover(item: it, height: 32, width: 32, radius: 10, fallback: StatIconBox(icon: Icons.auto_awesome, color: theme.blue, size: 32)),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(it['name'] as String, style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w700)),
-                const SizedBox(height: 3),
-                Text(it['note'] as String, style: TextStyle(color: theme.textFaint, fontSize: 10.5, height: 1.6)),
-              ]),
-            ),
-          ]),
+        return InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () => Navigator.of(context).push(ArticleScreen.route(
+            theme: theme,
+            badge: HzBadge(theme: theme, size: 34, child: Icon(Icons.auto_awesome, size: 15, color: theme.aiViolet)),
+            title: it['name'] as String,
+            subtitle: 'فرهنگ و زندگی',
+            body: (it['full'] ?? it['note']) as String,
+            imageUrl: it.imageUrl,
+            videoUrl: it.videoUrl,
+          )),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(16), border: Border.all(color: theme.glassBorder)),
+            child: Row(children: [
+              ContentMediaCover(item: it, height: 32, width: 32, radius: 10, fallback: SectionMediaPlaceholder(accent: theme.aiViolet, icon: Icons.auto_awesome, height: 32, width: 32)),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(it['name'] as String, style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w700)),
+                  const SizedBox(height: 3),
+                  Text(it['note'] as String, style: TextStyle(color: theme.textFaint, fontSize: 10.5, height: 1.6)),
+                ]),
+              ),
+              Icon(Icons.chevron_left, size: 16, color: theme.textFaint),
+            ]),
+          ),
         ).staggered(i);
       },
     );
@@ -361,10 +365,8 @@ class DictionaryBody extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
           decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(16), border: Border.all(color: theme.glassBorder)),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            if ((it.imageUrl != null && it.imageUrl!.isNotEmpty) || (it.videoUrl != null && it.videoUrl!.isNotEmpty)) ...[
-              ContentMediaCover(item: it, height: 90, radius: 12, fallback: const SizedBox.shrink()),
-              const SizedBox(height: 10),
-            ],
+            ContentMediaCover(item: it, height: 90, radius: 12, fallback: SectionMediaPlaceholder(accent: theme.blue, icon: Icons.translate, height: 90)),
+            const SizedBox(height: 10),
             Text(it['hazaragi'] as String, style: TextStyle(color: theme.blue, fontSize: 14, fontWeight: FontWeight.w800)),
             const SizedBox(height: 4),
             Text('${it['fa']}  ·  ${it['en']}', style: TextStyle(color: theme.textSecondary, fontSize: 11)),
@@ -467,10 +469,8 @@ class _RegionsBodyState extends State<RegionsBody> {
             ]),
             const SizedBox(height: 6),
             Text(active['note'] as String, style: TextStyle(color: theme.textSecondary, fontSize: 11.5, height: 1.9)),
-            if ((active.imageUrl != null && active.imageUrl!.isNotEmpty) || (active.videoUrl != null && active.videoUrl!.isNotEmpty)) ...[
-              const SizedBox(height: 10),
-              ContentMediaCover(item: active, height: 110, radius: 12, fallback: const SizedBox.shrink()),
-            ],
+            const SizedBox(height: 10),
+            ContentMediaCover(item: active, height: 110, radius: 12, fallback: SectionMediaPlaceholder(accent: theme.blue, icon: Icons.terrain_rounded, height: 110)),
           ]),
         ),
         const SizedBox(height: 20),
@@ -559,14 +559,7 @@ class PhotosBody extends StatelessWidget {
                   height: double.infinity,
                   width: double.infinity,
                   radius: 0,
-                  fallback: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(gradient: LinearGradient(
-                      begin: Alignment.topLeft, end: Alignment.bottomRight,
-                      colors: [colors[i % 2].withValues(alpha: 0.35), colors[(i + 1) % 2].withValues(alpha: 0.2)],
-                    )),
-                    child: Icon(Icons.photo_camera_outlined, color: colors[i % 2].withValues(alpha: 0.6)),
-                  ),
+                  fallback: SectionMediaPlaceholder(accent: colors[i % 2], icon: Icons.photo_camera_outlined, height: double.infinity, width: double.infinity),
                 ),
               ),
             ),
@@ -625,10 +618,8 @@ class NewsBody extends StatelessWidget {
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(14), border: Border.all(color: theme.glassBorder)),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            if ((it.imageUrl != null && it.imageUrl!.isNotEmpty) || (it.videoUrl != null && it.videoUrl!.isNotEmpty)) ...[
-              ContentMediaCover(item: it, height: 130, radius: 12, fallback: const SizedBox.shrink()),
-              const SizedBox(height: 10),
-            ],
+            ContentMediaCover(item: it, height: 130, radius: 12, fallback: SectionMediaPlaceholder(accent: theme.blue, icon: Icons.newspaper_rounded, height: 130)),
+            const SizedBox(height: 10),
             Text(it['date'] as String, style: TextStyle(color: theme.blue, fontSize: 10, fontWeight: FontWeight.w700)),
             const SizedBox(height: 6),
             Text(it['title'] as String, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700, height: 1.5)),
@@ -655,31 +646,40 @@ class BooksBody extends StatelessWidget {
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 11, crossAxisSpacing: 11, childAspectRatio: 0.82),
       itemBuilder: (context, i) {
         final it = items[i];
-        return Container(
-          padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(18), border: Border.all(color: theme.glassBorder)),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            ContentMediaCover(
-              item: it,
-              height: 54,
-              radius: 10,
-              fallback: Container(
-                width: double.infinity, height: 54,
-                decoration: BoxDecoration(gradient: LinearGradient(colors: [theme.blue.withValues(alpha: 0.2), theme.yellow.withValues(alpha: 0.12)]), borderRadius: BorderRadius.circular(10)),
-                child: Icon(Icons.menu_book, color: theme.textSecondary, size: 20),
+        final note = it['note'] as String?;
+        return InkWell(
+          borderRadius: BorderRadius.circular(18),
+          onTap: (note == null || note.isEmpty) ? null : () => Navigator.of(context).push(ArticleScreen.route(
+            theme: theme,
+            badge: HzBadge(theme: theme, size: 34, child: Icon(Icons.menu_book_rounded, size: 15, color: theme.blue)),
+            title: it['title'] as String,
+            subtitle: it['author'] as String,
+            body: note,
+            imageUrl: it.imageUrl,
+            videoUrl: it.videoUrl,
+          )),
+          child: Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(18), border: Border.all(color: theme.glassBorder)),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              ContentMediaCover(
+                item: it,
+                height: 54,
+                radius: 10,
+                fallback: SectionMediaPlaceholder(accent: theme.blue, icon: Icons.menu_book_rounded, height: 54),
               ),
-            ),
-            const SizedBox(height: 10),
-            Text(it['title'] as String, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 11, fontWeight: FontWeight.w700, height: 1.5)),
-            const SizedBox(height: 4),
-            Text(it['author'] as String, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
-            const Spacer(),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-              decoration: BoxDecoration(color: theme.blue.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(999)),
-              child: Text(it['tag'] as String, style: TextStyle(color: theme.blue, fontSize: 9, fontWeight: FontWeight.w700)),
-            ),
-          ]),
+              const SizedBox(height: 10),
+              Text(it['title'] as String, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 11, fontWeight: FontWeight.w700, height: 1.5)),
+              const SizedBox(height: 4),
+              Text(it['author'] as String, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
+              const Spacer(),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(color: theme.blue.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(999)),
+                child: Text(it['tag'] as String, style: TextStyle(color: theme.blue, fontSize: 9, fontWeight: FontWeight.w700)),
+              ),
+            ]),
+          ),
         ).staggered(i);
       },
     );

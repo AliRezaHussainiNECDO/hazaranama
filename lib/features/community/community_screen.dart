@@ -54,6 +54,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
     }
     final picked = await ImagePicker().pickMultiImage(imageQuality: 85);
     if (picked.isEmpty) return;
+    if (!mounted) return;
     setState(() => _uploadingImages = true);
     try {
       for (final f in picked) {
@@ -75,9 +76,11 @@ class _CommunityScreenState extends State<CommunityScreen> {
     }
     final picked = await ImagePicker().pickVideo(source: ImageSource.gallery);
     if (picked == null) return;
+    if (!mounted) return;
     setState(() => _uploadingVideo = true);
     try {
       final url = await app.uploadPostVideo(File(picked.path));
+      if (!mounted) return;
       setState(() => _videoUrl = url);
     } catch (_) {
       if (mounted) showHzToast(context, 'آپلود ویدیو ناموفق بود.');
@@ -92,6 +95,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
     setState(() => _publishing = true);
     try {
       await app.publishPost(text: text, imageUrls: List.of(_imageUrls), videoUrl: _videoUrl);
+      if (!mounted) return;
       _text.clear();
       setState(() {
         _imageUrls.clear();
@@ -125,10 +129,10 @@ class _CommunityScreenState extends State<CommunityScreen> {
           const SizedBox(height: 14),
           _buildComposer(app, theme),
           const SizedBox(height: 20),
-          if (app.posts.isEmpty)
+          if (app.visiblePosts.isEmpty)
             _EmptyFeed(theme: theme)
           else
-            for (final (i, post) in app.posts.indexed) ...[
+            for (final (i, post) in app.visiblePosts.indexed) ...[
               PostCard(post: post, onTap: () => Navigator.of(context).pushNamed('/post', arguments: post.id)).staggered(i),
               const SizedBox(height: 14),
             ],

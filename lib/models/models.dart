@@ -276,6 +276,56 @@ class ContactMessage {
   });
 }
 
+/// یک گزارش کاربر درباره‌ی محتوا یا کاربر دیگر (پست، کامنت یا پروفایل) —
+/// بخش «گزارش‌ها»ی پنل مدیریت این‌ها را برای بررسی/اقدام فهرست می‌کند.
+/// این الزام گوگل‌پلی/اپل برای محتوای کاربرساخته است: راهی برای گزارش‌دادن
+/// محتوای نامناسب که تیم اپ بتواند رسیدگی کند.
+class ContentReport {
+  final String id;
+  final String reporterId;
+  final String reporterName;
+  final String targetType; // post | comment | user
+  final String targetId;
+  final String? targetOwnerId;
+  final String? targetPreview;
+  final String reason;
+  final String? note;
+  final String status; // pending | reviewed | dismissed
+  final String createdAtLabel;
+
+  ContentReport({
+    required this.id,
+    required this.reporterId,
+    required this.reporterName,
+    required this.targetType,
+    required this.targetId,
+    this.targetOwnerId,
+    this.targetPreview,
+    required this.reason,
+    this.note,
+    required this.status,
+    required this.createdAtLabel,
+  });
+}
+
+/// یک کاربر که شما مسدودش کرده‌اید — دیگر پست/کامنتش را در فید نمی‌بینید.
+/// جدا از مسدودسازی سراسری ادمین (UserStatus.blocked روی کل حساب).
+class BlockedUser {
+  final String id; // شناسه‌ی ردیف blocked_users (برای لغو مسدودی)
+  final String blockedId;
+  final String blockedName;
+  final String? blockedAvatarUrl;
+  final String createdAtLabel;
+
+  BlockedUser({
+    required this.id,
+    required this.blockedId,
+    required this.blockedName,
+    this.blockedAvatarUrl,
+    required this.createdAtLabel,
+  });
+}
+
 /// یک پست در «حافظه‌ی جمعی» — فید اجتماعی به سبک اینستاگرام/فیسبوک: متن،
 /// عکس (چندتایی) یا یک ویدیو، شمارنده‌ی سبک نظرها (خودِ نظرها جدا لود می‌شوند)،
 /// و واکنش‌های ایموجی (که ❤️ نقش «لایک» را بازی می‌کند).

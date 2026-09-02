@@ -72,6 +72,7 @@ class _ContestManagerPageState extends State<ContestManagerPage> {
       ),
     );
     if (confirmed != true) return;
+    if (!mounted) return;
 
     setState(() => _autoRanking = true);
     var reviewed = 0;
@@ -1025,6 +1026,7 @@ class _SettingsTabState extends State<_SettingsTab> {
       ),
     );
     if (confirmed != true) return;
+    if (!mounted) return;
 
     setState(() => _startingRound = true);
     try {

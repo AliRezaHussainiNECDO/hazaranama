@@ -47,20 +47,20 @@ class DonorTier {
 
 const List<DonorTier> kDonorTiers = [
   DonorTier(
-    index: 1, minUsd: 0, title: 'تازه‌وارد',
+    index: 1, minUsd: 0, title: 'همراه',
     colors: [Color(0xFFB9BEC7), Color(0xFFEFEFF2), Color(0xFFB9BEC7)],
   ),
   DonorTier(
-    index: 2, minUsd: 5, title: 'کاوشگر',
+    index: 2, minUsd: 5, title: 'یاور',
     colors: [Color(0xFF4FA8FF), Color(0xFFBFE0FF), Color(0xFF4FA8FF)],
   ),
   DonorTier(
-    index: 3, minUsd: 15, title: 'فعال',
+    index: 3, minUsd: 15, title: 'نیکوکار',
     colors: [Color(0xFF2FBE86), Color(0xFF8FF0C8), Color(0xFF2FBE86)],
     glow: true, tickColor: Color(0xFF2FBE86),
   ),
   DonorTier(
-    index: 4, minUsd: 35, title: 'حرفه‌ای',
+    index: 4, minUsd: 35, title: 'سخاوتمند',
     colors: [Color(0xFF8E6BFF), Color(0xFFB79CFF), Color(0xFF8E6BFF)],
     glow: true,
   ),
@@ -116,7 +116,7 @@ double usdRateFor(String currency) {
 }
 
 /// مقام فعلی بر اساس جمع دلاریِ کمک‌های تأییدشده — چون مرحله‌ی اول
-/// («تازه‌وارد») آستانه‌ی صفر دارد، این تابع همیشه یک مقام واقعی برمی‌گرداند
+/// («همراه») آستانه‌ی صفر دارد، این تابع همیشه یک مقام واقعی برمی‌گرداند
 /// (حتی برای کاربری که هنوز هیچ کمکی نکرده)، نه حالت خالی.
 DonorTier? donorTierForUsd(double usd) {
   DonorTier? found;
@@ -356,7 +356,7 @@ class DonorTierChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = tier.colors.first;
     final secondColor = tier.colors.length > 1 ? tier.colors[1] : color;
-    return Container(
+    final chip = Container(
       padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2.5),
       decoration: BoxDecoration(
         gradient: LinearGradient(colors: [color.withValues(alpha: 0.28), secondColor.withValues(alpha: 0.14)]),
@@ -369,6 +369,9 @@ class DonorTierChip extends StatelessWidget {
         Text(tier.title, style: TextStyle(fontSize: 8.5, fontWeight: FontWeight.w800, color: color)),
       ]),
     );
+    // مقام‌های تاج‌دار (قهرمان به بالا) یک درخشش ملایم و پیوسته می‌گیرند تا
+    // نشان ویژه‌شان در فید/کامنت/پروفایل بلافاصله به چشم بیاید.
+    return tier.crownStyle != DonorCrownStyle.none ? chip.royalShimmer() : chip;
   }
 }
 
@@ -409,14 +412,36 @@ class DonorTierCard extends StatelessWidget {
               ? 'به‌عنوان مدیر هزاره‌نامه، بالاترین مقام را داری.'
               : totalUsd > 0
                   ? 'مجموع کمک‌های تأییدشده‌ی شما تقریباً ${totalUsd.toStringAsFixed(0)} دلار است.'
-                  : 'با اولین کمک مالی، حلقه‌ی دور عکس پروفایلت رنگ می‌گیرد و از «تازه‌وارد» ارتقا می‌یابی.',
+                  : 'با اولین کمک مالی، حلقه‌ی دور عکس پروفایلت رنگ می‌گیرد و از «همراه» ارتقا می‌یابی.',
           style: TextStyle(color: theme.textSecondary, fontSize: 11, height: 1.8),
         ),
         if (next != null) ...[
           const SizedBox(height: 12),
           ClipRRect(
             borderRadius: BorderRadius.circular(999),
-            child: LinearProgressIndicator(value: progress, minHeight: 7, backgroundColor: theme.bgCardAlt, color: theme.success),
+            child: SizedBox(
+              height: 7,
+              child: Stack(children: [
+                Container(color: theme.bgCardAlt),
+                LayoutBuilder(
+                  builder: (context, constraints) => TweenAnimationBuilder<double>(
+                    tween: Tween(begin: 0, end: progress),
+                    duration: const Duration(milliseconds: 900),
+                    curve: Curves.easeOutCubic,
+                    builder: (context, value, _) => Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Container(
+                        width: constraints.maxWidth * value,
+                        height: 7,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: [tier?.colors.first ?? theme.success, next.colors.first]),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ]),
+            ),
           ),
           const SizedBox(height: 6),
           Text('${(next.minUsd - totalUsd).clamp(0, next.minUsd).toStringAsFixed(0)} دلار دیگر تا مقام «${next.title}»',

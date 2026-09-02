@@ -75,6 +75,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
       );
       if (confirmed != true) return;
     }
+    if (!mounted) return;
     setState(() => _busy = true);
     try {
       await app.updateUserRole(user.id, role);

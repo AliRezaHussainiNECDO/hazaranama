@@ -50,8 +50,10 @@ class _AiAssistantScreenState extends State<AiAssistantScreen> {
     _scrollToEnd();
     try {
       final reply = await _ai.chat(message: text, history: _messages);
+      if (!mounted) return;
       setState(() => _messages.add(AiChatMessage(fromUser: false, text: reply.isEmpty ? 'پاسخی دریافت نشد؛ دوباره تلاش کنید.' : reply)));
     } on AiServiceException catch (e) {
+      if (!mounted) return;
       setState(() => _messages.add(AiChatMessage(fromUser: false, text: '⚠️ ${e.message}')));
     } finally {
       if (mounted) setState(() => _sending = false);

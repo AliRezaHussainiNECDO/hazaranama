@@ -233,6 +233,7 @@ class _TransferCardState extends State<_TransferCard> {
       if (result == null) return;
       confirmedAmount = result;
     }
+    if (!mounted) return;
     setState(() => _busy = true);
     try {
       await widget.app.updateDonationTransferStatus(widget.transfer.id, status, confirmedAmount: confirmedAmount);

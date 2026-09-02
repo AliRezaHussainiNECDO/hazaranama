@@ -66,8 +66,10 @@ class _AiToolsPageState extends State<AiToolsPage> {
         sourceText: _sourceCtrl.text.trim(),
         targetLang: _targetLang,
       );
+      if (!mounted) return;
       setState(() => _result = text);
     } on AiServiceException catch (e) {
+      if (!mounted) return;
       setState(() => _error = e.message);
     } finally {
       if (mounted) setState(() => _loading = false);

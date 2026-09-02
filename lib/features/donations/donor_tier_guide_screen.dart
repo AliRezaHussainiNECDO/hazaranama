@@ -50,9 +50,9 @@ class DonorTierGuideScreen extends StatelessWidget {
                     gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [theme.aiViolet.withValues(alpha: 0.85), theme.blueDeep.withValues(alpha: 0.8)]),
                     borderRadius: BorderRadius.circular(18),
                   ),
-                  child: Row(children: [
-                    const Icon(Icons.workspace_premium_rounded, color: Colors.white, size: 26),
-                    const SizedBox(width: 10),
+                  child: const Row(children: [
+                    Icon(Icons.workspace_premium_rounded, color: Colors.white, size: 26),
+                    SizedBox(width: 10),
                     Expanded(
                       child: Text(
                         'با هر کمک مالی تأییدشده، مقام و قاب دور عکس پروفایلت یک پله بالاتر می‌رود — تا مرحله‌ی ۱۰: پادشاه (خاقان). مقام‌ها دائمی‌اند و هرگز افت نمی‌کنند.',

@@ -6,6 +6,7 @@ import '../../core/app_constants.dart';
 import '../../core/app_logo.dart';
 import '../../core/widgets.dart';
 import '../../state/app_state.dart';
+import 'blocked_users_screen.dart';
 
 class AccountSettingsScreen extends StatefulWidget {
   const AccountSettingsScreen({super.key});
@@ -28,6 +29,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
   bool _showPass = false;
 
   bool _savingProfile = false;
+  bool _deletingAccount = false;
   bool _savingPassword = false;
   String? _profileError;
   String? _passwordError;
@@ -43,6 +45,20 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
     _tribe = TextEditingController(text: u.tribe == '—' ? '' : u.tribe);
     _bio = TextEditingController(text: u.bio);
     _nativeLanguage = AppConstants.languageOptions.contains(u.nativeLanguage) ? u.nativeLanguage : null;
+  }
+
+  @override
+  void dispose() {
+    _name.dispose();
+    _country.dispose();
+    _originProvince.dispose();
+    _district.dispose();
+    _tribe.dispose();
+    _bio.dispose();
+    _currentPassword.dispose();
+    _newPassword.dispose();
+    _confirmPassword.dispose();
+    super.dispose();
   }
 
   Future<void> _saveProfile(AppState app) async {
@@ -190,6 +206,54 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                   HzPrimaryButton(theme: theme, label: _savingPassword ? 'در حال تغییر…' : 'تغییر رمز عبور', loading: _savingPassword, onPressed: () => _savePassword(app)),
                 ]),
               ).animate(delay: 80.ms).fadeIn(duration: 320.ms).slideY(begin: 0.05, end: 0),
+
+              const SizedBox(height: 22),
+              HzGlassCard(
+                theme: theme,
+                radius: 22,
+                padding: const EdgeInsets.all(18),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  _sectionHeader(theme, Icons.warning_amber_rounded, 'حذف حساب کاربری'),
+                  const SizedBox(height: 10),
+                  Text(
+                    'با حذف حساب، پروفایل، پست‌ها، کامنت‌ها، پیام‌ها و تمام اطلاعات شخصی شما برای همیشه از هزاره‌نامه پاک می‌شود. این کار غیرقابل بازگشت است.',
+                    style: TextStyle(color: theme.textFaint, fontSize: 11.5, height: 1.8),
+                  ),
+                  const SizedBox(height: 14),
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton.icon(
+                      onPressed: _deletingAccount ? null : () => _confirmDeleteAccount(app),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: theme.danger,
+                        side: BorderSide(color: theme.danger.withValues(alpha: 0.5)),
+                        padding: const EdgeInsets.symmetric(vertical: 13),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                      ),
+                      icon: _deletingAccount
+                          ? SizedBox(width: 15, height: 15, child: CircularProgressIndicator(strokeWidth: 2, color: theme.danger))
+                          : const Icon(Icons.delete_forever_outlined, size: 18),
+                      label: Text(_deletingAccount ? 'در حال حذف…' : 'حذف همیشگی حساب من', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Center(
+                    child: TextButton.icon(
+                      onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const BlockedUsersScreen())),
+                      icon: Icon(Icons.block_outlined, size: 15, color: theme.textFaint),
+                      label: Text('کاربران مسدودشده', style: TextStyle(color: theme.textFaint, fontSize: 11, fontWeight: FontWeight.w600)),
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Center(
+                    child: TextButton.icon(
+                      onPressed: () => openContentUrl(context, 'https://claude.ai/code/artifact/6a99f9a5-adca-4153-a980-bd844bb3213f'),
+                      icon: Icon(Icons.privacy_tip_outlined, size: 15, color: theme.textFaint),
+                      label: Text('سیاست حریم خصوصی و حذف داده', style: TextStyle(color: theme.textFaint, fontSize: 11, fontWeight: FontWeight.w600)),
+                    ),
+                  ),
+                ]),
+              ).animate(delay: 160.ms).fadeIn(duration: 320.ms).slideY(begin: 0.05, end: 0),
             ],
           ),
           ),
@@ -204,6 +268,46 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
       const SizedBox(width: 10),
       Expanded(child: Text(title, style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w800))),
     ]).animate().fadeIn(duration: 300.ms).slideX(begin: 0.05, end: 0);
+  }
+
+  void _confirmDeleteAccount(AppState app) {
+    final theme = app.colors;
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: theme.bgElevated,
+        title: Text('حساب کاربری‌تان برای همیشه حذف شود؟', style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w700)),
+        content: Text(
+          'پروفایل، پست‌ها، کامنت‌ها، پیام‌ها و هر اطلاعات دیگری که با این حساب ثبت کرده‌اید، پاک می‌شود و امکان بازگرداندن آن وجود ندارد.',
+          style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.7),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('انصراف')),
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              _deleteAccount(app);
+            },
+            child: Text('حذف همیشگی', style: TextStyle(color: theme.danger, fontWeight: FontWeight.w700)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _deleteAccount(AppState app) async {
+    setState(() => _deletingAccount = true);
+    final error = await app.deleteAccount();
+    if (!mounted) return;
+    if (error != null) {
+      setState(() => _deletingAccount = false);
+      showHzToast(context, error);
+      return;
+    }
+    // پس از موفقیت، AppState.stage به welcome تغییر کرده و ریشه‌ی اپ خودش
+    // صفحه را عوض می‌کند؛ اگر این صفحه هنوز روی پشته مانده باشد (حالت نادر)،
+    // آن را هم می‌بندیم.
+    if (Navigator.of(context).canPop()) Navigator.of(context).pop();
   }
 
   Widget _errorBox(theme, String msg) => Container(

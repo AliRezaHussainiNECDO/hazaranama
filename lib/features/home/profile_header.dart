@@ -43,6 +43,7 @@ class _ProfileHeaderState extends State<ProfileHeader> with TickerProviderStateM
     final picker = ImagePicker();
     final file = await picker.pickImage(source: ImageSource.gallery, maxWidth: 800);
     if (file == null) return;
+    if (!mounted) return;
     setState(() => _uploading = true);
     try {
       await app.uploadAvatar(File(file.path));

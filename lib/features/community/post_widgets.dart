@@ -78,18 +78,24 @@ class _PostCardState extends State<PostCard> {
                 Text(post.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 10)),
               ]),
             ),
-            if (isMine)
-              PopupMenuButton<String>(
-                icon: Icon(Icons.more_horiz, color: theme.textFaint, size: 19),
-                color: theme.bgElevated,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                onSelected: (v) {
-                  if (v == 'delete') _confirmDelete(context, app, post.id);
-                },
-                itemBuilder: (_) => [
-                  PopupMenuItem(value: 'delete', child: Text('حذف پست', style: TextStyle(color: theme.danger, fontSize: 12, fontWeight: FontWeight.w600))),
-                ],
-              ),
+            PopupMenuButton<String>(
+              icon: Icon(Icons.more_horiz, color: theme.textFaint, size: 19),
+              color: theme.bgElevated,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+              onSelected: (v) {
+                if (v == 'delete') _confirmDelete(context, app, post.id);
+                if (v == 'report') showReportDialog(context, targetType: 'post', targetId: post.id, targetOwnerId: post.authorId, targetPreview: post.text);
+                if (v == 'block') _confirmBlockAuthor(context, app, post);
+              },
+              itemBuilder: (_) => isMine
+                  ? [
+                      PopupMenuItem(value: 'delete', child: Text('حذف پست', style: TextStyle(color: theme.danger, fontSize: 12, fontWeight: FontWeight.w600))),
+                    ]
+                  : [
+                      PopupMenuItem(value: 'report', child: Text('گزارش این پست', style: TextStyle(color: theme.textSecondary, fontSize: 12, fontWeight: FontWeight.w600))),
+                      PopupMenuItem(value: 'block', child: Text('مسدودکردن ${post.authorName}', style: TextStyle(color: theme.danger, fontSize: 12, fontWeight: FontWeight.w600))),
+                    ],
+            ),
           ]),
         ),
         if (post.text.trim().isNotEmpty)
@@ -182,6 +188,86 @@ class _PostCardState extends State<PostCard> {
       ),
     );
   }
+
+  void _confirmBlockAuthor(BuildContext context, AppState app, Post post) {
+    final theme = app.colors;
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: theme.bgElevated,
+        title: Text('${post.authorName} مسدود شود؟', style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w700)),
+        content: Text(
+          'دیگر پست و کامنت‌های این کاربر را در فید نمی‌بینید. هر زمان می‌توانید از «تنظیمات حساب ← کاربران مسدودشده» او را دوباره از حالت مسدود خارج کنید.',
+          style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.7),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('انصراف')),
+          TextButton(
+            onPressed: () {
+              app.blockUser(userId: post.authorId, name: post.authorName, avatarUrl: post.authorAvatar);
+              Navigator.of(ctx).pop();
+              showHzToast(context, '${post.authorName} مسدود شد');
+            },
+            child: Text('مسدودکردن', style: TextStyle(color: theme.danger, fontWeight: FontWeight.w700)),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+const List<String> kReportReasons = [
+  'محتوای توهین‌آمیز یا نفرت‌پراکنی',
+  'اطلاعات نادرست یا گمراه‌کننده',
+  'هرزنامه یا تبلیغات ناخواسته',
+  'آزار یا زورگویی نسبت به کاربر دیگر',
+  'دلیل دیگر',
+];
+
+/// دیالوگ گزارش‌دادن یک پست یا کامنت — برای هر دلیل انتخابی، بی‌درنگ گزارش
+/// را ثبت می‌کند (بدون نیاز به تأیید دوم) تا مسیر گزارش‌دادن کوتاه بماند.
+Future<void> showReportDialog(
+  BuildContext context, {
+  required String targetType,
+  required String targetId,
+  required String targetOwnerId,
+  String? targetPreview,
+}) {
+  final app = context.read<AppState>();
+  final theme = app.colors;
+  return showModalBottomSheet(
+    context: context,
+    backgroundColor: theme.bgElevated,
+    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+    builder: (ctx) => SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 18, 20, 10),
+        child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text('چرا این را گزارش می‌دهید؟', style: TextStyle(color: theme.textPrimary, fontSize: 14.5, fontWeight: FontWeight.w800)),
+          const SizedBox(height: 4),
+          Text('گزارش شما محرمانه است و فقط تیم هزاره‌نامه آن را می‌بیند.', style: TextStyle(color: theme.textFaint, fontSize: 11)),
+          const SizedBox(height: 10),
+          for (final reason in kReportReasons)
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              title: Text(reason, style: TextStyle(color: theme.textSecondary, fontSize: 12.5)),
+              trailing: Icon(Icons.chevron_left, size: 16, color: theme.textFaint),
+              onTap: () async {
+                Navigator.of(ctx).pop();
+                final error = await app.reportContent(
+                  targetType: targetType,
+                  targetId: targetId,
+                  targetOwnerId: targetOwnerId,
+                  targetPreview: targetPreview,
+                  reason: reason,
+                );
+                if (context.mounted) showHzToast(context, error ?? 'گزارش شما ثبت شد؛ بررسی می‌کنیم.');
+              },
+            ),
+        ]),
+      ),
+    ),
+  );
 }
 
 /// دکمه‌ی «لایک» سریع (قلب) — دقیقاً معادل دکمه‌ی لایک اینستاگرام/فیسبوک؛
@@ -353,8 +439,14 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
   Future<void> _load() async {
     setState(() => _loading = true);
     try {
-      final comments = await context.read<AppState>().fetchPostComments(widget.postId);
+      final app = context.read<AppState>();
+      final comments = await app.fetchPostComments(widget.postId);
       if (!mounted) return;
+      // نظر/ریپلای کاربرانی که خودِ کاربر مسدود کرده، نمایش داده نمی‌شود
+      comments.removeWhere((c) => app.isBlocked(c.authorId));
+      for (final c in comments) {
+        c.replies.removeWhere((r) => app.isBlocked(r.authorId));
+      }
       setState(() {
         _comments = comments;
         _loading = false;
@@ -645,6 +737,12 @@ class _CommentTile extends StatelessWidget {
               if (onDeleteTap != null) ...[
                 const SizedBox(width: 14),
                 InkWell(onTap: onDeleteTap, child: Text('حذف', style: TextStyle(color: theme.danger, fontSize: 10.5, fontWeight: FontWeight.w700))),
+              ] else ...[
+                const SizedBox(width: 14),
+                InkWell(
+                  onTap: () => showReportDialog(context, targetType: 'comment', targetId: comment.id, targetOwnerId: comment.authorId, targetPreview: comment.text),
+                  child: Text('گزارش', style: TextStyle(color: theme.textFaint, fontSize: 10.5, fontWeight: FontWeight.w700)),
+                ),
               ],
             ]),
             if (replying && replyController != null) ...[

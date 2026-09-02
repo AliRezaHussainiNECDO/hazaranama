@@ -33,14 +33,14 @@ flutter:
     - assets/crowns/champion_silver.png
     - assets/crowns/sovereign_gold.png
     - assets/crowns/emperor_imperial.png
-  # اگر فونت وزیرمتن را بعداً اضافه کردید، این بخش را از حالت کامنت خارج کنید:
-  # fonts:
-  #   - family: Vazirmatn
-  #     fonts:
-  #       - asset: assets/fonts/Vazirmatn-Regular.ttf
-  #       - asset: assets/fonts/Vazirmatn-Medium.ttf
-  #         weight: 500
-  #       - asset: assets/fonts/Vazirmatn-Bold.ttf
-  #         weight: 700
-  #       - asset: assets/fonts/Vazirmatn-ExtraBold.ttf
-  #         weight: 800
+  # فونت فارسی وزیرمتن (Vazirmatn) — دقیقاً منطبق با fontFamily در app.dart
+  fonts:
+    - family: Vazirmatn
+      fonts:
+        - asset: assets/fonts/Vazirmatn-Regular.ttf
+        - asset: assets/fonts/Vazirmatn-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Vazirmatn-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Vazirmatn-ExtraBold.ttf
+          weight: 800

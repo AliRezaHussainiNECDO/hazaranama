@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,6 +17,16 @@ const String kPaypalEmail = 'alireza.necdo@gmail.com';
 const String kTransferRecipientName = 'Ali Reza Hussaini';
 const String kTransferRecipientCity = 'Geneva';
 const String kTransferRecipientCountry = 'Switzerland';
+
+/// صفحه‌ی وب مستقل و عمومیِ «کمک‌های مالی» — روی iOS به‌جای نمایش مستقیم
+/// مشخصات پی‌پال/حواله داخل اپ، کاربر با این لینک به مرورگر (Safari) فرستاده
+/// می‌شود. این جدایی برای رعایت قوانین اپ‌استور اپل (بند ۳.۲.۱ و ۳.۲.۲) است:
+/// اپل برای اپ‌هایی که هنوز به‌عنوان سازمان غیرانتفاعی تأیید نشده‌اند، فقط
+/// جمع‌آوری کمک از طریق یک صفحه‌ی وب بیرون از اپ (بدون هیچ پرکردن خودکار) را
+/// می‌پذیرد، نه نمایش مستقیم مشخصات پرداخت در صفحه‌ی خودِ اپ. نسخه‌ی اندروید
+/// (که گوگل‌پلی چنین محدودیتی ندارد) همچنان کارت‌های PayPal/حواله را مستقیم
+/// نشان می‌دهد.
+const String kDonationWebUrl = 'https://claude.ai/code/artifact/cbb736cf-1e66-4c1b-8008-7560e2c30dbf';
 
 const List<String> kDonationCurrencies = ['USD', 'EUR', 'CHF', 'GBP', 'AFN'];
 
@@ -136,9 +147,13 @@ class _DonationScreenState extends State<DonationScreen> {
                           ]),
                         ),
                         const SizedBox(height: 12),
-                        _PaypalCard(theme: theme, onCopy: _copy),
-                        const SizedBox(height: 12),
-                        _TransferCard(theme: theme, onCopy: _copy),
+                        if (Platform.isIOS) ...[
+                          _ExternalDonationCard(theme: theme),
+                        ] else ...[
+                          _PaypalCard(theme: theme, onCopy: _copy),
+                          const SizedBox(height: 12),
+                          _TransferCard(theme: theme, onCopy: _copy),
+                        ],
                         if (myTransfers.isNotEmpty) ...[
                           const SizedBox(height: 22),
                           Row(children: [
@@ -313,7 +328,7 @@ class _TierGuideButton extends StatelessWidget {
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text('راهنمای مقام‌ها', style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w800)),
-              Text('۱۰ مرحله، از تازه‌وارد تا پادشاه — با هر مبلغ چه می‌گیری؟', style: TextStyle(color: theme.textFaint, fontSize: 10)),
+              Text('۱۰ مرحله، از همراه تا پادشاه — با هر مبلغ چه می‌گیری؟', style: TextStyle(color: theme.textFaint, fontSize: 10)),
             ]),
           ),
           Icon(Icons.arrow_back_ios_new, size: 13, color: theme.textFaint),
@@ -347,6 +362,74 @@ class _ImpactCategoriesRow extends StatelessWidget {
           if (c != items.last) const SizedBox(width: 8),
         ],
       ],
+    );
+  }
+}
+
+// =============================================================================
+// کارت کمک مالی — نسخه‌ی iOS (لینک بیرونی به‌جای نمایش مستقیم مشخصات پرداخت)
+// =============================================================================
+
+/// روی iOS، به‌جای دو کارت PayPal/حواله، کاربر با یک دکمه به صفحه‌ی وب عمومی
+/// «کمک‌های مالی» (خارج از اپ، در Safari) فرستاده می‌شود. دلیل: راهنمای اپ‌استور
+/// اپل برای اپ‌هایی که تأییدیه‌ی سازمان غیرانتفاعی ندارند.
+class _ExternalDonationCard extends StatelessWidget {
+  final AppColors theme;
+  const _ExternalDonationCard({required this.theme});
+
+  @override
+  Widget build(BuildContext context) {
+    return HzGlassCard(
+      theme: theme,
+      radius: 20,
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(children: [
+          StatIconBox(icon: Icons.volunteer_activism_outlined, color: theme.success, size: 38),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text('کمک مالی از طریق وب‌سایت', style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800)),
+              const SizedBox(height: 2),
+              Text('PayPal و حواله‌ی بانکی — روی صفحه‌ی وب هزاره‌نامه', style: TextStyle(color: theme.textFaint, fontSize: 10)),
+            ]),
+          ),
+        ]),
+        const SizedBox(height: 12),
+        Text(
+          'برای رعایت قوانین اپ‌استور اپل، مشخصات پرداخت (ایمیل پی‌پال و اطلاعات حواله) را در یک صفحه‌ی وب جداگانه گذاشته‌ایم. با زدن دکمه‌ی زیر، همان مشخصات در مرورگرتان باز می‌شود.',
+          style: TextStyle(color: theme.textSecondary, fontSize: 11, height: 1.9),
+        ),
+        const SizedBox(height: 14),
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton.icon(
+            onPressed: () => openContentUrl(context, kDonationWebUrl),
+            icon: const Icon(Icons.open_in_new, size: 15),
+            label: const Text('باز کردن صفحه‌ی کمک‌های مالی', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800)),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: theme.success, foregroundColor: Colors.white, elevation: 0,
+              padding: const EdgeInsets.symmetric(vertical: 13),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        SizedBox(
+          width: double.infinity,
+          child: OutlinedButton.icon(
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const DonationTransferFormScreen())),
+            icon: const Icon(Icons.edit_note, size: 16),
+            label: const Text('قبلاً کمک فرستاده‌اید؟ ثبتش کنید', style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w800)),
+            style: OutlinedButton.styleFrom(
+              foregroundColor: theme.success, side: BorderSide(color: theme.success.withValues(alpha: 0.5)),
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+          ),
+        ),
+        const SizedBox(height: 6),
+        Text('ثبت اعلام کمک، آن را به مقام و حلقه‌ی دور عکس پروفایلت وصل می‌کند.', style: TextStyle(color: theme.textFaint, fontSize: 9.5, height: 1.7)),
+      ]),
     );
   }
 }

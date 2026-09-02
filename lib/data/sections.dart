@@ -44,7 +44,7 @@ const List<ContentSection> kSections = [
   ContentSection(
     id: 'genocide',
     title: 'نسل‌کشی هزاره‌ها در تاریخ',
-    description: '۴۳ رویداد مستند، از ۱۸۹۰ تا امروز',
+    description: '۳۰ رویداد مستند، از ۱۸۸۸ تا امروز',
     group: 'history',
     kind: SectionKind.incidents,
     fields: [
@@ -60,12 +60,13 @@ const List<ContentSection> kSections = [
   ContentSection(
     id: 'culture',
     title: 'فرهنگ و زندگی',
-    description: 'آیین‌ها، خوراک و پوشاک',
+    description: 'آیین‌ها، خوراک، پوشاک و رسوم مردم هزاره',
     group: 'culture',
     kind: SectionKind.grid,
     fields: [
       ContentFieldSpec('name', 'عنوان'),
-      ContentFieldSpec('note', 'توضیح', multiline: true),
+      ContentFieldSpec('note', 'توضیح کوتاه (برای کارت)', multiline: true),
+      ContentFieldSpec('full', 'شرح کامل و تفصیلی (برای صفحه‌ی جزئیات)', multiline: true),
     ],
   ),
   ContentSection(
@@ -129,6 +130,7 @@ const List<ContentSection> kSections = [
       ContentFieldSpec('title', 'عنوان اثر'),
       ContentFieldSpec('author', 'نویسنده'),
       ContentFieldSpec('tag', 'دسته‌بندی'),
+      ContentFieldSpec('note', 'معرفی کتاب', multiline: true),
     ],
   ),
   ContentSection(

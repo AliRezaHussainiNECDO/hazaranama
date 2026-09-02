@@ -4,7 +4,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import '../../core/animated_backdrop.dart';
 import '../../core/widgets.dart';
-import '../../models/models.dart';
 import '../../state/app_state.dart';
 import 'notification_style.dart';
 

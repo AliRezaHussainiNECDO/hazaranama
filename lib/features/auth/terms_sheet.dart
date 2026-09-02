@@ -74,6 +74,18 @@ class _TermsSheetContent extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(22, 4, 22, 10),
                 children: [
                   Text(kTermsText, style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 2)),
+                  const SizedBox(height: 4),
+                  InkWell(
+                    onTap: () => openContentUrl(context, 'https://claude.ai/code/artifact/6a99f9a5-adca-4153-a980-bd844bb3213f'),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: Row(mainAxisSize: MainAxisSize.min, children: [
+                        Icon(Icons.open_in_new, size: 13, color: theme.blue),
+                        const SizedBox(width: 6),
+                        Text('مشاهده‌ی کامل سیاست حریم خصوصی و حذف حساب', style: TextStyle(color: theme.blue, fontSize: 11.5, fontWeight: FontWeight.w600)),
+                      ]),
+                    ),
+                  ),
                 ],
               ),
             ),

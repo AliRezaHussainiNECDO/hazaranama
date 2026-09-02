@@ -26,6 +26,19 @@ class SupabaseService {
 
   Future<void> signOut() => _db.auth.signOut();
 
+  /// حذف کامل و برگشت‌ناپذیر حساب کاربری — از طریق Edge Function امن
+  /// «delete-account» (که با نشست خودِ کاربر صدا زده می‌شود و فقط اجازه
+  /// دارد حساب همان کاربر را حذف کند). تمام محتوای متعلق به کاربر
+  /// (پست‌ها، کامنت‌ها، پیام‌ها، اعلان‌ها، توکن‌های دستگاه و غیره) به‌واسطه‌ی
+  /// «on delete cascade»ی تعریف‌شده در اسکیمای دیتابیس، خودکار پاک می‌شود.
+  Future<void> deleteAccount() async {
+    final res = await _db.functions.invoke('delete-account');
+    final data = res.data;
+    if (data is Map && data['error'] != null) {
+      throw Exception(data['error'].toString());
+    }
+  }
+
   Future<void> resetPasswordForEmail(String email) => _db.auth.resetPasswordForEmail(
         email,
         redirectTo: SupabaseConfig.passwordResetRedirect,
@@ -308,6 +321,90 @@ class SupabaseService {
       message: r['message'] as String,
       status: messageStatusFromString((r['status'] as String?) ?? 'new'),
       adminReply: r['admin_reply'] as String?,
+      createdAtLabel: _relativeTime(r['created_at'] as String),
+    );
+  }
+
+  // ================= نظارت: گزارش محتوا و مسدودسازی کاربر =================
+
+  Future<void> reportContent({
+    required String reporterId,
+    required String targetType,
+    required String targetId,
+    String? targetOwnerId,
+    String? targetPreview,
+    required String reason,
+    String? note,
+  }) {
+    return _db.from('content_reports').insert({
+      'reporter_id': reporterId,
+      'target_type': targetType,
+      'target_id': targetId,
+      'target_owner_id': targetOwnerId,
+      'target_preview': targetPreview,
+      'reason': reason,
+      'note': note,
+    });
+  }
+
+  Future<List<ContentReport>> fetchContentReports() async {
+    final rows = await _db
+        .from('content_reports')
+        .select('*, reporter:profiles(name)')
+        .order('created_at', ascending: false);
+    return (rows as List).map((r) => _reportFromRow(r as Map<String, dynamic>)).toList();
+  }
+
+  Future<void> updateReportStatus(String id, String status) {
+    return _db.from('content_reports').update({'status': status}).eq('id', id);
+  }
+
+  ContentReport _reportFromRow(Map<String, dynamic> r) {
+    final reporter = r['reporter'] as Map<String, dynamic>?;
+    return ContentReport(
+      id: r['id'] as String,
+      reporterId: r['reporter_id'] as String,
+      reporterName: (reporter?['name'] as String?) ?? 'کاربر',
+      targetType: r['target_type'] as String,
+      targetId: r['target_id'] as String,
+      targetOwnerId: r['target_owner_id'] as String?,
+      targetPreview: r['target_preview'] as String?,
+      reason: r['reason'] as String,
+      note: r['note'] as String?,
+      status: r['status'] as String,
+      createdAtLabel: _relativeTime(r['created_at'] as String),
+    );
+  }
+
+  Future<List<BlockedUser>> fetchBlockedUsers(String blockerId) async {
+    final rows = await _db
+        .from('blocked_users')
+        .select()
+        .eq('blocker_id', blockerId)
+        .order('created_at', ascending: false);
+    return (rows as List).map((r) => _blockedUserFromRow(r as Map<String, dynamic>)).toList();
+  }
+
+  /// upsert روی (blocker_id, blocked_id) — اگر قبلاً مسدود شده، خطا نمی‌دهد.
+  Future<void> blockUser({required String blockerId, required String blockedId, String? blockedName, String? blockedAvatarUrl}) {
+    return _db.from('blocked_users').upsert({
+      'blocker_id': blockerId,
+      'blocked_id': blockedId,
+      'blocked_name': blockedName,
+      'blocked_avatar_url': blockedAvatarUrl,
+    }, onConflict: 'blocker_id,blocked_id');
+  }
+
+  Future<void> unblockUser({required String blockerId, required String blockedId}) {
+    return _db.from('blocked_users').delete().match({'blocker_id': blockerId, 'blocked_id': blockedId});
+  }
+
+  BlockedUser _blockedUserFromRow(Map<String, dynamic> r) {
+    return BlockedUser(
+      id: r['id'] as String,
+      blockedId: r['blocked_id'] as String,
+      blockedName: (r['blocked_name'] as String?) ?? 'کاربر',
+      blockedAvatarUrl: r['blocked_avatar_url'] as String?,
       createdAtLabel: _relativeTime(r['created_at'] as String),
     );
   }

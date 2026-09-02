@@ -17,14 +17,16 @@ class CommunityModerationPage extends StatefulWidget {
 }
 
 class _CommunityModerationPageState extends State<CommunityModerationPage> {
-  int _tab = 0; // 0 = آمار، 1 = همه‌ی پست‌ها
+  int _tab = 0; // 0 = آمار، 1 = همه‌ی پست‌ها، 2 = گزارش‌ها
   String _filter = 'all'; // all | media | text
   bool _loading = false;
+  bool _loadingReports = false;
 
   @override
   void initState() {
     super.initState();
     _refresh();
+    _refreshReports();
   }
 
   Future<void> _refresh() async {
@@ -35,6 +37,17 @@ class _CommunityModerationPageState extends State<CommunityModerationPage> {
       // نادیده گرفتن خطای شبکه؛ فهرست موجود همچنان نمایش داده می‌شود
     } finally {
       if (mounted) setState(() => _loading = false);
+    }
+  }
+
+  Future<void> _refreshReports() async {
+    setState(() => _loadingReports = true);
+    try {
+      await context.read<AppState>().loadContentReports();
+    } catch (_) {
+      // نادیده گرفتن خطای شبکه؛ فهرست موجود همچنان نمایش داده می‌شود
+    } finally {
+      if (mounted) setState(() => _loadingReports = false);
     }
   }
 
@@ -50,14 +63,27 @@ class _CommunityModerationPageState extends State<CommunityModerationPage> {
           Expanded(child: _TabChip(theme: theme, label: 'آمار حافظه‌ی جمعی', selected: _tab == 0, onTap: () => setState(() => _tab = 0))),
           const SizedBox(width: 6),
           Expanded(child: _TabChip(theme: theme, label: 'همه‌ی پست‌ها', selected: _tab == 1, onTap: () => setState(() => _tab = 1))),
+          const SizedBox(width: 6),
+          Expanded(
+            child: _TabChip(
+              theme: theme,
+              label: app.contentReports.where((r) => r.status == 'pending').isEmpty ? 'گزارش‌ها' : 'گزارش‌ها (${app.contentReports.where((r) => r.status == 'pending').length})',
+              selected: _tab == 2,
+              onTap: () => setState(() => _tab = 2),
+            ),
+          ),
         ]),
       ),
       Expanded(
-        child: _loading && app.posts.isEmpty
-            ? const Center(child: CircularProgressIndicator())
-            : _tab == 0
-                ? _StatsTab(theme: theme, posts: app.posts)
-                : _PostsTab(theme: theme, app: app, filter: _filter, onFilterChanged: (f) => setState(() => _filter = f), onRefresh: _refresh),
+        child: _tab == 2
+            ? (_loadingReports && app.contentReports.isEmpty
+                ? const Center(child: CircularProgressIndicator())
+                : _ReportsTab(theme: theme, app: app, onRefresh: _refreshReports))
+            : (_loading && app.posts.isEmpty
+                ? const Center(child: CircularProgressIndicator())
+                : _tab == 0
+                    ? _StatsTab(theme: theme, posts: app.posts)
+                    : _PostsTab(theme: theme, app: app, filter: _filter, onFilterChanged: (f) => setState(() => _filter = f), onRefresh: _refresh)),
       ),
     ]);
   }
@@ -517,4 +543,144 @@ Future<bool?> _confirmDialog(BuildContext context, AppColors theme, String messa
       ],
     );
   });
+}
+
+// =============================================================================
+// تب گزارش‌ها
+// =============================================================================
+
+class _ReportsTab extends StatelessWidget {
+  final AppColors theme;
+  final AppState app;
+  final Future<void> Function() onRefresh;
+  const _ReportsTab({required this.theme, required this.app, required this.onRefresh});
+
+  @override
+  Widget build(BuildContext context) {
+    final reports = [...app.contentReports]
+      ..sort((a, b) {
+        if (a.status == b.status) return 0;
+        if (a.status == 'pending') return -1;
+        if (b.status == 'pending') return 1;
+        return 0;
+      });
+
+    return RefreshIndicator(
+      onRefresh: onRefresh,
+      child: reports.isEmpty
+          ? ListView(
+              padding: const EdgeInsets.symmetric(vertical: 60),
+              children: [
+                Center(
+                  child: Column(children: [
+                    Icon(Icons.flag_outlined, size: 30, color: theme.textFaint),
+                    const SizedBox(height: 10),
+                    Text('هیچ گزارشی ثبت نشده است.', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
+                  ]),
+                ),
+              ],
+            )
+          : ListView(
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
+              children: [
+                for (final r in reports) ...[
+                  _ReportCard(theme: theme, app: app, report: r),
+                  const SizedBox(height: 10),
+                ],
+              ],
+            ),
+    );
+  }
+}
+
+class _ReportCard extends StatelessWidget {
+  final AppColors theme;
+  final AppState app;
+  final ContentReport report;
+  const _ReportCard({required this.theme, required this.app, required this.report});
+
+  static const _typeLabels = {'post': 'پست', 'comment': 'کامنت', 'user': 'کاربر'};
+  static const _statusLabels = {'pending': 'در انتظار بررسی', 'reviewed': 'بررسی‌شد', 'dismissed': 'رد شد'};
+
+  Color _statusColor() {
+    switch (report.status) {
+      case 'reviewed':
+        return theme.success;
+      case 'dismissed':
+        return theme.textFaint;
+      default:
+        return theme.danger;
+    }
+  }
+
+  Future<void> _act(BuildContext context, String status) async {
+    await app.resolveReport(report.id, status);
+    if (context.mounted) showHzToast(context, status == 'reviewed' ? 'گزارش به‌عنوان بررسی‌شده ثبت شد' : 'گزارش رد شد');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final color = _statusColor();
+    return Container(
+      padding: const EdgeInsets.all(13),
+      decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(16), border: Border.all(color: theme.glassBorder)),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+            decoration: BoxDecoration(color: theme.bgCardAlt, borderRadius: BorderRadius.circular(999)),
+            child: Text(_typeLabels[report.targetType] ?? report.targetType, style: TextStyle(color: theme.textSecondary, fontSize: 10, fontWeight: FontWeight.w700)),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(report.reason, style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w700), maxLines: 1, overflow: TextOverflow.ellipsis),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+            decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(999)),
+            child: Text(_statusLabels[report.status] ?? report.status, style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w700)),
+          ),
+        ]),
+        if ((report.targetPreview ?? '').isNotEmpty) ...[
+          const SizedBox(height: 8),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(9),
+            decoration: BoxDecoration(color: theme.bgCardAlt, borderRadius: BorderRadius.circular(10)),
+            child: Text(report.targetPreview!, style: TextStyle(color: theme.textSecondary, fontSize: 11, height: 1.6), maxLines: 3, overflow: TextOverflow.ellipsis),
+          ),
+        ],
+        if ((report.note ?? '').isNotEmpty) ...[
+          const SizedBox(height: 6),
+          Text('یادداشت گزارش‌دهنده: ${report.note}', style: TextStyle(color: theme.textFaint, fontSize: 10.5, height: 1.6)),
+        ],
+        const SizedBox(height: 8),
+        Row(children: [
+          Text('گزارش‌دهنده: ${report.reporterName}', style: TextStyle(color: theme.textFaint, fontSize: 10)),
+          const Spacer(),
+          Text(report.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 10)),
+        ]),
+        if (report.status == 'pending') ...[
+          const SizedBox(height: 10),
+          Row(children: [
+            Expanded(
+              child: OutlinedButton(
+                onPressed: () => _act(context, 'dismissed'),
+                style: OutlinedButton.styleFrom(foregroundColor: theme.textFaint, side: BorderSide(color: theme.glassBorder), padding: const EdgeInsets.symmetric(vertical: 9)),
+                child: const Text('رد گزارش', style: TextStyle(fontSize: 11.5)),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: FilledButton(
+                onPressed: () => _act(context, 'reviewed'),
+                style: FilledButton.styleFrom(backgroundColor: theme.success, padding: const EdgeInsets.symmetric(vertical: 9)),
+                child: const Text('بررسی‌شد', style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700)),
+              ),
+            ),
+          ]),
+        ],
+      ]),
+    );
+  }
 }

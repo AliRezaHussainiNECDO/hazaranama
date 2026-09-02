@@ -45,6 +45,8 @@ class AppState extends ChangeNotifier {
   List<DonorRankEntry> donorLeaderboard = []; // فهرست عمومی کمک‌کنندگان
   final Map<String, UserRole> _roleById = {}; // کش سبک نقش همه‌ی کاربران — برای حلقه‌ی مقام در فید/کامنت/مقاله/پیام
   List<UserActivityEntry> recentActivity = []; // آخرین فعالیت‌های همه‌ی کاربران — صفحه‌ی نخست پنل مدیریت
+  List<BlockedUser> blockedUsers = []; // کاربرانی که خودِ کاربر مسدود کرده — پست/کامنتشان را نمی‌بیند
+  List<ContentReport> contentReports = []; // فقط مدیر — گزارش‌های محتوا/کاربر برای بررسی
   int todayVisitCount = 0; // شمار واقعی نشست‌های امروز — کارت «بازدید امروز»
   List<double> visitTrend = []; // شمار بازدید ۷ روز گذشته — نمودار ریز همان کارت
 
@@ -123,6 +125,7 @@ class AppState extends ChangeNotifier {
       // تا حلقه‌ی مقام درست دور عکس پروفایل بقیه‌ی کاربران هم در فید، کامنت‌ها،
       // مقاله و پیام‌ها نمایش داده شود؛ خطای احتمالی نباید جلوی ورود را بگیرد.
       unawaited(_loadRoleAndDonorCaches());
+      unawaited(loadBlockedUsers());
     } catch (_) {
       // پروفایل یا محتوا لود نشد؛ کاربر را دوباره به ورود برگردان
       await _service.signOut();
@@ -254,9 +257,34 @@ class AppState extends ChangeNotifier {
     donorLeaderboard = [];
     _roleById.clear();
     notifications = [];
+    blockedUsers = [];
+    contentReports = [];
     incomingToast = null;
     stage = AuthStage.welcome;
     notifyListeners();
+  }
+
+  /// حذف کامل و برگشت‌ناپذیر حساب کاربری — پس از تأیید کاربر در UI فراخوانی
+  /// می‌شود. در صورت موفقیت، دقیقاً همان پاک‌سازی وضعیت محلی «logout» را انجام
+  /// می‌دهد (چون دیگر نشستی برای این حساب معنا ندارد) و کاربر را به صفحه‌ی
+  /// خوش‌آمدگویی برمی‌گرداند. خروجی: null یعنی موفق، غیر آن پیام خطای فارسی است.
+  Future<String?> deleteAccount() async {
+    if (currentUser == null) return 'ابتدا وارد شوید.';
+    try {
+      await _service.deleteAccount();
+    } catch (e) {
+      return 'حذف حساب ناموفق بود؛ دوباره تلاش کنید یا از طریق «تماس با ما» با ما در ارتباط باشید.';
+    }
+    // حساب دیگر روی سرور وجود ندارد؛ حتی اگر پاک‌سازی محلی (مثلاً signOut) با
+    // خطای شبکه مواجه شود، کاربر نباید در وضعیت واردشده‌ی نامعتبر بماند.
+    try {
+      await logout();
+    } catch (_) {
+      currentUser = null;
+      stage = AuthStage.welcome;
+      notifyListeners();
+    }
+    return null;
   }
 
   String _translateAuthError(String message) {
@@ -274,7 +302,15 @@ class AppState extends ChangeNotifier {
     if (m.contains('token has expired') || m.contains('otp') && m.contains('expired') || m.contains('token') && m.contains('invalid')) {
       return 'کد وارد‌شده نادرست یا منقضی است؛ کد تازه‌ای درخواست دهید.';
     }
-    return message;
+    if (m.contains('rate limit') || m.contains('too many')) {
+      return 'درخواست‌های زیاد در زمان کوتاه؛ کمی صبر کنید و دوباره تلاش کنید.';
+    }
+    if (m.contains('network') || m.contains('timeout') || m.contains('failed host lookup')) {
+      return 'خطا در اتصال اینترنت؛ دوباره تلاش کنید.';
+    }
+    // پیام خام Supabase معمولاً انگلیسی است — به‌جای نشان‌دادنش به کاربر
+    // فارسی‌زبان، یک پیام عمومی و قابل‌فهم برمی‌گردانیم.
+    return 'خطایی رخ داد؛ دوباره تلاش کنید.';
   }
 
   void toggleAdminPreview() {
@@ -361,6 +397,70 @@ class AppState extends ChangeNotifier {
   Future<void> markMessageRead(String messageId) async {
     await _service.markMessageRead(messageId);
     await loadAllMessages();
+  }
+
+  // ---------------- گزارش محتوا و مسدودسازی کاربر ----------------
+
+  bool isBlocked(String userId) => blockedUsers.any((b) => b.blockedId == userId);
+
+  /// فید بدون پست/کامنتِ کاربرانی که خودِ کاربر مسدود کرده — همه‌جا به‌جای
+  /// posts خام، همین را برای نمایش استفاده کنید.
+  List<Post> get visiblePosts => blockedUsers.isEmpty ? posts : posts.where((p) => !isBlocked(p.authorId)).toList();
+
+  Future<void> loadBlockedUsers() async {
+    if (currentUser == null) return;
+    blockedUsers = await _service.fetchBlockedUsers(currentUser!.id);
+    notifyListeners();
+  }
+
+  Future<void> blockUser({required String userId, required String name, String? avatarUrl}) async {
+    if (currentUser == null || userId == currentUser!.id) return;
+    await _service.blockUser(blockerId: currentUser!.id, blockedId: userId, blockedName: name, blockedAvatarUrl: avatarUrl);
+    await loadBlockedUsers();
+  }
+
+  Future<void> unblockUser(String userId) async {
+    if (currentUser == null) return;
+    await _service.unblockUser(blockerId: currentUser!.id, blockedId: userId);
+    await loadBlockedUsers();
+  }
+
+  /// خروجی: null یعنی گزارش با موفقیت ثبت شد.
+  Future<String?> reportContent({
+    required String targetType,
+    required String targetId,
+    String? targetOwnerId,
+    String? targetPreview,
+    required String reason,
+    String? note,
+  }) async {
+    if (currentUser == null) return 'ابتدا وارد شوید.';
+    try {
+      await _service.reportContent(
+        reporterId: currentUser!.id,
+        targetType: targetType,
+        targetId: targetId,
+        targetOwnerId: targetOwnerId,
+        targetPreview: targetPreview,
+        reason: reason,
+        note: note,
+      );
+      return null;
+    } catch (_) {
+      return 'ثبت گزارش ناموفق بود؛ دوباره تلاش کنید.';
+    }
+  }
+
+  // ---- فقط مدیر ----
+
+  Future<void> loadContentReports() async {
+    contentReports = await _service.fetchContentReports();
+    notifyListeners();
+  }
+
+  Future<void> resolveReport(String id, String status) async {
+    await _service.updateReportStatus(id, status);
+    await loadContentReports();
   }
 
   // ---------------- محتوای بخش‌ها (برای پنل مدیریت) ----------------

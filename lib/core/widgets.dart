@@ -683,6 +683,55 @@ Future<void> openContentUrl(BuildContext context, String url) async {
 /// [fallback] (مثلاً آیکون یا گرادیان قبلی) را بدون هیچ تغییری نشان می‌دهد —
 /// یعنی افزودن این ویجت به بخش‌های موجود، ظاهر آیتم‌های بدون رسانه را
 /// دست‌نخورده نگه می‌دارد.
+/// جای‌گیر زیبا و پویا برای عکس هر بخش — پیش از اینکه عکس واقعی اضافه شود
+/// (یا در حین بارگذاری‌اش)، به‌جای فضای خالی یا آیکون خشک، یک ترکیب هویتی
+/// متشکل از گرادیان رنگی بخش + آیکون بزرگ محو در گوشه (به سبک واترمارک
+/// شماره‌ی فصل در «هویت و تاریخچه») + یک نشان دایره‌ای شفاف در مرکز، همراه
+/// با درخشش ملایم و پیوسته نمایش می‌دهد. همین ویجت هم زیر عکس واقعی
+/// می‌نشیند، طوری که وقتی عکس اضافه/بارگذاری شود، با یک محوشدگی نرم رویش
+/// ظاهر می‌شود — نه با یک پرش ناگهانی.
+class SectionMediaPlaceholder extends StatelessWidget {
+  final Color accent;
+  final IconData icon;
+  final double height;
+  final double? width;
+  const SectionMediaPlaceholder({super.key, required this.accent, required this.icon, this.height = 120, this.width});
+
+  @override
+  Widget build(BuildContext context) {
+    // وقتی height نامحدود است (مثلاً داخل Expanded در شبکه‌ی آلبوم عکس)،
+    // برای محاسبه‌ی اندازه‌ی آیکون‌ها یک عدد ثابت و معقول جایگزین می‌شود —
+    // خودِ Container همچنان به اندازه‌ی واقعیِ در دسترس کشیده می‌شود.
+    final h = height.isFinite ? height : 160.0;
+    return Container(
+      height: height,
+      width: width ?? double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft, end: Alignment.bottomRight,
+          colors: [accent.withValues(alpha: 0.20), accent.withValues(alpha: 0.05)],
+        ),
+      ),
+      child: Stack(clipBehavior: Clip.none, alignment: Alignment.center, children: [
+        Positioned(
+          right: -h * 0.16, bottom: -h * 0.24,
+          child: Icon(icon, size: h * 0.92, color: accent.withValues(alpha: 0.12)),
+        ),
+        Container(
+          width: (h * 0.36).clamp(26, 52),
+          height: (h * 0.36).clamp(26, 52),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: accent.withValues(alpha: 0.14),
+            border: Border.all(color: accent.withValues(alpha: 0.4)),
+          ),
+          child: Icon(icon, size: (h * 0.17).clamp(14, 24), color: accent),
+        ),
+      ]),
+    ).animate(onPlay: (c) => c.repeat(reverse: true)).shimmer(duration: 2400.ms, color: accent.withValues(alpha: 0.16));
+  }
+}
+
 class ContentMediaCover extends StatelessWidget {
   final ContentItem item;
   final Widget fallback;
@@ -704,7 +753,6 @@ class ContentMediaCover extends StatelessWidget {
     final videoUrl = item.videoUrl;
     final hasImage = imageUrl != null && imageUrl.isNotEmpty;
     final hasVideo = videoUrl != null && videoUrl.isNotEmpty;
-    if (!hasImage && !hasVideo) return fallback;
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(radius),
@@ -712,10 +760,24 @@ class ContentMediaCover extends StatelessWidget {
         height: height,
         width: width ?? double.infinity,
         child: Stack(fit: StackFit.expand, children: [
+          // پایه همیشه جای‌گیر است — تا زمان بارگذاری هم زیر عکس دیده می‌شود،
+          // و اگر خطا در بارگذاری رخ دهد، به‌جای آیکون شکسته، همین می‌ماند.
+          fallback,
           if (hasImage)
-            Image.network(imageUrl, fit: BoxFit.cover, errorBuilder: (_, __, ___) => fallback)
-          else
-            fallback,
+            Image.network(
+              imageUrl,
+              fit: BoxFit.cover,
+              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                if (wasSynchronouslyLoaded) return child;
+                return AnimatedOpacity(
+                  opacity: frame == null ? 0 : 1,
+                  duration: const Duration(milliseconds: 450),
+                  curve: Curves.easeOut,
+                  child: child,
+                );
+              },
+              errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+            ),
           if (hasImage)
             const DecoratedBox(
               decoration: BoxDecoration(

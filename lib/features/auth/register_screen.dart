@@ -209,6 +209,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         onToggle: () => setState(() => _acceptedTerms = !_acceptedTerms),
         onReadTerms: () async {
           final result = await showTermsSheet(context, theme);
+          if (!mounted) return;
           if (result == true) setState(() => _acceptedTerms = true);
         },
       ),
