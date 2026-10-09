@@ -76,7 +76,7 @@ class _TermsSheetContent extends StatelessWidget {
                   Text(kTermsText, style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 2)),
                   const SizedBox(height: 4),
                   InkWell(
-                    onTap: () => openContentUrl(context, 'https://claude.ai/code/artifact/6a99f9a5-adca-4153-a980-bd844bb3213f'),
+                    onTap: () => openContentUrl(context, 'https://hazaranama.pages.dev/privacy/'),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 6),
                       child: Row(mainAxisSize: MainAxisSize.min, children: [

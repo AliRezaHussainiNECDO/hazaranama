@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>حریم خصوصی هزاره‌نامه</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<meta name="theme-color" content="#05070F">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap');
+
+  :root{
+    --bg:#EFF3FC;
+    --bg-elevated:#FFFFFF;
+    --card:#FFFFFF;
+    --card-alt:#F4F7FD;
+    --border:#DCE4F4;
+    --blue:#2159C4;
+    --blue-deep:#163C87;
+    --blue-soft:#6F97DE;
+    --yellow:#C98A0A;
+    --yellow-soft:#E6AE3E;
+    --text:#0D1730;
+    --text-2:#4A5578;
+    --text-3:#8792B3;
+    --danger:#D3435E;
+    --success:#1E9463;
+    --violet:#7A4CE0;
+    --shadow: 0 1px 2px rgba(13,23,48,.04), 0 8px 24px -12px rgba(13,23,48,.12);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#05070F;
+      --bg-elevated:#0D1226;
+      --card:#161B33;
+      --card-alt:#1C2340;
+      --border:#2C3559;
+      --blue:#5B93FF;
+      --blue-deep:#A7C3FF;
+      --blue-soft:#3F5FA8;
+      --yellow:#FFC94D;
+      --yellow-soft:#8A6A22;
+      --text:#F5F7FF;
+      --text-2:#A9B3D6;
+      --text-3:#69719C;
+      --danger:#FF6B85;
+      --success:#4EDBA0;
+      --violet:#A06BFF;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 30px -14px rgba(0,0,0,.55);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#05070F;
+    --bg-elevated:#0D1226;
+    --card:#161B33;
+    --card-alt:#1C2340;
+    --border:#2C3559;
+    --blue:#5B93FF;
+    --blue-deep:#A7C3FF;
+    --blue-soft:#3F5FA8;
+    --yellow:#FFC94D;
+    --yellow-soft:#8A6A22;
+    --text:#F5F7FF;
+    --text-2:#A9B3D6;
+    --text-3:#69719C;
+    --danger:#FF6B85;
+    --success:#4EDBA0;
+    --violet:#A06BFF;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 30px -14px rgba(0,0,0,.55);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    direction:rtl;
+    text-align:right;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Vazirmatn', 'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  h1,h2,h3{text-wrap:balance; font-family:'Vazirmatn', sans-serif;}
+  .en{direction:ltr; text-align:left; font-family:'IBM Plex Sans', sans-serif; unicode-bidi:isolate;}
+  .mono{font-family:'IBM Plex Mono','IBM Plex Sans',monospace; font-variant-numeric:tabular-nums;}
+
+  a{color:var(--blue); text-decoration:none; border-bottom:1px solid transparent;}
+  a:hover{border-bottom-color:currentColor;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--blue); outline-offset:2px; border-radius:4px;}
+
+  .topbar{
+    position:sticky; top:0; z-index:20;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .topbar-inner{
+    max-width:820px; margin:0 auto; padding:14px 24px;
+    display:flex; align-items:center; gap:12px; justify-content:space-between;
+  }
+  .brand{display:flex; align-items:center; gap:10px; min-width:0;}
+  .mark{
+    width:34px; height:34px; border-radius:10px; flex:none;
+    background:linear-gradient(135deg, var(--blue-deep), var(--violet) 60%, var(--yellow) 130%);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:800; color:#fff; font-size:15px;
+  }
+  .brand-name{font-weight:800; font-size:14.5px; white-space:nowrap;}
+  .updated{font-size:11px; color:var(--text-3); white-space:nowrap;}
+
+  main{max-width:820px; margin:0 auto; padding:0 24px 90px;}
+
+  .hero{padding:40px 0 26px;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:7px;
+    font-size:11.5px; font-weight:700; color:var(--blue);
+    background:color-mix(in srgb, var(--blue) 10%, transparent);
+    border:1px solid color-mix(in srgb, var(--blue) 25%, transparent);
+    padding:5px 12px; border-radius:999px; margin-bottom:16px;
+  }
+  .hero h1{font-size:clamp(26px,4vw,32px); font-weight:800; margin:0 0 10px; line-height:1.35;}
+  .hero p{font-size:14.5px; color:var(--text-2); max-width:60ch; margin:0;}
+
+  .facts{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr));
+    gap:10px; margin:26px 0 8px;
+  }
+  .fact{
+    background:var(--card); border:1px solid var(--border); border-radius:14px;
+    padding:14px 15px; box-shadow:var(--shadow);
+  }
+  .fact .ico{font-size:17px; margin-bottom:8px; display:block;}
+  .fact .t{font-size:12.5px; font-weight:700; margin-bottom:3px;}
+  .fact .d{font-size:11px; color:var(--text-3); line-height:1.6;}
+
+  .toc{
+    display:flex; flex-wrap:wrap; gap:6px 8px;
+    margin:28px 0 6px; padding:14px 16px;
+    background:var(--card-alt); border:1px solid var(--border); border-radius:14px;
+  }
+  .toc a{
+    font-size:11.5px; color:var(--text-2); padding:5px 10px; border-radius:999px;
+    background:var(--card); border:1px solid var(--border);
+  }
+  .toc a:hover{color:var(--blue); border-color:var(--blue); border-bottom:1px solid var(--blue);}
+
+  .deletion-card{
+    margin:34px 0; border-radius:18px; overflow:hidden;
+    border:1px solid color-mix(in srgb, var(--yellow) 40%, var(--border));
+    background:var(--card); box-shadow:var(--shadow);
+  }
+  .deletion-head{
+    padding:18px 22px; display:flex; align-items:center; gap:12px;
+    background:color-mix(in srgb, var(--yellow) 10%, transparent);
+    border-bottom:1px solid color-mix(in srgb, var(--yellow) 30%, var(--border));
+  }
+  .deletion-head .ico{
+    width:36px; height:36px; border-radius:10px; flex:none;
+    background:color-mix(in srgb, var(--yellow) 20%, transparent);
+    display:flex; align-items:center; justify-content:center; font-size:17px;
+  }
+  .deletion-head h2{margin:0; font-size:16px; font-weight:800;}
+  .deletion-body{padding:20px 22px 22px;}
+  .deletion-body p{margin:0 0 14px; font-size:13px; color:var(--text-2); line-height:1.85;}
+  .path-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0;}
+  @media (max-width:560px){.path-grid{grid-template-columns:1fr;}}
+  .path{
+    background:var(--card-alt); border:1px solid var(--border); border-radius:12px; padding:14px 15px;
+  }
+  .path .step{
+    display:inline-block; font-size:10.5px; font-weight:700; color:var(--blue);
+    background:color-mix(in srgb, var(--blue) 12%, transparent); padding:2px 8px; border-radius:999px; margin-bottom:8px;
+  }
+  .path h3{font-size:13px; font-weight:700; margin:0 0 6px;}
+  .path p{font-size:11.5px; color:var(--text-3); margin:0; line-height:1.7;}
+  .path a.btn{
+    display:inline-block; margin-top:10px; font-size:11.5px; font-weight:700;
+    color:#fff; background:var(--blue); padding:7px 13px; border-radius:8px; border-bottom:none;
+  }
+
+  .reviewer-box{
+    margin-top:16px; padding:14px 16px; border-radius:12px;
+    background:var(--card-alt); border:1px dashed var(--text-3);
+  }
+  .reviewer-box .tag{
+    font-size:10px; font-weight:600; color:var(--text-3); letter-spacing:.04em; text-transform:uppercase;
+    margin-bottom:6px; display:block;
+  }
+  .reviewer-box p{font-size:12px; color:var(--text-2); margin:0 0 6px; line-height:1.6;}
+  .reviewer-box p:last-child{margin-bottom:0;}
+
+  section.policy{margin:40px 0;}
+  section.policy h2{
+    font-size:17px; font-weight:800; margin:0 0 4px;
+    display:flex; align-items:baseline; gap:9px;
+    scroll-margin-top:76px;
+  }
+  section.policy h2 .num{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; font-weight:500; color:var(--text-3); direction:ltr;
+  }
+  section.policy .lede{font-size:11.5px; color:var(--text-3); margin:0 0 16px;}
+  section.policy p{font-size:13.5px; color:var(--text-2); line-height:1.9; margin:0 0 14px; max-width:66ch;}
+  section.policy ul{margin:0 0 14px; padding-inline-start:20px; display:flex; flex-direction:column; gap:8px;}
+  section.policy li{font-size:13.5px; color:var(--text-2); line-height:1.8;}
+  section.policy li b{color:var(--text); font-weight:700;}
+  section.policy strong.hl{color:var(--text); font-weight:700;}
+
+  table.data-table{width:100%; border-collapse:collapse; margin:6px 0 18px; font-size:12.5px;}
+  table.data-table th, table.data-table td{
+    text-align:right; padding:9px 11px; border-bottom:1px solid var(--border); vertical-align:top;
+  }
+  table.data-table th{color:var(--text-3); font-weight:700; font-size:11px;}
+  table.data-table td{color:var(--text-2); line-height:1.7;}
+  .table-wrap{overflow-x:auto; border:1px solid var(--border); border-radius:12px;}
+  .table-wrap table{margin:0;}
+  .table-wrap th:first-child, .table-wrap td:first-child{padding-inline-start:14px;}
+
+  .pill{
+    display:inline-block; font-size:10.5px; font-weight:700; padding:2px 9px; border-radius:999px;
+  }
+  .pill.violet{color:var(--violet); background:color-mix(in srgb, var(--violet) 14%, transparent);}
+  .pill.success{color:var(--success); background:color-mix(in srgb, var(--success) 14%, transparent);}
+
+  footer{
+    max-width:820px; margin:20px auto 0; padding:22px 24px 40px;
+    border-top:1px solid var(--border);
+    font-size:11.5px; color:var(--text-3); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  }
+  footer a{color:var(--text-2);}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="mark">ه</div>
+      <div class="brand-name">هزاره‌نامه</div>
+    </div>
+    <div class="updated mono">به‌روزرسانی: ۱۰ سنبله ۱۴۰۵ <span class="en">(1 Sep 2026)</span></div>
+  </div>
+</div>
+
+<main>
+  <div class="hero">
+    <span class="eyebrow">🔒 حریم خصوصی و حذف حساب</span>
+    <h1>سیاست حریم خصوصی هزاره‌نامه</h1>
+    <p>هزاره‌نامه یک مرجع دیجیتال برای شناخت، حفظ و گرامی‌داشت تاریخ و فرهنگ مردم هزاره است. این صفحه به‌روشنی می‌گوید چه اطلاعاتی از شما جمع می‌شود، چرا، و چگونه می‌توانید حساب و داده‌های خود را برای همیشه پاک کنید.</p>
+  </div>
+
+  <div class="facts">
+    <div class="fact"><span class="ico">🚫</span><div class="t">بدون تبلیغات</div><div class="d">هیچ شبکه‌ی تبلیغاتی یا ردیاب شخص‌ثالثی در اپ نیست.</div></div>
+    <div class="fact"><span class="ico">🤝</span><div class="t">بدون فروش داده</div><div class="d">اطلاعات شما هرگز به شرکت دیگری فروخته نمی‌شود.</div></div>
+    <div class="fact"><span class="ico">🗑️</span><div class="t">حذف کامل، هر زمان</div><div class="d">از داخل اپ یا با یک ایمیل، بدون نیاز به دلیل.</div></div>
+    <div class="fact"><span class="ico">🌍</span><div class="t">اختیاری‌بودن هویت</div><div class="d">اطلاعات ریشه/طایفه اختیاری‌اند و قابل حذف.</div></div>
+  </div>
+
+  <nav class="toc" aria-label="فهرست بخش‌ها">
+    <a href="#deletion">حذف حساب</a>
+    <a href="#s1">چه اطلاعاتی جمع می‌شود</a>
+    <a href="#s2">محتوای عمومی</a>
+    <a href="#s3">هوش مصنوعی</a>
+    <a href="#s4">کمک‌های مالی</a>
+    <a href="#s5">اعلان‌ها</a>
+    <a href="#s6">اشتراک‌گذاری داده</a>
+    <a href="#s7">امنیت و نگه‌داری</a>
+    <a href="#s8">حقوق شما</a>
+    <a href="#s9">کودکان</a>
+    <a href="#s10">تماس</a>
+  </nav>
+
+  <div class="deletion-card" id="deletion">
+    <div class="deletion-head">
+      <div class="ico">⚠️</div>
+      <h2>حذف حساب و اطلاعات — همیشگی و رایگان</h2>
+    </div>
+    <div class="deletion-body">
+      <p>هر زمان که بخواهید، از هر دو راه زیر — بدون نیاز به باز کردن اپ — می‌توانید درخواست حذف کامل حساب‌تان را ثبت کنید. با حذف حساب، پروفایل، پست‌ها، کامنت‌ها، واکنش‌ها، پیام‌ها، توکن اعلان و فایل‌های تصویری/ویدیویی شما برای همیشه پاک می‌شود.</p>
+      <div class="path-grid">
+        <div class="path">
+          <span class="step">مسیر ۱ — داخل اپ</span>
+          <h3>تنظیمات حساب ← حذف همیشگی حساب من</h3>
+          <p>در بخش «تنظیمات حساب»، پایین‌ترین کارت، دکمه‌ی قرمز «حذف همیشگی حساب من» را بزنید و تأیید کنید. حذف بلافاصله انجام می‌شود.</p>
+        </div>
+        <div class="path">
+          <span class="step">مسیر ۲ — بدون نیاز به اپ</span>
+          <h3>درخواست ایمیلی حذف</h3>
+          <p>به آدرس زیر از همان ایمیلی که با آن ثبت‌نام کرده‌اید بنویسید؛ حساب و داده‌های شما حداکثر تا ۱۴ روز پاک و برای‌تان تأیید می‌شود.</p>
+          <a class="btn en" href="mailto:alireza.necdo@gmail.com?subject=Hazaranama%20account%20deletion%20request">alireza.necdo@gmail.com</a>
+        </div>
+      </div>
+      <p style="margin-top:4px">برخی رکوردهای غیرشخصی — مانند گزارش‌های شفافیت کمک‌های مالی که شما تأیید یا منتشر کرده‌اید — برای صداقت مالی نزد سایر کاربران نگه داشته می‌شوند، اما پیوندشان با هویت شما (نام و شناسه‌ی کاربری) پاک می‌شود.</p>
+
+      <div class="reviewer-box">
+        <span class="tag en">For App Store / Play Store reviewers</span>
+        <p class="en">Hazaranama supports in-app account deletion (Account settings → red "Delete my account permanently" button) that immediately deletes the auth account and cascades to all associated user data (profile, posts, comments, reactions, messages, device tokens, uploaded media). A web-based deletion request path is also provided above via email, reachable without installing the app, per Google Play's Account Deletion requirement and Apple Guideline 5.1.1(v).</p>
+        <p class="en" style="margin-bottom:0">Data safety: no ads, no third-party trackers, no data sale. AI assistant messages are relayed through a server-side proxy to Google's Gemini API for generating responses only (see §3).</p>
+      </div>
+    </div>
+  </div>
+
+  <section class="policy" id="s1">
+    <h2><span class="num">§1</span> چه اطلاعاتی جمع می‌شود</h2>
+    <p class="lede">فقط همان چیزی که برای کارکردن اپ لازم است — نه بیشتر.</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>دسته</th><th>موارد</th><th>هدف</th></tr></thead>
+        <tbody>
+          <tr><td><b>حساب</b></td><td>ایمیل، رمز عبور (رمزنگاری‌شده)، نام</td><td>ورود و شناسایی حساب</td></tr>
+          <tr><td><b>پروفایل</b></td><td>عکس پروفایل، بیوگرافی کوتاه</td><td>نمایش هویت شما در بخش‌های عمومی</td></tr>
+          <tr><td><b>ریشه‌ی خانوادگی <span class="pill success">اختیاری</span></b></td><td>کشور، ولایت، ولسوالی، طایفه، زبان مادری</td><td>نگاشت پراکندگی جهانی هزاره‌ها؛ هر زمان قابل ویرایش یا خالی‌گذاشتن</td></tr>
+          <tr><td><b>محتوای شما</b></td><td>پست، کامنت، واکنش (ایموجی)، مقاله‌ی ارسالی به مسابقه</td><td>بخش «حافظه‌ی جمعی» و مسابقه‌ی مقالات — عمومی</td></tr>
+          <tr><td><b>کمک‌های مالی</b></td><td>مبلغ، ارز و روش کمکی که خودتان ثبت می‌کنید</td><td>پیگیری کمک‌های شما و نمایش در جدول امتیازات (اختیاری)</td></tr>
+          <tr><td><b>پیام «تماس با ما»</b></td><td>متن پیام شما به مدیر برنامه</td><td>پاسخ‌گویی مستقیم</td></tr>
+          <tr><td><b>دستگاه</b></td><td>توکن اعلان (FCM)</td><td>ارسال اعلان‌های پوش</td></tr>
+          <tr><td><b>بازدید</b></td><td>شمارش کلی و ناشناس بازدید روزانه</td><td>سنجش کلی رشد اپ — بدون ردیابی فردی</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>ما هیچ داده‌ی موقعیت مکانی، مخاطبین گوشی یا داده‌ی سلامتی جمع نمی‌کنیم. تنها دسترسی دستگاهی که درخواست می‌شود، دسترسی به گالری تصاویر است — فقط وقتی خودتان عکس یا ویدیویی برای آپلود انتخاب می‌کنید.</p>
+  </section>
+
+  <section class="policy" id="s2">
+    <h2><span class="num">§2</span> محتوای عمومی شما</h2>
+    <p>هر چیزی که در بخش «حافظه‌ی جمعی» — روایت، خاطره، عکس، نظر یا واکنش — منتشر می‌کنید، برای دیگر کاربران اپ قابل مشاهده است. نام و عکس پروفایل‌تان (و در صورت تکمیل، اطلاعات ریشه) نیز کنار محتوای عمومی‌تان نمایش داده می‌شود. لطفاً اطلاعاتی را که نمی‌خواهید عمومی باشد، منتشر نکنید.</p>
+    <p>می‌توانید هر پست خودتان را از داخل اپ حذف کنید. اگر محتوای شخص دیگری را نامناسب، توهین‌آمیز یا ناقض این سیاست دیدید، می‌توانید از همان پست گزارش دهید یا نویسنده را مسدود کنید؛ تیم هزاره‌نامه گزارش‌ها را بررسی و در صورت لزوم محتوا یا حساب را حذف می‌کند.</p>
+  </section>
+
+  <section class="policy" id="s3">
+    <h2><span class="num">§3</span> دستیار هوش مصنوعی <span class="pill violet">Gemini</span></h2>
+    <p>پیام‌هایی که به «دستیار هوشمند» می‌فرستید، از طریق یک واسط امن روی سرور ما به سرویس هوش مصنوعی Gemini (متعلق به گوگل) ارسال می‌شوند تا پاسخ تولید شود. کلید سرویس هوش مصنوعی هرگز داخل اپ ذخیره نمی‌شود. متن گفتگوی شما فقط برای تولید همان پاسخ استفاده می‌شود و در دیتابیس اپ به‌صورت گفت‌وگوی قابل‌جست‌وجو ذخیره نمی‌ماند.</p>
+    <p>لطفاً اطلاعات حساس یا شخصی غیرضروری را داخل گفت‌وگو با دستیار هوشمند تایپ نکنید.</p>
+  </section>
+
+  <section class="policy" id="s4">
+    <h2><span class="num">§4</span> کمک‌های مالی</h2>
+    <p>کمک‌های مالی به هزاره‌نامه از طریق پی‌پال یا حواله‌ی بانکی، <strong class="hl">مستقیماً و بیرون از اپ</strong> انجام می‌شود — اپ هرگز شماره کارت یا اطلاعات پرداخت شما را نمی‌بیند یا ذخیره نمی‌کند. آنچه ذخیره می‌شود، فقط رکوردی است که خودتان (مبلغ، ارز، روش) برای پیگیری ثبت می‌کنید. گزارش‌های شفافیت مصرف کمک‌ها به‌صورت عمومی منتشر می‌شوند تا همه ببینند کمک‌ها کجا مصرف شده است.</p>
+  </section>
+
+  <section class="policy" id="s5">
+    <h2><span class="num">§5</span> اعلان‌ها</h2>
+    <p>در صورت اجازه‌ی شما، توکن اعلان دستگاه‌تان ذخیره می‌شود تا اعلان‌های پوش (خبر تازه، پاسخ کامنت و مانند آن) دریافت کنید. هر زمان از تنظیمات گوشی یا اپ می‌توانید این اجازه را لغو کنید.</p>
+  </section>
+
+  <section class="policy" id="s6">
+    <h2><span class="num">§6</span> اشتراک‌گذاری داده</h2>
+    <ul>
+      <li><b>هرگز فروخته نمی‌شود:</b> داده‌ی شما به هیچ شرکت تبلیغاتی یا شخص ثالثی فروخته نمی‌شود.</li>
+      <li><b>زیرساخت فنی:</b> داده‌ها روی Supabase (پایگاه‌داده، احراز هویت و فضای ذخیره‌سازی) نگهداری می‌شوند؛ اعلان‌های پوش از طریق Firebase Cloud Messaging گوگل ارسال می‌شوند؛ گفت‌وگوی دستیار هوشمند از طریق Gemini گوگل پردازش می‌شود (§۳). این‌ها صرفاً ارائه‌دهندگان زیرساخت‌اند، نه دریافت‌کننده‌ی تبلیغاتی داده‌ی شما.</li>
+      <li><b>الزام قانونی:</b> فقط در صورت الزام قانونی صریح، ممکن است داده به مرجع ذی‌صلاح ارائه شود.</li>
+    </ul>
+  </section>
+
+  <section class="policy" id="s7">
+    <h2><span class="num">§7</span> امنیت و نگه‌داری داده</h2>
+    <p>رمز عبور شما رمزنگاری‌شده ذخیره می‌شود و هیچ‌کس — حتی مدیر برنامه — آن را نمی‌بیند. ارتباط اپ با سرور رمزنگاری‌شده (HTTPS) است. داده‌های شما تا زمانی که حساب‌تان فعال است نگه‌داری می‌شود؛ پس از حذف حساب (§ بالا)، ظرف حداکثر ۱۴ روز به‌طور کامل پاک می‌شود، مگر نسخه‌ای محدود که قانون یا جلوگیری از سوءاستفاده ایجاب کند.</p>
+  </section>
+
+  <section class="policy" id="s8">
+    <h2><span class="num">§8</span> حقوق شما</h2>
+    <p>در هر زمان می‌توانید: اطلاعات پروفایل‌تان را ویرایش یا خالی کنید، محتوای خودتان را حذف کنید، از دریافت اعلان انصراف دهید، یا کل حساب و داده‌هایتان را برای همیشه پاک کنید (بخش بالا). برای هرگونه پرسش درباره‌ی داده‌های خودتان، از راه‌های بخش «تماس» زیر با ما در ارتباط باشید.</p>
+  </section>
+
+  <section class="policy" id="s9">
+    <h2><span class="num">§9</span> کودکان</h2>
+    <p>هزاره‌نامه برای مخاطب عمومی طراحی شده و آگاهانه اطلاعات کودکان زیر ۱۳ سال را جمع نمی‌کند. اگر متوجه شدید فرزندتان بدون اجازه‌ی شما حسابی ساخته، لطفاً از راه‌های زیر با ما تماس بگیرید تا آن را حذف کنیم.</p>
+  </section>
+
+  <section class="policy" id="s10">
+    <h2><span class="num">§10</span> تماس و تغییرات این سیاست</h2>
+    <p>برای پرسش، درخواست حذف داده، یا گزارش نگرانی درباره‌ی حریم خصوصی: <a href="mailto:alireza.necdo@gmail.com">alireza.necdo@gmail.com</a> — یا از بخش «تماس با ما» داخل اپ. این سیاست ممکن است برای همراهی با تغییرات اپ به‌روزرسانی شود؛ تاریخ بالای صفحه همیشه آخرین نسخه را نشان می‌دهد.</p>
+  </section>
+</main>
+
+<footer>
+  <span>هزاره‌نامه — مرجع دیجیتال تاریخ و فرهنگ مردم هزاره</span>
+  <span class="en mono">v1.0 · 2026-09-01</span>
+</footer>
+
+</body></html>

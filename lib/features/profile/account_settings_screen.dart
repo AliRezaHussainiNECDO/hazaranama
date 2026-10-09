@@ -247,7 +247,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                   const SizedBox(height: 4),
                   Center(
                     child: TextButton.icon(
-                      onPressed: () => openContentUrl(context, 'https://claude.ai/code/artifact/6a99f9a5-adca-4153-a980-bd844bb3213f'),
+                      onPressed: () => openContentUrl(context, 'https://hazaranama.pages.dev/privacy/'),
                       icon: Icon(Icons.privacy_tip_outlined, size: 15, color: theme.textFaint),
                       label: Text('سیاست حریم خصوصی و حذف داده', style: TextStyle(color: theme.textFaint, fontSize: 11, fontWeight: FontWeight.w600)),
                     ),

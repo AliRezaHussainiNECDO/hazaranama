@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>کمک‌های مالی هزاره‌نامه</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<meta name="theme-color" content="#05070F">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#EFF3FC; --bg-elevated:#FFFFFF; --bg-card:#FFFFFF; --bg-card-alt:#F4F7FD;
+  --border:#DCE4F4; --blue:#2159C4; --blue-deep:#163C87; --blue-soft:#6F97DE;
+  --yellow:#C98A0A; --yellow-soft:#E6AE3E; --text-primary:#0D1730; --text-secondary:#4A5578;
+  --text-faint:#8792B3; --success:#1E9463; --danger:#D3435E;
+  --font-fa:'Vazirmatn',Tahoma,sans-serif; --font-en:'IBM Plex Sans',system-ui,sans-serif; --font-mono:'IBM Plex Mono',monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#05070F; --bg-elevated:#0D1226; --bg-card:#161B33; --bg-card-alt:#1C2340;
+    --border:#2C3559; --blue:#5B93FF; --blue-deep:#223A85; --blue-soft:#A7C3FF;
+    --yellow:#FFC94D; --yellow-soft:#FFE096; --text-primary:#F5F7FF; --text-secondary:#A9B3D6;
+    --text-faint:#69719C; --success:#4EDBA0; --danger:#FF6B85;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#05070F; --bg-elevated:#0D1226; --bg-card:#161B33; --bg-card-alt:#1C2340;
+  --border:#2C3559; --blue:#5B93FF; --blue-deep:#223A85; --blue-soft:#A7C3FF;
+  --yellow:#FFC94D; --yellow-soft:#FFE096; --text-primary:#F5F7FF; --text-secondary:#A9B3D6;
+  --text-faint:#69719C; --success:#4EDBA0; --danger:#FF6B85;
+}
+*{box-sizing:border-box;}
+body{
+  background:var(--bg); color:var(--text-primary); font-family:var(--font-fa);
+  direction:rtl; margin:0; padding:0;
+}
+.wrap{max-width:640px; margin:0 auto; padding:0 20px 64px;}
+.topbar{
+  height:5px; width:100%;
+  background:linear-gradient(90deg,var(--blue-deep),var(--blue),var(--yellow));
+}
+header.hero{padding:40px 0 28px;}
+.eyebrow{
+  display:inline-flex; align-items:center; gap:6px; font-family:var(--font-en);
+  font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--blue); background:color-mix(in srgb, var(--blue) 12%, transparent);
+  padding:5px 12px; border-radius:999px; margin-bottom:16px;
+}
+h1{font-size:26px; line-height:1.5; font-weight:800; margin:0 0 10px; text-wrap:balance;}
+.lede{font-size:14.5px; line-height:2; color:var(--text-secondary); margin:0; max-width:56ch;}
+.stats{display:flex; gap:10px; margin-top:22px; flex-wrap:wrap;}
+.stat{
+  background:var(--bg-card-alt); border:1px solid var(--border); border-radius:14px;
+  padding:10px 16px; font-family:var(--font-en);
+}
+.stat b{display:block; font-size:11px; color:var(--text-faint); font-weight:600; font-family:var(--font-fa);}
+.stat span{font-size:15px; font-weight:800;}
+
+.impact{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:28px 0 8px;}
+@media (max-width:420px){
+  .impact{grid-template-columns:repeat(2,1fr);}
+  .wrap{padding:0 16px 56px;}
+  h1{font-size:22px;}
+}
+.impact-item{
+  background:var(--bg-card); border:1px solid var(--border); border-radius:14px;
+  padding:14px 8px; text-align:center;
+}
+.impact-item .ic{font-size:19px; margin-bottom:6px;}
+.impact-item .lb{font-size:10.5px; color:var(--text-secondary); font-weight:700; line-height:1.4;}
+
+section.method{
+  background:var(--bg-card); border:1px solid var(--border); border-radius:20px;
+  padding:22px; margin-top:20px;
+}
+.method-head{display:flex; align-items:center; gap:12px; margin-bottom:16px;}
+.method-icon{
+  width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+  font-size:19px; flex-shrink:0;
+}
+.method-icon.paypal{background:color-mix(in srgb, var(--blue) 14%, transparent); color:var(--blue);}
+.method-icon.transfer{background:color-mix(in srgb, var(--yellow) 16%, transparent); color:var(--yellow);}
+.method-head h2{font-size:15px; font-weight:800; margin:0 0 3px;}
+.method-head p{font-size:11px; color:var(--text-faint); margin:0;}
+
+.field-box{
+  background:var(--bg-card-alt); border:1px solid var(--border); border-radius:12px;
+  padding:12px 14px; margin-bottom:10px;
+}
+.field-row{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+.field-row + .field-row{margin-top:10px; padding-top:10px; border-top:1px solid var(--border);}
+.field-label{font-size:10.5px; color:var(--text-faint); flex-shrink:0;}
+.field-value{
+  font-family:var(--font-en); font-size:13.5px; font-weight:700; direction:ltr; text-align:left;
+  word-break:break-word;
+}
+.copy-btn{
+  font-family:var(--font-fa); font-size:10.5px; font-weight:700; color:var(--blue);
+  background:none; border:1px solid var(--blue); border-radius:8px; padding:5px 10px;
+  cursor:pointer; flex-shrink:0; transition:opacity .15s;
+}
+.copy-btn:active{opacity:.6;}
+.copy-btn.copied{color:var(--success); border-color:var(--success);}
+
+.howto{font-size:11.5px; line-height:2; color:var(--text-secondary); margin:14px 0 0;}
+.howto b{color:var(--text-primary); font-weight:700;}
+
+.note{
+  margin-top:28px; padding:16px; border-radius:14px; background:var(--bg-card-alt);
+  border:1px solid var(--border); font-size:11.5px; line-height:1.9; color:var(--text-secondary);
+}
+.note b{color:var(--text-primary);}
+
+footer{margin-top:32px; padding-top:20px; border-top:1px solid var(--border);}
+.foot-row{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+.foot-label{font-size:11px; color:var(--text-faint);}
+.foot-link{font-family:var(--font-en); font-size:12px; color:var(--blue); text-decoration:none; direction:ltr;}
+.foot-link:hover{text-decoration:underline;}
+.legal-note{font-size:10px; color:var(--text-faint); line-height:1.8; margin-top:18px;}
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+<div class="wrap">
+  <header class="hero">
+    <span class="eyebrow">🤲 HAZARANAMA · هزاره‌نامه</span>
+    <h1>دست هزاره‌نامه‌ای‌های سراسر جهان را به هزارستان برسانید</h1>
+    <p class="lede">
+      همین کمک کوچک شما می‌تواند برای یک خانواده‌ی بی‌بضاعت نان شب باشد، یا خشتی در ساخت یک
+      شفاخانه، مکتب، پل یا سرک برای هزارستان. هر مبلغی، هرچند کوچک، با شفافیت کامل به مقصد می‌رسد.
+    </p>
+    <div class="stats">
+      <div class="stat"><b>روش پرداخت</b><span>PayPal یا حواله</span></div>
+      <div class="stat"><b>مقصد</b><span>هزارستان، افغانستان</span></div>
+    </div>
+  </header>
+
+  <div class="impact">
+    <div class="impact-item"><div class="ic">👨‍👩‍👧‍👦</div><div class="lb">خانواده‌های بی‌بضاعت</div></div>
+    <div class="impact-item"><div class="ic">🏥</div><div class="lb">ساخت شفاخانه</div></div>
+    <div class="impact-item"><div class="ic">🏫</div><div class="lb">ساخت مکتب</div></div>
+    <div class="impact-item"><div class="ic">🌉</div><div class="lb">پل، پلچک و سرک</div></div>
+  </div>
+
+  <section class="method">
+    <div class="method-head">
+      <div class="method-icon paypal">💳</div>
+      <div>
+        <h2>ارسال از طریق PayPal</h2>
+        <p>ساده و آنی — برای کاربران خارج از افغانستان</p>
+      </div>
+    </div>
+    <div class="field-box">
+      <div class="field-row">
+        <span class="field-label">ایمیل پی‌پال</span>
+        <span class="field-value" id="paypal-value">alireza.necdo@gmail.com</span>
+        <button class="copy-btn" onclick="copyField('paypal-value', this)">کپی</button>
+      </div>
+    </div>
+    <p class="howto">
+      در اپ یا سایت PayPal گزینه‌ی <b>Send</b> را بزنید، همین ایمیل را وارد کنید، و برای این‌که
+      کارمزد کم‌تری کسر شود، گزینه‌ی <b>Friends &amp; Family</b> را انتخاب کنید.
+    </p>
+  </section>
+
+  <section class="method">
+    <div class="method-head">
+      <div class="method-icon transfer">🏦</div>
+      <div>
+        <h2>ارسال از طریق حواله</h2>
+        <p>صرافی، ویسترن یونیون یا هر روش حواله‌ی دلخواه شما</p>
+      </div>
+    </div>
+    <div class="field-box">
+      <div class="field-row">
+        <span class="field-label">نام گیرنده</span>
+        <span class="field-value" id="name-value">Ali Reza Hussaini</span>
+        <button class="copy-btn" onclick="copyField('name-value', this)">کپی</button>
+      </div>
+      <div class="field-row">
+        <span class="field-label">شهر</span>
+        <span class="field-value" id="city-value">Geneva</span>
+        <button class="copy-btn" onclick="copyField('city-value', this)">کپی</button>
+      </div>
+      <div class="field-row">
+        <span class="field-label">کشور</span>
+        <span class="field-value" id="country-value">Switzerland</span>
+        <button class="copy-btn" onclick="copyField('country-value', this)">کپی</button>
+      </div>
+    </div>
+    <p class="howto">
+      بعد از ارسال حواله از طریق صرافی یا بانک محل خودتان، می‌توانید جزئیات آن را در اپ هزاره‌نامه
+      (بخش «کمک‌های مالی» ← «ثبت کمک من») ثبت کنید تا مدیریت دریافت آن را تأیید کند و در مقام
+      اهدای شما لحاظ شود.
+    </p>
+  </section>
+
+  <div class="note">
+    <b>درباره‌ی شفافیت:</b> هزاره‌نامه یک تلاش داوطلبانه‌ی
+    جمعی است که توسط علی‌رضا حسینی اداره می‌شود. تمام کمک‌ها مستقیم به دست او می‌رسد و مصرف آن‌ها
+    در بخش «گزارش‌های شفافیت مصرف کمک‌ها»ی اپ منتشر می‌شود. اگر پرسشی دارید، پیش از ارسال کمک با ما
+    در تماس باشید.
+  </div>
+
+  <footer>
+    <div class="foot-row">
+      <span class="foot-label">پرسشی دارید؟</span>
+      <a class="foot-link" href="mailto:alireza.necdo@gmail.com">alireza.necdo@gmail.com</a>
+    </div>
+    <p class="legal-note">
+      این صفحه فقط اطلاعات لازم برای ارسال یک کمک مالی داوطلبانه را در اختیار شما می‌گذارد؛ هیچ
+      پرداختی روی همین صفحه پردازش نمی‌شود. برای دیدن گزارش‌های شفافیت، مقام‌های اهداکنندگان و فهرست
+      کمک‌کنندگان، به اپ هزاره‌نامه ← بخش «کمک‌های مالی» مراجعه کنید.
+    </p>
+  </footer>
+</div>
+
+<script>
+function copyField(id, btn){
+  try{
+    const text = document.getElementById(id).textContent.trim();
+    navigator.clipboard.writeText(text).then(()=>{
+      const original = btn.textContent;
+      btn.textContent = 'کپی شد ✓';
+      btn.classList.add('copied');
+      setTimeout(()=>{ btn.textContent = original; btn.classList.remove('copied'); }, 1500);
+    });
+  }catch(e){}
+}
+</script>
+
+</body></html>
