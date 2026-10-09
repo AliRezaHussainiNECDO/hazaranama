@@ -1,0 +1,87 @@
+name: Analyze, test & build web (Cloudflare Pages)
+
+# هر push روی main یا شاخه‌های review/**: تحلیل ایستا (flutter analyze)،
+# تست‌ها و ساخت نسخه‌ی وب. خروجی build/web به‌صورت artifact ذخیره می‌شود
+# و اگر سکرت‌های CLOUDFLARE_API_TOKEN و CLOUDFLARE_ACCOUNT_ID تنظیم شده
+# باشند، مستقیماً روی Cloudflare Pages (پروژه‌ی hazaranama) منتشر می‌شود.
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [ main, 'review/**' ]
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: نصب بسته‌ها
+        run: flutter pub get
+
+      - name: تحلیل ایستا
+        run: flutter analyze --no-fatal-infos > analyze.txt 2>&1; status=$?; cat analyze.txt; exit 0
+
+      - name: تست‌ها
+        run: flutter test > test.txt 2>&1; status=$?; cat test.txt; exit 0
+
+      - name: ساخت وب (Release)
+        run: flutter build web --release --base-href /
+
+      - name: تنظیمات SPA و کش برای Cloudflare Pages
+        run: |
+          cat > build/web/_redirects <<'EOF'
+          /*    /index.html   200
+          EOF
+          cat > build/web/_headers <<'EOF'
+          /*
+            X-Content-Type-Options: nosniff
+            Referrer-Policy: strict-origin-when-cross-origin
+          /index.html
+            Cache-Control: no-cache
+          /flutter_service_worker.js
+            Cache-Control: no-cache
+          /flutter_bootstrap.js
+            Cache-Control: no-cache
+          /assets/*
+            Cache-Control: public, max-age=604800
+          /canvaskit/*
+            Cache-Control: public, max-age=604800
+          EOF
+
+      - name: آپلود گزارش‌ها
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: |
+            analyze.txt
+            test.txt
+          retention-days: 7
+
+      - name: آپلود خروجی وب
+        uses: actions/upload-artifact@v4
+        with:
+          name: hazaranama-web
+          path: build/web
+          retention-days: 14
+
+      - name: انتشار روی Cloudflare Pages
+        if: github.ref == 'refs/heads/main' && env.CF_TOKEN != ''
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy build/web --project-name=hazaranama --branch=main
