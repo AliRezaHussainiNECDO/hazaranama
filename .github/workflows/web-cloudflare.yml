@@ -12,6 +12,9 @@ on:
     paths-ignore:
       - '**.md'
 
+permissions:
+  contents: write
+
 jobs:
   web:
     runs-on: ubuntu-latest
@@ -58,6 +61,34 @@ jobs:
           /canvaskit/*
             Cache-Control: public, max-age=604800
           EOF
+
+      # گزارش‌ها و خروجی ساخته‌شده به شاخه‌های جدا push می‌شوند تا بدون
+      # نیاز به دانلود artifact قابل دسترسی باشند (و Cloudflare Pages بتواند
+      # مستقیماً از شاخه‌ی cf-pages منتشر کند، بدون نصب Flutter).
+      - name: انتشار گزارش‌ها و خروجی وب در شاخه‌های git
+        if: always()
+        run: |
+          set -e
+          ref="${GITHUB_REF_NAME//\//-}"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          push_dir () {
+            src="$1"; branch="$2"; msg="$3"
+            tmp=$(mktemp -d)
+            cp -r "$src"/. "$tmp"/
+            cd "$tmp"
+            git init -q -b "$branch"
+            git add -A
+            git commit -qm "$msg"
+            git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "$branch:$branch"
+            cd - >/dev/null
+          }
+          mkdir -p _reports && cp -f analyze.txt test.txt _reports/ 2>/dev/null || true
+          push_dir _reports "ci-reports/$ref" "reports for ${GITHUB_SHA}"
+          if [ -f build/web/index.html ]; then
+            if [ "$GITHUB_REF_NAME" = "main" ]; then target=cf-pages; else target="cf-pages-preview"; fi
+            push_dir build/web "$target" "web build of ${GITHUB_SHA}"
+          fi
 
       - name: آپلود گزارش‌ها
         if: always()
