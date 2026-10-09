@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +28,9 @@ class HazaranamaApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      builder: (context, child) => Directionality(textDirection: TextDirection.rtl, child: child ?? const SizedBox()),
+      builder: (context, child) => _WebFrame(
+        child: Directionality(textDirection: TextDirection.rtl, child: child ?? const SizedBox()),
+      ),
       theme: ThemeData(
         useMaterial3: true,
         fontFamily: 'Vazirmatn', // اگر فونت را اضافه نکردید، فلاتر خودکار به فونت پیش‌فرض برمی‌گردد
@@ -94,6 +97,43 @@ class _CheckingScreen extends StatelessWidget {
               .then()
               .fade(begin: 1, end: 0.4, duration: 700.ms),
         ]),
+      ),
+    );
+  }
+}
+
+
+/// در نسخه‌ی وب روی نمایشگرهای عریض (دسکتاپ)، اپ که برای موبایل طراحی شده
+/// در یک ستون وسط با عرض گوشی نمایش داده می‌شود تا دکمه‌ها و کارت‌ها به
+/// پهنای کل صفحه کشیده نشوند. MediaQuery هم بازنویسی می‌شود تا ویجت‌هایی
+/// که اندازه‌ی صفحه را می‌خوانند، عرض واقعیِ ستون را ببینند.
+class _WebFrame extends StatelessWidget {
+  final Widget child;
+  const _WebFrame({required this.child});
+
+  static const double _maxWidth = 520;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!kIsWeb) return child;
+    final mq = MediaQuery.of(context);
+    if (mq.size.width <= _maxWidth + 80) return child;
+    final theme = context.watch<AppState>().colors;
+    return ColoredBox(
+      color: Color.lerp(theme.bg, Colors.black, 0.35)!,
+      child: Center(
+        child: Container(
+          width: _maxWidth,
+          height: mq.size.height,
+          decoration: BoxDecoration(
+            boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.45), blurRadius: 40)],
+          ),
+          clipBehavior: Clip.hardEdge,
+          child: MediaQuery(
+            data: mq.copyWith(size: Size(_maxWidth, mq.size.height)),
+            child: child,
+          ),
+        ),
       ),
     );
   }
