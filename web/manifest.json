@@ -1,11 +1,11 @@
 {
-    "name": "hazaranama",
-    "short_name": "hazaranama",
-    "start_url": ".",
+    "name": "هزاره‌نامه",
+    "short_name": "هزاره‌نامه",
+    "start_url": "/",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "Hazaranama",
+    "background_color": "#05070F",
+    "theme_color": "#05070F",
+    "description": "مرجع دیجیتال تاریخ، فرهنگ و حافظه‌ی جمعی مردم هزاره",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
@@ -31,5 +31,8 @@
             "type": "image/png",
             "purpose": "maskable"
         }
-    ]
+    ],
+    "lang": "fa",
+    "dir": "rtl",
+    "scope": "/"
 }

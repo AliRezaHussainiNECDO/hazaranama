@@ -39,7 +39,7 @@ jobs:
         run: flutter test > test.txt 2>&1; status=$?; cat test.txt; exit 0
 
       - name: ساخت وب (Release)
-        run: flutter build web --release --base-href /
+        run: flutter build web --release --base-href / --no-web-resources-cdn
 
       - name: تنظیمات SPA و کش برای Cloudflare Pages
         run: |
