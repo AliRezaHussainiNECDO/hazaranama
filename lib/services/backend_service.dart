@@ -1,16 +1,17 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:image_picker/image_picker.dart' show XFile;
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'hz_backend.dart';
 import '../core/afghan_calendar.dart';
-import '../core/supabase_config.dart';
+import '../core/backend_config.dart';
 import '../models/models.dart';
 
-/// تمام تماس‌های واقعی با Supabase اینجا جمع شده — دیتابیس، Auth و Storage.
-/// AppState فقط این متدها را صدا می‌زند و نتیجه را در مدل‌های اپ می‌ریزد؛
-/// هیچ‌جای دیگر کد مستقیماً با Supabase صحبت نمی‌کند.
-class SupabaseService {
-  SupabaseClient get _db => Supabase.instance.client;
+/// تمام تماس‌های واقعی با بک‌اند هزاره‌نامه (Cloudflare Worker + D1 + R2) اینجا
+/// جمع شده — دیتابیس، حساب کاربری و فایل‌ها. AppState فقط این متدها را صدا
+/// می‌زند و نتیجه را در مدل‌های اپ می‌ریزد؛ هیچ‌جای دیگر کد مستقیماً با سرور صحبت نمی‌کند.
+class BackendService {
+  HzBackend get _db => HzBackend.instance;
 
   // ================= AUTH =================
 
@@ -43,7 +44,7 @@ class SupabaseService {
 
   Future<void> resetPasswordForEmail(String email) => _db.auth.resetPasswordForEmail(
         email,
-        redirectTo: SupabaseConfig.passwordResetRedirect,
+        redirectTo: BackendConfig.passwordResetRedirect,
       );
 
   /// کاربر کد ۶ رقمی ارسال‌شده به ایمیلش را وارد می‌کند؛ همان درخواست بازیابی
@@ -201,19 +202,22 @@ class SupabaseService {
   /// یک کانال Realtime باز می‌کند و هر اعلانِ تازه‌ی همین کاربر را همان لحظه‌ای
   /// که در دیتابیس ساخته می‌شود (توسط trigger) به onInsert می‌دهد. باید هنگام
   /// خروج از حساب یا بستن اپ با removeChannel بسته شود.
-  RealtimeChannel subscribeToNotifications(String userId, void Function(AppNotification) onInsert) {
-    final channel = _db.channel('notifications:$userId').onPostgresChanges(
-          event: PostgresChangeEvent.insert,
-          schema: 'public',
-          table: 'notifications',
-          filter: PostgresChangeFilter(type: PostgresChangeFilterType.eq, column: 'user_id', value: userId),
-          callback: (payload) => onInsert(_notificationFromRow(payload.newRecord)),
-        );
-    channel.subscribe();
-    return channel;
+  NotificationSubscription subscribeToNotifications(String userId, void Function(AppNotification) onInsert) {
+    return NotificationSubscription._(this, userId, onInsert);
   }
 
-  Future<void> removeChannel(RealtimeChannel channel) => _db.removeChannel(channel);
+  Future<void> removeChannel(NotificationSubscription channel) async => channel.cancel();
+
+  Future<List<AppNotification>> _fetchNotificationsSince(String userId, String sinceIso) async {
+    final rows = await _db
+        .from('notifications')
+        .select()
+        .eq('user_id', userId)
+        .gt('created_at', sinceIso)
+        .order('created_at')
+        .limit(50);
+    return (rows as List).map((r) => _notificationFromRow(r as Map<String, dynamic>)).toList();
+  }
 
   /// ثبت/به‌روزرسانی توکن FCM دستگاه جاری برای این کاربر — پایه‌ی پوش
   /// نوتیفیکیشن واقعی. اگر همین توکن قبلاً به کاربر دیگری وصل بوده (مثلاً
@@ -264,8 +268,8 @@ class SupabaseService {
   Future<String> uploadAvatar(String userId, XFile file) async {
     final ext = _extOf(file);
     final path = '$userId/avatar.$ext';
-    await _uploadPicked(SupabaseConfig.avatarsBucket, path, file, fallbackType: 'image/jpeg');
-    final url = _db.storage.from(SupabaseConfig.avatarsBucket).getPublicUrl(path);
+    await _uploadPicked(BackendConfig.avatarsBucket, path, file, fallbackType: 'image/jpeg');
+    final url = _db.storage.from(BackendConfig.avatarsBucket).getPublicUrl(path);
     // یک پارامتر تصادفی برای شکستن کش تصویر مرورگر/فلاتر بعد از هر آپلود تازه
     final bustedUrl = '$url?t=${DateTime.now().millisecondsSinceEpoch}';
     await updateProfileFields(userId, {'avatar_url': bustedUrl});
@@ -299,6 +303,14 @@ class SupabaseService {
 
   Future<void> updatePassword(String newPassword) async {
     await _db.auth.updateUser(UserAttributes(password: newPassword));
+  }
+
+  /// فقط مدیر: یک کد ۸ رقمیِ بازیابی رمز (اعتبار ۲۴ ساعت) برای کاربر می‌سازد؛
+  /// مدیر این کد را (مثلاً با ایمیل) برای کاربر می‌فرستد و کاربر در صفحه‌ی
+  /// «فراموشی رمز» واردش می‌کند — جایگزین ایمیل خودکار.
+  Future<String> createRecoveryCode(String userId) async {
+    final data = await _db.post('/admin/recovery-code', {'user_id': userId});
+    return (data as Map)['code'] as String;
   }
 
   // ================= تماس با ما =================
@@ -1314,5 +1326,42 @@ class SupabaseService {
       'projects_completed': projectsCompleted,
       'updated_at': DateTime.now().toIso8601String(),
     });
+  }
+}
+
+/// جایگزین کانال Realtime سوپابیس: هر ۲۰ ثانیه (فقط وقتی اپ باز است) اعلان‌های
+/// تازه‌ی همین کاربر را از سرور می‌پرسد و به onInsert می‌دهد.
+class NotificationSubscription {
+  NotificationSubscription._(this._service, this._userId, this._onInsert) {
+    _since = DateTime.now().toUtc().toIso8601String();
+    _timer = Timer.periodic(const Duration(seconds: 20), (_) => _poll());
+  }
+
+  final BackendService _service;
+  final String _userId;
+  final void Function(AppNotification) _onInsert;
+  late String _since;
+  Timer? _timer;
+  bool _busy = false;
+
+  Future<void> _poll() async {
+    if (_busy || _timer == null) return;
+    _busy = true;
+    try {
+      final fresh = await _service._fetchNotificationsSince(_userId, _since);
+      for (final n in fresh) {
+        _since = n.createdAt.toUtc().toIso8601String();
+        _onInsert(n);
+      }
+    } catch (_) {
+      // قطعی موقت شبکه — دور بعد دوباره تلاش می‌شود
+    } finally {
+      _busy = false;
+    }
+  }
+
+  void cancel() {
+    _timer?.cancel();
+    _timer = null;
   }
 }

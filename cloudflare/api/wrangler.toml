@@ -1,0 +1,35 @@
+# API هزاره‌نامه — Cloudflare Worker (جایگزین Supabase)
+name = "hazaranama-api"
+main = "src/index.ts"
+compatibility_date = "2025-09-01"
+workers_dev = true
+
+[vars]
+ADMIN_EMAIL = "alireza.necdo@gmail.com"
+AI_MODEL = "@cf/google/gemma-3-12b-it"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hazaranama_db"
+database_id = "bd394188-07f4-4673-99ed-e51ce12bc576"
+
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "hazaranama-media"
+
+[ai]
+binding = "AI"
+
+[observability]
+enabled = true
+
+# schema.sql به‌صورت متن داخل Worker بسته‌بندی می‌شود
+[[rules]]
+type = "Text"
+globs = ["**/*.sql"]
+fallthrough = true
+
+# سکرت‌ها (از داشبورد: Settings → Variables and Secrets):
+#   JWT_SECRET           رشته‌ی تصادفی بلند برای امضای نشست‌ها
+#   MIGRATION_KEY        کلید یک‌بارمصرف انتقال داده از Supabase
+#   FCM_SERVICE_ACCOUNT  (اختیاری) JSON حساب سرویس Firebase برای پوش

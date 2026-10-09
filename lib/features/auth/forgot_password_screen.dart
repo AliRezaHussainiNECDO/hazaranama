@@ -80,7 +80,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       setState(() {
         _loading = false;
         _resending = false;
-        _error = 'ارسال ایمیل ناموفق بود؛ دوباره تلاش کنید.';
+        _error = 'ثبت درخواست ناموفق بود؛ اتصال اینترنت را بررسی کنید.';
       });
     }
   }
@@ -198,12 +198,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   List<Widget> _emailStep(theme, AppState app) {
     return [
-      Text('ایمیل حساب‌تان را وارد کنید؛ یک کد $_codeLengthFa رقمی برایتان ایمیل می‌شود.', style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.9)),
+      Text('ایمیل حساب‌تان را وارد کنید تا درخواست بازیابی برای مدیر هزاره‌نامه ارسال شود. مدیر یک کد $_codeLengthFa رقمی (با اعتبار ۲۴ ساعت) برایتان می‌فرستد. برای سرعت بیشتر می‌توانید از همان ایمیل حساب به alireza.necdo@gmail.com هم بنویسید.', style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.9)),
       const SizedBox(height: 16),
       HzTextField(controller: _email, icon: Icons.mail_outline, hint: 'ایمیل', theme: theme, keyboardType: TextInputType.emailAddress),
       if (_error != null) ...[const SizedBox(height: 10), _errorBox(theme)],
       const SizedBox(height: 18),
-      HzPrimaryButton(theme: theme, label: _loading ? 'در حال ارسال…' : 'ارسال کد بازیابی', loading: _loading, onPressed: () => _sendResetEmail(app)),
+      HzPrimaryButton(theme: theme, label: _loading ? 'در حال ارسال…' : 'درخواست کد بازیابی', loading: _loading, onPressed: () => _sendResetEmail(app)),
     ];
   }
 
@@ -224,7 +224,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         Text('کد را وارد کنید', style: TextStyle(color: theme.textPrimary, fontSize: 19, fontWeight: FontWeight.w800)),
         const SizedBox(height: 6),
         Text(
-          'کد $_codeLengthFa رقمی ارسال‌شده به ${_email.text} را وارد کنید.',
+          'کد $_codeLengthFa رقمی‌ای را که مدیر برای حساب ${_email.text} فرستاده، وارد کنید.',
           style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.9),
         ),
         const SizedBox(height: 22),
@@ -251,7 +251,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               : TextButton(
                   onPressed: _resending ? null : () => _sendResetEmail(app, isResend: true),
                   child: Text(
-                    _resending ? 'در حال ارسال…' : 'ارسال دوباره‌ی کد',
+                    _resending ? 'در حال ارسال…' : 'یادآوری دوباره به مدیر',
                     style: TextStyle(color: theme.blue, fontSize: 12, fontWeight: FontWeight.w700),
                   ),
                 ),

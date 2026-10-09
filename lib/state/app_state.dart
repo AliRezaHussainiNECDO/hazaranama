@@ -1,21 +1,21 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart' show XFile;
-import 'package:supabase_flutter/supabase_flutter.dart' show AuthChangeEvent, AuthException, AuthState, RealtimeChannel;
+import '../services/hz_backend.dart' show AuthChangeEvent, AuthException, AuthState;
 import '../core/app_colors.dart';
 import '../core/donor_tiers.dart';
 import '../models/models.dart';
 import '../services/push_service.dart';
-import '../services/supabase_service.dart';
+import '../services/backend_service.dart';
 
 enum AuthStage { checking, welcome, login, register, forgot, resetPassword, app }
 
 /// وضعیت سراسری برنامه — حالا هر خواندن/نوشتنی واقعاً از Supabase می‌آید.
 /// شکل بیرونی این کلاس (فیلدها و اسم متدها) عمداً همان چیزی مانده که
 /// صفحات UI از قبل با آن کار می‌کردند؛ فقط داخلش به‌جای دیتای mock،
-/// به SupabaseService وصل شده است.
+/// به BackendService وصل شده است.
 class AppState extends ChangeNotifier {
-  final SupabaseService _service = SupabaseService();
+  final BackendService _service = BackendService();
 
   AuthStage stage = AuthStage.checking;
   bool isDark = true;
@@ -53,7 +53,7 @@ class AppState extends ChangeNotifier {
   // ================= اعلان‌های درون‌اپی =================
   List<AppNotification> notifications = [];
   AppNotification? incomingToast; // آخرین اعلانی که همین الان از Realtime رسیده — برای نمایش بنر پویا
-  RealtimeChannel? _notificationsChannel;
+  NotificationSubscription? _notificationsChannel;
   String? _pushToken; // توکن فعلی FCM این دستگاه — برای پاک‌سازی هنگام خروج
   StreamSubscription<String>? _pushTokenRefreshSub;
   String? _pendingPushUserId; // کاربری که منتظر تصمیمش درباره‌ی اجازه‌ی اعلان هستیم
@@ -76,7 +76,7 @@ class AppState extends ChangeNotifier {
   AppState() {
     _service.authChanges.listen((AuthState data) {
       // وقتی کاربر روی پیوند «بازیابی رمز عبور» ایمیل‌شده کلیک می‌کند و اپ از
-      // طریق deep link باز می‌شود، Supabase یک نشست موقتِ بازیابی می‌سازد و
+      // طریق کد بازیابی وارد می‌شود، سرور یک نشست موقتِ بازیابی می‌سازد و
       // دقیقاً همین رویداد را می‌فرستد — این‌جا کاربر را به صفحه‌ی «تنظیم رمز
       // تازه» می‌بریم (نه صفحه‌ی اصلی اپ، چون هنوز رمز تازه تنظیم نشده).
       if (data.event == AuthChangeEvent.passwordRecovery) {
@@ -155,7 +155,7 @@ class AppState extends ChangeNotifier {
     } on AuthException catch (e) {
       return _translateAuthError(e.message);
     } catch (_) {
-      return 'خطایی رخ داد؛ اتصال اینترنت یا تنظیمات Supabase را بررسی کنید.';
+      return 'خطایی رخ داد؛ اتصال اینترنت را بررسی کنید و دوباره تلاش کنید.';
     }
   }
 
@@ -180,19 +180,18 @@ class AppState extends ChangeNotifier {
         await _loadSessionUser();
         return null;
       }
-      // نشست فعالی نیست؛ یعنی Supabase منتظر تأیید ایمیل است
-      return 'حساب ساخته شد اما نیاز به تأیید ایمیل دارد. برای عبور از این مرحله در دموی داخلی، گزینه‌ی «Confirm email» را در تنظیمات Supabase Auth غیرفعال کنید.';
+      return 'حساب ساخته شد؛ لطفاً با همین ایمیل و رمز وارد شوید.';
     } on AuthException catch (e) {
       return _translateAuthError(e.message);
     } catch (_) {
-      return 'خطایی رخ داد؛ اتصال اینترنت یا تنظیمات Supabase را بررسی کنید.';
+      return 'خطایی رخ داد؛ اتصال اینترنت را بررسی کنید و دوباره تلاش کنید.';
     }
   }
 
   Future<void> resetPasswordForEmail(String email) => _service.resetPasswordForEmail(email);
 
   /// تأیید کد ۶ رقمیِ بازیابی — جایگزینِ قابل‌اعتمادِ کلیک روی پیوند ایمیل
-  /// (نگاه کنید به توضیح در SupabaseService.verifyRecoveryOtp). در صورت
+  /// (نگاه کنید به توضیح در BackendService.verifyRecoveryOtp). در صورت
   /// موفقیت، Supabase یک نشست موقتِ بازیابی می‌سازد؛ رویداد passwordRecovery
   /// در listener بالای همین کلاس هم شلیک می‌شود، اما برای اطمینان stage را
   /// همین‌جا هم مستقیم به resetPassword تغییر می‌دهیم.
@@ -308,7 +307,7 @@ class AppState extends ChangeNotifier {
     if (m.contains('network') || m.contains('timeout') || m.contains('failed host lookup')) {
       return 'خطا در اتصال اینترنت؛ دوباره تلاش کنید.';
     }
-    // پیام خام Supabase معمولاً انگلیسی است — به‌جای نشان‌دادنش به کاربر
+    // پیام خام سرور معمولاً انگلیسی است — به‌جای نشان‌دادنش به کاربر
     // فارسی‌زبان، یک پیام عمومی و قابل‌فهم برمی‌گردانیم.
     return 'خطایی رخ داد؛ دوباره تلاش کنید.';
   }
@@ -368,6 +367,9 @@ class AppState extends ChangeNotifier {
       return 'رمز فعلی نادرست است یا خطایی رخ داد.';
     }
   }
+
+  /// فقط مدیر: کد ۸ رقمیِ بازیابی رمز برای یک کاربر (جایگزین ایمیل خودکار).
+  Future<String> createRecoveryCode(String userId) => _service.createRecoveryCode(userId);
 
   // ---------------- تماس با ما ----------------
 

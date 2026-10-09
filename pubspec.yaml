@@ -15,7 +15,8 @@ dependencies:
   provider: ^6.1.2          # مدیریت وضعیت سراسری (معادل useState/useContext در نسخه‌ی وب)
   image_picker: ^1.1.2       # انتخاب و آپلود عکس پروفایل از گالری/دوربین
   flutter_animate: ^4.5.0    # انیمیشن‌های مدرن و یکدست در سراسر اپ
-  supabase_flutter: ^2.6.0   # اتصال واقعی به دیتابیس، Auth و Storage
+  http: ^1.2.2               # اتصال به API هزاره‌نامه روی Cloudflare Workers (جایگزین Supabase)
+  shared_preferences: ^2.3.2  # نگه‌داری نشست ورود کاربر روی دستگاه
   url_launcher: ^6.3.0       # باز کردن لینک ویدیو (یوتیوب و…) در مرورگر/اپ خارجی
   video_player: ^2.9.2       # پخش واقعی و بومی ویدیوهای آپلودشده‌ی هنرمندان، داخل خود اپ
   firebase_core: ^3.6.0      # اتصال پایه به پروژه‌ی Firebase (پیش‌نیاز پوش نوتیفیکیشن)

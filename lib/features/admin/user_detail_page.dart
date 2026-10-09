@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../core/afghan_calendar.dart';
 import '../../core/animated_backdrop.dart';
@@ -85,6 +86,46 @@ class _UserDetailPageState extends State<UserDetailPage> {
     } finally {
       if (mounted) setState(() => _busy = false);
     }
+  }
+
+  /// ساخت کد ۸ رقمیِ بازیابی رمز برای این کاربر (اعتبار ۲۴ ساعت) — چون سرویس
+  /// ایمیل خودکار نداریم، مدیر این کد را خودش برای کاربر می‌فرستد.
+  Future<void> _makeRecoveryCode(AppState app, UserProfile user) async {
+    setState(() => _busy = true);
+    String? code;
+    try {
+      code = await app.createRecoveryCode(user.id);
+    } catch (_) {
+      if (mounted) showHzToast(context, 'ساخت کد ناموفق بود؛ دوباره تلاش کنید.');
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+    if (code == null || !mounted) return;
+    final theme = app.colors;
+    await showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: theme.bgElevated,
+        title: Text('کد بازیابی رمز «${user.name}»', style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w800)),
+        content: Column(mainAxisSize: MainAxisSize.min, children: [
+          SelectableText(code!, textDirection: TextDirection.ltr, style: TextStyle(color: theme.yellow, fontSize: 30, fontWeight: FontWeight.w800, letterSpacing: 6)),
+          const SizedBox(height: 12),
+          Text('این کد را برای ${user.email} بفرستید. کاربر در صفحه‌ی «فراموشی رمز» ایمیلش را وارد می‌کند و بعد این کد را؛ سپس رمز تازه می‌گذارد. اعتبار: ۲۴ ساعت، فقط یک‌بار.',
+              style: TextStyle(color: theme.textSecondary, fontSize: 11.5, height: 1.8)),
+        ]),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: code!));
+              Navigator.of(ctx).pop();
+              showHzToast(context, 'کد کپی شد');
+            },
+            child: Text('کپی کد', style: TextStyle(color: theme.yellow, fontWeight: FontWeight.w700)),
+          ),
+          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('بستن')),
+        ],
+      ),
+    );
   }
 
   @override
@@ -228,6 +269,20 @@ class _UserDetailPageState extends State<UserDetailPage> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: user.status == UserStatus.active ? theme.danger : theme.success,
                           foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 12),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: double.infinity,
+                      child: OutlinedButton.icon(
+                        onPressed: _busy ? null : () => _makeRecoveryCode(app, user),
+                        icon: Icon(Icons.key_rounded, size: 16, color: theme.yellow),
+                        label: Text('ساخت کد بازیابی رمز عبور', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12, color: theme.yellow)),
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(color: theme.yellow.withValues(alpha: 0.6)),
+                          padding: const EdgeInsets.symmetric(vertical: 12),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         ),
                       ),

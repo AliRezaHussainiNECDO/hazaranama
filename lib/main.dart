@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'app.dart';
-import 'core/supabase_config.dart';
+import 'services/hz_backend.dart';
 import 'services/push_service.dart';
 import 'state/app_state.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Supabase.initialize(
-    url: SupabaseConfig.url,
-    publishableKey: SupabaseConfig.publishableKey,
-  );
+  // اتصال به بک‌اند هزاره‌نامه روی Cloudflare (نشست ذخیره‌شده‌ی قبلی هم بازیابی می‌شود)
+  await HzBackend.initialize();
 
   // اگر فایل‌های تنظیمات Firebase (google-services.json / GoogleService-Info.plist)
   // هنوز در پروژه نباشند، initialize شکست می‌خورد — اپ باید بدون پوش واقعی هم

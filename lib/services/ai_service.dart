@@ -1,4 +1,4 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'hz_backend.dart';
 
 /// خطای مخصوص فراخوانی‌های هوش مصنوعی — پیام آن همیشه فارسی و قابل‌نمایش
 /// مستقیم به کاربر است (چه خطای شبکه باشد، چه خطای برگشتی از ai-gateway).
@@ -52,7 +52,7 @@ class AiDonationReportDraft {
 /// امن «ai-gateway»، نه مستقیم با هیچ سرویس هوش مصنوعی. AppState/UI هرگز کلید
 /// API را نمی‌بینند.
 class AiService {
-  SupabaseClient get _db => Supabase.instance.client;
+  HzBackend get _db => HzBackend.instance;
 
   Future<Map<String, dynamic>> _invoke(Map<String, dynamic> body) async {
     try {

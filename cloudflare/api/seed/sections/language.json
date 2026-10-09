@@ -1,0 +1,51 @@
+[
+ {
+  "fields": {
+   "hazaragi": "آبیست",
+   "fa": "خویشاوند، بستگان",
+   "en": "relative / kin"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "ستادن",
+   "fa": "گرفتن",
+   "en": "to take"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "هشتن",
+   "fa": "گذاشتن، رها کردن",
+   "en": "to put / to leave"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "کاکا",
+   "fa": "عمو (برادر پدر)",
+   "en": "paternal uncle"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "بچگک",
+   "fa": "پسربچه، پسرکوچک",
+   "en": "little boy"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "خو",
+   "fa": "بله / باشد (تأیید در گفتگو)",
+   "en": "okay / alright"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "چطو استی؟",
+   "fa": "چطور هستی؟",
+   "en": "how are you?"
+  }
+ }
+]

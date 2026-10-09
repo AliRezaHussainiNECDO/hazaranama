@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../core/app_colors.dart';
 
 /// آیکون و رنگ متناسب با نوع اعلان — برای ناقوس، بنر پویا و صندوق اعلان‌ها.
-/// نوع‌ها دقیقاً همان مقادیری‌اند که trigger‌های Supabase در ستون
-/// notifications.type می‌نویسند (نگاه کنید به hazaranama-supabase-notifications.sql).
+/// نوع‌ها دقیقاً همان مقادیری‌اند که سرور (cloudflare/api/src/hooks.ts) در ستون
+/// notifications.type می‌نویسد.
 IconData notificationTypeIcon(String type) {
   switch (type) {
     case 'post_comment':
@@ -24,6 +24,8 @@ IconData notificationTypeIcon(String type) {
       return Icons.emoji_events_rounded;
     case 'message_reply':
       return Icons.support_agent_rounded;
+    case 'password_recovery_request':
+      return Icons.key_rounded;
     default:
       return Icons.notifications_rounded;
   }
@@ -47,6 +49,8 @@ Color notificationTypeColor(String type, AppColors theme) {
       return theme.yellow;
     case 'message_reply':
       return theme.aiTeal;
+    case 'password_recovery_request':
+      return theme.yellow;
     default:
       return theme.blue;
   }
