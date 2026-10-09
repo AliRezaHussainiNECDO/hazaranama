@@ -41,11 +41,10 @@ jobs:
       - name: ساخت وب (Release)
         run: flutter build web --release --base-href / --no-web-resources-cdn
 
-      - name: تنظیمات SPA و کش برای Cloudflare Pages
+      - name: تنظیمات کش برای Cloudflare Pages
         run: |
-          cat > build/web/_redirects <<'EOF'
-          /*    /index.html   200
-          EOF
+          # بدون 404.html، Cloudflare Pages خودش همه‌ی مسیرها را به index.html
+          # برمی‌گرداند (رفتار SPA)؛ قانون «/* /index.html 200» آنجا حلقه می‌سازد.
           cat > build/web/_headers <<'EOF'
           /*
             X-Content-Type-Options: nosniff
