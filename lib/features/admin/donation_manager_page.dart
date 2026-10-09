@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -448,7 +447,7 @@ void _openReportForm(BuildContext context, AppState app, AiService ai, DonationR
           setSheetState(() => uploadingImages = true);
           try {
             for (final f in picked) {
-              final url = await app.uploadDonationImage(File(f.path));
+              final url = await app.uploadDonationImage(f);
               imageUrls.add(url);
             }
           } catch (_) {
@@ -463,7 +462,7 @@ void _openReportForm(BuildContext context, AppState app, AiService ai, DonationR
           if (picked == null) return;
           setSheetState(() => uploadingVideo = true);
           try {
-            videoUrl = await app.uploadDonationVideoFile(File(picked.path));
+            videoUrl = await app.uploadDonationVideoFile(picked);
           } catch (_) {
             if (context.mounted) showHzToast(context, 'آپلود ویدیو ناموفق بود.');
           } finally {

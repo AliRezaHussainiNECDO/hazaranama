@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math' as math;
 import 'dart:ui';
 import 'package:flutter/material.dart';
@@ -46,7 +45,7 @@ class _ProfileHeaderState extends State<ProfileHeader> with TickerProviderStateM
     if (!mounted) return;
     setState(() => _uploading = true);
     try {
-      await app.uploadAvatar(File(file.path));
+      await app.uploadAvatar(file);
     } catch (_) {
       if (mounted) showHzToast(context, 'بارگذاری عکس ناموفق بود؛ دوباره تلاش کنید.');
     } finally {

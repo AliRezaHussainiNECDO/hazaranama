@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -59,7 +58,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
     try {
       for (final f in picked) {
         if (_imageUrls.length >= 6) break;
-        final url = await app.uploadPostImage(File(f.path));
+        final url = await app.uploadPostImage(f);
         _imageUrls.add(url);
       }
     } catch (_) {
@@ -79,7 +78,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
     if (!mounted) return;
     setState(() => _uploadingVideo = true);
     try {
-      final url = await app.uploadPostVideo(File(picked.path));
+      final url = await app.uploadPostVideo(picked);
       if (!mounted) return;
       setState(() => _videoUrl = url);
     } catch (_) {

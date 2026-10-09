@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -113,7 +112,7 @@ class ContentManagerPage extends StatelessWidget {
             if (picked == null) return;
             setSheetState(() => uploading = true);
             try {
-              final url = await app.uploadContentImage(File(picked.path));
+              final url = await app.uploadContentImage(picked);
               imageUrlController.text = url;
               setSheetState(() {});
             } catch (_) {

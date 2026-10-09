@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart' show XFile;
 import 'package:supabase_flutter/supabase_flutter.dart' show AuthChangeEvent, AuthException, AuthState, RealtimeChannel;
 import '../core/app_colors.dart';
 import '../core/donor_tiers.dart';
@@ -326,7 +326,7 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> uploadAvatar(File file) async {
+  Future<void> uploadAvatar(XFile file) async {
     if (currentUser == null) return;
     final url = await _service.uploadAvatar(currentUser!.id, file);
     avatarPath = url;
@@ -482,7 +482,7 @@ class AppState extends ChangeNotifier {
   }
 
   /// آپلود عکس یک آیتم محتوا (از «مدیریت محتوا») و برگرداندن URL عمومی آن.
-  Future<String> uploadContentImage(File file) => _service.uploadContentImage(file);
+  Future<String> uploadContentImage(XFile file) => _service.uploadContentImage(file);
 
   Future<void> deleteContentItem(String sectionId, String itemId) async {
     await _service.deleteContentItem(itemId);
@@ -634,13 +634,13 @@ class AppState extends ChangeNotifier {
   }
 
   /// آپلود یک عکس برای پست تازه و برگرداندن URL عمومی آن.
-  Future<String> uploadPostImage(File file) {
+  Future<String> uploadPostImage(XFile file) {
     if (currentUser == null) throw Exception('ابتدا وارد شوید.');
     return _service.uploadPostImage(currentUser!.id, file);
   }
 
   /// آپلود یک ویدیو برای پست تازه و برگرداندن URL عمومی آن.
-  Future<String> uploadPostVideo(File file) {
+  Future<String> uploadPostVideo(XFile file) {
     if (currentUser == null) throw Exception('ابتدا وارد شوید.');
     return _service.uploadPostVideo(currentUser!.id, file);
   }
@@ -657,10 +657,10 @@ class AppState extends ChangeNotifier {
   }
 
   /// آپلود یک عکس (آواتار هنرمند، کاور، یا تامبنیل ویدیو) و برگرداندن URL آن.
-  Future<String> uploadArtistImage(File file) => _service.uploadArtistImage(file);
+  Future<String> uploadArtistImage(XFile file) => _service.uploadArtistImage(file);
 
   /// آپلود یک فایل ویدیو و برگرداندن URL عمومی آن.
-  Future<String> uploadArtistVideoFile(File file) => _service.uploadArtistVideoFile(file);
+  Future<String> uploadArtistVideoFile(XFile file) => _service.uploadArtistVideoFile(file);
 
   Future<void> addArtist(String name, {String bio = '', String? avatarUrl, String? coverUrl}) async {
     final artist = await _service.addArtist(name, bio: bio, avatarUrl: avatarUrl, coverUrl: coverUrl);
@@ -1163,8 +1163,8 @@ class AppState extends ChangeNotifier {
   }
 
   /// آپلود یک عکس مستند برای گزارش شفافیت و برگرداندن URL آن.
-  Future<String> uploadDonationImage(File file) => _service.uploadDonationImage(file);
+  Future<String> uploadDonationImage(XFile file) => _service.uploadDonationImage(file);
 
   /// آپلود یک فایل ویدیوی مستند برای گزارش شفافیت و برگرداندن URL آن.
-  Future<String> uploadDonationVideoFile(File file) => _service.uploadDonationVideoFile(file);
+  Future<String> uploadDonationVideoFile(XFile file) => _service.uploadDonationVideoFile(file);
 }

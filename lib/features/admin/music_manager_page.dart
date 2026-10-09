@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -151,7 +150,7 @@ class _ArtistsManager extends StatelessWidget {
             if (picked == null) return;
             setSheetState(() => uploading = true);
             try {
-              final url = await app.uploadArtistImage(File(picked.path));
+              final url = await app.uploadArtistImage(picked);
               avatarUrlCtrl.text = url;
             } catch (_) {
               if (context.mounted) showHzToast(context, 'آپلود ناموفق بود.');
@@ -339,7 +338,7 @@ class _VideosManager extends StatelessWidget {
             if (picked == null) return;
             setSheetState(() => uploadingVideo = true);
             try {
-              final url = await app.uploadArtistVideoFile(File(picked.path));
+              final url = await app.uploadArtistVideoFile(picked);
               videoUrlCtrl.text = url;
             } catch (_) {
               if (context.mounted) showHzToast(context, 'آپلود ویدیو ناموفق بود؛ حجم فایل را بررسی کنید.');
@@ -353,7 +352,7 @@ class _VideosManager extends StatelessWidget {
             if (picked == null) return;
             setSheetState(() => uploadingThumb = true);
             try {
-              final url = await app.uploadArtistImage(File(picked.path));
+              final url = await app.uploadArtistImage(picked);
               thumbUrlCtrl.text = url;
             } catch (_) {
               if (context.mounted) showHzToast(context, 'آپلود تامبنیل ناموفق بود.');

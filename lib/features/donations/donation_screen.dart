@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -147,7 +148,8 @@ class _DonationScreenState extends State<DonationScreen> {
                           ]),
                         ),
                         const SizedBox(height: 12),
-                        if (Platform.isIOS) ...[
+                        // در وب، Platform از dart:io خطای Unsupported می‌دهد؛ پس اول kIsWeb.
+                        if (!kIsWeb && Platform.isIOS) ...[
                           _ExternalDonationCard(theme: theme),
                         ] else ...[
                           _PaypalCard(theme: theme, onCopy: _copy),

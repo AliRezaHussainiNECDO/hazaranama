@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 /// این تابع باید top-level (بیرون از هر کلاس) و با همین امضا بماند —
@@ -32,6 +33,9 @@ class PushService {
 
   static Future<void> initialize() async {
     if (_initialized) return;
+    // نسخه‌ی وب تنظیمات Firebase (FirebaseOptions) ندارد و پوش وب هم به
+    // service worker جدا نیاز دارد؛ فعلاً در وب فقط اعلان درون‌اپی فعال است.
+    if (kIsWeb) return;
     await Firebase.initializeApp();
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
     _initialized = true;
@@ -41,6 +45,8 @@ class PushService {
   /// برای این‌که بفهمیم آیا باید پیش از درخواست رسمی، توضیح دوستانه نشان
   /// بدهیم یا کاربر قبلاً تصمیمش را گرفته (قبول/رد کرده).
   static Future<PushPermissionState> getPermissionState() async {
+    // در وب پوش واقعی نداریم — «رد» برمی‌گردانیم تا کارت درخواست اجازه نمایش داده نشود.
+    if (kIsWeb || !_initialized) return PushPermissionState.denied;
     try {
       final settings = await FirebaseMessaging.instance.getNotificationSettings();
       switch (settings.authorizationStatus) {
@@ -60,6 +66,7 @@ class PushService {
   /// اجازه‌ی نمایش اعلان را از کاربر می‌گیرد (در iOS اجباری، در اندروید ۱۳+
   /// هم لازم است) و در صورت تأیید، توکن دستگاه را برمی‌گرداند.
   static Future<String?> requestPermissionAndGetToken() async {
+    if (kIsWeb || !_initialized) return null;
     try {
       final messaging = FirebaseMessaging.instance;
       final settings = await messaging.requestPermission(alert: true, badge: true, sound: true);
@@ -72,5 +79,6 @@ class PushService {
     }
   }
 
-  static Stream<String> get onTokenRefresh => FirebaseMessaging.instance.onTokenRefresh;
+  static Stream<String> get onTokenRefresh =>
+      (kIsWeb || !_initialized) ? const Stream<String>.empty() : FirebaseMessaging.instance.onTokenRefresh;
 }

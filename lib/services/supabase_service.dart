@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:image_picker/image_picker.dart' show XFile;
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../core/afghan_calendar.dart';
 import '../core/supabase_config.dart';
@@ -217,7 +219,7 @@ class SupabaseService {
   /// نوتیفیکیشن واقعی. اگر همین توکن قبلاً به کاربر دیگری وصل بوده (مثلاً
   /// دستگاه مشترک)، صاحبش عوض می‌شود.
   Future<void> registerDeviceToken(String userId, String token) async {
-    final platform = Platform.isIOS ? 'ios' : (Platform.isAndroid ? 'android' : 'other');
+    final platform = kIsWeb ? 'web' : (Platform.isIOS ? 'ios' : (Platform.isAndroid ? 'android' : 'other'));
     await _db.from('device_tokens').upsert({
       'user_id': userId,
       'token': token,
@@ -230,14 +232,39 @@ class SupabaseService {
     await _db.from('device_tokens').delete().eq('token', token);
   }
 
-  Future<String> uploadAvatar(String userId, File file) async {
-    final ext = file.path.split('.').last;
+  // ---------------- آپلود فایل انتخاب‌شده — سازگار با موبایل و وب ----------------
+  // در وب، dart:io.File وجود ندارد و مسیرِ XFile یک blob: URL است؛ پس آنجا
+  // بایت‌ها را مستقیم می‌فرستیم. در موبایل همان آپلود مبتنی بر فایل حفظ
+  // می‌شود تا ویدیوهای بزرگ یکجا در حافظه بارگذاری نشوند.
+  String _extOf(XFile file) {
+    final name = file.name.isNotEmpty ? file.name : file.path;
+    final dot = name.lastIndexOf('.');
+    if (dot == -1 || dot == name.length - 1) return 'jpg';
+    return name.substring(dot + 1).toLowerCase();
+  }
+
+  Future<void> _uploadPicked(String bucket, String path, XFile file, {required String fallbackType}) async {
+    final contentType = file.mimeType ?? fallbackType;
+    if (kIsWeb) {
+      final bytes = await file.readAsBytes();
+      await _db.storage.from(bucket).uploadBinary(
+            path,
+            bytes,
+            fileOptions: FileOptions(upsert: true, contentType: contentType),
+          );
+    } else {
+      await _db.storage.from(bucket).upload(
+            path,
+            File(file.path),
+            fileOptions: FileOptions(upsert: true, contentType: file.mimeType ?? (fallbackType == 'video/mp4' ? fallbackType : null)),
+          );
+    }
+  }
+
+  Future<String> uploadAvatar(String userId, XFile file) async {
+    final ext = _extOf(file);
     final path = '$userId/avatar.$ext';
-    await _db.storage.from(SupabaseConfig.avatarsBucket).upload(
-          path,
-          file,
-          fileOptions: const FileOptions(upsert: true),
-        );
+    await _uploadPicked(SupabaseConfig.avatarsBucket, path, file, fallbackType: 'image/jpeg');
     final url = _db.storage.from(SupabaseConfig.avatarsBucket).getPublicUrl(path);
     // یک پارامتر تصادفی برای شکستن کش تصویر مرورگر/فلاتر بعد از هر آپلود تازه
     final bustedUrl = '$url?t=${DateTime.now().millisecondsSinceEpoch}';
@@ -455,10 +482,10 @@ class SupabaseService {
 
   /// آپلود عکس یک آیتم محتوا به باکت content-media؛ فقط مدیر می‌تواند بنویسد
   /// (طبق سیاست‌های RLS در hazaranama-supabase-media-migration.sql).
-  Future<String> uploadContentImage(File file) async {
-    final ext = file.path.split('.').last;
-    final path = '${DateTime.now().millisecondsSinceEpoch}_${file.path.hashCode}.$ext';
-    await _db.storage.from('content-media').upload(path, file, fileOptions: const FileOptions(upsert: true));
+  Future<String> uploadContentImage(XFile file) async {
+    final ext = _extOf(file);
+    final path = '${DateTime.now().millisecondsSinceEpoch}_${file.name.hashCode}.$ext';
+    await _uploadPicked('content-media', path, file, fallbackType: 'image/jpeg');
     final url = _db.storage.from('content-media').getPublicUrl(path);
     return '$url?t=${DateTime.now().millisecondsSinceEpoch}';
   }
@@ -605,21 +632,18 @@ class SupabaseService {
 
   // ---------------- آپلود عکس/ویدیوی پست — باکت post-media، هر کاربر فقط در پوشه‌ی خودش می‌نویسد ----------------
 
-  Future<String> uploadPostImage(String userId, File file) async {
-    final ext = file.path.split('.').last;
-    final path = '$userId/images/${DateTime.now().millisecondsSinceEpoch}_${file.path.hashCode}.$ext';
-    await _db.storage.from('post-media').upload(path, file, fileOptions: const FileOptions(upsert: true));
+  Future<String> uploadPostImage(String userId, XFile file) async {
+    final ext = _extOf(file);
+    final path = '$userId/images/${DateTime.now().millisecondsSinceEpoch}_${file.name.hashCode}.$ext';
+    await _uploadPicked('post-media', path, file, fallbackType: 'image/jpeg');
     final url = _db.storage.from('post-media').getPublicUrl(path);
     return '$url?t=${DateTime.now().millisecondsSinceEpoch}';
   }
 
-  Future<String> uploadPostVideo(String userId, File file) async {
-    final ext = file.path.split('.').last;
-    final path = '$userId/videos/${DateTime.now().millisecondsSinceEpoch}_${file.path.hashCode}.$ext';
-    await _db.storage.from('post-media').upload(
-          path, file,
-          fileOptions: const FileOptions(upsert: true, contentType: 'video/mp4'),
-        );
+  Future<String> uploadPostVideo(String userId, XFile file) async {
+    final ext = _extOf(file);
+    final path = '$userId/videos/${DateTime.now().millisecondsSinceEpoch}_${file.name.hashCode}.$ext';
+    await _uploadPicked('post-media', path, file, fallbackType: 'video/mp4');
     return _db.storage.from('post-media').getPublicUrl(path);
   }
 
@@ -728,22 +752,19 @@ class SupabaseService {
   }
 
   /// آپلود عکس (آواتار هنرمند، کاور، یا تامبنیل ویدیو) به باکت artist-media.
-  Future<String> uploadArtistImage(File file) async {
-    final ext = file.path.split('.').last;
-    final path = 'images/${DateTime.now().millisecondsSinceEpoch}_${file.path.hashCode}.$ext';
-    await _db.storage.from('artist-media').upload(path, file, fileOptions: const FileOptions(upsert: true));
+  Future<String> uploadArtistImage(XFile file) async {
+    final ext = _extOf(file);
+    final path = 'images/${DateTime.now().millisecondsSinceEpoch}_${file.name.hashCode}.$ext';
+    await _uploadPicked('artist-media', path, file, fallbackType: 'image/jpeg');
     final url = _db.storage.from('artist-media').getPublicUrl(path);
     return '$url?t=${DateTime.now().millisecondsSinceEpoch}';
   }
 
   /// آپلود فایل ویدیو (mp4/mov/…) به باکت artist-media.
-  Future<String> uploadArtistVideoFile(File file) async {
-    final ext = file.path.split('.').last;
-    final path = 'videos/${DateTime.now().millisecondsSinceEpoch}_${file.path.hashCode}.$ext';
-    await _db.storage.from('artist-media').upload(
-          path, file,
-          fileOptions: const FileOptions(upsert: true, contentType: 'video/mp4'),
-        );
+  Future<String> uploadArtistVideoFile(XFile file) async {
+    final ext = _extOf(file);
+    final path = 'videos/${DateTime.now().millisecondsSinceEpoch}_${file.name.hashCode}.$ext';
+    await _uploadPicked('artist-media', path, file, fallbackType: 'video/mp4');
     return _db.storage.from('artist-media').getPublicUrl(path);
   }
 
@@ -1253,21 +1274,17 @@ class SupabaseService {
   }
 
   /// آپلود عکس/ویدیوی مستندِ یک گزارش شفافیت به باکت donation-media.
-  Future<String> uploadDonationImage(File file) async {
-    final ext = file.path.split('.').last;
-    final path = 'images/${DateTime.now().millisecondsSinceEpoch}_${file.path.hashCode}.$ext';
-    await _db.storage.from('donation-media').upload(path, file, fileOptions: const FileOptions(upsert: true));
+  Future<String> uploadDonationImage(XFile file) async {
+    final ext = _extOf(file);
+    final path = 'images/${DateTime.now().millisecondsSinceEpoch}_${file.name.hashCode}.$ext';
+    await _uploadPicked('donation-media', path, file, fallbackType: 'image/jpeg');
     return _db.storage.from('donation-media').getPublicUrl(path);
   }
 
-  Future<String> uploadDonationVideoFile(File file) async {
-    final ext = file.path.split('.').last;
-    final path = 'videos/${DateTime.now().millisecondsSinceEpoch}_${file.path.hashCode}.$ext';
-    await _db.storage.from('donation-media').upload(
-          path,
-          file,
-          fileOptions: const FileOptions(upsert: true, contentType: 'video/mp4'),
-        );
+  Future<String> uploadDonationVideoFile(XFile file) async {
+    final ext = _extOf(file);
+    final path = 'videos/${DateTime.now().millisecondsSinceEpoch}_${file.name.hashCode}.$ext';
+    await _uploadPicked('donation-media', path, file, fallbackType: 'video/mp4');
     return _db.storage.from('donation-media').getPublicUrl(path);
   }
 

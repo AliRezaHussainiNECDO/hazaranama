@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/models.dart';
@@ -54,7 +55,9 @@ class HzBadge extends StatelessWidget {
           ? Center(child: child)
           : avatarPath!.startsWith('http')
               ? Image.network(avatarPath!, fit: BoxFit.cover, errorBuilder: (_, __, ___) => Center(child: child))
-              : Image.file(File(avatarPath!), fit: BoxFit.cover, errorBuilder: (_, __, ___) => Center(child: child)),
+              : kIsWeb
+                  ? Center(child: child)
+                  : Image.file(File(avatarPath!), fit: BoxFit.cover, errorBuilder: (_, __, ___) => Center(child: child)),
     );
   }
 }
