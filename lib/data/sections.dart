@@ -80,7 +80,7 @@ const List<ContentSection> kSections = [
   ContentSection(
     id: 'language',
     title: 'زبان و گویش هزارگی',
-    description: 'واژه‌نامه‌ی هزارگی با جست‌وجو، دسته‌ها و واژه‌ی روز',
+    description: 'بیش از ۲۰۰۰ واژه‌ی هزارگی با جست‌وجو، الفبا و واژه‌ی روز',
     group: 'culture',
     kind: SectionKind.dictionary,
     fields: [

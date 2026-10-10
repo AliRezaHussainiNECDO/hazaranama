@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import '../../core/app_colors.dart';
 import '../../core/app_logo.dart';
 import '../../core/widgets.dart';
@@ -11,6 +13,36 @@ const kMashalHazaragiGlossary =
 String _fa(int n) {
   const map = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
   return n.toString().split('').map((d) => map[int.parse(d)]).join();
+}
+
+/// برچسب دسته‌ی واژه‌نامه‌ی نبی‌زاده (در فهرست تراشه‌ها)
+const kGlossaryCat = 'واژه‌نامه‌ی نبی‌زاده';
+
+/// واژه‌نامه‌ی «ترجمه‌ی لهجه و گویش هزاره‌گی به دری» گردآوری محمد عوض نبی‌زاده —
+/// با اجازه‌ی سایت مشعل، داخل خودِ اپ (بدون اینترنت هم کار می‌کند).
+Future<List<ContentItem>>? _glossaryFuture;
+Future<List<ContentItem>> loadHazaragiGlossary() {
+  return _glossaryFuture ??= () async {
+    final raw = await rootBundle.loadString('assets/data/hazaragi_glossary.json');
+    final data = jsonDecode(raw) as Map<String, dynamic>;
+    final items = data['items'] as List;
+    return [
+      for (var i = 0; i < items.length; i++)
+        ContentItem(id: 'gl-$i', fields: {
+          'hazaragi': items[i][0] as String,
+          'fa': items[i][1] as String,
+          'letter': items[i][2] as String,
+          'gl': true,
+        }),
+    ];
+  }();
+}
+
+class _Header {
+  final String title;
+  final int count;
+  final Color color;
+  const _Header(this.title, this.count, this.color);
 }
 
 String _s(ContentItem it, String key) {
@@ -34,7 +66,28 @@ class _DictionaryBodyState extends State<DictionaryBody> {
   final _search = TextEditingController();
   String _query = '';
   String? _cat;
+  String? _letter;
   final Set<String> _open = {};
+  List<ContentItem> _glossary = const [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadHazaragiGlossary().then((g) {
+      if (mounted) setState(() => _glossary = g);
+    }).catchError((_) {});
+  }
+
+  List<ContentItem> get _all => [...widget.items, ..._glossary];
+  bool _isGl(ContentItem it) => it['gl'] == true;
+  List<String> get _letters {
+    final out = <String>[];
+    for (final g in _glossary) {
+      final l = _s(g, 'letter');
+      if (l.isNotEmpty && !out.contains(l)) out.add(l);
+    }
+    return out;
+  }
 
   @override
   void dispose() {
@@ -59,7 +112,12 @@ class _DictionaryBodyState extends State<DictionaryBody> {
   }
 
   bool _matches(ContentItem it) {
-    if (_cat != null && _s(it, 'cat') != _cat) return false;
+    if (_cat == kGlossaryCat) {
+      if (!_isGl(it)) return false;
+      if (_letter != null && _s(it, 'letter') != _letter) return false;
+    } else if (_cat != null && _s(it, 'cat') != _cat) {
+      return false;
+    }
     if (_query.isEmpty) return true;
     final q = _query.toLowerCase();
     return ['hazaragi', 'fa', 'en', 'tr', 'example', 'example_fa']
@@ -69,32 +127,50 @@ class _DictionaryBodyState extends State<DictionaryBody> {
   @override
   Widget build(BuildContext context) {
     final theme = widget.theme;
-    final items = widget.items;
+    final items = _all;
     final filtered = items.where(_matches).toList();
     final cats = _cats;
 
-    // در حالت عادی واژه‌ها زیر سرفصل دسته‌ها می‌آیند؛ در جست‌وجو یک فهرست ساده.
-    final rows = <Widget>[];
-    if (_query.isEmpty && _cat == null && cats.isNotEmpty) {
+    // ردیف‌ها فقط به‌صورت «داده» ساخته می‌شوند و ویجت هر ردیف هنگام نمایش ساخته
+    // می‌شود — برای بیش از دو هزار واژه روان بماند.
+    final rows = <Object>[];
+    void addLetterGroups(Iterable<ContentItem> list) {
+      String? cur;
+      final byLetter = <String, int>{};
+      for (final it in list) {
+        byLetter[_s(it, 'letter')] = (byLetter[_s(it, 'letter')] ?? 0) + 1;
+      }
+      for (final it in list) {
+        final l = _s(it, 'letter');
+        if (l != cur) {
+          cur = l;
+          rows.add(_Header('حرف «$l»', byLetter[l] ?? 0, theme.blue));
+        }
+        rows.add(it);
+      }
+    }
+
+    if (_query.isEmpty && _cat == null) {
       for (final c in cats) {
         final group = filtered.where((it) => _s(it, 'cat') == c).toList();
         if (group.isEmpty) continue;
-        rows.add(_CatHeader(theme: theme, title: c, count: group.length, color: _catColor(c)));
-        for (final it in group) {
-          rows.add(_tile(it));
-        }
+        rows.add(_Header(c, group.length, _catColor(c)));
+        rows.addAll(group);
       }
-      final rest = filtered.where((it) => _s(it, 'cat').isEmpty).toList();
+      final rest = filtered.where((it) => _s(it, 'cat').isEmpty && !_isGl(it)).toList();
       if (rest.isNotEmpty) {
-        rows.add(_CatHeader(theme: theme, title: 'واژه‌های دیگر', count: rest.length, color: theme.blue));
-        for (final it in rest) {
-          rows.add(_tile(it));
-        }
+        rows.add(_Header('واژه‌های دیگر', rest.length, theme.blue));
+        rows.addAll(rest);
       }
+      final gl = filtered.where(_isGl).toList();
+      if (gl.isNotEmpty) {
+        rows.add(_Header('$kGlossaryCat — ${_fa(gl.length)} واژه', gl.length, theme.aiViolet));
+        addLetterGroups(gl);
+      }
+    } else if (_cat == kGlossaryCat && _query.isEmpty) {
+      addLetterGroups(filtered);
     } else {
-      for (final it in filtered) {
-        rows.add(_tile(it));
-      }
+      rows.addAll(filtered);
     }
 
     return CustomScrollView(
@@ -103,11 +179,12 @@ class _DictionaryBodyState extends State<DictionaryBody> {
           padding: const EdgeInsets.fromLTRB(18, 14, 18, 0),
           sliver: SliverList(
             delegate: SliverChildListDelegate([
-              if (items.isNotEmpty) _Hero(theme: theme, items: items, catCount: cats.length),
+              if (items.isNotEmpty) _Hero(theme: theme, items: items, catCount: cats.length + (_glossary.isEmpty ? 0 : 1)),
               const SizedBox(height: 14),
               _searchField(theme),
               const SizedBox(height: 10),
               if (cats.isNotEmpty) _chips(theme, cats),
+              if (_cat == kGlossaryCat && _glossary.isNotEmpty) ...[const SizedBox(height: 8), _letterBar(theme)],
               const SizedBox(height: 6),
             ]),
           ),
@@ -116,7 +193,11 @@ class _DictionaryBodyState extends State<DictionaryBody> {
           padding: const EdgeInsets.fromLTRB(18, 0, 18, 0),
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate(
-              (context, i) => rows[i],
+              (context, i) {
+                final r = rows[i];
+                if (r is _Header) return _CatHeader(theme: theme, title: r.title, count: r.count, color: r.color);
+                return _tile(r as ContentItem);
+              },
               childCount: rows.length,
             ),
           ),
@@ -179,7 +260,10 @@ class _DictionaryBodyState extends State<DictionaryBody> {
       return Padding(
         padding: const EdgeInsetsDirectional.only(end: 8),
         child: GestureDetector(
-          onTap: () => setState(() => _cat = value),
+          onTap: () => setState(() {
+            _cat = value;
+            _letter = null;
+          }),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 220),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
@@ -205,7 +289,44 @@ class _DictionaryBodyState extends State<DictionaryBody> {
         scrollDirection: Axis.horizontal,
         children: [
           chip('همه', null, theme.blue),
+          if (_glossary.isNotEmpty) chip('$kGlossaryCat (${_fa(_glossary.length)})', kGlossaryCat, theme.aiViolet),
           for (final c in cats) chip(c, c, _catColor(c)),
+        ],
+      ),
+    );
+  }
+
+  /// نوار حروف الفبا برای پیمایش واژه‌نامه‌ی نبی‌زاده
+  Widget _letterBar(AppColors theme) {
+    Widget l(String label, String? value) {
+      final on = _letter == value;
+      return Padding(
+        padding: const EdgeInsetsDirectional.only(end: 6),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () => setState(() => _letter = value),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 180),
+            width: value == null ? 52 : 38,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: on ? theme.aiViolet : theme.bgCard.withValues(alpha: 0.6),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: on ? theme.aiViolet : theme.glassBorder),
+            ),
+            child: Text(label, style: TextStyle(color: on ? Colors.white : theme.textPrimary, fontSize: 15, fontWeight: FontWeight.w800)),
+          ),
+        ),
+      );
+    }
+
+    return SizedBox(
+      height: 40,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: [
+          l('همه', null),
+          for (final x in _letters) l(x, x),
         ],
       ),
     );
@@ -457,13 +578,13 @@ class _MashalCard extends StatelessWidget {
           Icon(Icons.menu_book_rounded, color: theme.yellow, size: 20),
           const SizedBox(width: 8),
           Expanded(
-            child: Text('واژه‌نامه‌ی گسترده‌تر',
+            child: Text('سپاس از محمد عوض نبی‌زاده و سایت مشعل',
                 style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w900)),
           ),
         ]),
         const SizedBox(height: 6),
         Text(
-          'فهرست بزرگ «ترجمه‌ی لهجه و گویش هزاره‌گی به دری» با بیش از هزار واژه، گردآوری‌شده از سوی نبی‌زاده، در سایت مشعل منتشر شده است.',
+          'بیش از دو هزار واژه‌ی این واژه‌نامه از «ترجمه‌ی لهجه و گویش هزاره‌گی به دری»، گردآوری محمد عوض نبی‌زاده (۲۰۱۷)، با اجازه‌ی سایت مشعل آورده شده است.',
           style: TextStyle(color: theme.textSecondary, fontSize: 12, height: 1.7),
         ),
         const SizedBox(height: 10),
@@ -472,7 +593,7 @@ class _MashalCard extends StatelessWidget {
           child: TextButton.icon(
             onPressed: () => openContentUrl(context, kMashalHazaragiGlossary),
             icon: Icon(Icons.open_in_new_rounded, color: theme.blue, size: 16),
-            label: Text('خواندن در سایت مشعل', style: TextStyle(color: theme.blue, fontSize: 12, fontWeight: FontWeight.w800)),
+            label: Text('متن اصلی در سایت مشعل', style: TextStyle(color: theme.blue, fontSize: 12, fontWeight: FontWeight.w800)),
           ),
         ),
       ]),

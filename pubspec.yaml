@@ -34,6 +34,7 @@ flutter:
     - assets/crowns/champion_silver.png
     - assets/crowns/sovereign_gold.png
     - assets/crowns/emperor_imperial.png
+    - assets/data/hazaragi_glossary.json
   # فونت فارسی وزیرمتن (Vazirmatn) — دقیقاً منطبق با fontFamily در app.dart
   fonts:
     - family: Vazirmatn
