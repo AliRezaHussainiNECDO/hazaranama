@@ -10,7 +10,7 @@ import '../services/backend_service.dart';
 
 enum AuthStage { checking, welcome, login, register, forgot, resetPassword, app }
 
-/// وضعیت سراسری برنامه — حالا هر خواندن/نوشتنی واقعاً از Supabase می‌آید.
+/// وضعیت سراسری برنامه — حالا هر خواندن/نوشتنی واقعاً از سرور هزاره‌نامه (Cloudflare) می‌آید.
 /// شکل بیرونی این کلاس (فیلدها و اسم متدها) عمداً همان چیزی مانده که
 /// صفحات UI از قبل با آن کار می‌کردند؛ فقط داخلش به‌جای دیتای mock،
 /// به BackendService وصل شده است.

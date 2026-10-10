@@ -27,7 +27,7 @@ enum PushPermissionState {
 /// اتصال اپ به Firebase Cloud Messaging برای پوش نوتیفیکیشن واقعی — حتی
 /// وقتی اپ بسته یا در پس‌زمینه است. جدا از سیستم اعلان درون‌اپیِ Realtime
 /// (که فقط وقتی اپ باز است کار می‌کند)، این همان توکنی است که سرور
-/// (Edge Function روی Supabase) با آن پیام را مستقیم به گوشی کاربر می‌فرستد.
+/// (Worker هزاره‌نامه روی Cloudflare) با آن پیام را مستقیم به گوشی کاربر می‌فرستد.
 class PushService {
   static bool _initialized = false;
 

@@ -292,7 +292,7 @@
       <div class="reviewer-box">
         <span class="tag en">For App Store / Play Store reviewers</span>
         <p class="en">Hazaranama supports in-app account deletion (Account settings → red "Delete my account permanently" button) that immediately deletes the auth account and cascades to all associated user data (profile, posts, comments, reactions, messages, device tokens, uploaded media). A web-based deletion request path is also provided above via email, reachable without installing the app, per Google Play's Account Deletion requirement and Apple Guideline 5.1.1(v).</p>
-        <p class="en" style="margin-bottom:0">Data safety: no ads, no third-party trackers, no data sale. AI assistant messages are relayed through a server-side proxy to Google's Gemini API for generating responses only (see §3).</p>
+        <p class="en" style="margin-bottom:0">Data safety: no ads, no third-party trackers, no data sale. All app data (accounts, content, media) is hosted on Cloudflare (Workers, D1, R2). AI assistant messages are processed by Cloudflare Workers AI on our own server, for generating responses only (see §3).</p>
       </div>
     </div>
   </div>
@@ -325,8 +325,8 @@
   </section>
 
   <section class="policy" id="s3">
-    <h2><span class="num">§3</span> دستیار هوش مصنوعی <span class="pill violet">Gemini</span></h2>
-    <p>پیام‌هایی که به «دستیار هوشمند» می‌فرستید، از طریق یک واسط امن روی سرور ما به سرویس هوش مصنوعی Gemini (متعلق به گوگل) ارسال می‌شوند تا پاسخ تولید شود. کلید سرویس هوش مصنوعی هرگز داخل اپ ذخیره نمی‌شود. متن گفتگوی شما فقط برای تولید همان پاسخ استفاده می‌شود و در دیتابیس اپ به‌صورت گفت‌وگوی قابل‌جست‌وجو ذخیره نمی‌ماند.</p>
+    <h2><span class="num">§3</span> دستیار هوش مصنوعی <span class="pill violet">Cloudflare Workers AI</span></h2>
+    <p>پیام‌هایی که به «دستیار هوشمند» می‌فرستید، روی سرور خودِ هزاره‌نامه در Cloudflare و با سرویس Workers AI پردازش می‌شوند تا پاسخ تولید شود. هیچ کلیدی داخل اپ ذخیره نمی‌شود. متن گفتگوی شما فقط برای تولید همان پاسخ استفاده می‌شود و در دیتابیس اپ به‌صورت گفت‌وگوی قابل‌جست‌وجو ذخیره نمی‌ماند.</p>
     <p>لطفاً اطلاعات حساس یا شخصی غیرضروری را داخل گفت‌وگو با دستیار هوشمند تایپ نکنید.</p>
   </section>
 
@@ -344,7 +344,7 @@
     <h2><span class="num">§6</span> اشتراک‌گذاری داده</h2>
     <ul>
       <li><b>هرگز فروخته نمی‌شود:</b> داده‌ی شما به هیچ شرکت تبلیغاتی یا شخص ثالثی فروخته نمی‌شود.</li>
-      <li><b>زیرساخت فنی:</b> داده‌ها روی Supabase (پایگاه‌داده، احراز هویت و فضای ذخیره‌سازی) نگهداری می‌شوند؛ اعلان‌های پوش از طریق Firebase Cloud Messaging گوگل ارسال می‌شوند؛ گفت‌وگوی دستیار هوشمند از طریق Gemini گوگل پردازش می‌شود (§۳). این‌ها صرفاً ارائه‌دهندگان زیرساخت‌اند، نه دریافت‌کننده‌ی تبلیغاتی داده‌ی شما.</li>
+      <li><b>زیرساخت فنی:</b> داده‌ها روی Cloudflare (پایگاه‌داده‌ی D1، فضای ذخیره‌سازی R2 و سرور Workers) نگهداری می‌شوند؛ اعلان‌های پوش از طریق Firebase Cloud Messaging گوگل ارسال می‌شوند؛ گفت‌وگوی دستیار هوشمند با Cloudflare Workers AI پردازش می‌شود (§۳). این‌ها صرفاً ارائه‌دهندگان زیرساخت‌اند، نه دریافت‌کننده‌ی تبلیغاتی داده‌ی شما.</li>
       <li><b>الزام قانونی:</b> فقط در صورت الزام قانونی صریح، ممکن است داده به مرجع ذی‌صلاح ارائه شود.</li>
     </ul>
   </section>

@@ -1,9 +1,9 @@
 # هزاره‌نامه — نسخه‌ی فلاتر
 
 این پوشه، تبدیل کامل دموی React هزاره‌نامه (نسخه‌ی نهایی v14) به یک پروژه‌ی Flutter
-با ساخت‌وساز تمیز و مبتنی بر feature است. همه‌چیز هنوز با داده‌ی نمونه (mock) کار
-می‌کند — دقیقاً مثل دموی وب — و آماده‌ی وصل‌شدن به Supabase (طبق فایل schema که قبلاً
-ساختیم) است.
+با ساخت‌وساز تمیز و مبتنی بر feature است. سرور برنامه کاملاً روی Cloudflare است
+(Worker + D1 + R2 + Workers AI در پوشه‌ی `cloudflare/api`)؛ نسخه‌ی وب روی
+Cloudflare Pages (hazaranama.pages.dev) منتشر می‌شود.
 
 ## ساخت‌وساز پوشه‌ها
 
@@ -81,8 +81,8 @@ flutter run
 
 ## هوش مصنوعی (تازه اضافه شد)
 
-اپ حالا چهار قابلیت هوش مصنوعی دارد که همه از یک Edge Function امن
-(`supabase/functions/ai-gateway`) با Gemini صحبت می‌کنند — کلید API هرگز
+اپ چهار قابلیت هوش مصنوعی دارد که همه از مسیر امن `/functions/ai-gateway`
+روی Worker هزاره‌نامه با Cloudflare Workers AI کار می‌کنند — هیچ کلیدی
 داخل اپ کلاینت قرار نمی‌گیرد:
 
 - **دستیار گفتگوی هوشمند** (`lib/features/ai/ai_assistant_screen.dart`):
@@ -105,14 +105,16 @@ flutter run
 `HzGlassCard` (کارت شیشه‌ای/glassmorphism)، `BlobBackground` (پس‌زمینه‌ی
 دایره‌های محو شناور)، `AiFab` (دکمه‌ی شناور دستیار) و `TypingDots`.
 
-## نکات مهم برای گام بعدی (اتصال به Supabase)
-- تمام خواندن/نوشتن داده در حال حاضر از طریق `AppState` (در `state/app_state.dart`)
-  انجام می‌شود؛ برای اتصال واقعی فقط لازم است متدهای این کلاس (مثل `addContentItem`,
-  `toggleUserStatus`, `publishPost`) را به‌جای تغییر دادن لیست‌های محلی، به
-  `supabase.from(...).insert/update/delete` وصل کنید. ساختار داده‌ای همان چیزی
-  است که در `hazaranama-supabase-schema.sql` تعریف شده.
-- «به‌خاطر سپردن ورود» با `shared_preferences` پیاده شده (معادل window.storage در نسخه‌ی وب).
-  وقتی Supabase Auth وصل شود، به‌جای آن از `supabase.auth.currentSession` استفاده کنید.
-- فونت فارسی: در حال حاضر از فونت پیش‌فرض سیستم استفاده می‌شود. برای ظاهر دقیقاً مثل
-  دموی وب، فونت Vazirmatn را در `assets/fonts` بگذارید و بخش کامنت‌شده‌ی `pubspec.yaml`
-  را فعال کنید.
+## سرور (Cloudflare)
+
+- کد سرور: `cloudflare/api` (TypeScript). با هر push روی `main`، Workers Builds آن را
+  با `npx wrangler deploy` منتشر می‌کند.
+- پایگاه‌داده: D1 به نام `hazaranama_db` (ساختار در `cloudflare/api/schema.sql`،
+  خودکار ساخته می‌شود). فایل‌ها: R2 به نام `hazaranama-media` از مسیر `/media/...`.
+- محتوای بخش‌ها: `cloudflare/api/seed` — بعد از ویرایش `src/*.py`، دستور
+  `python3 build.py` را اجرا کنید؛ Worker نسخه‌ی تازه را خودکار جایگزین می‌کند.
+- کلاینت فلاتر از `lib/services/hz_backend.dart` به این API وصل می‌شود؛ نشانی
+  سرور در `lib/core/backend_config.dart` است (`--dart-define=HZ_API_URL=...`).
+- رمزهای سرور (Secrets): `JWT_SECRET`، و اختیاری `FCM_SERVICE_ACCOUNT` برای پوش.
+- بازیابی رمز بدون ایمیل: مدیر در صفحه‌ی کاربر «ساخت کد بازیابی رمز عبور» را می‌زند.
+- فایل‌های قدیمی Supabase فقط برای سابقه در `legacy/supabase` نگه داشته شده‌اند.
