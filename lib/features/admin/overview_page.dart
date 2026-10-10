@@ -163,7 +163,7 @@ class _OverviewPageState extends State<OverviewPage> {
                     Expanded(
                       child: RichText(
                         text: TextSpan(
-                          style: TextStyle(color: theme.textSecondary, fontSize: 11, height: 1.7),
+                          style: TextStyle(fontFamily: 'Vazirmatn', color: theme.textSecondary, fontSize: 11, height: 1.7),
                           children: [
                             TextSpan(text: app.userNameById(app.recentActivity[i].userId), style: TextStyle(color: theme.textPrimary, fontWeight: FontWeight.w700)),
                             TextSpan(text: ' — ${userActivityTypeLabel(app.recentActivity[i].type)}'),

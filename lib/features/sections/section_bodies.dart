@@ -524,7 +524,7 @@ class _MapShapePainter extends CustomPainter {
     final kabulPaint = Paint()..color = theme.textFaint;
     canvas.drawCircle(Offset(size.width * 0.63, size.height * 0.38), 3, kabulPaint);
     final tp = TextPainter(
-      text: TextSpan(text: 'کابل', style: TextStyle(color: theme.textFaint, fontSize: 10)),
+      text: TextSpan(text: 'کابل', style: TextStyle(fontFamily: 'Vazirmatn', color: theme.textFaint, fontSize: 10)),
       textDirection: TextDirection.rtl,
     )..layout();
     tp.paint(canvas, Offset(size.width * 0.65, size.height * 0.40));

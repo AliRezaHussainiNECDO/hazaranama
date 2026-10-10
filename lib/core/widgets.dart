@@ -273,7 +273,7 @@ class HzTextField extends StatelessWidget {
       controller: controller,
       obscureText: obscureText,
       keyboardType: keyboardType,
-      style: TextStyle(color: theme.textPrimary, fontSize: 13),
+      style: TextStyle(fontFamily: 'Vazirmatn', color: theme.textPrimary, fontSize: 13),
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: TextStyle(color: theme.textFaint, fontSize: 13),

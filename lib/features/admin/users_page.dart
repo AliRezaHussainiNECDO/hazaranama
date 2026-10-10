@@ -195,7 +195,7 @@ class _FilterDropdown extends StatelessWidget {
           isExpanded: true,
           dropdownColor: theme.bgElevated,
           icon: Icon(Icons.expand_more, size: 16, color: theme.textFaint),
-          style: TextStyle(color: theme.textSecondary, fontSize: 11, fontWeight: FontWeight.w700),
+          style: TextStyle(fontFamily: 'Vazirmatn', color: theme.textSecondary, fontSize: 11, fontWeight: FontWeight.w700),
           items: items.entries.map((e) => DropdownMenuItem(value: e.key, child: Text(e.value))).toList(),
           onChanged: (v) => onChanged(v ?? 'all'),
         ),

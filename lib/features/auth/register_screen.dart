@@ -275,7 +275,7 @@ class _TermsCheckRow extends StatelessWidget {
           Expanded(
             child: RichText(
               text: TextSpan(
-                style: TextStyle(color: theme.textSecondary, fontSize: 11.5, height: 1.9),
+                style: TextStyle(fontFamily: 'Vazirmatn', color: theme.textSecondary, fontSize: 11.5, height: 1.9),
                 children: [
                   const TextSpan(text: 'با ساخت حساب، '),
                   TextSpan(
