@@ -1,0 +1,279 @@
+https://en.wikipedia.org/wiki/Uruzgan_Province
+
+Uruzgan (Pashto and Dari: اروزگان) is one of the 34 provinces of Afghanistan. It has a population of 436,079, and the province is mostly a tribal society. Tarinkot serves as the capital of the province. Uruzgan borders the provinces of Kandahar, Daykundi, Ghazni, Zabul, and Helmand.
+
+
+== History ==
+
+The Arabs were first to arrive in Uruzgan in the 7th century when they brought Islam to the region followed by the Saffarids who conquered the place in the 9th century. The region was part of ancient Arachosia, and was ruled by the Medes before it fell to the Achaemenids. In 330 BC, Alexander the Great occupied the area but left it to the Seleucids to rule. It was later attained and ruled by the Mauryas under Ashoka.  By the 7th century, when the Arabs first arrived, it was under the control of the Zunbils before being conquered in the name of Islam by the Saffarids in the 9th century. It fell to the Ghaznavids followed by the Ghurids before the Mongol invasion in the 13th century. The area was ruled by Arghun Khan of Ilkhanate, later by the Timurids, Mughals and Safavids.
+During the 1980's Soviet war in Afghanistan, Uruzgan witnessed fighting between pro-Soviet forces and the Mujahideen. One of the most prominent local Mujahideen leaders was Jan Mohammad Khan. In late 1994, Uruzgan was captured by the Taliban.  They were toppled by US-led forces in late 2001. Hamid Karzai and his followers arrived in Uruzgan between October and November 2001 to take over control of the area. 
+
+
+=== Recent history ===
+
+In June 2002, a wedding party in Uruzgan was bombed by the U.S. Air Force, which resulted in the death of 30 civilians.
+In 2004, the new Daykundi Province was carved out of an area of northern Uruzgan.
+In August 2006, the NATO-led International Security Assistance Force (ISAF) assumed authority for Uruzgan from the US-led coalition, as the Netherlands took command of the Provincial Reconstruction Team (PRT) from the US as Task Force Uruzgan. There is also an Australian element under the Dutch command.
+
+Because of security concerns and the Taliban insurgency, only one international aid agency (GIZ) has a permanent presence in Uruzgan. NATO's ISAF operates a PRT in Tarinkot. The 1,400 Dutch and 1,090 Australian troops in the area secured only the largest population centers in Uruzgan (Deh Rawood, Chora, and Tarinkot towns) under the Dutch "inkspot policy". However, the force's area of responsibility included the entire province. Gizab district, which was then the most dangerous of Uruzgan's district, had no ISAF presence before. In August 2010, the 1,950 Dutch forces withdrew their forces from Uruzgan province, after a political disagreement in the Dutch parliament, leaving the PRT to the US and Australia to continue the mission.
+
+Uruzgan's opium poppy crop reached record levels in 2006 and 2007, according to the United Nations Office on Drugs and Crime (UNODC), as no significant eradication efforts were carried out by the Afghan administration or Dutch forces.
+Between 15 and 19 June 2007, Dutch, American, Australian and Afghan soldiers defended the town of Chora against an assault by Taliban combatants. Reports in the Dutch, Australian and US press indicated that the battle was one of the largest Taliban offensives of the year. The fighting resulted in the deaths of a Dutch soldier, 1 Australian soldier, 1 American soldier, 16 Afghan policemen, an unknown number of civilians and a large number of Taliban.
+In September 2008, Rozi Khan, the leader of Uruzgan's Pashtun Barakzai tribe, and a longtime rival of Popalzai leader Jan Mohammed Khan, was killed in a firefight in Chora District.
+Gizab District was temporarily cleared of the Taliban by ISAF forces in late April 2010 and this was attributed to the uprising of the townspeople who helped the ISAF forces.
+In February 2010, near Khod, over ten civilians in a three-vehicle convoy were killed by a combined force of a Lockheed AC-130, Bell OH-58 Kiowa helicopters and General Atomics MQ-1 Predator drones, who misidentified them as Taliban. The air forces were attempting to protect ground troops fighting several km away.
+
+
+== Geography ==
+
+Uruzgan province is located in southern Afghanistan, bordering Zabul and Kandahar to the south, Helmand to the southwest, Daykundi to the north, and Ghazni to the east. Uruzgan covers an area of 12,640 square kilometres (1,264,000 ha). Much of the province is mountainous or semi-mountainous terrain, while the rest of the area is made up of flat land.
+
+
+== Administrative divisions ==
+
+
+== Economy ==
+As of May 2014, the province was served by Tarinkot Airport which had regularly scheduled direct passenger service to Kabul.
+
+
+== Demographics ==
+
+
+=== Population ===
+As of 2020, the total population of the province is about 436,079. The province has an estimated 45,000 households, each with about six members on average. Population figures are from the Ministry of Rural Rehabilitation and Development, the Central Statistics Office Afghanistan, and the Liaison Office study 2009.
+
+
+=== Ethnicity, languages and religion ===
+The population of Uruzgan is predominantly Pashtun at around 90%, largely as a result of historical population policies and the creation of the province of Daikundi in 2004, which separated most Hazara-majority areas. Nowadays, Hazaras remain a smaller minority mainly in northern districts, alongside groups such as Sayeds, Tajiks, and Quraishis. The exact ethnic composition remains somewhat contested, as province boundaries and administrative control of districts have repeatedly shifted between Daikundi and Uruzgan, making clear majorities difficult to define and occasionally, like in the case of Gizab, contributing to political tension. Pashto is the dominant language across most of the province, while Persian dialects spoken within Hazara and other communities. Sunni Islam is prevailing among Pashtuns and Shia Islam among Hazaras.
+
+
+=== Education ===
+The overall literacy rate (6+ years of age) increased from 5% in 2005 to 17% in 2011.
+The overall net enrollment rate (6–13 years of age) increased from 1% in 2005 to 49% in 2011.
+
+
+=== Health ===
+The percentage of households with clean drinking water increased from 8% in 2005 to 27% in 2011.
+The percentage of births attended to by a skilled birth attendant increased from 6% in 2005 to 14% in 2011.
+
+
+== See also ==
+Provinces of Afghanistan
+
+
+== Notes ==
+
+
+== References ==
+
+=====WIKITEXT=====
+{{pp|small=yes}}
+{{short description|Province of Afghanistan}}
+{{Infobox settlement
+| name                 = Uruzgan
+| native_name          = {{nq|اروزگان}}
+| native_name_lang     = ps
+| type                 = [[Provinces of Afghanistan|Province]]
+| image                = Wheat fields in Uruzgan province.jpg
+| caption              = Aerial photograph of fields in Uruzgan Province
+| image_map            = Oruzgan in Afghanistan.svg
+| map_caption          = Map of Afghanistan with Uruzgan highlighted
+| coordinates          = {{coord|32.8|66.0|type:adm1st_region:AF|display=inline,title}}
+| coor_pinpoint        = Capital
+| subdivision_type     = Country
+| subdivision_name     = {{flag|Afghanistan}}
+| seat_type            = Capital
+| seat                 = [[Tarinkot]]
+| leader_title         = [[List of governors of Uruzgan|Governor]]
+| leader_name          = Haji Dawat<ref>{{Cite web|url=http://azamnews.com/?p=108148|archive-url=https://web.archive.org/web/20211107145754/http://azamnews.com/?p=108148|url-status=usurped|archive-date=November 7, 2021|title = د نږدې شلو ولایاتو لپاره نوي والیان او امنیې قوماندانان وټاکل شول|date = 7 November 2021}}</ref>
+| leader_title1        = Deputy Governor
+| leader_name1         = 
+| leader_title2        = Police Chief
+| leader_name2         = Mullah Abdullah Bashir<ref>{{Cite web|url=https://www.etilaatroz.com/ps/2021/12/11/taliban-police-chief-in-uruzgan-anti-taliban-groups-have-emerged-in-the-guise-of-religious-scholars/|title=ارزګان کې د طالبانو امنیه قوماندان: د دیني عالمانو جامه کې طالب ضد ډلې پیدا شوي|date=December 11, 2021}}</ref>
+| unit_pref            = Metric
+| area_total_km2       = 12640
+| population_footnotes = <ref name=nsia/>
+| population_total     = 436079
+| population_as_of     = 2020
+| custom_label_sec1    = [[Languages of Afghanistan|Main languages]]
+| custom_data_sec1     = [[Pashto]] and [[Dari]]
+| postal_code_type     = Postal code
+| postal_code          = 41xx
+| time_zone1           = Afghanistan Time
+| utc_offset1          = +4:30
+| iso_code             = AF-URU
+}}
+
+'''Uruzgan''' ([[Pashto]]{{efn|{{IPA|ps|ˌʔʊɾuzˈgɑn}}}} and [[Dari]]:{{efn|{{IPA|prs|ˌʔʊɾuːzˈgɑːn}}}} {{nq|اروزگان}}) is one of the 34 [[provinces of Afghanistan]]. It has a population of 436,079,<ref name=nsia/> and the province is mostly a tribal society. [[Tarinkot]] serves as the capital of the province. Uruzgan borders the provinces of [[Kandahar Province|Kandahar]], [[Daykundi Province|Daykundi]], [[Ghazni Province|Ghazni]], [[Zabul Province|Zabul]], and [[Helmand Province|Helmand]].
+
+==History==
+{{Further|History of Afghanistan}}
+The [[Arabs]] were first to arrive in Uruzgan in the 7th century when they brought [[Islam]] to the region followed by the [[Saffarid dynasty|Saffarids]] who conquered the place in the 9th century. The region was part of ancient [[Arachosia]], and was ruled by the [[Medes]] before it fell to the [[Achaemenid Empire|Achaemenids]]. In 330 BC, [[Alexander the Great]] occupied the area but left it to the [[Seleucid Empire|Seleucids]] to rule. It was later attained and ruled by the [[Maurya Empire|Mauryas]] under [[Ashoka]].{{cn|date=February 2023}}  By the 7th century, when the Arabs first arrived, it was under the control of the [[Zunbils]] before being conquered in the name of [[Islam]] by the [[Saffarid dynasty|Saffarids]] in the 9th century. It fell to the [[Ghaznavids]] followed by the [[Ghurid dynasty|Ghurids]] before the [[Mongol Empire|Mongol]] invasion in the 13th century.{{cn|date=February 2023}} The area was ruled by [[Arghun|Arghun Khan]] of [[Ilkhanate]], later by the [[Timurids]], [[Mughal Empire|Mughals]] and [[Safavid dynasty|Safavids]].{{cn|date=February 2023}}
+
+During the 1980's [[Soviet–Afghan War|Soviet war in Afghanistan]], Uruzgan witnessed fighting between pro-Soviet forces and the [[Mujahideen]]. One of the most prominent local Mujahideen leaders was [[Jan Mohammad Khan]]. In late 1994, Uruzgan was captured by the [[Taliban]].{{cn|date=February 2023}}  They were toppled by US-led forces in late 2001. [[Hamid Karzai]] and his followers arrived in Uruzgan between October and November 2001 to take over control of the area.{{cn|date=February 2023}} 
+
+===Recent history===
+{{Further|International Security Assistance Force}}
+[[File:Opening of the Chutu bridge -d.jpg|thumb|[[Afghan National Security Forces]] (ANSF) stand by near the Chutu Bridge during a grand opening ceremony for the bridge in December 2008.]]
+In June 2002, a wedding party in Uruzgan was bombed by the [[United States Air Force|U.S. Air Force]], which resulted in the death of 30 civilians.<ref>{{cite news|url=http://news.bbc.co.uk/2/hi/south_asia/2079565.stm|date=2002-07-01|title='Scores killed' in US Afghan raid|publisher=[[BBC News]]|access-date=2018-07-19}}</ref>
+
+In 2004, the new [[Daykundi Province]] was carved out of an area of northern Uruzgan.
+
+In August 2006, the NATO-led [[International Security Assistance Force]] (ISAF) assumed authority for Uruzgan from the US-led coalition, as the [[Netherlands]] took command of the [[Provincial Reconstruction Team]] (PRT) from the US as [[Task Force Uruzgan]]. There is also an [[Australia]]n element under the [[Netherlands|Dutch]] command.
+[[File:Bushmaster Afghanistan snow Jan 2010.jpg|left|thumb|Soldiers from [[Australia]]'s Special Operations Task Group (SOTG) in December 2009.]]
+
+Because of security concerns and the [[Taliban insurgency]], only one international aid agency ([[Deutsche Gesellschaft für Internationale Zusammenarbeit|GIZ]]) has a permanent presence in Uruzgan. NATO's ISAF operates a PRT in Tarinkot. The 1,400 Dutch and 1,090 Australian troops in the area secured only the largest population centers in Uruzgan (Deh Rawood, Chora, and Tarinkot towns) under the Dutch "[[Inkspot Strategy|inkspot policy]]". However, the force's area of responsibility included the entire province. Gizab district, which was then the most dangerous of Uruzgan's district, had no ISAF presence before. In August 2010, the 1,950 Dutch forces withdrew their forces from Uruzgan province, after a political disagreement in the Dutch parliament, leaving the PRT to the US and Australia to continue the mission.
+[[File:U.S. Army 1st Lt. Patrick Gurski, foreground, with a security force assistance team (SFAT) with the 56th Infantry Brigade Combat Team, Texas Army National Guard, watches Afghans pass during a logistics 130604-A-FS372-018.jpg|thumb|U.S. Army soldier watching Afghans pass during a logistics inspection in [[Tarinkot]].]]
+
+Uruzgan's opium poppy crop reached record levels in 2006 and 2007, according to the [[United Nations Office on Drugs and Crime]] (UNODC), as no significant eradication efforts were carried out by the Afghan administration or Dutch forces.
+
+Between 15 and 19 June 2007, Dutch, American, Australian and Afghan soldiers [[Battle of Chora|defended the town of Chora]] against an assault by Taliban combatants. Reports in the Dutch, Australian<ref>{{cite news|url=http://www.news.com.au/story/0,23599,21957030-1702,00.html|title=Aussie troops backed Dutch against Taliban|website=[[news.com.au]]|date=2007-06-23|access-date=2008-03-25|archive-url=https://archive.today/20070626181057/http://www.news.com.au/story/0,23599,21957030-1702,00.html|archive-date=2007-06-26|url-status=dead}}</ref> and US press<ref>{{cite news|url=https://usatoday30.usatoday.com/news/world/2007-06-18-afghanistan-airstrike_N.htm|title=Over 100 die in southern Afghan battle|work=[[USA Today]]|date=2007-06-18|access-date=2018-07-19}}</ref><ref>{{cite news|url=http://www.iht.com/articles/ap/2007/06/22/europe/EU-GEN-Netherlands-Afghanistan.php|title=Dutch military chief says Taliban executed civilians during fighting with NATO forces|work=[[International Herald Tribune]]|date=2007-06-22|access-date=2008-03-25|archive-url=https://archive.today/20070627040327/http://www.iht.com/articles/ap/2007/06/22/europe/EU-GEN-Netherlands-Afghanistan.php|archive-date=2007-06-27|url-status=live}}</ref><ref>{{cite news|url=https://www.foxnews.com/story/over-100-militants-civilians-and-police-killed-in-massive-afghan-battle|title=Over 100 Militants, Civilians and Police Killed In Massive Afghan Battle|publisher=[[Fox News]]|agency=[[Associated Press]]|date=2007-06-18|access-date=2018-07-19}}</ref> indicated that the battle was one of the largest Taliban offensives of the year. The fighting resulted in the deaths of a Dutch soldier, 1 Australian soldier, 1 American soldier, 16 Afghan policemen, an unknown number of civilians and a large number of Taliban.
+
+In September 2008, [[Rozi Khan]], the leader of Uruzgan's Pashtun [[Barakzai]] tribe, and a longtime rival of Popalzai leader Jan Mohammed Khan, was killed in a firefight in [[Chora District]].
+
+Gizab District was temporarily cleared of the Taliban by ISAF forces in late April 2010 and this was attributed to the uprising of the townspeople who helped the ISAF forces.<ref>{{cite news|url=https://www.smh.com.au/national/aussies-help-reclaim-afghan-town-20100429-twli.html|agency=AAP|date=2010-04-29|title=Aussies help reclaim Afghan town|work=[[The Sydney Morning Herald|SMH]]|access-date=2018-07-19}}</ref><ref>{{cite news|url=http://government.newsarticles.net.au/Defence/From-Gunfire-To-Governance-In-Gizab.htm|date=2010-04-29|title=From gunfire to governance in Gizab|agency=[[Australian Defence Force|ADF]]|access-date=2018-07-19}}</ref>
+
+In February 2010, near Khod, over ten civilians in a three-vehicle convoy were killed by a combined force of a [[Lockheed AC-130]], [[Bell OH-58 Kiowa]] helicopters and [[General Atomics MQ-1 Predator]] drones, who misidentified them as Taliban. The air forces were attempting to protect ground troops fighting several km away.<ref>{{cite news|url=http://www.latimes.com/world/la-fg-afghanistan-drone-20110410-story.html|title=Anatomy of an Afghan war tragedy|author=David S. Cloud|work=[[Los Angeles Times]]|date=2011-04-10|access-date=2018-07-19}}</ref><ref>{{cite news|url=https://www.washingtonpost.com/wp-dyn/content/article/2010/05/29/AR2010052901390.html|author=Karin Brulliard|title=Drone operators blamed in airstrike that killed Afghan civilians in February|newspaper=[[The Washington Post]]|date=2010-05-30|access-date=2018-07-19}}</ref>
+
+==Geography==
+{{Further|Geography of Afghanistan}}
+Uruzgan province is located in southern Afghanistan, bordering [[Zabul Province|Zabul]] and [[Kandahar Province|Kandahar]] to the south, [[Helmand Province|Helmand]] to the southwest, [[Daykundi Province|Daykundi]] to the north, and [[Ghazni Province|Ghazni]] to the east. Uruzgan covers an area of {{convert|12640|km2|ha}}. Much of the province is mountainous or semi-mountainous terrain, while the rest of the area is made up of flat land.<ref>{{cite web|title=iMMAP_Uruzgan_Admin_/Lands_A0_20110125|url=http://afghanag.ucdavis.edu/country-info/Province-agriculture-profiles/province-maps-immap/uruzgan_province_january_2011.pdf|website=Uruzgan Province January 2011|access-date=2016-01-05|archive-date=2016-03-05|archive-url=https://web.archive.org/web/20160305111325/http://afghanag.ucdavis.edu/country-info/Province-agriculture-profiles/province-maps-immap/uruzgan_province_january_2011.pdf|url-status=dead}}</ref>
+
+==Administrative divisions==
+[[File:Districts of Uruzgan as of January 2004 (corrected).png|250px|thumb|Map of the districts of Uruzgan as of January 2004, prior to the redrawing of provincial and district boundaries later that year. The northern districts (namely Daikundi, [[Shahristan District|Shahristan]], [[Kajran District|Kijran]] and parts of [[Gizab District|Gizab]]) became part of the newly created [[Daikundi Province]] later that year.]]
+{| class="wikitable sortable" style="font-size:90%;"
+|+ Districts of Uruzgan Province
+|-
+!District
+!Capital.
+!Population<ref name=mrrd>{{cite web|url=http://www.mrrd-nabdp.org/index.php?option=com_content&view=article&id=127&Itemid=116|title=Urozgan Province|work=[[United Nations]]|publisher=Afghanistan's [[Ministry of Rural Rehabilitation and Development]]|date=2006–2007|access-date=2012-07-18|archive-url=https://web.archive.org/web/20130414095308/http://www.mrrd-nabdp.org/index.php?option=com_content&view=article&id=127&Itemid=116|archive-date=2013-04-14|url-status=usurped}}</ref>
+!Area<ref>[http://www.fao.org/afghanistan/en/ Afghanistan Geographic & Thematic Layers] Retrieved 2018-07-19.</ref>
+!Pop.<br />density
+!Notes
+|-
+|[[Shahidi Hassas District|Shahidi Hassas]]|||| 66,695 ||2,261||30||
+|-
+|[[Chora District|Chora]]|||| 72,276 ||2,189|| 33
+|-
+|[[Deh Rawood District|Deh Rawood]]|| || 69,213 ||1,360||51||
+|-
+|[[Khas Uruzgan District|Khas Uruzgan]]|||| 63,904 ||2,821||23||
+|-
+|[[Tarinkot District|Tarinkot]]||[[Tarinkot]]|| 116,359 ||1,974||59||
+|- bgcolor="#d3d3d3"
+|'''Uruzgan'''
+|
+|'''436,079'''
+|'''11,474'''
+|'''38'''
+|
+|}
+
+==Economy==
+As of May 2014, the province was served by [[Tarinkot Airport]] which had regularly scheduled direct passenger service to [[Kabul International Airport|Kabul]].
+
+==Demographics==
+{{Further|Demography of Afghanistan}}
+===Population===
+As of 2020, the total population of the province is about 436,079.<ref name=nsia>{{cite web |url=https://www.nsia.gov.af:8080/wp-content/uploads/2020/06/%D8%A8%D8%B1%D8%A2%D9%88%D8%B1%D8%AF-%D9%86%D9%81%D9%88%D8%B3-%DA%A9%D8%B4%D9%88%D8%B1-%DB%B1%DB%B3%DB%B9%DB%B9-%D9%86%D8%B3%D8%AE%DB%80-%D8%A7%D9%88%D9%84.pdf |title=Estimated Population of Afghanistan 2020-21 |publisher=Islamic Republic of Afghanistan, National Statistics and Information Authority |access-date=6 June 2021 |archive-date=3 July 2020 |archive-url=https://web.archive.org/web/20200703171906/https://www.nsia.gov.af:8080/wp-content/uploads/2020/06/%D8%A8%D8%B1%D8%A2%D9%88%D8%B1%D8%AF-%D9%86%D9%81%D9%88%D8%B3-%DA%A9%D8%B4%D9%88%D8%B1-%DB%B1%DB%B3%DB%B9%DB%B9-%D9%86%D8%B3%D8%AE%DB%80-%D8%A7%D9%88%D9%84.pdf |url-status=dead }}</ref> The province has an estimated 45,000 households, each with about six members on average. Population figures are from the [[Ministry of Rural Rehabilitation and Development]], the Central Statistics Office Afghanistan, and the Liaison Office study 2009.<ref>The Liaison Office, [http://www.nrc.nl/multimedia/archive/00250/TLO_Uruzgan_Assessm_250835a.pdf Three Years Later: A Sociopolitical Study of Uruzgun Province from 2006 to 2009]</ref>
+
+===Ethnicity, languages and religion===
+The population of Uruzgan is predominantly [[Pashtuns|Pashtun]] at around 90%, largely as a result of historical population policies and the creation of the province of Daikundi in 2004, which separated most [[Hazaras|Hazara]]-majority areas. Nowadays, Hazaras remain a smaller minority mainly in northern districts, alongside groups such as [[Sayyid|Sayeds]], [[Tajiks]], and [[Arabs in Afghanistan|Quraishis]]. The exact ethnic composition remains somewhat contested, as province boundaries and administrative control of districts have repeatedly shifted between Daikundi and Uruzgan, making clear majorities difficult to define and occasionally, like in the case of [[Gizab District|Gizab]], contributing to political tension.<ref name="fic" /><ref name="ci" /> [[Pashto]] is the dominant language across most of the province, while [[Persian language|Persian]] dialects spoken within Hazara and other communities.<ref name="prt" /><ref name="usa" /> [[Sunni Islam]] is prevailing among Pashtuns and [[Shia Islam]] among Hazaras.<ref name="nps" />
+
+{| class="wikitable" style="text-align:center; table-layout:fixed; width:100%; margin:0"
+|+ Estimated ethnolinguistic and -religious composition
+! style="width:7.5em; background-color:#d8f3d8;" | <small>Ethnicity</small>
+! rowspan="2" style="width:4.6em; background-color:#d8f3d8;" | <small>[[Pashtuns|Pashtun]]</small>
+! colspan="2" style="width:4.6em; background-color:#d8f3d8;" | <small>[[Persian language|Persian]]-speaking people</small>
+! rowspan="2" style="width:3em; background-color:#d8f3d8;" | <small>''Sources''</small>
+|-
+! style="width:7.5em; background-color:#ddf;" | <small>Period</small>
+! rowspan="2" style="width:4.6em; background-color:#d8f3d8;" | <small>[[Hazaras|Hazara]]</small>
+! rowspan="2" style="width:4.6em; background-color:#d8f3d8;" | <small>non-Hazara</small>
+|}
+{| class="wikitable mw-collapsible mw-collapsed" style="text-align:center; table-layout:fixed; width:100%; margin:0"
+|- style="background-color:#e6f2ff;"
+! style="width:7.5em; background-color:#ddf;" | <small>2004–2021<br>[[Islamic Republic of Afghanistan|(Islamic Republic)]]</small>
+| style="width:4.6em;" | 90 – 92%
+| colspan="2" style="width:4.6em;" | 8 – 10%
+| style="width:3em;" |
+|-style="background-color:#E6E6E6;"
+| 2020 [[European Union Agency for Asylum|EU]]<ref>{{cite web |date=2020 |title=Country Guidance: Afghanistan. Common analysis and guidance note |url=https://www.euaa.europa.eu/sites/default/files/Country_Guidance_Afghanistan_2020_0.pdf |publisher=[[European Union Agency for Asylum]] |access-date=25 November 2025}}</ref>
+|| 1st || – || –
+|-style="background-color:#E6E6E6;"
+| 2018 [[United Nations Assistance Mission in Afghanistan|UN]]<ref name="unama">{{cite web |last=Ramizpoor |date=2018 |title=Afghan People's Dialogue on Peace: Local Road Maps for Peace – Kabul and Surrounding Provinces |url=https://unama.unmissions.org/sites/default/files/afghan_peoples_dialogue_34_roadmaps_on_peace_english.pdf |publisher=[[United Nations Assistance Mission in Afghanistan]] |access-date=25 November 2025}}</ref>
+|| 92% || 8% || –
+|-style="background-color:#FFFFFF;"
+| 2015 [[Naval Postgraduate School|NPS]]<ref name="nps">{{Cite web |title=Uruzgan - Program for Culture and Conflict Studies - Naval Postgraduate School |url=https://nps.edu/web/ccs/uruzgan|access-date=26 April 2024 |website=nps.edu}}</ref>
+|| ∅{{efn|incl. [[Kochis|Kuchi]], [[Durrani]] ([[Alizai (Pashtun tribe)|Alizai]], [[Nurzai]], [[Barakzai]], [[Popalzai]], [[Achakzai]]) and [[Ghilji|Ghilzai]] ([[Hotak]]).}} || ∅ || –
+|-style="background-color:#FFFFFF;"
+| 2012 [[Feinstein International Center|FIC]]<ref name="fic">{{Cite web |title=Winning Hearts and Minds in Uruzgan Province |url=https://fic.tufts.edu/wp-content/uploads/Uruzgan-Report.pdf |access-date=7 May 2026}}</ref>
+|| 90% || – || –
+|-style="background-color:#FFFFFF;"
+| 2011 [[University of California, Davis|UCD]]<ref>{{Cite web |title=Uruzgan Provincial Profile |url=https://www.ecoi.net/en/file/local/1115701/1222_1197555343_uruzgan-provincial-profile.pdf |access-date=26 April 2024}}</ref>
+|| majority || – || –
+|-style="background-color:#E6E6E6;"
+| 2011 [[Provincial Reconstruction Team|PRT]]<ref name="prt">{{Cite web |title=Afghanistan Provincial Reconstruction Team|url=https://apps.dtic.mil/sti/tr/pdf/ADA550604.pdf |date=February 2011 |access-date=2025-11-25 }}</ref>
+|| 90%{{efn|name=k}}
+| colspan="2"| 10%
+|-style="background-color:#FFFFFF;"
+| 2011 [[U. S. Army|USA]]<ref name="usa">{{Cite web |title=U.S. Army Afghanistan Smart Book, Third Edition |url=https://info.publicintelligence.net/AfghanSmartBook.pdf |date=January 2011 |access-date=15 December 2025}}</ref>
+| 90%{{efn|name=k|excl. [[Kochis|Kuchi]].}}
+| colspan="2"| 10%
+|-style="background-color:#FFFFFF;"
+| 2010 [[Clingendael Institute|CI]]<ref name="ci">{{Cite web |title= The man who would be king: The Challenges to Strengthening Governance in Uruzgan|url=https://www.clingendael.org/sites/default/files/pdfs/20110316_cru_publicatie_sschmeidl.pdf |access-date=7 May 2026}}</ref>
+|| 91% || 8% || 1%{{efn|incl. [[Sayyid]], [[Tajiks|Tajik]] and [[History of Arabs in Afghanistan|Quraish]].}}
+|-style="background-color:#FFFFFF;"
+| 2009 [[Institute for the Study of War|ISW]]<ref>{{Cite web |title=Regional Command South
+|url=https://understandingwar.org/research/middle-east/regional-command-south/ |access-date=April 15, 2009}}</ref>
+|| majority || significant minority || –
+|}
+{| class="wikitable" style="text-align:left; table-layout:fixed; margin:0"
+| <small>'''Legend:'''<br>
+<ul style="margin:0; padding-left:1.2em; list-style-position:inside;">
+<li>'''∅:''' Ethnicity mentioned in source but not quantified</li>
+<li>'''–:''' Ethnicity not mentioned specifically</li>
+<li>'''Source abbreviations:''' {{font color|bg=#CCCCCC|text=Empirical sources: –}}, {{font color|bg=#E6E6E6|text=Government sources: EU – [[European Union Agency for Asylum]], PRT – [[Provincial Reconstruction Team]] of the [[United States government]], UN – [[United Nations Assistance Mission in Afghanistan]]}}, {{font color|bg=#FFFFFF|text=Editorial sources: CI – [[Clingendael Institute]], FIC – [[Feinstein International Center]], ISW – [[Institute for the Study of War]], NPS – [[Naval Postgraduate School]], UCD – [[University of California, Davis]],{{efn|Produced at UCD as part of the ''Regional Rural Economic Regeneration Strategies'' subproject of the ''eAfghan Ag'' project, supported by [[United States Agency for International Development|USAID]].<ref>[https://documents1.worldbank.org/curated/en/221411481792470877/pdf/SFG2759-EA-P159291-Box396338B-PUBLIC-Disclosed-12-13-2016.pdf World Bank Group]</ref>}} USA – [[United States Army]]}}</li>
+</ul></small>
+|}
+
+===Education===
+The overall literacy rate (6+ years of age) increased from 5% in 2005 to 17% in 2011.<ref name="cimicweb.org"/>
+The overall net enrollment rate (6–13 years of age) increased from 1% in 2005 to 49% in 2011.<ref name="cimicweb.org"/>
+
+===Health===
+The percentage of households with clean drinking water increased from 8% in 2005 to 27% in 2011.<ref name="cimicweb.org">{{Cite web |url=https://www.cimicweb.org/AfghanistanProvincialMap/Pages/Uruzgan.aspx |title=Archive, Civil Military Fusion Centre |access-date=2014-05-30 |archive-date=2014-05-31 |archive-url=https://web.archive.org/web/20140531105201/https://www.cimicweb.org/AfghanistanProvincialMap/Pages/Uruzgan.aspx |url-status=dead }}</ref>
+The percentage of births attended to by a skilled birth attendant increased from 6% in 2005 to 14% in 2011.<ref name="cimicweb.org"/>
+
+==See also==
+*[[Provinces of Afghanistan]]
+
+== Notes ==
+{{notelist}}
+
+==References==
+{{Commons category}}
+{{Reflist}}
+
+{{Geographic location
+|Centre    = Uruzgan Province
+|North     = [[Daykundi Province]]
+|Northeast = [[Ghazni Province]]
+|East      = [[Zabul Province]]
+|Southeast = 
+|South     = [[Kandahar Province]]
+|Southwest = 
+|West      = [[Helmand Province]]
+|Northwest = 
+}}
+
+{{Provinces of Afghanistan}}
+{{Urozgan Province}}
+
+{{Authority control}}
+
+{{DEFAULTSORT:Uruzgan Province}}
+[[Category:Hazarajat]]
+[[Category:Provinces of Afghanistan]]
+[[Category:Urozgan Province| ]]
+[[Category:Provinces of the Islamic Republic of Afghanistan]]

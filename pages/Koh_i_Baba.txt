@@ -1,0 +1,85 @@
+https://en.wikipedia.org/wiki/Koh-i-Baba
+
+The Baba Mountain range (Pashto: بابا غر Bâbâ Ǧar; Persian: کوه بابا Kōh-i Bābā; or Kūh-e Bābā; Kōh or Kūh meaning ′mountain′, Bābā meaning ′father′) is the western extension of the Hindu Kush, and the origin of Afghanistan's Kabul, Arghandab, Helmand, Farah, Hari, Murghab, Balkh, and Kunduz rivers. The mountain range is crowned by Foladi peak (or Shah Fuladi) rising 5048 m (some old maps and dictionaries: 5143 m) above sea level, and is located south of Bamyan.
+The Koh-e Firoz plateau merges farther to the west by gentle gradients into the Paropamise, and which may be traced across the Hari River to Mashad. To the southwest of the culminating peaks, long spurs divide the upper tributaries of the Helmand River, and separate its basin from that of the Farah River. These spurs retain a considerable altitude, marked by peaks exceeding 11,000 ft (3,400 m). They sweep in a broad band of roughly parallel ranges to the southwest, preserving their general direction till they abut on the Great Registan desert to the west of Kandahar, where they terminate in a series of detached and broken anticlines whose sides are swept by a sea of encroaching sand. The long, straight, level-backed ridges which divide the Argandab, the Tarnak and Arghastan valleys, flank the route from Kandahar to Ghazni.
+The high jagged peaks above the Hajigak Pass, blue-black and shining, shimmer in the sunlight for they contain an estimated reserve of 2 billion tons of iron ore; Asia's richest deposit. The very steep descent from the Hajigak Pass (3,700 m (12,100 ft)) with its numerous hairpin bends leads to the sparkling Kalu River, known locally as the Sauzao or Green Waters. It is bordered by poplars and several charming villages. 
+The area is inhabited mostly by ethnic Hazara people followed by Tajiks, Pashtuns. There are also  Sayyid households. Much of the population heavily depends on agriculture as their prime source of income and potato the prime crop.
+
+
+== See also ==
+Geography of Afghanistan
+List of ultras of the Karakoram and Hindu Kush
+
+
+== Literature ==
+Peter Lumsden, Countries and Tribes Bordering on the Koh-i-Baba Range, Proceedings of the Royal Geographical Society and Monthly Record of Geography (1885).
+
+
+== References ==
+
+
+== External links ==
+
+Tourism Conference In Bamyan - B-roll, Part 2 Archived 2016-03-06 at the Wayback Machine - Defense Video & Imagery Distribution System
+
+=====WIKITEXT=====
+{{short description|Mountain range in Afghanistan}}
+{{redirect|Fuladi|the villages in Iran|Fuladi, Iran (disambiguation){{!}}Fuladi, Iran|the Afghan Hazara tribe|Poladha}}
+{{More footnotes|date=August 2020}}
+{{Infobox mountain <!-- Infobox mountain range redirects there -->
+| name             = Koh-i-Baba
+| image            = Bamyan 1.jpg
+| image_caption    = [[Bamyan]], Afghanistan
+<!-- MAP -->
+| pushpin_map      = Afghanistan
+| map_caption      = Afghanistan<br />Position on the heights [[Ab Bala]]-[[Kamati]], [[Bamyan Province]]
+<!----------------------- HIGHEST POINT -->
+| highest          = Shah Fuladi
+| highest_location = 
+| elevation_m      = 5048
+| elevation_ref    = <ref>[https://www.peakbagger.com/peak.aspx?pid=10489 Shah Fuladi, Afghanistan] on peakbagger.com</ref>
+| prominence_m     = 
+| prominence_ref   = 
+| parent_peak      = 
+| isolation_km     = 
+| isolation_parent = 
+| isolation_ref    = 
+| coordinates      = {{coord|34|38|43|N|67|37|27|E|type:mountain_scale:100000|format=dms|display=inline,title}}
+| coordinates_ref  = 
+<!----------------------- GEOGRAPHY -->
+| location         = Central Afghanistan
+| range            = 
+| topo             = 
+<!----------------------- CLIMBING -->
+| first_ascent     = 
+| easiest_route    = 
+}}
+[[File:Mountain passes Afghanistan Pakistan.png|thumb|290px|Topographic map of northeastern Afghanistan with Koh-i-Baba on the left]]
+The '''Baba Mountain range''' ({{langx|ps|بابا غر}} '''Bâbâ Ǧar'''; {{langx|fa|کوه بابا}} '''Kōh-i Bābā'''; or '''Kūh-e Bābā''';<ref>[https://www.britannica.com/place/Baba-Mountains Bābā Mountains (Kūh-e Bābā)] in Encyclopædia Britannica</ref> ''Kōh'' or ''Kūh'' meaning ′mountain′, ''Bābā'' meaning ′father′) is the western extension of the [[Hindu Kush]], and the origin of [[Afghanistan]]'s [[Kabul River|Kabul]], [[Arghandab River|Arghandab]], [[Helmand River|Helmand]], [[Farah River|Farah]], [[Hari (Afghanistan)|Hari]], [[Murghab River|Murghab]], [[Balkh River|Balkh]], and [[Kunduz River|Kunduz]] rivers. The mountain range is crowned by ''Foladi peak'' (or '''Shah Fuladi''') rising 5048 m (some old maps and dictionaries:<ref>[https://universal_lexikon.de-academic.com/263155/Kuh-e_Baba Kuh-e Baba] on universal_lexikon.de</ref> 5143 m) above sea level, and is located south of [[Bamyan]].
+
+The [[Koh-e Firoz]] plateau merges farther to the west by gentle gradients into the [[Paropamisadae#Name|Paropamise]], and which may be traced across the Hari River to [[Mashad]]. To the southwest of the culminating peaks, long spurs divide the upper tributaries of the [[Helmand River]], and separate its basin from that of the [[Farah River]]. These spurs retain a considerable altitude, marked by peaks exceeding {{convert|11000|ft|m|abbr=on}}. They sweep in a broad band of roughly parallel ranges to the southwest, preserving their general direction till they abut on the Great [[Registan]] desert to the west of [[Kandahar]], where they terminate in a series of detached and broken anticlines whose sides are swept by a sea of encroaching sand. The long, straight, level-backed ridges which divide the [[Argandab]], the [[Tarnak River|Tarnak]] and [[Arghastan]] valleys, flank the route from Kandahar to [[Ghazni]].
+The high jagged peaks above the [[Hajigak Pass]], blue-black and shining, shimmer in the sunlight for they contain an estimated reserve of 2 billion tons of iron ore; Asia's richest deposit. The very steep descent from the Hajigak Pass ({{convert|3700|m|ft|abbr=on}}) with its numerous hairpin bends leads to the sparkling Kalu River, known locally as the Sauzao or Green Waters. It is bordered by poplars and several charming villages. 
+
+The area is inhabited mostly by ethnic [[Hazara people]] followed by [[Tajik people|Tajiks]], [[Pashtun people|Pashtuns]]. There are also [[Sayyid| Sayyid households]]. Much of the population heavily depends on agriculture as their prime source of income and potato the prime crop.
+
+==See also==
+* [[Geography of Afghanistan]]
+* [[List of ultras of the Karakoram and Hindu Kush]]
+
+==Literature==
+* Peter Lumsden, ''Countries and Tribes Bordering on the Koh-i-Baba Range'', Proceedings of the Royal Geographical Society and Monthly Record of Geography (1885).
+
+==References==
+{{Reflist}}
+
+== External links ==
+{{Commons category}}
+*[http://www.dvidshub.net/video/116718/tourism-conference-bamyan-b-roll-part-2 Tourism Conference In Bamyan - B-roll, Part 2] {{Webarchive|url=https://web.archive.org/web/20160306083002/https://www.dvidshub.net/video/116718/tourism-conference-bamyan-b-roll-part-2 |date=2016-03-06 }} - [[Defense Video & Imagery Distribution System]]
+
+{{Bamyan Province}}
+
+[[Category:Landforms of Bamyan Province]]
+[[Category:Landforms of Maidan Wardak Province]]
+[[Category:Hindu Kush]]
+[[Category:Mountain ranges of Afghanistan]]
+[[Category:Ultra-prominent peaks of Asia]]

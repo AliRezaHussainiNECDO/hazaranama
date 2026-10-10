@@ -1,0 +1,230 @@
+https://en.wikipedia.org/wiki/Jaghori_District
+
+Jaghori (Dari: جاغوری) is one of the districts of Ghazni Province in central Afghanistan. It has an estimated population of 217,483 people. Most of them are Hazara villagers involved in agriculture. Others are traders, shop owners, and construction workers. Sange-e-Masha serves as the capital of Jaghori. It is where major business transactions take place. Major marketplaces are in Ghojor and Anguri.
+Occupying 1,855 km2 (716 sq mi), Jaghori is one of the mountainous and remote districts of Ghazni Province. It sits in the highlands in the southern fringes of the Hazarajat region, in the upper Arghandab River valley. The district has a growing number of dams and reservoirs, which are slowly attracting tourists from not only Ghazni but also other provinces.
+Climate of Jaghori is generally arid continental, with cold and snowy winters, and hot summers with temperatures rising between 25 °C (77 °F) to 38 °C (100 °F).
+
+
+== History ==
+
+During the period of Dost Muhammad Khan in the 1830s the area operated as part of the semi-autonomous area of Hazarajat. In 1949 Malistan District was separated from Jaghori.
+During the Soviet Occupation, Maoist resistance groups were particularly active. After Harakat lost in Qarabagh District, Ghazni in 1985 to Nasr, the political organizations united to force out Hezbi Islami from the districts of Jaghori and Malistan. However, there were only sporadic clashes here and the Democratic Republic of Afghanistan lacked interest in Jaghori. In 1997 the area was put under food blockade by the Taliban, leaving the locals, including those in Malistan, on the brink of starvation. The elders of Jaghori avoided a war with the Taliban by forming a shura and then negotiating with the Taliban leaders in Kandahar, Kabul, and Ghazni.
+
+During NATO's occupation in the early 20th century, the area remained in Taliban control. The major issues have been about use of land and water.
+Many residents of Jaghori fled the area during the decades of war and drought. Some began returning since the early 2000s. From 2002 to 2008 approximately 12,348 expatriates returned to Jaghori.
+Districts of Ghazni have been inaccessible except through Taliban territory, where the road has been reportedly mined and in some areas vehicles have been banned. According to some reports, the road from Qarabagh District to Jaghouri, passing through Malistan was under particular threat, with kidnappings and theft. There were also concerns that certain militants would use the Kuchis to exert their influence in the region. General Habibullah Bashi had check posts between Rasna, Gilan connecting Zeba, and Gardo Hotqul.
+In 2012, a Bactrian inscription was discovered on a rock, dated to around 757 CE (140 AH), it commemorates the defeat of an "Indian prince" by a local prince named Frum Kesar, likely the grandson of a king whose reign ended in 745 CE. The ruling family's tamgha, or dynastic symbol, appears twice below the text.
+In November 2018 Taliban-led forces launched a major offensive in Jaghori, which resulted in thousands of locals fleeing the area for safety elsewhere, particularly in Dashte Barchi in Kabul. Heavy fighting was reported around the village of Hotqul. It was claimed that 100s of militants attacked General Bashi's security posts bordering Hotqul and Rasna Gilan. General Bashi was killed along with his family members. The fighting continued for over two weeks in which around seventy more people died. According to locals, about 1,000 Taliban-led fighters were deployed in southern Jaghori. It was said that the people of Jaghori resisted and repelled the Taliban forces without any assistance from Ashraf Ghani's administration. Despite all of that, the Taliban captured the district on 15 August 2021, as part of their offensive. Since then no attacks or military activities have been reported.
+
+
+== Drought ==
+
+The area has been particularly affected by drought. As a result, the residents began building check dams throughout the district.
+
+
+== Notable people ==
+Mohammad Sharif Saiidi, poet
+Muhammad al-Fayadh, Shia jurist
+Akram Yari
+Yazdan Khan
+Musa Khan
+Khodadad Erfani
+Sima Samar
+Shah Gul Rezai
+
+
+== See also ==
+Districts of Afghanistan
+Jaghori (Hazara tribe)
+
+
+== References ==
+
+
+== External links ==
+ ۱ نومبر ۲۰۲۵ on YouTube
+Jaghori drone view. ویدیوی جدید از آسمان زیبای جاغوری on YouTube
+Ghazni Province, Jaghori District on YouTube
+اولین ,مجلل ترین پارک درجاغوریThe first most luxurious park in jaghori on YouTube
+Drone view of snowy Jaghori Zeba on YouTube
+Jaghori district on OpenStreetMap (relation)
+UNHCR District ProfileArchived 2016-03-03 at the Wayback Machine
+
+=====WIKITEXT=====
+{{pp-pc|small=yes}}
+{{More citations needed|date=August 2020}}
+{{Infobox settlement
+<!--See the Table at Infobox Settlement for all fields and descriptions of usage-->
+| official_name            = Jaghori
+| native_name              = جاغوری
+| native_name_lang         = prs
+| nickname                 = 
+| type                     = [[Districts of Afghanistan|District]]
+| motto                    = {{langx|prs|جاغوری سرزمین آرزوها}}
+<!-- images and maps  ----------->
+| image                    = Jaghori Mountaintop View (4K).jpg
+| image_size               = 
+| caption                  = View of [[Sang-e-Masha]] (Central Jaghori) from Badasiya Mountain,
+| image_flag               = 
+| flag_size                = 
+| image_seal               = 
+| seal_size                = 
+| image_shield             = 
+| shield_size              = 
+| image_blank_emblem       = 
+| blank_emblem_type        = 
+| blank_emblem_size        = 
+| image_map                = 
+| map_size                 = 
+| map_caption              = [https://www.openstreetmap.org/relation/6602845#map=10/33.1203/67.6167 Jaghuri]
+| image_map1               = 
+| map_size1                = 
+| map_caption1             = 
+| image_dot_map            = 
+| dot_mapsize              = 
+| dot_map_caption          = 
+| dot_x                    = 
+| dot_y                    = 
+| pushpin_map              = Afghanistan <!-- the name of a location map as per http://en.wikipedia.org/wiki/Template:Location_map -->
+| pushpin_label_position   = bottom
+| pushpin_caption          = Location in Afghanistan
+| subdivision_type         = Country
+| subdivision_name         = [[Afghanistan]]
+| subdivision_type1        = [[Provinces of Afghanistan|Province]]
+| subdivision_name1        = [[Ghazni Province|Ghazni]]
+| subdivision_type2        = [[Capital city|Capital]]
+| subdivision_name2        = [[Sang-e-Masha]]
+| subdivision_type3        = 
+| subdivision_name3        = 
+| subdivision_type4        = 
+| subdivision_name4        = <!-- Politics ----------------->
+| government_footnotes     = 
+| government_type          = 
+| leader_title             = 
+| leader_name              = 
+| leader_title1            = <!-- for places with, say, both a mayor and a city manager -->
+| leader_name1             = 
+| leader_title2            = 
+| leader_name2             = 
+| leader_title3            = 
+| leader_name3             = 
+| leader_title4            = 
+| leader_name4             = 
+| established_title        = <!-- Settled -->
+| established_date         = 
+| established_title2       = <!-- Incorporated (town) -->
+| established_date2        = 
+| established_title3       = <!-- Incorporated (city) -->
+| established_date3        = <!-- Area    --------------------->
+| area_magnitude           = 
+| unit_pref                = Metric <!--Enter: Imperial, if Imperial (metric) is desired-->
+| area_footnotes           = 
+| area_total_km2           = 3000 <!-- ALL fields dealing with a measurements are subject to automatic unit conversion-->
+| area_land_km2            = <!--See table @ Template:Infobox Settlement for details on automatic unit conversion-->
+| area_water_km2           = 
+| area_total_sq_mi         = 
+| area_land_sq_mi          = 
+| area_water_sq_mi         = 0
+| area_water_percent       = 
+| area_urban_km2           = 
+| area_urban_sq_mi         = 
+| area_metro_km2           = 
+| area_metro_sq_mi         = 
+| area_blank1_title        = 
+| area_blank1_km2          = 
+| area_blank1_sq_mi        = <!-- Population   ----------------------->
+| population_as_of         = 2025
+| population_footnotes     = <ref name="population" />
+| population_note          = 
+| population_total         = 217483
+| population_density_km2   = auto
+| population_density_sq_mi = 
+| population_metro         = 
+| population_density_metro_km2 = 
+| population_density_metro_sq_mi = 
+| population_urban         = 
+| population_density_urban_km2 = 
+| population_density_urban_sq_mi = 
+| population_blank1        = 
+| population_blank2_title  = 
+| population_blank2        = 
+| population_density_blank1_km2 = 
+| population_density_blank1_sq_mi = <!-- General information  --------------->
+| time_zone                = [[Time in Afghanistan|Afghanistan Time]]
+| utc_offset               = +04:30
+| time_zone_DST            = 
+| utc_offset_DST           = 
+| coordinates              = {{coord|33|7|59|N|67|27|13|E|region:AF|display=inline,title}}
+| elevation_footnotes      = <ref>Arc - GIS - earth topographic nap - https://www.arcgis.com/home/webmap/viewer.html</ref>
+| elevation_m              = 4022
+| elevation_ft             = 
+| postal_code_type         = <!-- enter ZIP code, Postcode, Post code, Postal code... -->
+| postal_code              = 
+| area_code                = 
+| custom_label_sec1        = 
+| custom_data_sec1         = 
+| custom_label1_sec1       = 
+| custom_data1_sec1        = 
+| website                  = 
+| footnotes                = 
+}}
+
+'''Jaghori''' ({{langx|prs|جاغوری}}) is one of the [[districts of Afghanistan|districts]] of [[Ghazni Province]] in central [[Afghanistan]]. It has an estimated population of 217,483 people.<ref name="population">{{cite web |url=https://nsia.gov.af:8443/wp-content/uploads/2025/09/براورد-نفوس-کشور-سال-1404.pdf#page=68 |title=Estimated Population of Afghanistan 2025-26 |page=45 |work=National Statistics and Information Authority |date=September 2025 |access-date=2025-12-22}}</ref> Most of them are [[Hazaras|Hazara]] villagers involved in [[agriculture]]. Others are traders, shop owners, and construction workers. [[Sang-e-Masha|Sange-e-Masha]] serves as the capital of Jaghori. It is where major business transactions take place. Major marketplaces are in Ghojor and [[Anguri]].
+
+Occupying {{cvt|1855|km2}}, Jaghori is one of the mountainous and remote districts of Ghazni Province.<ref>{{cite news |url=https://tolonews.com/afghanistan-196662 |title=Road Project Launched to Link Ajristan and Malistan Districts in Ghazni |publisher=TOLOnews |date=20 September 2025 |access-date=2025-12-24}}</ref> It sits in the highlands in the southern fringes of the [[Hazarajat]] region, in the upper [[Arghandab River]] [[valleys of Afghanistan|valley]].<ref name="Monsutti2005">{{citation|last=Monsutti|first=Alessandro|title=War and Migration: Social Networks and Economic Strategies of the Hazaras of Afghanistan|url=https://books.google.com/books?id=YhEfDAAAQBAJ&pg=PA69|year=2005|publisher=Routledge|isbn=978-1-135-48676-1|pages=69–}}</ref> The district has a growing number of [[list of dams and reservoirs in Afghanistan|dams and reservoirs]], which are slowly attracting [[tourism in Afghanistan|tourists]] from not only Ghazni but also other [[provinces of Afghanistan|provinces]].
+
+Climate of Jaghori is generally arid continental, with cold and [[snow]]y [[winter]]s, and hot summers with temperatures rising between {{cvt|25|°C}} to {{cvt|38|°C}}.
+
+== History ==
+{{Further|History of Afghanistan}}
+During the period of [[Dost Muhammad Khan]] in the 1830s the area operated as part of the semi-autonomous area of [[Hazarajat]]. In 1949 [[Malistan District]] was separated from Jaghori.{{cn|date=November 2020}}
+
+During the [[Soviet–Afghan War|Soviet Occupation]], [[Maoist]] resistance groups were particularly active. After [[Harakat]] lost in [[Qarabagh District, Ghazni]] in 1985 to Nasr, the political organizations united to force out [[Hezbi Islami]] from the districts of Jaghori and Malistan. However, there were only sporadic clashes here and the [[Democratic Republic of Afghanistan]] lacked interest in Jaghori. In 1997 the area was put under food blockade by the [[Taliban]], leaving the locals, including those in Malistan, on the brink of starvation. The elders of Jaghori avoided a war with the Taliban by forming a [[shura]] and then negotiating with the Taliban leaders in [[Kandahar]], [[Kabul]], and [[Ghazni]].
+[[File:Jaghori mission DVIDS304682.jpg|thumb|left|A U.S. soldier giving ride to local Afghan children in 2010]]
+During [[NATO]]'s occupation in the early 20th century, the area remained in Taliban control.<ref>{{Cite web |title=World |url=https://archive.nytimes.com/www.nytimes.com/imagepages/2009/10/23/world/23tbmap.html |access-date=2024-07-04 |website=archive.nytimes.com}}</ref> The major issues have been about use of land and water.
+
+Many residents of Jaghori fled the area during the decades of war and drought. Some began returning since the early 2000s. From 2002 to 2008 approximately 12,348 [[expatriate]]s returned to Jaghori.
+
+Districts of Ghazni have been inaccessible except through Taliban territory, where the road has been reportedly mined and in some areas vehicles have been banned.<ref>Reuter Christoph, Borhan Younus. "The Return of the Taliban in Andar District: Ghazni." Decoding the New Taliban: Insights from the Afghan Field. Ed. Antonio Giustozzi. HURST Publications Ltd. 2009.</ref> According to some reports, the road from [[Qarabagh District, Ghazni|Qarabagh District]] to Jaghouri, passing through [[Malistan]] was under particular threat, with kidnappings and theft. There were also concerns that certain militants would use the [[Kuchis]] to exert their influence in the region. General Habibullah Bashi had check posts between Rasna, [[Gelan District|Gilan]] connecting Zeba, and Gardo Hotqul.
+
+In 2012, a Bactrian inscription was discovered on a rock, dated to around 757 CE (140 AH), it commemorates the defeat of an "Indian prince" by a local prince named Frum Kesar, likely the grandson of a king whose reign ended in 745 CE. The ruling family's tamgha, or dynastic symbol, appears twice below the text.<ref>{{Cite web |date=2020-05-27 |title=A new Bactrian inscription from Jaghori, Afghanistan |url=https://www.indiran.org/a-new-bactrian-inscription-from-jaghori-afghanistan/ |access-date=2024-09-03 |website=Ancient India & Iran Trust |language=en-GB}}</ref>
+
+In November 2018 Taliban-led forces launched a major offensive in Jaghori,<ref>{{cite news |url=https://tolonews.com/afghanistan/taliban-launches-group-attacks-ghazni%E2%80%99s-jaghori-district |title=Taliban Launches Group Attacks On Ghazni's Jaghori District |work=TOLOnews |date=November 7, 2018}}</ref><ref>{{cite news |url=https://www.ariananews.af/dozens-of-civilians-commando-forces-killed-in-taliban-attack-in-ghazni/ |title=Dozens of Civilians, Commando Forces Killed in Taliban Attack in Ghazni |work=Ariana News |date=November 11, 2018}}</ref> which resulted in thousands of locals fleeing the area for safety elsewhere, particularly in [[Dashte Barchi]] in [[Kabul]].<ref>{{cite news |url=https://www.reuters.com/article/world/thousands-flee-as-taliban-attack-afghanistans-safe-districts-idUSKCN1NJ26N/ |title=Thousands flee as Taliban attack Afghanistan's 'safe' districts |publisher=Reuters |date=November 14, 2018}}</ref><ref>{{cite news |url=https://gandhara.rferl.org/a/afghanistan-ghazni-afghan-hazara-fleeing-taliban-find-little-solace-in-escape/29604174.html |title='From One Grave To Another': Afghan Hazara Fleeing Taliban Find Little Solace In Escape |publisher=Radio Free Europe/Radio Liberty |date=November 16, 2018}}</ref> Heavy fighting was reported around the village of Hotqul. It was claimed that 100s of militants attacked General Bashi's security posts bordering Hotqul and Rasna Gilan. General Bashi was killed along with his family members. The fighting continued for over two weeks in which around seventy more people died. According to locals, about 1,000 Taliban-led fighters were deployed in southern Jaghori. It was said that the people of Jaghori resisted and repelled the Taliban forces without any assistance from [[Ashraf Ghani]]'s administration.<ref name=":0">{{cite news |url=https://www.nytimes.com/2018/11/12/world/asia/afghanistan-taliban-attack-jaghori-district.html |title=Taliban Slaughter Elite Afghan Troops, and a 'Safe' District Is Falling |first=Rod |last=Nordland |work=The New York Times |date=November 12, 2018}}</ref> Despite all of that, the Taliban captured the district on 15 August 2021, as part of their [[2021 Taliban offensive|offensive]]. Since then no attacks or military activities have been reported.
+
+== Drought ==
+{{Further|Economy of Afghanistan}}
+The area has been particularly affected by [[Drought in Afghanistan|drought]]. As a result, the residents began building [[check dam]]s throughout the district.<ref>{{cite news |url=https://pajhwok.com/2025/09/14/ghazni-farmers-thrive-as-39-check-dams-revive-agriculture-ease-drought/ |title=Ghazni farmers thrive as 39 check dams revive agriculture, ease drought |publisher=Pajhwok Afghan News |date=14 September 2025 |access-date=2025-12-24}}</ref>
+
+==Notable people== 
+* [[Mohammad Sharif Saiidi]], poet
+* [[Muhammad al-Fayadh]], [[Shia]] jurist
+* [[Akram Yari]]
+* [[Yazdan Khan]]
+* [[Muhammad Musa (general)|Musa Khan]]
+* [[Khodadad Erfani]]
+* [[Sima Samar]]
+* [[Shah Gul Rezai]]
+
+== See also ==
+* [[Districts of Afghanistan]]
+* [[Jaghori (Hazara tribe)]]
+
+== References ==
+{{reflist|30em}}
+
+== External links ==
+*{{YouTube|yqwPg1TbFpI| ۱ نومبر ۲۰۲۵ }}
+*{{YouTube|Ru4MwK6x0QA|Jaghori drone view. ویدیوی جدید از آسمان زیبای جاغوری }}
+*{{YouTube|hNkBlXJi3zw|Ghazni Province, Jaghori District}}
+*{{YouTube|AwHrGU705_I|اولین ,مجلل ترین پارک درجاغوریThe first most luxurious park in jaghori}}
+*{{YouTube|a3mSv5TEL28|Drone view of snowy Jaghori Zeba}}
+* [https://www.openstreetmap.org/relation/6602845 Jaghori district] on [[OpenStreetMap]] (relation)
+*[http://www.aims.org.af/afg/dist_profiles/unhcr_district_profiles/centra/ghazni/jaghori.pdf UNHCR District Profile]{{webarchive|url=https://web.archive.org/web/20160303222836/http://www.aims.org.af/afg/dist_profiles/unhcr_district_profiles/centra/ghazni/jaghori.pdf |date=2016-03-03}}
+
+{{Districts of Ghazni}}
+{{Ghazni Province}}
+{{Authority control}}
+{{DEFAULTSORT:Jaghori District}}
+[[Category:Jaghori District| ]]
+[[Category:Districts of Ghazni Province]]
+[[Category:Hazarajat]]

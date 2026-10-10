@@ -1,0 +1,173 @@
+https://en.wikipedia.org/wiki/Dashte_Barchi
+
+Dasht-e-Barchi (Pashto; Dari: دشت برچی) is a neighborhood in the western section of Kabul, Afghanistan. It is within the jurisdiction of Municipal District 13 (Nahia 13) and has an estimated population of 317,097 people. 
+Previously barren with some farmlands, the neighborhood began to be developed by the Kabul Municipality in the 2000s. Many natives of Bamyan, Daikundi, Ghazni, Maidan Wardak, Parwan and other provinces settled in Barchi. Some returned from Iran, Pakistan, Turkey and other countries. Majority of them are Hazaras. For this reason the neighborhood has been targeted by anti-Shia extremists, most notably by Islamic State – Khorasan Province (ISKP). 
+
+
+== History ==
+
+Dashte Barchi literally translates to "desert of the porters". It was named due to its use as a respite for Hazara laborers transporting goods into Kabul. It was historically a remote and underpopulated area, with few government buildings or military installations. 
+During the drought in Afghanistan in the late 1990s, Dasht-e Barchi saw a massive influx of Hazara migrants from rural enclaves, most notably Behsud, Bamyan, and Jaghori. The Taliban's repression of the Hazaras was another reason for the mass migration. The majority of Hazaras now living in Dashte Barchi may still be considered internally displaced persons.
+Dasht-e Barchi saw comparatively little violence during the Afghan civil war, and suicide attacks remained rare in the 2000s, even as the rest of Kabul experienced these attacks with relative frequency.
+Some Hazaras who had fled to Iran during the decades of war resettled in Dashte Barchi upon their return. In recent years the neighborhood has been seen by many Hazaras as an area for economic opportunity. The rapid population growth created job opportunities and new schools, and due to the heavily Hazara population, there were fewer concerns about discrimination hampering one's economic prospects.
+While discrimination and lack of opportunity in rural enclaves had long meant that Hazaras had lower rates of education and political participation than other ethnic groups, new residents of Dasht-e Barchi sought out education and became more involved in politics. The neighborhood came to be known for political organizing and demonstrations. Hazaras in Kabul had higher rates of university enrollment and government participation than other ethnic groups. After more than a decade of relative safety, Dasht-e Barchi began to experience a rash of attacks starting in 2016.
+
+
+== Geography ==
+
+Lying at the western edge of Kabul, Dashte Barchi wraps around the mountains framing the city. Its main paved street, named for the Hazara mujahideen commander Abdul Ali Mazari, runs throughout the length of the neighborhood.
+Dashte Barchi is connected to Hazarjat, the historic homeland of Hazaras, by the Kabul-Behsud Highway. However, many have avoided this highway during the US war in Afghanistan due to lawlessness.
+
+
+== Incidents of terrorism ==
+
+On August 15, 2016, a suicide attack took place in this neighborhood, targeting an educational center called "The Promised Mehdi". The bomber struck shortly after noon in front of a crowd of 5,000, mostly students of the Hazara ethnic group who were preparing for university. 34 students were killed and 56 injured in the attack.
+On March 6, 2020, a mourning ceremony in honor of Abdul Ali Mazari was attacked by ISKP gunmen, leaving 32 dead and more than 50 injured.
+On May 12, 2020, a suicide attack targeting the maternity ward of Dashte Barchi Hospital left 16 mothers and 8 children dead. No group took responsibility for the attack.
+On October 25, 2020, the Kawsare Danish Center was targeted by a suicide bomber. At least 30 were killed and 70 more were injured in the attack. Most of the victims were students between the age of 15 and 26. ISKP claimed responsibility for the attack, but did not provide evidence.
+On May 8, 2021, the Kabul school bombing targeted Sayed al-Shuhada school for girls. No group took responsibility for the attack.
+On June 12, 2021, seven civilians were killed and six wounded in two separate explosions in Dashte Barchi. The dead included two young women.
+On September 30, 2022, the Kaaj Education Center was targeted by suicide bombers. 25 students, mostly young Hazara women sitting for a practice exam, were killed. The suspects were later killed.
+
+
+== References ==
+
+
+== External links ==
+Afghanistan Kabul Walk 🇦🇫 / Streets, People & Reality in 2025 (4K HDR) on YouTube
+
+=====WIKITEXT=====
+{{Use mdy dates |date=February 2025}}
+{{Infobox settlement
+| name                   = Dasht-e-Barchi
+| native_name            = {{nq|دشت برچی}}
+| native_name_lang       = prs
+| type                   = [[Neighborhoods of Kabul|Municipal District]]
+| image                  = Barchi.jpg
+| image_size             = 280
+| alt                    = 
+| caption                = View of Dashte Barchi
+| image_flag             = 
+| flag_alt               = 
+| image_seal             = 
+| seal_alt               = 
+| image_shield           = 
+| shield_alt             = 
+| etymology              = 
+| nickname               = 
+| motto                  = 
+<!-- Location ------------------>
+| image_map              = Kabul City Map.svg
+| map_alt                = 
+| map_caption            = 
+| pushpin_map            = 
+| pushpin_label_position = 
+| pushpin_alt            = 
+| pushpin_caption        = 
+| coordinates            = {{coord|34.49467|N|69.09422|E|display=inline,title}}
+| coor_pinpoint          = 
+| coordinates_footnotes  = 
+| subdivision_type       = Country
+| subdivision_name       = [[Afghanistan]]
+| subdivision_type1      = [[Provinces of Afghanistan|Province]]
+| subdivision_name1      = [[Kabul Province|Kabul]]
+| subdivision_type2      = [[Districts of Afghanistan|District]]
+| subdivision_name2      = [[Kabul District|Kabul]]
+| subdivision_type3      = [[List of cities in Afghanistan|City]]
+| subdivision_name3      = [[Kabul]]
+| subdivision_type4      = [[Municipal District|Hawza/Nahia]]
+| subdivision_name4      = 13
+| established_title      = 
+| established_date       = 
+| founder                = 
+| seat_type              = 
+| seat                   = 
+| government_footnotes   = 
+| leader_party           = 
+| leader_title           = 
+| leader_name            = 
+| unit_pref              = Metric<!-- ALL fields with measurements have automatic unit conversion -->
+<!-- Area --------------------->
+| area_footnotes         = <ref name=":2" />
+| area_urban_footnotes   = <!-- <ref> </ref> -->
+| area_rural_footnotes   = <!-- <ref> </ref> -->
+| area_metro_footnotes   = <!-- <ref> </ref> -->
+| area_magnitude         = <!-- <ref> </ref> -->
+| area_note              = 
+| area_water_percent     = 
+| area_rank              = 
+| area_blank1_title      = 
+| area_blank2_title      = <!-- square kilometers -->
+| area_total_km2         = 46.6
+| area_land_km2          = 
+| area_water_km2         = 
+| area_urban_km2         = 
+| area_rural_km2         = 
+| area_metro_km2         = 
+| area_blank1_km2        = 
+| area_blank2_km2        = 
+| length_km              = 6.8
+| width_km               = 3.7
+| dimensions_footnotes   = 
+| elevation_footnotes    = 
+| elevation_m            = 
+<!-- Population ----------------------->
+| population_as_of       = 2025
+| population_footnotes   = <ref name="population" />
+| population_total       = 317097
+| population_density_km2 = auto
+| population_note        = 
+| population_demonym     = 
+<!-- General information -------------->
+| time_zone1             = [[Time in Afghanistan|Afghanistan Time]]
+| utc_offset1            = +04:30
+| time_zone1_DST         = 
+| utc_offset1_DST        = 
+| postal_code_type       = 
+| postal_code            = 
+| area_code_type         = 
+| area_code              = 
+| iso_code               = 
+| website                = <!-- {{URL|example.com}} -->
+| footnotes              = 
+}}
+
+'''Dasht-e-Barchi''' ([[Pashto]]; [[Dari]]: دشت برچی) is a [[neighborhood]] in the western section of [[Kabul]], [[Afghanistan]].<ref>{{cite news |url=https://www.ariananews.af/massive-welcome-for-afghanistans-u-17-futsal-champions-in-west-kabul/ |title=Massive welcome for Afghanistan's U-17 futsal champions in west Kabul |work=Ariana News |date=November 2, 2025 |access-date=2025-12-21}}</ref> It is within the jurisdiction of [[Municipal District]] 13 (''[[Nahiya|Nahia]]'' 13) and has an estimated population of 317,097 people.<ref name="population">{{cite web |url=https://nsia.gov.af:8443/wp-content/uploads/2025/09/%D8%A8%D8%B1%D8%A7%D9%88%D8%B1%D8%AF-%D9%86%D9%81%D9%88%D8%B3-%DA%A9%D8%B4%D9%88%D8%B1-%D8%B3%D8%A7%D9%84-1404.pdf#page=37 |title=Estimated Population of Afghanistan 2025-26 |page=14 |work=National Statistics and Information Authority |date=September 2025 |access-date=2026-01-29}}</ref><ref name=":0" /> 
+
+Previously barren with some farmlands, the neighborhood began to be developed by the Kabul Municipality in the 2000s.<ref name=":2">{{cite web |url=http://open_jicareport.jica.go.jp/pdf/12068151.pdf |title=Kabul City Current Status Report For Urban Development |pages=32-34 |publisher=Japan International Cooperation Agency |date=June 2011 |access-date=2018-01-23 |archive-date=2019-07-12 |archive-url=https://web.archive.org/web/20190712164258/http://open_jicareport.jica.go.jp/pdf/12068151.pdf#page=39 |url-status=dead}}</ref> Many natives of [[Bamyan Province|Bamyan]], [[Daikundi Province|Daikundi]], [[Ghazni Province|Ghazni]], [[Maidan Wardak Province|Maidan Wardak]], [[Parwan Province|Parwan]] and other provinces settled in Barchi.<ref name=":0" /> Some returned from [[Afghans in Iran|Iran]], [[Afghans in Pakistan|Pakistan]], [[Afghans in Turkey|Turkey]] and other countries. Majority of them are [[Hazaras]].<ref name=":0" /><ref name=":1">{{cite web |url=https://www.afghanistan-analysts.org/wp-content/uploads/2019/03/Kabul-Police-Districts.pdf#page=18 |title=Kabul Unpacked - A geographical guide to a metropolis in the making |page=18 |publisher=Afghanistan Analysts Network |date=2 March 2019 |access-date=2025-10-18}}</ref> For this reason the neighborhood has been targeted by [[anti-Shia]] extremists,<ref>{{cite news |url=https://tolonews.com/afghanistan-190200 |title=Family of ٰDasht-e-Barchi Blast Victim Calls for Justice |work=TOLOnews |date=12 August 2024 |access-date=2025-12-21}}</ref> most notably by [[Islamic State – Khorasan Province]] (ISKP).<ref name="Adili">{{cite web |last=Adili |first=Ali Yawar |date=17 January 2022 |title=A Community Under Attack: How successive governments failed west Kabul and the Hazaras who live there |url=https://www.afghanistan-analysts.org/en/reports/war-and-peace/a-community-under-attack-how-successive-governments-failed-west-kabul-and-the-hazaras-who-live-there/ |access-date=2025-01-14 |publisher=Afghanistan Analysts Network}}</ref><ref>{{cite web |last1=Hossaini |first1=Fatimah |last2=Latifi |first2=Ali M. |title=Kabul Hazara neighbourhood stunned by wave of attacks |url=https://www.aljazeera.com/news/2021/6/13/anger-as-afghanistan-mourns-death-of-car-blast-victims |date=13 June 2021 |access-date=2025-01-14 |publisher=Al Jazeera |language=en}}</ref><ref>{{cite web |last=Latifi |first=Ali M. |title=As Ashura nears, Shia neighbourhood on alert after ISIL attacks |url=https://www.aljazeera.com/features/2018/9/18/as-ashoura-nears-shia-neighbourhood-on-alert-after-isil-attacks |date=18 September 2018 |publisher=Al Jazeera |access-date=2025-01-14 |language=en}}</ref> 
+
+== History ==
+{{Further|History of Afghanistan}}
+''Dashte Barchi'' literally translates to "desert of the porters". It was named due to its use as a respite for Hazara laborers transporting goods into Kabul.<ref name=":3" /> It was historically a remote and underpopulated area, with few government buildings or military installations. 
+
+During the [[drought in Afghanistan]] in the late 1990s, Dasht-e Barchi saw a massive influx of Hazara migrants from rural enclaves, most notably [[Behsud, Maidan Wardak|Behsud]], [[Bamyan]], and [[Jaghori District|Jaghori]].<ref name=":0">{{cite journal |last1=Sarwari |first1=Fakhrullah |last2=Ono |first2=Hiroko |title=A Study on Urban Ethnic Segmentation in Kabul City, Afghanistan |journal=Sustainability |year=2023 |volume=15 |issue=8 |page=5 |jstor=15086589 |publisher=MDPI |url=https://www.mdpi.com/2071-1050/15/8/6589 |access-date=2026-02-10}}</ref> The Taliban's repression of the Hazaras was another reason for the mass migration.<ref>{{cite web |title=Afghanistan |url=https://2009-2017.state.gov/j/drl/rls/irf/2001/5533.htm |date=2001 |access-date=2025-01-14 |website=U.S. Department of State}}</ref> The majority of Hazaras now living in Dashte Barchi may still be considered [[internally displaced person|internally displaced persons]].<ref>{{cite web |title=UNHCR Web Archive |url=https://webarchive.archive.unhcr.org/20230519001121/https://www.refworld.org/docid/57f794955.html |date=20 April 2016 |access-date=2025-01-14 |website=webarchive.archive.unhcr.org}}</ref>
+
+Dasht-e Barchi saw comparatively little violence during the Afghan civil war, and suicide attacks remained rare in the 2000s, even as the rest of Kabul experienced these attacks with relative frequency.<ref name=":3">{{cite journal |last=Chiovenda |first=Melissa Kerr |date=2019 |title=Discursive Placemaking And Acts Of Violence: The Dasht-e Barchi Neighborhood Of Kabul, Afghanistan |url=https://www.jstor.org/stable/45173359 |journal=Urban Anthropology and Studies of Cultural Systems and World Economic Development |volume=48 |issue=1/2 |pages=13–49 |jstor=45173359 |issn=0894-6019}}</ref>
+
+Some Hazaras who had fled to Iran during the decades of war resettled in Dashte Barchi upon their return.<ref name=":4">{{Cite book |last1=Larson |first1=Anna |title=Youth mobilization and political constraints in Afghanistan: the Y factor |last2=Coburn |first2=Noah |date=2014 |publisher=United States Institute of Peace |others=United States Institute of Peace |isbn=978-1-60127-210-2 |series=Special Report |location=Washington/D.C}}</ref> In recent years the neighborhood has been seen by many Hazaras as an area for economic opportunity. The rapid population growth created job opportunities and new schools, and due to the heavily Hazara population, there were fewer concerns about discrimination hampering one's economic prospects.
+
+While discrimination and lack of opportunity in rural enclaves had long meant that Hazaras had lower rates of education and political participation than other ethnic groups, new residents of Dasht-e Barchi sought out education and became more involved in politics. The neighborhood came to be known for political organizing and demonstrations. Hazaras in Kabul had higher rates of university enrollment and government participation than other ethnic groups.<ref name=":4" /> After more than a decade of relative safety, Dasht-e Barchi began to experience a rash of attacks starting in 2016.<ref name="Adili" />
+
+== Geography ==
+{{Further|Geography of Afghanistan}}
+Lying at the western edge of Kabul, Dashte Barchi wraps around the mountains framing the city.<ref name=":3" /> Its main paved street, named for the Hazara [[mujahideen]] commander [[Abdul Ali Mazari]], runs throughout the length of the neighborhood.
+
+Dashte Barchi is connected to [[Hazarajat|Hazarjat]], the historic homeland of Hazaras, by the [[Kabul–Behsud Highway|Kabul-Behsud Highway]]. However, many have avoided this highway during the [[US war in Afghanistan]] due to lawlessness.<ref>{{cite web |last=Keller |first=Greg |title='Death Road' blocks Afghan minority from homeland |url=https://www.telegram.com/story/news/state/2014/01/23/death-road-blocks-afghan/40303097007/ |date=January 22, 2014 |access-date=2025-01-14 |website=The Worcester Telegram & Gazette |language=en-US}}</ref>
+
+== Incidents of terrorism ==
+{{Further|List of terrorist attacks in Kabul|Stop Hazara Genocide}}
+* On August 15, 2016, a suicide attack took place in this neighborhood, targeting an educational center called "The Promised Mehdi". The bomber struck shortly after noon in front of a crowd of 5,000, mostly students of the Hazara ethnic group who were preparing for university. 34 students were killed and 56 injured in the attack.<ref name="Adili" />
+* On March 6, 2020, a mourning ceremony in honor of [[Abdul Ali Mazari]] was attacked by ISKP gunmen, leaving 32 dead and more than 50 injured.<ref>{{cite news |url=https://www.theguardian.com/world/2020/mar/06/dozens-killed-in-attack-on-political-rally-in-kabul |title=Dozens killed in attack on political rally in Kabul |publisher=The Guardian |date=6 March 2020 |access-date=2025-01-14 |language=en-GB |issn=0261-3077}}</ref>
+* On May 12, 2020, a suicide attack targeting the [[May 2020 Afghanistan attacks|maternity ward]] of Dashte Barchi Hospital left 16 mothers and 8 children dead. No group took responsibility for the attack.<ref>{{cite news |url=https://www.bbc.com/news/world-asia-52673563 |title=Afghan maternity ward attackers 'came to kill the mothers' |publisher=BBC |date=15 May 2020 |access-date=2025-01-14 |language=en-GB}}</ref>
+* On October 25, 2020, the Kawsare Danish Center was targeted by a suicide bomber. At least 30 were killed and 70 more were injured in the attack. Most of the victims were students between the age of 15 and 26. ISKP claimed responsibility for the attack, but did not provide evidence.<ref>{{cite news |url=https://tolonews.com/afghanistan-167715 |title=Kabul Education Center Reopens Weeks after Deadly Attack |work=TOLOnews |date=12 November 2020 |access-date=2026-01-30}}</ref><ref>{{cite news |url=https://www.bbc.com/news/world-asia-54676319 |title=Afghan bombing: Kabul education centre attack kills at least 24 |publisher=BBC |date=25 October 2020 |access-date=2025-01-14 |language=en-GB}}</ref>
+* On May 8, 2021, the [[2021 Kabul school bombing|Kabul school bombing]] targeted Sayed al-Shuhada school for girls.<ref>{{cite news |url=https://tolonews.com/afghanistan-172193 |title=Families Seek Probe, Security After Kabul School Attack |work=TOLOnews |date=16 May 2021 |access-date=2026-01-30}}</ref><ref>{{cite news |url=https://www.ariananews.af/families-of-victims-call-on-intl-community-to-investigate-school-bombing/ |title=Families of victims call on Int'l community to investigate school bombing |work=Ariana News |date=June 13, 2021 |access-date=2026-01-30}}</ref> No group took responsibility for the attack.<ref>{{cite news |url=https://tolonews.com/afghanistan-172908 |title=Victims' Families: UN Must Probe Attack on Girls School in Kabul |work=TOLOnews |date=17 June 2021 |access-date=2026-01-30}}</ref>
+* On June 12, 2021, seven civilians were killed and six wounded in two separate explosions in Dashte Barchi.<ref>{{cite news |url=https://www.ariananews.af/seven-killed-in-two-separate-explosions-in-kabul/ |title=Seven killed in two separate explosions in Kabul |work=Ariana News |date=June 12, 2021 |access-date=2026-01-30}}</ref> The dead included two young women.<ref>{{cite news |url=https://www.ariananews.af/families-find-the-bodies-of-two-missing-kabul-women/ |title=Families find the bodies of two missing Kabul women |work=Ariana News |date=June 12, 2021 |access-date=2026-01-30}}</ref>
+* On September 30, 2022, the Kaaj Education Center was targeted by suicide bombers. 25 students, mostly young Hazara women sitting for a practice exam, were killed.<ref>{{cite news |url=https://tolonews.com/afghanistan-180196 |title=Memorial Held for Victims of the Kaaj Educational Center Attack |work=TOLOnews |date=7 October 2022 |access-date=2026-01-30}}</ref> The suspects were later killed.<ref>{{cite news |url=https://tolonews.com/afghanistan-180406 |title=Suspected Perpetrators of Recent Kabul Blasts Killed in Raid: Officials |work=TOLOnews |date=22 October 2022 |access-date=2026-01-30}}</ref>
+
+== References ==
+{{Reflist}}
+
+== External links ==
+*{{YouTube|OLf8_QbwfBs|Afghanistan Kabul Walk 🇦🇫 / Streets, People & Reality in 2025 (4K HDR)}}
+
+[[Category:Neighbourhoods in Kabul]]

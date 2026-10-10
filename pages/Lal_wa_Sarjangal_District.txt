@@ -1,0 +1,99 @@
+https://en.wikipedia.org/wiki/Lal_wa_Sarjangal_District
+
+Lal wa Sarjangal (Dari: لعل و سرجنگل) is a district in the northeast of Ghor province in central Afghanistan. The district center is the town of Lal wa Sarjangal. It was reported in 2012 that around 108,900 people resided in the district, majority of which are ethnic Hazaras.
+
+
+== Notable people ==
+Murad Ali Murad
+Hassan Abdullahi, former Minister of Urban Development
+Nadir Shah Bahr, former Parliamentarian in Afghanistan
+Ruqia Nayel, former Parliamentarian in Afghanistan
+Haidar Ali Etimadi, a member of the Hezbe Wahdat
+Jafar Mahdavi, former Parliamentarian and a member of Afghan Mellat Party
+
+
+== See also ==
+Districts of Afghanistan
+Hazarajat
+
+
+== References ==
+
+
+== External links ==
+UNHCR District profile
+Map of Settlements AIMS, August 2002
+
+=====WIKITEXT=====
+{{pp-pc|small=yes}}
+{{Redirect|Lal Wa Sarjangal|the town centre|La‘l}}
+{{More citations needed|date=August 2020}}
+{{Infobox settlement
+| official_name          = La'l wa Sarjangal
+| native_name            = لعل و سرجنگل
+| native_name_lang       = prs
+| name                   = 
+| type                   = [[Districts of Afghanistan|District]]
+| image                  = 
+| image_size             = 
+| alt                    = 
+| caption                = 
+| image_map              = 
+| map_size               = 
+| map_alt                = 
+| map_caption            = Location within Afghanistan
+| coordinates            = {{coord|34|36|10|N|66|16|36|E|region:AF_type:adm2nd|display=inline,title}}
+| pushpin_map            = Afghanistan
+| pushpin_label_position = left <!-- left, right, top, bottom, none -->
+| pushpin_alt            = 
+| pushpin_map_size       = 
+| pushpin_caption        = 
+| subdivision_type       = Country
+| subdivision_name       = [[Afghanistan]]
+| subdivision_type1      = [[Provinces of Afghanistan|Province]]
+| subdivision_name1      = [[Ghor]]
+| subdivision_type2      = [[Capital city|Center]]
+| subdivision_name2      = [[La'l]]
+| population_total       = 108,900
+| population_as_of       = 2012
+| population_est         = 
+| pop_est_as_of          = 
+| population_footnotes   = <ref name="CSO-2012">{{cite web|title=Settled Population of Ghor Province|url=http://cso.gov.af/Content/files/Ghor(1).pdf|publisher=Central Statistics Organization|access-date=19 November 2015|archive-date=6 January 2014|archive-url=https://web.archive.org/web/20140106040420/http://cso.gov.af/Content/files/Ghor(1).pdf|url-status=dead}}</ref>
+| area_total_km2         = 
+| elevation_m            = 2800
+| elevation_m_min        = 
+| elevation_m_max        = 
+| population_density_km2 = 
+| area_code              = 
+| area_code_type         = 
+| time_zone1             = [[Time in Afghanistan|Afghanistan Time]]
+| utc_offset1            = +04:30
+| website                = 
+| footnotes              = 
+}}
+
+'''Lal wa Sarjangal''' ({{langx|prs|لعل و سرجنگل}}) is a [[Districts of Afghanistan|district]] in the northeast of [[Ghor province]] in central [[Afghanistan]].<ref>{{cite news |url=https://pajhwok.com/2025/11/16/small-water-reservoir-inaugurated-in-ghor/ |title=Small water reservoir inaugurated in Ghor |agency=Pajhwok Afghan News |date=16 November 2025 |access-date=2025-11-16}}</ref> The district center is the town of [[Lal wa Sarjangal]].<ref>{{cite news |url=https://pajhwok.com/2023/11/12/lal-wa-sarjangal-residents-lament-lack-of-female-doctors/ |title=Lal Wa Sarjangal residents lament lack of female doctors |agency=Pajhwok Afghan News |date=12 November 2023 |access-date=2025-11-16}}</ref><ref>{{GEOnet3|10536915}}</ref> It was reported in 2012 that around 108,900 people resided in the district,<ref name="CSO-2012" /> majority of which are ethnic [[Hazaras]].<ref>{{cite web |url=http://www.aims.org.af/afg/dist_profiles/unhcr_district_profiles/western/ghor/lal_wa_sarjangal.pdf |title=UNHCR District profile |date=21 October 2002 |access-date=13 November 2018 |archive-date=27 October 2005 |archive-url=https://web.archive.org/web/20051027191538/http://www.aims.org.af/afg/dist_profiles/unhcr_district_profiles/western/ghor/lal_wa_sarjangal.pdf |url-status=bot: unknown }}</ref>
+
+==Notable people==
+* [[Murad Ali Murad]]
+* Hassan Abdullahi, former Minister of Urban Development
+* Nadir Shah Bahr, former Parliamentarian in Afghanistan
+* Ruqia Nayel, former Parliamentarian in Afghanistan
+* Haidar Ali Etimadi, a member of the [[Hezbe Wahdat]]
+* [[Jafar Mahdavi]], former Parliamentarian and a member of [[Afghan Mellat Party]]
+
+== See also ==
+* [[Districts of Afghanistan]]
+* [[Hazarajat]]
+
+==References==
+{{reflist|2}}
+
+==External links==
+* [https://web.archive.org/web/20051027191538/http://www.aims.org.af/afg/dist_profiles/unhcr_district_profiles/western/ghor/lal_wa_sarjangal.pdf UNHCR District profile]
+* [https://web.archive.org/web/20151119235311/http://www.haqiqat.se/images/stories/Afghanistan_Mapper/Ghor%20Map/lal_wa_sarjangal.pdf Map of Settlements] AIMS, August 2002<!-- Dead link [http://www.aims.org.af/maps/district/ghor/lal_wa_sarjangal.pdf Map of Lal Wa Sarjangal] ([[PDF]]) -->
+{{Districts of Ghor}}{{Ghor Province}}{{Authority control}}<!-- {{coord|34|36|10|N|66|16|36|E|display=title}} -->
+
+{{DEFAULTSORT:Lal wa Sarjangal District}}
+[[Category:Districts of Ghor Province]]
+[[Category:Hazarajat]]

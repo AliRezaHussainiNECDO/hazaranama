@@ -1,0 +1,154 @@
+https://en.wikipedia.org/wiki/Balkhab_District
+
+Balkhab (Persian: بلخاب) is a district of Sar-e Pol Province, Afghanistan. The district seat lies at Balkhab, also known as Tarkhoj.
+Coal is mined in the area. A massive copper deposit is also located in Balkhab district of Sar-e pol province, the new copper discovery is bigger than the current Aynak copper deposit in Logar province, southeast of Kabul, according to a GSA report. It is valued at billions of U.S. dollars and one of the biggest untapped copper mines in Afghanistan. The discovery appears to be a volcano genetic massive sulfide deposit—a deposit type which could supply much of the world's gold, copper, lead and zinc. On October 5, 2018, in Washington, D.C., Afghan officials signed a 30-year contract for a copper mining project involving a $56 million investment by investment group Centar and its operating company, Afghan Gold and Minerals Co., for exploration of an area covering 500 square km, with development of mining due to begin thereafter.
+The entire Balkhab district was briefly controlled by Mehdi Mujahid during 2022, before the Taliban retook it.
+
+
+== See also ==
+Balkhab
+Balkhab River
+Balkhab uprising
+Districts of Afghanistan
+
+
+== References ==
+
+=====WIKITEXT=====
+{{pp-pc|small=yes}}
+{{Infobox settlement
+<!--See the Table at Infobox Settlement for all fields and descriptions of usage-->
+<!-- Basic info  ---------------->
+| official_name    = Balkhab
+| native_name      = بلخاب
+| native_name_lang = fa
+| other_name       = 
+| type             = [[Districts of Afghanistan|District]]
+| image            = Balkhab.jpg
+| image_size       = 300px
+| caption          = 
+| image_flag       = 
+| flag_size         https://en.m.wikipedia.org/wiki/National_Resistance_Front_of_Afghanistan#/media/File%3AFlag_of_Afghanistan_(1992%E2%80%932001).svg = 
+| image_seal               = 
+| seal_size                = 
+| image_shield             = 
+| shield_size              = 
+| image_blank_emblem       = 
+| blank_emblem_type        = 
+| blank_emblem_size        = 
+| nickname                 = 
+| motto                    = <!-- images and maps  ----------->
+| image_map                = 
+| map_size                 = 
+| map_caption              = 
+| image_map1               = 
+| map_size1                = 
+| map_caption1             = 
+| pushpin_map              = Afghanistan
+| pushpin_label_position   = bottom
+| pushpin_map_size         = 300
+<!-- Location ------------------>
+| pushpin_caption          = Location in Afghanistan
+| coordinates              = {{coord|36|13|17|N|65|55|40|E|region:AF-SAR_type:city|display=inline,title}}
+| subdivision_type         = Country
+| subdivision_name         = {{flag|Afghanistan}}
+| subdivision_type1        = [[Provinces of Afghanistan|Province]]
+| subdivision_type2        = [[Capital city|Capital]]
+| subdivision_type3        = 
+| subdivision_type4        = 
+| subdivision_name1        = [[Sar-e Pol Province|Sar-e Pol]]
+| subdivision_name2        = [[Balkhab]]
+| subdivision_name3        = 
+| subdivision_name4        = <!-- Politics ----------------->
+| established_title        = <!-- Settled -->
+| established_date         = 
+| established_title2       = <!-- Incorporated (town) -->
+| established_date2        = 
+| established_title3       = <!-- Incorporated (city) -->
+| established_date3        = <!-- Area    --------------------->
+| government_footnotes     = 
+| government_type          = 
+| leader_title             = 
+| leader_name              = 
+| leader_title1            = <!-- for places with, say, both a mayor and a city manager -->
+| leader_name1             = 
+| area_footnotes           = 
+| area_magnitude           = 
+| area_total_km2           = 
+| area_total_sq_mi         = 
+| area_land_km2            = 
+| area_land_sq_mi          = 
+| area_water_km2           = 
+| area_water_sq_mi         = 
+| area_water_percent       = 
+| area_urban_km2           = 
+| area_urban_sq_mi         = 
+| area_metro_km2           = 
+| area_metro_sq_mi         = 
+| area_blank1_title        = 
+| area_blank1_km2          = 
+| area_blank1_sq_mi        = <!-- Population   ----------------------->
+| elevation_footnotes      = 
+| elevation_m              = 2080
+| population_total         = 
+| population_as_of         = 
+| population_footnotes     = 
+| population_density_km2   = auto
+| population_density_sq_mi = 
+| population_urban         = 
+| population_density_urban_km2 = 
+| population_density_urban_sq_mi = 
+| population_metro         = 
+| population_density_metro_km2 = 
+| population_density_metro_sq_mi = 
+| population_blank1_title  = Ethnicities
+| population_blank1        = [[Hazaras]], [[Tajiks]] and [[Uzbeks]]
+| population_density_blank1_km2 = 
+| population_density_blank1_sq_mi = <!-- General information  --------------->
+| population_blank2        = 
+| population_note          = 
+| postal_code_type         = <!-- enter ZIP code, Postcode, Post code, Postal code... -->
+| postal_code              = 
+| area_code                = 
+| custom_label_sec1        = [[Languages of Afghanistan|Main languages]]
+| custom_data_sec1         = [[Dari-Persian]] and [[Uzbek language|Uzbeki]]
+| website                  = 
+| footnotes                = 
+| leader_title2            = 
+| leader_name2             = 
+| leader_title3            = 
+| leader_name3             = 
+| leader_title4            = 
+| leader_name4             = 
+| time_zone                = [[UTC+4:30]]
+| utc_offset               = 
+| time_zone_DST            = 
+| utc_offset_DST           = 
+| custom_label1_sec1       = 
+| custom_data1_sec1        = 
+}}
+[[File:Balkhab District.JPG|300px|thumb|right]]
+'''Balkhab''' ({{langx|fa|بلخاب}}) is a district of [[Sar-e Pol Province]], [[Afghanistan]]. The district seat lies at [[Balkhab]], also known as Tarkhoj.<ref>{{cite web|url=http://ochaonline.un.org|title=Afghanistan Settlements Index|publisher=United Nations Office for the Coordination of Human Affairs|format=accessed externally by google in PDF/Adobe Acrobat|archive-url=https://web.archive.org/web/20110322032350/http://ochaonline.un.org/|archive-date=March 22, 2011|url-status=live|access-date=29 April 2011}}</ref>
+
+Coal is mined in the area.<ref>{{cite web|url=http://www.unhcr.org/refworld/publisher,IRIN,,AFG,4a1f8c781e,0.html|title=Afghanistan: Risking one's health for a pittance|publisher=UNHCRA|archive-url=https://web.archive.org/web/20121018053323/http://www.unhcr.org/refworld/publisher%2CIRIN%2C%2CAFG%2C4a1f8c781e%2C0.html|archive-date=18 October 2012|url-status=dead|access-date=29 April 2011}}</ref> A massive copper deposit is also located in Balkhab district of Sar-e pol province, the new copper discovery is bigger than the current Aynak copper deposit in Logar province, southeast of Kabul, according to a GSA report. It is valued at billions of U.S. dollars and one of the biggest untapped copper mines in Afghanistan. The discovery appears to be a volcano genetic massive sulfide deposit—a deposit type which could supply much of the world's gold, copper, lead and zinc. On October 5, 2018, in [[Washington, D.C.]], Afghan officials signed a 30-year contract for a copper mining project involving a $56 million investment by investment group Centar and its operating company, Afghan Gold and Minerals Co., for exploration of an area covering 500 square km, with development of mining due to begin thereafter.<ref>{{cite web |last1=Mackenzie |first1=James |last2=Qadir Sediqi |first2=Abdul |title=Afghanistan signs major mining deals in development push|date=2018-10-07 |url=https://www.reuters.com/article/us-afghanistan-mining/afghanistan-signs-major-mining-deals-in-development-push-idUSKCN1MH0FM |website=reuters.com |publisher=Reuters |access-date=30 June 2020}}</ref>
+
+The entire Balkhab district was briefly controlled by [[Mehdi Mujahid]] during 2022, before the [[Taliban]] retook it.<ref>{{Cite web |date=13 June 2022 |title=تنش در سرپل؛ طالبان به ولسوالی بلخاب «نیروی نظامی» اعزام می‌کند |url=https://www.bbc.com/persian/afghanistan-61781177 |access-date=16 June 2022 |website=BBC News فارسی |language=fa}}</ref>
+
+== See also ==
+* [[Balkhab]]
+* [[Balkhab River]]
+* [[Balkhab uprising]]
+* [[Districts of Afghanistan]]
+
+== References ==
+{{Reflist}}
+
+{{Districts of Sar-e Pol}}
+{{Sar-e Pol Province}}
+
+{{Authority control}}
+
+[[Category:Districts of Sar-e Pol Province]]
+
+
+{{SarePol-geo-stub}}

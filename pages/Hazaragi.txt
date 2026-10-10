@@ -1,0 +1,317 @@
+https://en.wikipedia.org/wiki/Hazaragi_dialects
+
+Hazaragi refers to a group of dialects of Dari Persian. Dari Persian, also known as Dari, is an eastern variety of the Persian language and has many dialects throughout Afghanistan.
+
+
+== Classification ==
+Hazaragi dialects fall under Dari, an eastern variety of Persian. Dari is one of the two official Languages of Afghanistan. Persian is a prominent member of the Iranian branch of the Indo-European language family.  The Hazaragi dialects of Dari and the standard Kabuli dialect of Dari are mutually intelligible, with the primary differences being accents. In Daykundi, the local dialect of Dari contains some Turkic loanwords via Karluk.
+
+
+== Geographic distribution and diaspora ==
+
+Hazaragi dialects are mainly spoken by the Hazara people, who are native to and mainly live in Afghanistan.
+As part of the larger Afghan diaspora, the Hazara diaspora has led to many Hazara Afghans living, or being born, in Pakistan and Iran. As a result, many Afghan-Pakistanis (particularly in Quetta), and Afghan-Iranians (particularly in Mashhad), speak Hazaragi dialects of Dari. Along with the diaspora in eastern Uzbekistan, northern Tajikistan, the Americas, Europe, and Australia. 
+The influx of Afghan refugees in Iran has caused there to be an estimated total of 399,000 Dari speakers of Hazaragi dialects in the country, as of 2021.
+
+
+== Turkic and Mongolic influences ==
+Some dialects of Dari spoken by Hazaras contain many Turkic loanwords. According to Temirkhanov, the Mongolian elements make up 10% of the Hazara vocabulary. An Iranica article on Dari dialects of the Hazaras states that they consist of three linguistic layers: pre-Mongol Hazaragi Persian; the Mongolian language; and Tajik, another eastern variety of the Persian language.
+According to Efimov, examples of vocabulary in Hazaragi dialects that reflect Turkic influence include ata ('father'), qara ('black'), kunda ('plow'), qōš ('eyebrow'), while words of Mongolic origin include bêri ('bride'), alaḡa ('palm of the hand'), qulaḡay ('thief'), ōɡ̄il ('village'). German Iranologist Michael Weiers notes that a key distinguishing feature of the Hazaragi dialects are its Turco-Mongolic lexical components. Besides that, the Hazaragi dialects remain structurally similar to the Kabuli dialect of Dari Persian.
+
+
+== Grammatical structure ==
+The grammatical structure of the Hazaragi dialects of Dari are identical to that of the Kabuli dialect.
+
+
+=== Phonology ===
+
+/a/ can also approach the sound [æ] or [ɛ].
+Hazaragi dialects contain the voiced fricative /ɣ/, and the labial–velar approximant /w/. Unlike in other Persian dialects, the retroflex stops /ʈ/ and /ɖ/ are found. The voiceless glottal fricative /h/ is often dropped. The convergence of the voiceless uvular plosive /q/ (ق) and the voiced velar fricative /ɣ/ (غ) in Western Persian is treated as separate phonemes in Hazaragi dialects.
+Diphthongs include /aj/, /aw/, and /ew/ (cf. Iranian Persian ey, ow, uw). The vocalic system is eastern Persian, characterized by the loss of length distinction, the retention of mid-vowels, and the rounding of ā and å/o, alternating with its merger with a or û (cf. Iranian Persian ān).
+Stress is dynamic and same to that in the Kabuli dialect of Dari and Tajik, and are thus not variable. Stress generally falls on the last syllable of a nominal word form, including derivative suffixes and several morphological markers. Typical is the insertion of epenthetic vowels in consonant clusters (e.g., pašm > póšum; 'wool') and final devoicing (e.g., ḵût; 'self, own').
+
+[h] only occurs infrequently and among more educated speakers. /r/ can be heard as either a trill [r] or a tap [ɾ]. /x, ɣ/ can also range to uvular sounds [χ, ʁ].
+
+
+=== Nominal morphology ===
+The most productive derivative marker is -i, and the plural markers are -o for the inanimate (as in kitab-o, meaning 'books'; cf. Iranian Persian -hā) and -û for the animate (as in birar-û, meaning 'brothers'; cf. Iranian Persian -ān). The emphatic vocative marker is û or -o, the indefinite marker is -i, and the specific object marker is -(r)a. The comparative marker is -tar (as in kalû-tar; 'bigger'). Dependent adjectives and nouns follow the head noun and are connected by -i (as in kitab-i mamud; 'book of Mahmud'). Topicalized possessors precede the head noun marked by the resumptive personal suffix (as in Zulmay ayê-ši; lit. 'Zulmay her mother'). Prepositions include, in addition to the standard Persian ones, ḵun(i) ('with; using'), da ('in'; cf. Iranian Persian dar); the latter often replaces ba ('to') in dative function. Loaned postpositions include comitative -qati ('together with') and (az)-worî ('like'). Interrogatives typically function also as indefinite (as in kudam; 'which; someone').
+
+
+=== Particles, conjunctions, modals, and adverbials ===
+These include atê/arê ('yes'); amma or wali ('but'); balki ('however'); šaydi ('perhaps') ale ('now'); and wuḵt-a ('then'). These are also marked by distinctive initial stress.
+
+
+=== Verb morphology ===
+The imperfective marker is the prefix mi- (assimilated variants: m-, mu-, m-, mê-), as in the conjugated verb mi-zan-um ('I am hitting'). The subjunctive and imperative marker is bi- (with similar assimilation). The negation prefix is na- and is placed before all other prefixes, as in na-mi-zad-um ('I was not hitting'). These typically attract stress.
+
+
+=== Tenses ===
+The tense, mood, and aspect systems are somewhat different from Western Persian. The basic tense system is threefold: present-future, past, and remote (pluperfect). New modal paradigms developed in addition to the subjunctives:
+
+The non-seen/mirative that originates in the resultative-stative perfect (e.g., zad-ēm; cf. Iranian Persian zada(e) am), which has largely lost its non-modal use;
+the potential, or assumptive, which is marked by the invariant ḵot (cf. Persian xāh-ad or xād; 'it wants, it intends') combined with the indicate and subjunctive forms.
+Moreover, all past and remote forms have developed imperfective forms marked by mi-. There are doubts about several of the less commonly found, or recorded, forms, in particular those with ḵot. However, the systematic arrangement of all forms according to their morphological, as well as semantic, function shows that those forms fit well within the overall pattern. The system may tentatively be shown as follows, leaving out complex compound forms such as zada ḵot mu-buda baš-um.
+In the assumptive, the distinction appears to be not between present versus past, but indefinite versus definite. Also, similar to all Persian dialects, the imperfective forms in mi-, and past perfect forms, such as mi-zad-um and zada bud-um, are used in irreal conditional clauses and wishes, e.g., kaški zimi qulba kadagi mu-but ('If the field would only be/have been plowed'). Modal verbs, such as tan- ('can'), are constructed with the perfect participle, e.g., ma bû-r-um, da čaman rasid-a ḵot tanist-um ('I shall go, and may be able to get to Chaman'). Participial nominalization is typical, both with the perfect participle (e.g., kad-a 'having done'), and with the derived participle with passive meaning kad-ag-i 'having been done'. E.g., zimin-i qulba kada-ya ('The field has been ploughed'), zamin-i qulba (na-)šuda-ra mi-ngar-um ('I am looking at a plowed/unplowed field'), imrûz [u ḵondagi] tikrar mu-kun-a ('Today he repeats reading what he had read'). The gerundive (e.g., kad-an-i 'to be done') is likewise productive, as in yag čiz, ki uftadani baš-a, ma u-ra qad-dist-ḵu girift-um, tulḡa kad-um ('One object, that was about to fall, I grabbed, and held it'). The clitic -ku or -ḵu topicalizes the parts of speech, and -di topicalizes the predicate; e.g., i-yši raft, ma-ḵu da ḵona mand-um ('He himself left; I, though, I stayed').
+
+
+== See also ==
+Aimaq dialect
+
+
+== Notes ==
+
+
+== References ==
+
+
+== External links ==
+
+Hazaragi Translation Services
+
+=====WIKITEXT=====
+{{short description|Persian dialect spoken by the Hazara people}}
+{{Infobox language
+| name             = Hazaragi
+| nativename       = {{lang|haz|{{nq|هزارگی}}}}
+| image            = Hazaragi.svg
+| imagecaption     = The words ''Hazāragi'', ''Āzargi'', and ''Azargi'' written in Persian calligraphy (''[[Nastaliq]]'').
+| states           = Afghanistan<ref>{{cite book|url=https://books.google.com/books?id=bY8ck6iktikC&pg=PA9 |title=Culture and Customs of Afghanistan|isbn=9780313330896|last1=Emadi|first1=Hafizullah|year=2005}}</ref>
+| ethnicity        = [[Hazaras]]
+| speakers         = {{sigfig|5.053350|1}} million
+| date             = 2023
+| ref              = <ref>{{e28|haz}}</ref>
+| familycolor      = Indo-European
+| fam2             = [[Indo-Iranian languages|Indo-Iranian]]
+| fam3             = [[Iranian languages|Iranian]]
+| fam4             = [[Western Iranian languages|Western Iranian]]
+| fam5             = [[Southwestern Iranian languages|Southwestern Iranian]]
+| fam6             = [[Persian language|Persian]]
+| fam7             = [[Dari|Eastern]]
+| script           = [[Persian alphabet]]<ref>{{Cite web|url=https://www.omniglot.com/writing/hazaragi.htm|title=Hazaragi language, alphabet and pronunciation}}</ref>
+| iso3             = haz
+| glotto           = haza1239
+| glottorefname    = Hazaragi
+}}
+{{Hazaras}}
+
+'''Hazaragi'''{{efn|{{blist|{{langx|prs|{{nq|هزارگی}}|Hazāragī}}, {{small|cyrillized:}} {{lang|tg|Ҳазорагӣ}}, {{IPA|prs|(h)ɐˌzɑːɾɐˈɡiː|pron}}|{{IPA|haz|ʔɔːzäɾɡí, ʔɔːzuɾäɡí}}}}}} refers to a group of [[Persian dialects|dialects]] of [[Dari|Dari Persian]]. Dari Persian, also known as Dari, is an eastern variety of the [[Persian language]] and has many dialects throughout Afghanistan.<ref>{{Cite web|url=https://www.cia.gov/library/publications/the-world-factbook/fields/2098.html?countryName=Afghanistan&countryCode=af&regionCode=sas&#af|title=Afghanistan|last1=The World Factbook|first1=Central Intelligence Agency|year=2010|archive-url=https://web.archive.org/web/20131015094344/https://www.cia.gov/library/publications/the-world-factbook/fields/2098.html?countryName=Afghanistan&countryCode=af&regionCode=sas&#af|archive-date=2013-10-15}}</ref>
+
+== Classification ==
+Hazaragi dialects fall under [[Dari]],<ref name=":03">{{Cite web |title=Hazaragi |url=https://glottolog.org/resource/languoid/id/haza1239 |access-date=11 December 2025 |website=Glottolog}}</ref> an eastern variety of [[Persian language|Persian]]. Dari is one of the two official [[Languages of Afghanistan]]. Persian is a prominent member of the [[Iranian languages|Iranian]] branch of the [[Indo-European language family]].  The Hazaragi dialects of Dari and the standard Kabuli dialect of Dari are mutually intelligible,<ref name="Attitudes Towards Hazaragi2">{{cite web |title=Attitudes Towards Hazaragi |url=http://opensiuc.lib.siu.edu/cgi/viewcontent.cgi?article=1224&context=these |access-date=4 June 2014 }}{{Dead link|date=July 2024 |bot=InternetArchiveBot |fix-attempted=yes }}</ref> with the primary differences being accents.<ref name="OCLC 4016342">[[Franz Schurmann|Schurmann, Franz]] (1962) ''The Mongols of Afghanistan: An Ethnography of the Moghôls and Related Peoples of Afghanistan'' Mouton, [[The Hague, Netherlands]], page 17, [http://worldcat.org/oclc/401634 OCLC 401634]</ref> In [[Daykundi]], the local dialect of Dari contains some [[Turkic languages|Turkic]] loanwords via [[Karluk languages|Karluk]].<ref>{{Cite book|title = تاریخ باستانی هزاره‌ها|last = دلجو|first = عباس|publisher = انتشارات امیری|year = 2014|isbn = 978-9936801509|location = کابل}}</ref>
+
+== Geographic distribution and diaspora ==
+{{see also|Hazara diaspora}}
+Hazaragi dialects are mainly spoken by the Hazara people, who are native to and mainly live in Afghanistan.
+
+As part of the larger [[Afghan diaspora]], the [[Hazara diaspora]] has led to many Hazara Afghans living, or being born, in Pakistan and Iran. As a result, many Afghan-Pakistanis (particularly in [[Quetta]]), and Afghan-Iranians (particularly in [[Mashhad]]),<ref>Area Handbook for Afghanistan, page 77, Harvey Henry Smith, [[American University]] ([[Washington, D.C.]]) Foreign Area Studies</ref> speak Hazaragi dialects of Dari. Along with the diaspora in eastern [[Uzbekistan]], northern [[Tajikistan]], the [[Americas]], [[Europe]], and [[Australia]].<ref>Barbara A. West. "Encyclopedia of the Peoples of Asia and Oceania". pp 272. Info base Publishing, 2009. {{ISBN|1438119135}}</ref> 
+The influx of [[Afghan refugees]] in [[Iran]] has caused there to be an estimated total of 399,000 Dari speakers of Hazaragi dialects in the country, as of 2021.<ref name="Haz">{{Cite web|url=https://www.ethnologue.com/language/haz/|title=Hazaragi| publisher=Ethnologue|access-date=5 October 2023}}</ref>
+
+== Turkic and Mongolic influences ==
+
+
+
+Some dialects of Dari spoken by Hazaras contain many Turkic loanwords.<ref name="eprints.hec.gov.pk2">{{cite web |title=A Sociological Study of Hazara Tribe in Balochistan (An Analysis of Socio-Cultural Change) University of Karachi, Pakistan July 1976 |url=http://eprints.hec.gov.pk/665/1/443.htm |access-date=2013-12-08 |publisher=Eprints.hec.gov.pk}}</ref><ref name=":02">{{Citation |last=Monsutti |first=Alessandro |title=Hazāras |date=2017-07-01 |url=https://referenceworks.brillonline.com/entries/encyclopaedia-of-islam-3/hazaras-COM_30419?s.num=0&s.f.s2_parent=s.f.book.encyclopaedia-of-islam-3&s.q=hazara |access-date=2021-10-08 |publisher=Brill |language=en |encyclopedia=Encyclopaedia of Islam, THREE}}</ref> According to Temirkhanov, the Mongolian elements make up 10% of the Hazara vocabulary.<ref name="TemirkhanovVocabulary">Temirkhanov L. (1968). [https://www.booksite.ru/etnogr/1968/1968_1.pdf "О некоторых спорных вопросах этнической истории хазарейского народа"]. Советская этнография. 1. P. 91. In Russian: ''"монгольские элементы составляют 10% хазарейской лексики"''.</ref> An ''[[Encyclopædia Iranica|Iranica]]'' article on Dari dialects of the Hazaras states that they consist of three linguistic layers: pre-Mongol Hazaragi Persian; the [[Mongolian language]]; and [[Tajik language|Tajik]], another eastern variety of the Persian language.<ref name=":1" />
+
+According to Efimov, examples of vocabulary in Hazaragi dialects that reflect Turkic influence include ''ata'' ('father'), ''qara'' ('black'),<ref name=":1">{{Cite web |title=HAZĀRA iv. Hazāragi dialect |url=https://www.iranicaonline.org/articles/hazara-4/ |access-date=2025-08-10 |website=Encyclopaedia Iranica |language=en-US}}</ref> ''kunda'' ('plow'), ''qōš'' ('eyebrow'),<ref name="Efimov">Ефимов В. А. (1965)."Язык афганских хазара." Москва: Наука. Page 52.</ref> while words of Mongolic origin include ''bêri'' ('bride'), ''alaḡa'' ('palm of the hand'), ''qulaḡay'' ('thief'),<ref name=":1" /> ''ōɡ̄il'' ('village').<ref name="Efimov" /> German [[Iranologist]] {{ill|Michael Weiers|de|Michael Weiers}} notes that a key distinguishing feature of the Hazaragi dialects are its Turco-Mongolic lexical components. Besides that, the Hazaragi dialects remain structurally similar to the [[Kabuli dialect]] of Dari Persian.<ref name=":1" /><ref name="ReferenceA">Idem, The Spoken Dari of Afghanistan: A Grammar of Kāboli Dari (Persian), Compared to the Literary Language, Kabul, 1975</ref>
+
+== Grammatical structure ==
+The grammatical structure of the Hazaragi dialects of Dari<ref>Valentin Aleksandrovich Efimov, Yazyk afganskikh khazara: Yakavlangskii dialect, Moscow, 1965. pp. 22–83</ref><ref>Idem, “Khazara yazyk,” in Yazyki mira. Iranskiĭ yazyki I: yugo-zapadnye iranskiĭ yazyki, Moscow, 1997, pp. 154–66.</ref><ref>G. K. Dulling, The Hazaragi Dialect of Afghan Persian: A Preliminary Study, Central Asian Monograph 1, London, 1973. pp. 29–41</ref> are identical to that of the [[Kabuli dialect]].<ref>A. G. Ravan Farhadi, Le persan parlé en Afghanistan: Grammaire du kâboli accompagnée d’un recuil de quatrains populaires de région de Kâbol, Paris, 1955.</ref><ref name="ReferenceA"/>
+
+=== Phonology ===
+{| class="wikitable" style="text-align:center"
+|+Vowel phonemes of the Hazaragi dialects of Dari<ref name=":12">{{Cite book |last=Efimov |first=V. A. |title=Xazara |publisher=Moskva: Izdatel'stvo Firma Vostočnaya Literatura RAN |year=2008 |location=In V. A. Efimov (ed.), Sredneiranskie i novoiranskie Jazyki |pages=344–414}}</ref>
+!
+![[Front vowel|Front]]
+![[Back vowel|Back]]
+|-
+! rowspan="2" |[[High vowel|High]]
+| rowspan="2" align="center" |{{IPA link|i}}
+| align="center" |{{IPA link|u}}
+|-
+|{{IPA link|ʊ}}
+|-
+![[Mid vowel|Mid]]
+|{{IPA link|e}}
+|{{IPA link|ɔ}}
+|-
+![[Low vowel|Low]]
+|{{IPA link|a}}
+|
+|}
+{{IPA|/a/}} can also approach the sound {{IPA|[æ]}} or {{IPA|[ɛ]}}.<ref name=":12" />
+
+Hazaragi dialects contain the voiced fricative {{IPA|/ɣ/}}, and the labial–velar approximant {{IPA|/w/}}. Unlike in other Persian dialects, the retroflex stops {{IPA|/ʈ/}} and {{IPA|/ɖ/}} are found. The [[voiceless glottal fricative]] {{IPA|/h/}} is often dropped.<ref name=":0">{{Cite web |last=Foundation |first=Encyclopaedia Iranica |title=HAZĀRA iv. Hazāragi dialect |url=https://iranicaonline.org/articles/hazara-4 |access-date=2024-11-23 |website=iranicaonline.org |language=en-US}}</ref> The convergence of the [[voiceless uvular plosive]] {{IPA|/q/}} (ق) and the [[voiced velar fricative]] {{IPA|/ɣ/}} (غ) in [[Western Persian]]<ref>A. Pisowicz, ''Origins of the New and Middle Persian phonological systems'' (Cracow 1985), p. 112-114, 117.</ref> is treated as separate phonemes in Hazaragi dialects.
+
+Diphthongs include {{IPA|/aj/}}, {{IPA|/aw/}}, and {{IPA|/ew/}} (cf. Iranian Persian {{Translit|fa|ey}}, {{Translit|fa|ow}}, {{Translit|fa|uw}}). The vocalic system is eastern Persian, characterized by the loss of length distinction, the retention of mid-vowels, and the rounding of ''ā'' and ''å''/''o'', alternating with its merger with ''a'' or ''û'' (cf. Iranian Persian {{Translit|fa|ān}}).<ref name=":0" />
+
+Stress is dynamic and same to that in the Kabuli dialect of Dari<ref>Farhadi, Le persan parlé en Afghanistan: Grammaire du kâboli accompagnée d’un recuil de quatrains populaires de région de Kâbol, Paris, 1955, pp. 64–67</ref> and Tajik,<ref>V. S.Rastorgueva, A Short Sketch of Tajik Grammar, tr. Herbert H. Paper, Bloomington, Ind., and The Hague, 1963, pp. 9–10</ref> and are thus not variable.<ref>G. K. Dulling, The Hazaragi Dialect of Afghan Persian: A Preliminary Study, Central Asian Monograph 1, London, 1973. p. 37</ref> Stress generally falls on the last syllable of a nominal word form, including derivative suffixes and several morphological markers. Typical is the insertion of epenthetic vowels in consonant clusters (e.g., ''pašm'' > ''póšum''; 'wool') and final devoicing (e.g., ''ḵût''; 'self, own').<ref name=":0" />
+
+{| class="wikitable" style="text-align: center;"
+|+Consonant phonemes of the Hazaragi dialects of Dari<ref name=":12" /><ref name=":0" />
+! colspan="2" |
+![[Labial consonant|Labial]]
+![[Dental consonant|Dental]]
+![[Alveolar consonant|Alveolar]]
+![[Retroflex consonant|Retroflex]]
+![[Palato-alveolar consonant|Palato-<br>alveolar]]
+![[Velar consonant|Velar]]
+![[Uvular consonant|Uvular]]
+![[Glottal consonant|Glottal]]
+|-
+! colspan="2" |[[Nasal consonant|Nasal]]
+|{{IPA link|m}}
+|
+|{{IPA link|n}}
+|
+|
+|
+|
+|
+|-
+! rowspan="2" |[[Plosive consonant|Plosive]]/<br>[[Affricate consonant|Affricate]]
+!<small>[[Voicelessness|voiceless]]</small>
+|{{IPA link|p}}
+|{{IPA link|t̪}}
+|
+|{{IPA link|ʈ}}
+|{{IPA link|tʃ}}
+|{{IPA link|k}}
+|{{IPA link|q}}
+|
+|-
+!<small>[[Voice (phonetics)|voiced]]</small>
+|{{IPA link|b}}
+|{{IPA link|d̪}}
+|
+|{{IPA link|ɖ}}
+|{{IPA link|dʒ}}
+|{{IPA link|ɡ}}
+|
+|
+|-
+! colspan="2" |[[Flap consonant|Flap]]/[[Trill consonant|Trill]]
+|
+|
+|{{IPA link|r}}
+|
+|
+|
+|
+|
+|-
+! rowspan="2" |[[Fricative consonant|Fricative]]
+!<small>[[Voicelessness|voiceless]]</small>
+|{{IPA link|f}}
+|
+|{{IPA link|s}}
+|
+|{{IPA link|ʃ}}
+| colspan="2" |{{IPA link|x}}
+|({{IPA link|h}})
+|-
+!<small>[[Voice (phonetics)|voiced]]</small>
+|
+|
+|{{IPA link|z}}
+|
+|{{IPA link|ʒ}}
+| colspan="2" |{{IPA link|ɣ}}
+|
+|-
+! colspan="2" |[[Approximant consonant|Approximant]]
+|{{IPA link|w}}
+|
+|{{IPA link|l}}
+|
+|{{IPA link|j}}
+|
+|
+|
+|}
+{{IPA|[h]}} only occurs infrequently and among more educated speakers. {{IPA|/r/}} can be heard as either a trill {{IPA|[r]}} or a tap {{IPA|[ɾ]}}. /{{IPA|x, ɣ}}/ can also range to uvular sounds [{{IPA|χ, ʁ}}].{{citation needed|date=November 2025}}
+
+=== Nominal morphology ===
+The most productive derivative marker is ''-i'', and the plural markers are ''-o'' for the inanimate (as in ''kitab-o'', meaning 'books'; cf. Iranian Persian {{Translit|fa|-hā}}) and ''-û'' for the animate (as in ''birar-û'', meaning 'brothers'; cf. Iranian Persian {{Translit|fa|-ān}}). The emphatic vocative marker is ''û'' or ''-o'', the indefinite marker is ''-i'', and the specific object marker is ''-(r)a''. The comparative marker is ''-tar'' (as in ''kalû-tar''; 'bigger'). Dependent adjectives and nouns follow the head noun and are connected by ''-i'' (as in ''kitab-i mamud''; 'book of Mahmud'). Topicalized possessors precede the head noun marked by the resumptive personal suffix (as in ''Zulmay ayê-ši''; {{lit|Zulmay her mother}}). Prepositions include, in addition to the standard Persian ones, ''ḵun(i)'' ('with; using'), ''da'' ('in'; cf. Iranian Persian {{Translit|fa|dar}}); the latter often replaces ''ba'' ('to') in dative function. Loaned postpositions include comitative ''-qati'' ('together with') and ''(az)-worî'' ('like'). Interrogatives typically function also as indefinite (as in ''kudam''; 'which; someone').<ref name=":0" />
+{| class="wikitable" style="font-size:90%; width:78%; margin:auto;"
+|+ style="text-align:center; background:#bfd7ff;" |'''Pronouns in the Hazaragi dialects of Dari'''<ref name=":0" /> ''[English]'' (Iranian Persian)
+! align="left" |Singular/Plural
+! align="left" |First person
+! align="left" |Second person
+! align="right" |Third person
+|-
+|singular
+|ma ''[me, I]'' (man)
+|tu ''[you]'' (tu)
+|e/u ''[this/that]'' (w)
+|-
+|plural
+|mû ''[we, us]'' (mo)
+|šimû/šumû (cumo)
+|yo/wo ''[these/those]'' (icon)
+|-
+|singular
+| -um ''[mine]'' -em
+| -it/khu/–tû ''[your/yours]'' (-et)
+| -iš/-(i)ši ''[his/hers]'' (-ec)
+|-
+|plural
+| -mû ''[ours]'' (-emon)
+|–tû/-šimû/šumû ''[your/yours]'' (-eton)
+| -iš/-(i)ši ''[their]'' (-econ)
+|}
+
+=== Particles, conjunctions, modals, and adverbials ===
+These include ''atê/arê'' ('yes'); ''amma'' or ''wali'' ('but'); ''balki'' ('however'); ''šaydi'' ('perhaps') ''ale'' ('now'); and ''wuḵt-a'' ('then'). These are also marked by distinctive initial stress.<ref name=":0" />
+{| class="wikitable" style="font-size:90%; width:58%; margin:auto;"
+|+ style="text-align:center; background:#bfd7ff;" |'''The Hazaragi dialects of Dari particles, conjunctions, modals, and adverbials'''
+! align="left" |Hazaragi-Dari
+! align="left" |Iranian Persian
+! align="left" |English
+|-
+|amyale
+| style="text-align:left;" |aknun
+|now
+|-
+|dalil'dera
+| style="text-align:left;" |dalil darad
+|maybe
+|}
+
+=== Verb morphology ===
+The imperfective marker is the prefix ''mi-'' (assimilated variants: ''m-'', ''mu-'', ''m-'', ''mê-''), as in the conjugated verb ''mi-zan-um'' ('I am hitting'). The subjunctive and imperative marker is ''bi-'' (with similar assimilation). The negation prefix is ''na-'' and is placed before all other prefixes, as in ''na-mi-zad-um'' ('I was not hitting'). These typically attract stress.<ref name=":0" />
+
+=== Tenses ===
+The tense, mood, and aspect systems are somewhat different from Western Persian. The basic tense system is threefold: present-future, past, and remote (pluperfect). New modal paradigms developed in addition to the subjunctives:
+
+* The non-seen/mirative that originates in the resultative-stative perfect (e.g., ''zad-ēm''; cf. Iranian Persian {{Translit|fa|zada(e) am}}), which has largely lost its non-modal use;
+* the potential, or assumptive, which is marked by the invariant ''ḵot'' (cf. Persian ''xāh-ad'' or ''xād''; 'it wants, it intends') combined with the indicate and subjunctive forms.
+
+Moreover, all past and remote forms have developed imperfective forms marked by ''mi-''. There are doubts about several of the less commonly found, or recorded, forms, in particular those with ''ḵot''.<ref>G. K. Dulling, The Hazaragi Dialect of Afghan Persian: A Preliminary Study, Central Asian Monograph 1, London, 1973. pp. 35–36</ref> However, the systematic arrangement of all forms according to their morphological, as well as semantic, function shows that those forms fit well within the overall pattern. The system may tentatively be shown as follows, leaving out complex compound forms such as ''zada ḵot mu-buda baš-um''.<ref name=":0" />
+
+In the assumptive, the distinction appears to be not between present versus past, but indefinite versus definite. Also, similar to all Persian dialects, the imperfective forms in ''mi-'', and past perfect forms, such as ''mi-zad-um'' and ''zada bud-um'', are used in irreal conditional clauses and wishes, e.g., ''kaški zimi qulba kadagi mu-but'' ('If the field would only be/have been plowed'). Modal verbs, such as ''tan-'' ('can'), are constructed with the perfect participle, e.g., ''ma bû-r-um, da čaman rasid-a ḵot tanist-um'' ('I shall go, and may be able to get to Chaman'). Participial nominalization is typical, both with the perfect participle (e.g., ''kad-a'' 'having done'), and with the derived participle with passive meaning ''kad-ag-i'' 'having been done'. E.g., ''zimin-i qulba kada-ya'' ('The field has been ploughed'), ''zamin-i qulba (na-)šuda-ra mi-ngar-um'' ('I am looking at a plowed/unplowed field'), ''imrûz [u ḵondagi] tikrar mu-kun-a'' ('Today he repeats reading what he had read'). The gerundive (e.g., ''kad-an-i'' 'to be done') is likewise productive, as in ''yag čiz, ki uftadani baš-a, ma u-ra qad-dist-ḵu girift-um, tulḡa kad-um'' ('One object, that was about to fall, I grabbed, and held it'). The clitic ''-ku'' or ''-ḵu'' topicalizes the parts of speech, and ''-di'' topicalizes the predicate; e.g., ''i-yši raft, ma-ḵu da ḵona mand-um'' ('He himself left; I, though, I stayed').<ref name=":0" />
+
+== See also ==
+* [[Aimaq dialect]]
+
+== Notes ==
+{{notelist}}
+
+== References ==
+{{reflist|colwidth=30em}}
+
+== External links ==
+{{Incubator|code=haz}}
+
+* [https://sydneytranslation.com.au/Hazaragi-translation/ Hazaragi Translation Services]
+
+{{Persian language|state=expanded}}
+{{Iranian languages}}
+
+{{DEFAULTSORT:Hazaragi dialect}}
+[[Category:Hazaragi language| ]]
+[[Category:Eastern Persian dialects]]
+[[Category:Languages of Afghanistan]]
+[[Category:Languages of Iran]]
+[[Category:Persian language in Pakistan]]
+[[Category:Languages of Balochistan, Pakistan]]
+[[Category:Hazara culture|Language]]

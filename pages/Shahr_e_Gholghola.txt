@@ -1,0 +1,68 @@
+https://en.wikipedia.org/wiki/Shahr-e-Gholghola
+
+Shahr-e-Gholghola or Gholghola City (Dari: شهر غلغله) (also City of Screams, City of Woe, City of Sorrows) is an archaeological site located near the town of Bamyan, Afghanistan.
+The Siege of Bamyan took place here in 1221 during the Mongol pursuit of Jalal al-Din Mangburni, the last ruler of the Khwarazmian Empire. Mutukan, eldest son of Chagatai Khan and favourite grandson of Genghis Khan, was killed in battle by an arrow from the besieged walls, which led Genghis to massacre the population of the city and its surrounding region (the origin of the city's moniker "City of Woe").
+
+
+== See also ==
+Shahr-e Zuhak, Bamyan
+Siege of Bamyan
+
+
+== References ==
+
+=====WIKITEXT=====
+{{distinguish|text=[[Shahr-i Gholghola]], historical, archaeological site located in Nimroz Province of Afghanistan}}
+{{Infobox historic site
+| name = Shahr-e-Gholghola (City of Screams)<br>Gholghola City
+| native_name = شهر غلغله
+| native_name_lang = prs
+| image = Shahr-e-Gholghola.jpg
+| caption = Shahr-e-Gholghola or the 'City of Screams', Taken Sept 9, 2009 near Bamyan City, Bamyan Province, Afghanistan
+| coordinates = {{Coord|34.818813|N|67.838997|E|region:AF|display=inline,title}}<ref>{{Cite web|url=http://en.wikigogo.org/en/9395/|title=WikiGOGO - Shar-i-Gholghola {{!}} UNESCO, bariki|website=en.wikigogo.org|access-date=2018-04-06|archive-date=2018-04-06|archive-url=https://web.archive.org/web/20180406225846/http://en.wikigogo.org/en/9395/|url-status=dead}}</ref>
+| pushpin_map =
+| location = [[Bamyan]], [[Afghanistan]]
+| area =
+| built = 
+| architect =
+| architecture =
+| governing_body =
+| designation1 =
+| designation1_offname =
+| designation1_date =
+| designation1_number =
+| designation2 =
+| designation2_offname =
+| designation2_date =
+| designation2_number =
+| designation3 =
+| designation3_offname =
+| designation3_date =
+| designation3_number =
+| designation4 =
+| designation4_offname =
+| designation4_date =
+| designation4_number =
+| designation5 =
+| designation5_offname =
+| designation5_date =
+| designation5_number =
+}}
+{{Hazara people}}
+'''Shahr-e-Gholghola''' or '''Gholghola City''' ({{langx|prs|شهر غلغله}}) (also City of Screams, City of Woe, City of Sorrows) is an archaeological site located near the town of [[Bamyan]], [[Afghanistan]].<ref>{{cite web |url=http://www.wakht.af/index.php?option=com_content&view=article&id=3487&lang=en&Itemid= |title=Gholghola, a sign of old civilization in Bamyan |publisher=Wakht.af |date=2012-03-26 |accessdate=2012-05-09 |archive-date=2012-05-05 |archive-url=https://web.archive.org/web/20120505075208/http://wakht.af/index.php?option=com_content&view=article&id=3487&lang=en&Itemid= |url-status=dead }}</ref><ref>{{cite web|url=http://www.lonelyplanet.com/afghanistan/bamiyan-and-central-afghanistan/bamiyan/sights/castle/shahr-e-gholghola |title=Shahr-e Gholghola in Bamiyan, Afghanistan |publisher=Lonely Planet |date=2011-09-28 |accessdate=2012-05-09}}</ref>
+
+The [[Siege of Bamyan]] took place here in 1221 during the [[Mongol Empire|Mongol]] pursuit of [[Jalal al-Din Mangburni]], the last ruler of the [[Khwarazmian Empire]].<ref name="Wars p.55">Dictionary of Wars, by George C. Kohn, p.55.</ref> [[Mutukan]], eldest son of [[Chagatai Khan]] and favourite grandson of [[Genghis Khan]], was killed in battle by an arrow from the besieged walls, which led Genghis to massacre the population of the city and its surrounding region (the origin of the city's moniker "City of Woe").<ref>{{cite book|author1=Jack Weatherford|title=Genghis Khan and the Making of the Modern World|date=2005|publisher=Crown/Archetype|isbn=9780307237811|page=117}}</ref><ref>{{cite book|author1=Brendan Cassar|author2=Sara Noshadi|title=Keeping history alive: safeguarding cultural heritage in post-conflict Afghanistan|date=2015|publisher=UNESCO Publishing|isbn=9789231000645|page=244}}</ref><ref name="Haqqi152">[https://www.abebooks.co.uk/Chingiz-Khan-Haqqi-Syed-Anwarul-Haque/18563360183/bd Anwarul Haque Haqqi], ''Chingiz Khan: The Life and Legacy of an Empire Builder'', (Primus Books, 2010), 152.</ref>
+
+==See also==
+*[[Shahr-e Zuhak, Bamyan]]
+*[[Siege of Bamyan]]
+
+==References==
+<references/>
+
+{{Bamyan Province}}
+
+[[Category:Hazarajat]]
+[[Category:Bamyan Province]]
+
+{{Bamyan-geo-stub}}

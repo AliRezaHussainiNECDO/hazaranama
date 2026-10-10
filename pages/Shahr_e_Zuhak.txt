@@ -1,0 +1,75 @@
+https://en.wikipedia.org/wiki/Zuhak,_Bamyan
+
+Shahr-e Zuhak or City of Zuhak (Dari: شهر ضحاک), also known as The Red City, is a historic city ruins in Bamyan, Afghanistan which was once home to 3,000 people. 
+The fortress is believed to have been founded between 500 and 600 AD by the Hephthalites, around the same time as the Buddhas of Bamyan were carved into rock in the Bamiyan valley. The city lies at the easternmost point of the Bamyan valley, above the confluence of the Kunduz and Kalu Ganga rivers. The valley used to be a part of a route connecting Europe to India and China.
+Zuhak was fortified during the Islamic period (10th - 13th century), under the rule of the Ghaznavid and Ghorid dynasties. The fortress was later ransacked by Genghis Khan and his army during the Siege of Bamyan, as a part of the greater invasion of the Khwarazmian Empire.
+The fortress was protected by ramparts, built along the steep cliffs bounding the site, which were equipped with several watchtowers, some of which still stand today. The citadel was protected by three more orders of walls and was located on the topmost part of the hill. Due to prolonged exposure and a lack of conservation, exacerbated by recent periods of war, many of the structures on the site have collapsed or are prone to collapse.
+
+
+== See also ==
+Shahr-e Gholghola
+
+
+== References ==
+
+=====WIKITEXT=====
+{{Short description|City ruins in Bamyan, Afghanistan}}
+{{Use dmy dates|date=January 2023}}
+{{Infobox historic site
+| name = Shahr-e Zuhak (Zuhak City)
+| native_name = شهر ضحاک
+| native_name_lang = prs
+| image = Françoise Foliot - Afghanistan 152.jpg
+| caption = 
+| pushpin_map = 
+| location = [[Bamyan, Afghanistan]]
+| area = [[Hazarajat]]
+| built = 
+| architect = 
+| architecture = 
+| governing_body = 
+| designation1 = 
+| designation1_offname = 
+| designation1_date = 
+| designation1_number = 
+| designation2 = 
+| designation2_offname = 
+| designation2_date = 
+| designation2_number = 
+| designation3 = 
+| designation3_offname = 
+| designation3_date = 
+| designation3_number = 
+| designation4 = 
+| designation4_offname = 
+| designation4_date = 
+| designation4_number = 
+| designation5 = 
+| designation5_offname = 
+| designation5_date = 
+| designation5_number = 
+| built_for = [[Zahhak]]
+}}
+{{Hazara people}}
+'''Shahr-e Zuhak''' or '''City of [[Zuhak]]''' ({{langx|prs|شهر ضحاک}}), also known as '''The Red City''', is a historic city ruins in [[Bamyan]], [[Afghanistan]] which was once home to 3,000 people. 
+The fortress is believed to have been founded between 500 and 600 AD by the [[Hephthalites]], around the same time as the [[Buddhas of Bamiyan|Buddhas of Bamyan]] were carved into rock in the Bamiyan valley.<ref>{{cite web |last1= |first1= |title=Cultural Landscape and Archaeological Remains of the Bamiyan Valley |url=https://whc.unesco.org/en/list/208/ |website=UNESCO World Heritage Centre |language=en}}</ref> The city lies at the easternmost point of the Bamyan valley, above the confluence of the [[Kunduz River|Kunduz]] and [[Kalu Ganga]] rivers. The valley used to be a part of a route connecting Europe to [[Royal Road|India]] and [[Silk Road|China]].<br />
+  
+Zuhak was fortified during the Islamic period (10th - 13th century), under the rule of the [[Ghaznavid]] and [[Ghorid]] dynasties. The fortress was later ransacked by [[Genghis Khan]] and his army during the [[Siege of Bamyan]], as a part of the greater [[Mongol invasion of the Khwarazmian Empire|invasion of the Khwarazmian Empire]].
+
+The fortress was protected by ramparts, built along the steep cliffs bounding the site, which were equipped with several watchtowers, some of which still stand today. The citadel was protected by three more orders of walls and was located on the topmost part of the hill. Due to prolonged exposure and a lack of conservation, exacerbated by recent periods of war, many of the structures on the site have collapsed or are prone to collapse.<ref>{{cite journal |last1=Margottini |first1=Claudio |last2=Fidolini |first2=Francesco |last3=Iadanza |first3=Carla |last4=Trigila |first4=Alessandro |last5=Ubelmann |first5=Yves |title=The conservation of the Shahr-e-Zohak archaeological site (central Afghanistan): Geomorphological processes and ecosystem-based mitigation |journal=Geomorphology |date=June 2015 |volume=239 |pages=73–90 |doi=10.1016/j.geomorph.2014.12.047|bibcode=2015Geomo.239...73M }}</ref>
+
+[[File:Shahr-e Zuhak Bamyan Afghanistan.jpg|thumb|left|Shahr-e Zuhak viewed from ground level]]
+== See also ==
+* [[Shahr-e Gholghola]]
+
+==References==
+{{Reflist}}
+
+{{Bamyan Province}}
+{{Authority control}}
+
+[[Category:Hazarajat]]
+[[Category:Bamyan Province]]
+
+{{Afghanistan-hist-stub}}
+{{Bamyan-geo-stub}}
