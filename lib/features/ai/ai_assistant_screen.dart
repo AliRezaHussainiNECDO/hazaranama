@@ -164,7 +164,7 @@ class _WelcomePane extends StatelessWidget {
                 child: Row(children: [
                   Icon(Icons.bolt, size: 15, color: theme.aiViolet),
                   const SizedBox(width: 8),
-                  Expanded(child: Text(starters[i], style: TextStyle(color: theme.textSecondary, fontSize: 11.5, fontWeight: FontWeight.w600))),
+                  Expanded(child: Text(starters[i], style: TextStyle(color: theme.textSecondary, fontSize: 12.5, fontWeight: FontWeight.w600))),
                 ]),
               ),
             ),

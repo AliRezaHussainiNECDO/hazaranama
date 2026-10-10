@@ -54,7 +54,7 @@ class MainShell extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                       decoration: BoxDecoration(color: theme.yellow.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(999), border: Border.all(color: theme.yellow.withValues(alpha: 0.3))),
-                      child: Text('مدیر', style: TextStyle(color: theme.yellow, fontSize: 9.5, fontWeight: FontWeight.w700)),
+                      child: Text('مدیر', style: TextStyle(color: theme.yellow, fontSize: 11, fontWeight: FontWeight.w700)),
                     ),
                   ],
                 ]),
@@ -163,7 +163,7 @@ class _NotificationBell extends StatelessWidget {
               child: Text(
                 unreadCount > 9 ? '9+' : '$unreadCount',
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.white, fontSize: 8.5, fontWeight: FontWeight.w800, height: 1.3),
+                style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w800, height: 1.3),
               ),
             ),
           ).animate(onPlay: (c) => c.repeat(reverse: true)).scaleXY(begin: 1, end: 1.14, duration: 900.ms, curve: Curves.easeInOut),
@@ -230,7 +230,7 @@ class _NotificationToastState extends State<_NotificationToast> {
                 Text(n.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontWeight: FontWeight.w800, fontSize: 12.5)),
                 if (n.body.isNotEmpty) ...[
                   const SizedBox(height: 2),
-                  Text(n.body, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 10.5)),
+                  Text(n.body, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 12)),
                 ],
               ]),
             ),

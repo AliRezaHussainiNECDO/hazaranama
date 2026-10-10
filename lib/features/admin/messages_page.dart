@@ -42,7 +42,7 @@ class _MessagesPageState extends State<MessagesPage> {
         Row(children: [
           StatIconBox(icon: Icons.mark_email_unread_outlined, color: theme.blue, size: 32),
           const SizedBox(width: 10),
-          Expanded(child: Text('${app.allMessages.length} پیام ثبت‌شده · $newCount پیام تازه', style: TextStyle(color: theme.textFaint, fontSize: 11.5))),
+          Expanded(child: Text('${app.allMessages.length} پیام ثبت‌شده · $newCount پیام تازه', style: TextStyle(color: theme.textFaint, fontSize: 12.5))),
         ]),
         const SizedBox(height: 16),
         if (app.allMessages.isEmpty)
@@ -112,11 +112,11 @@ class _AdminMessageCardState extends State<_AdminMessageCard> {
                     _statusPill(theme, m.status),
                   ]),
                   const SizedBox(height: 3),
-                  Text('${m.userEmail} · ${m.userCountry}', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 10)),
+                  Text('${m.userEmail} · ${m.userCountry}', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
                   const SizedBox(height: 8),
                   Text(m.message, maxLines: _expanded ? null : 2, overflow: _expanded ? null : TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 12, height: 1.8)),
                   const SizedBox(height: 4),
-                  Text(m.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
+                  Text(m.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 11)),
                 ]),
               ),
               Icon(_expanded ? Icons.expand_less : Icons.expand_more, color: theme.textFaint, size: 18),
@@ -140,7 +140,7 @@ class _AdminMessageCardState extends State<_AdminMessageCard> {
                   margin: const EdgeInsets.only(bottom: 10),
                   decoration: BoxDecoration(color: theme.success.withValues(alpha: 0.08), borderRadius: BorderRadius.circular(12), border: Border.all(color: theme.success.withValues(alpha: 0.3))),
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text('پاسخ ارسال‌شده', style: TextStyle(color: theme.success, fontSize: 10, fontWeight: FontWeight.w700)),
+                    Text('پاسخ ارسال‌شده', style: TextStyle(color: theme.success, fontSize: 11.5, fontWeight: FontWeight.w700)),
                     const SizedBox(height: 6),
                     Text(m.adminReply!, style: TextStyle(color: theme.textPrimary, fontSize: 12, height: 1.8)),
                   ]),
@@ -183,7 +183,7 @@ class _AdminMessageCardState extends State<_AdminMessageCard> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(color: color.withValues(alpha: 0.14), borderRadius: BorderRadius.circular(999)),
-      child: Text(messageStatusLabel(status), style: TextStyle(color: color, fontSize: 9, fontWeight: FontWeight.w700)),
+      child: Text(messageStatusLabel(status), style: TextStyle(color: color, fontSize: 10.5, fontWeight: FontWeight.w700)),
     );
   }
 
@@ -193,7 +193,7 @@ class _AdminMessageCardState extends State<_AdminMessageCard> {
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           Icon(icon, size: 11, color: theme.textSecondary),
           const SizedBox(width: 4),
-          Text(label, style: TextStyle(color: theme.textSecondary, fontSize: 10)),
+          Text(label, style: TextStyle(color: theme.textSecondary, fontSize: 11.5)),
         ]),
       );
 }

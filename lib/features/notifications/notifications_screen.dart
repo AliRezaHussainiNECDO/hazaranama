@@ -57,7 +57,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   if (app.unreadNotificationCount > 0)
                     TextButton(
                       onPressed: () => app.markAllNotificationsRead(),
-                      child: Text('علامت‌زدن همه', style: TextStyle(color: theme.blue, fontSize: 11.5, fontWeight: FontWeight.w700)),
+                      child: Text('علامت‌زدن همه', style: TextStyle(color: theme.blue, fontSize: 12.5, fontWeight: FontWeight.w700)),
                     ),
                   const SizedBox(width: 4),
                 ],
@@ -111,10 +111,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                           Text(n.title, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: n.isRead ? FontWeight.w600 : FontWeight.w800), maxLines: 2, overflow: TextOverflow.ellipsis),
                                           if (n.body.isNotEmpty) ...[
                                             const SizedBox(height: 3),
-                                            Text(n.body, style: TextStyle(color: theme.textSecondary, fontSize: 11), maxLines: 2, overflow: TextOverflow.ellipsis),
+                                            Text(n.body, style: TextStyle(color: theme.textSecondary, fontSize: 12.5), maxLines: 2, overflow: TextOverflow.ellipsis),
                                           ],
                                           const SizedBox(height: 5),
-                                          Text(notificationTimeAgo(n.createdAt), style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
+                                          Text(notificationTimeAgo(n.createdAt), style: TextStyle(color: theme.textFaint, fontSize: 11)),
                                         ]),
                                       ),
                                       if (!n.isRead)

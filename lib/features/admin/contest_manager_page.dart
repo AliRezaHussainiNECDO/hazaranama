@@ -188,7 +188,7 @@ class _TabChip extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: selected ? theme.blue : theme.glassBorder),
         ),
-        child: Text(label, style: TextStyle(color: selected ? Colors.white : theme.textSecondary, fontSize: 11.5, fontWeight: FontWeight.w700)),
+        child: Text(label, style: TextStyle(color: selected ? Colors.white : theme.textSecondary, fontSize: 12.5, fontWeight: FontWeight.w700)),
       ),
     );
   }
@@ -264,7 +264,7 @@ class _SubmissionsTab extends StatelessWidget {
                 readyCount > 0
                     ? '$readyCount مقاله دوره‌شان تمام شده و آماده‌ی بررسی‌اند.'
                     : 'فعلاً مقاله‌ای که دوره‌اش تمام شده باشد نیست.',
-                style: TextStyle(color: theme.textFaint, fontSize: 10.5, height: 1.7),
+                style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.7),
               ),
               const SizedBox(height: 10),
               SizedBox(
@@ -274,7 +274,7 @@ class _SubmissionsTab extends StatelessWidget {
                   icon: autoRanking
                       ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
                       : const Icon(Icons.emoji_events_outlined, size: 15),
-                  label: Text(autoRanking ? 'در حال بررسی و رتبه‌بندی…' : 'بررسی، رتبه‌بندی و انتشار برگزیدگان', style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700)),
+                  label: Text(autoRanking ? 'در حال بررسی و رتبه‌بندی…' : 'بررسی، رتبه‌بندی و انتشار برگزیدگان', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                   style: ElevatedButton.styleFrom(backgroundColor: theme.aiViolet, foregroundColor: Colors.white, elevation: 0, padding: const EdgeInsets.symmetric(vertical: 12), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
                 ),
               ),
@@ -301,7 +301,7 @@ class _SubmissionsTab extends StatelessWidget {
                       borderRadius: BorderRadius.circular(999),
                       border: Border.all(color: selected ? theme.blue : theme.glassBorder),
                     ),
-                    child: Text(_filters[key]!, style: TextStyle(color: selected ? theme.blue : theme.textSecondary, fontSize: 10.5, fontWeight: FontWeight.w700)),
+                    child: Text(_filters[key]!, style: TextStyle(color: selected ? theme.blue : theme.textSecondary, fontSize: 12, fontWeight: FontWeight.w700)),
                   ),
                 );
               },
@@ -475,7 +475,7 @@ class _SubmissionCardState extends State<_SubmissionCard> {
                 const SizedBox(height: 4),
                 const FlagStripe(width: 46),
                 const SizedBox(height: 16),
-                Text('رتبه', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                Text('رتبه', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 const SizedBox(height: 6),
                 Row(children: [1, 2, 3].map((p) {
                   final sel = placement == p;
@@ -501,10 +501,10 @@ class _SubmissionCardState extends State<_SubmissionCard> {
                   );
                 }).toList()),
                 const SizedBox(height: 14),
-                Text('عنوان دوره (مثلاً ماه انتشار)', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                Text('عنوان دوره (مثلاً ماه انتشار)', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 _formField(theme, monthCtrl, hint: 'مثلاً: سنبله ۱۴۰۳'),
                 const SizedBox(height: 12),
-                Text('جایزه (اختیاری)', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                Text('جایزه (اختیاری)', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 _formField(theme, prizeCtrl, hint: 'مثلاً: ۵۰۰۰ افغانی + لوح تقدیر'),
                 const SizedBox(height: 18),
                 Row(children: [
@@ -565,30 +565,30 @@ class _SubmissionCardState extends State<_SubmissionCard> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
               decoration: BoxDecoration(color: theme.yellow.withValues(alpha: 0.14), borderRadius: BorderRadius.circular(999)),
-              child: Text('نفر ${s.placement}', style: TextStyle(color: theme.yellow, fontSize: 9.5, fontWeight: FontWeight.w800)),
+              child: Text('نفر ${s.placement}', style: TextStyle(color: theme.yellow, fontSize: 11, fontWeight: FontWeight.w800)),
             ),
         ]),
         const SizedBox(height: 3),
-        Text('${s.authorName.isEmpty ? 'کاربر' : s.authorName} — ${afghanDateLabel(s.submittedAt)}', style: TextStyle(color: theme.textFaint, fontSize: 10)),
+        Text('${s.authorName.isEmpty ? 'کاربر' : s.authorName} — ${afghanDateLabel(s.submittedAt)}', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
         const SizedBox(height: 8),
         Row(children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
             decoration: BoxDecoration(color: theme.blue.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(999)),
-            child: Text(_statusLabel(s.status), style: TextStyle(color: theme.blue, fontSize: 9.5, fontWeight: FontWeight.w700)),
+            child: Text(_statusLabel(s.status), style: TextStyle(color: theme.blue, fontSize: 11, fontWeight: FontWeight.w700)),
           ),
           const SizedBox(width: 6),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
             decoration: BoxDecoration(color: _verdictColor(s.aiVerdict).withValues(alpha: 0.12), borderRadius: BorderRadius.circular(999)),
-            child: Text(_verdictLabel(s.aiVerdict), style: TextStyle(color: _verdictColor(s.aiVerdict), fontSize: 9.5, fontWeight: FontWeight.w700)),
+            child: Text(_verdictLabel(s.aiVerdict), style: TextStyle(color: _verdictColor(s.aiVerdict), fontSize: 11, fontWeight: FontWeight.w700)),
           ),
           if (s.aiQualityScore != null) ...[
             const SizedBox(width: 6),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
               decoration: BoxDecoration(color: theme.aiViolet.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(999)),
-              child: Text('کیفیت: ${s.aiQualityScore!.round()}/۱۰۰', style: TextStyle(color: theme.aiViolet, fontSize: 9.5, fontWeight: FontWeight.w700)),
+              child: Text('کیفیت: ${s.aiQualityScore!.round()}/۱۰۰', style: TextStyle(color: theme.aiViolet, fontSize: 11, fontWeight: FontWeight.w700)),
             ),
           ],
           const Spacer(),
@@ -597,17 +597,17 @@ class _SubmissionCardState extends State<_SubmissionCard> {
               widget.app.contestSettings.submissionsOpen
                   ? '${widget.app.contestSettings.timeUntilDeadline.inDays} روز تا رتبه‌بندی'
                   : 'آماده‌ی رتبه‌بندی',
-              style: TextStyle(color: theme.textFaint, fontSize: 9.5),
+              style: TextStyle(color: theme.textFaint, fontSize: 11),
             ),
         ]),
         if (s.aiNotes != null && s.aiNotes!.trim().isNotEmpty) ...[
           const SizedBox(height: 6),
-          Text('یادداشت هوش مصنوعی: ${s.aiNotes}', style: TextStyle(color: theme.textFaint, fontSize: 10, height: 1.6)),
+          Text('یادداشت هوش مصنوعی: ${s.aiNotes}', style: TextStyle(color: theme.textFaint, fontSize: 11.5, height: 1.6)),
         ],
         const SizedBox(height: 6),
         InkWell(
           onTap: () => setState(() => _expanded = !_expanded),
-          child: Text(_expanded ? 'بستن متن مقاله' : 'خواندن متن کامل مقاله', style: TextStyle(color: theme.blue, fontSize: 10.5, fontWeight: FontWeight.w700)),
+          child: Text(_expanded ? 'بستن متن مقاله' : 'خواندن متن کامل مقاله', style: TextStyle(color: theme.blue, fontSize: 12, fontWeight: FontWeight.w700)),
         ),
         if (_expanded) ...[
           const SizedBox(height: 8),
@@ -615,7 +615,7 @@ class _SubmissionCardState extends State<_SubmissionCard> {
             width: double.infinity,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(color: theme.bgCardAlt, borderRadius: BorderRadius.circular(10)),
-            child: Text(s.body, style: TextStyle(color: theme.textSecondary, fontSize: 11.5, height: 1.9)),
+            child: Text(s.body, style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.9)),
           ),
         ],
         const SizedBox(height: 10),
@@ -626,28 +626,28 @@ class _SubmissionCardState extends State<_SubmissionCard> {
             OutlinedButton.icon(
               onPressed: _runAiReview,
               icon: const Icon(Icons.smart_toy_outlined, size: 14),
-              label: const Text('بررسی با هوش مصنوعی', style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.w700)),
+              label: const Text('بررسی با هوش مصنوعی', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
               style: OutlinedButton.styleFrom(foregroundColor: theme.aiViolet, side: BorderSide(color: theme.aiViolet.withValues(alpha: 0.4)), padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
             ),
             if (s.status != ArticleStatus.published && s.status != ArticleStatus.disqualified)
               OutlinedButton.icon(
                 onPressed: _disqualify,
                 icon: const Icon(Icons.block, size: 14),
-                label: const Text('رد صلاحیت', style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.w700)),
+                label: const Text('رد صلاحیت', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
                 style: OutlinedButton.styleFrom(foregroundColor: theme.danger, side: BorderSide(color: theme.danger.withValues(alpha: 0.4)), padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
               ),
             if (s.status == ArticleStatus.disqualified)
               OutlinedButton.icon(
                 onPressed: _reactivate,
                 icon: const Icon(Icons.restore, size: 14),
-                label: const Text('بازگردانی', style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.w700)),
+                label: const Text('بازگردانی', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
                 style: OutlinedButton.styleFrom(foregroundColor: theme.success, side: BorderSide(color: theme.success.withValues(alpha: 0.4)), padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
               ),
             if (s.status != ArticleStatus.published && s.status != ArticleStatus.disqualified)
               ElevatedButton.icon(
                 onPressed: _openPlacementForm,
                 icon: const Icon(Icons.emoji_events_outlined, size: 14),
-                label: const Text('انتخاب به‌عنوان برگزیده', style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.w700)),
+                label: const Text('انتخاب به‌عنوان برگزیده', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
                 style: ElevatedButton.styleFrom(backgroundColor: theme.blue, foregroundColor: Colors.white, elevation: 0, padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
               ),
             IconButton(icon: Icon(Icons.delete_outline, size: 17, color: theme.textFaint), onPressed: _confirmDelete, padding: EdgeInsets.zero, constraints: const BoxConstraints(minWidth: 30, minHeight: 30)),
@@ -692,7 +692,7 @@ class _FeaturedTab extends StatelessWidget {
                 const SizedBox(height: 4),
                 const FlagStripe(width: 46),
                 const SizedBox(height: 16),
-                Text('رتبه', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                Text('رتبه', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 const SizedBox(height: 6),
                 Row(children: [1, 2, 3].map((p) {
                   final sel = placement == p;
@@ -718,22 +718,22 @@ class _FeaturedTab extends StatelessWidget {
                   );
                 }).toList()),
                 const SizedBox(height: 12),
-                Text('نام نویسنده', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                Text('نام نویسنده', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 _formField(theme, nameCtrl, hint: 'نام و تخلص'),
                 const SizedBox(height: 12),
-                Text('لینک آواتار (اختیاری)', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                Text('لینک آواتار (اختیاری)', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 _formField(theme, avatarCtrl, hint: 'https://…'),
                 const SizedBox(height: 12),
-                Text('عنوان مقاله', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                Text('عنوان مقاله', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 _formField(theme, titleCtrl, hint: 'عنوان'),
                 const SizedBox(height: 12),
-                Text('متن کامل مقاله', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                Text('متن کامل مقاله', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 _formField(theme, bodyCtrl, hint: 'متن مقاله…', maxLines: 8),
                 const SizedBox(height: 12),
-                Text('عنوان دوره', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                Text('عنوان دوره', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 _formField(theme, monthCtrl, hint: 'مثلاً: سنبله ۱۴۰۳'),
                 const SizedBox(height: 12),
-                Text('جایزه (اختیاری)', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                Text('جایزه (اختیاری)', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 _formField(theme, prizeCtrl, hint: 'مثلاً: ۵۰۰۰ افغانی'),
                 const SizedBox(height: 18),
                 Row(children: [
@@ -799,7 +799,7 @@ class _FeaturedTab extends StatelessWidget {
                 const SizedBox(height: 4),
                 const FlagStripe(width: 46),
                 const SizedBox(height: 16),
-                Text('رتبه', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                Text('رتبه', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 const SizedBox(height: 6),
                 Row(children: [1, 2, 3].map((p) {
                   final sel = placement == p;
@@ -825,16 +825,16 @@ class _FeaturedTab extends StatelessWidget {
                   );
                 }).toList()),
                 const SizedBox(height: 12),
-                Text('عنوان مقاله', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                Text('عنوان مقاله', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 _formField(theme, titleCtrl, hint: 'عنوان'),
                 const SizedBox(height: 12),
-                Text('متن کامل مقاله', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                Text('متن کامل مقاله', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 _formField(theme, bodyCtrl, hint: 'متن مقاله…', maxLines: 8),
                 const SizedBox(height: 12),
-                Text('عنوان دوره', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                Text('عنوان دوره', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 _formField(theme, monthCtrl, hint: 'مثلاً: سنبله ۱۴۰۳'),
                 const SizedBox(height: 12),
-                Text('جایزه (اختیاری)', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                Text('جایزه (اختیاری)', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 _formField(theme, prizeCtrl, hint: 'مثلاً: ۵۰۰۰ افغانی'),
                 const SizedBox(height: 18),
                 Row(children: [
@@ -902,7 +902,7 @@ class _FeaturedTab extends StatelessWidget {
             child: ElevatedButton.icon(
               onPressed: () => _openManualForm(context),
               icon: const Icon(Icons.add, size: 15),
-              label: const Text('افزودن دستی', style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700)),
+              label: const Text('افزودن دستی', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
               style: ElevatedButton.styleFrom(backgroundColor: theme.blue, foregroundColor: Colors.white, elevation: 0, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
             ),
           ),
@@ -931,7 +931,7 @@ class _FeaturedTab extends StatelessWidget {
                         const SizedBox(width: 4),
                         Expanded(child: Text(a.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700))),
                       ]),
-                      Text('${a.authorName} — ${a.monthLabel}', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 10)),
+                      Text('${a.authorName} — ${a.monthLabel}', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
                     ]),
                   ),
                   IconButton(icon: Icon(Icons.edit_outlined, size: 17, color: theme.blue), onPressed: () => _openEditForm(context, a)),
@@ -1066,7 +1066,7 @@ class _SettingsTabState extends State<_SettingsTab> {
                   : settings.submissionsOpen
                       ? 'دوره از ${afghanDateLabel(settings.roundStartedAt!)} آغاز شده؛ ${settings.timeUntilDeadline.inDays} روز تا پایان مهلت ارسال (${afghanDateLabel(settings.submissionDeadline!)}) باقی است.'
                       : 'مهلت ارسال این دوره در ${afghanDateLabel(settings.submissionDeadline!)} تمام شده — از تب «مقالات ارسالی» رتبه‌بندی را اجرا کنید.',
-              style: TextStyle(color: theme.textSecondary, fontSize: 11, height: 1.8),
+              style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.8),
             ),
             const SizedBox(height: 10),
             SizedBox(
@@ -1076,7 +1076,7 @@ class _SettingsTabState extends State<_SettingsTab> {
                 icon: _startingRound
                     ? SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: theme.blue))
                     : const Icon(Icons.play_circle_outline, size: 16),
-                label: Text(settings.hasActiveRound ? 'شروع دوره‌ی تازه از همین لحظه' : 'شروع اولین دوره از همین لحظه', style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700)),
+                label: Text(settings.hasActiveRound ? 'شروع دوره‌ی تازه از همین لحظه' : 'شروع اولین دوره از همین لحظه', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                 style: OutlinedButton.styleFrom(foregroundColor: theme.blue, side: BorderSide(color: theme.blue.withValues(alpha: 0.4)), padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
               ),
             ),
@@ -1093,7 +1093,7 @@ class _SettingsTabState extends State<_SettingsTab> {
               Text('موضوع مشترک این دوره', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800)),
             ]),
             const SizedBox(height: 4),
-            Text('همه‌ی کاربران مقاله‌شان را روی همین عنوان می‌نویسند — دیگر عنوان دلخواه وارد نمی‌کنند.', style: TextStyle(color: theme.textFaint, fontSize: 10, height: 1.7)),
+            Text('همه‌ی کاربران مقاله‌شان را روی همین عنوان می‌نویسند — دیگر عنوان دلخواه وارد نمی‌کنند.', style: TextStyle(color: theme.textFaint, fontSize: 11.5, height: 1.7)),
             const SizedBox(height: 10),
             _formField(theme, _topicCtrl, hint: 'مثلاً: نقش زنان هزاره در حفظ فرهنگ و زبان', maxLines: 3),
           ]),
@@ -1109,15 +1109,15 @@ class _SettingsTabState extends State<_SettingsTab> {
               Text('جوایز سه مقام برتر', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800)),
             ]),
             const SizedBox(height: 4),
-            Text('پیش از ارسال، در صفحه‌ی مسابقه به کاربران نشان داده می‌شود.', style: TextStyle(color: theme.textFaint, fontSize: 10, height: 1.7)),
+            Text('پیش از ارسال، در صفحه‌ی مسابقه به کاربران نشان داده می‌شود.', style: TextStyle(color: theme.textFaint, fontSize: 11.5, height: 1.7)),
             const SizedBox(height: 12),
-            Text('🥇 جایزه‌ی نفر اول', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+            Text('🥇 جایزه‌ی نفر اول', style: TextStyle(color: theme.textFaint, fontSize: 12)),
             _formField(theme, _prizeFirstCtrl, hint: 'مثلاً: ۱۰٬۰۰۰ افغانی + لوح تقدیر'),
             const SizedBox(height: 12),
-            Text('🥈 جایزه‌ی نفر دوم', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+            Text('🥈 جایزه‌ی نفر دوم', style: TextStyle(color: theme.textFaint, fontSize: 12)),
             _formField(theme, _prizeSecondCtrl, hint: 'مثلاً: ۶٬۰۰۰ افغانی'),
             const SizedBox(height: 12),
-            Text('🥉 جایزه‌ی نفر سوم', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+            Text('🥉 جایزه‌ی نفر سوم', style: TextStyle(color: theme.textFaint, fontSize: 12)),
             _formField(theme, _prizeThirdCtrl, hint: 'مثلاً: ۳٬۰۰۰ افغانی'),
           ]),
         ),
@@ -1144,7 +1144,7 @@ Widget _formField(AppColors theme, TextEditingController ctrl, {String hint = ''
       style: TextStyle(color: theme.textPrimary, fontSize: 12.5),
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: TextStyle(color: theme.textFaint, fontSize: 11.5),
+        hintStyle: TextStyle(color: theme.textFaint, fontSize: 12.5),
         filled: true, fillColor: theme.bgCard,
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: theme.border)),

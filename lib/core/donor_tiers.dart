@@ -366,7 +366,7 @@ class DonorTierChip extends StatelessWidget {
       child: Row(mainAxisSize: MainAxisSize.min, children: [
         Icon(tier.crownStyle != DonorCrownStyle.none ? Icons.emoji_events_rounded : Icons.favorite_rounded, size: 9.5, color: color),
         const SizedBox(width: 3),
-        Text(tier.title, style: TextStyle(fontSize: 8.5, fontWeight: FontWeight.w800, color: color)),
+        Text(tier.title, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w800, color: color)),
       ]),
     );
     // مقام‌های تاج‌دار (قهرمان به بالا) یک درخشش ملایم و پیوسته می‌گیرند تا
@@ -413,7 +413,7 @@ class DonorTierCard extends StatelessWidget {
               : totalUsd > 0
                   ? 'مجموع کمک‌های تأییدشده‌ی شما تقریباً ${totalUsd.toStringAsFixed(0)} دلار است.'
                   : 'با اولین کمک مالی، حلقه‌ی دور عکس پروفایلت رنگ می‌گیرد و از «همراه» ارتقا می‌یابی.',
-          style: TextStyle(color: theme.textSecondary, fontSize: 11, height: 1.8),
+          style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.8),
         ),
         if (next != null) ...[
           const SizedBox(height: 12),
@@ -445,7 +445,7 @@ class DonorTierCard extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text('${(next.minUsd - totalUsd).clamp(0, next.minUsd).toStringAsFixed(0)} دلار دیگر تا مقام «${next.title}»',
-              style: TextStyle(color: theme.textFaint, fontSize: 10)),
+              style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
         ],
         const SizedBox(height: 12),
         SizedBox(
@@ -453,7 +453,7 @@ class DonorTierCard extends StatelessWidget {
           child: ElevatedButton.icon(
             onPressed: onDonateTap,
             icon: const Icon(Icons.favorite, size: 14),
-            label: Text(totalUsd <= 0 && !isAdmin ? 'اولین کمک را بفرست' : 'افزایش مقام — کمک کن', style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w800)),
+            label: Text(totalUsd <= 0 && !isAdmin ? 'اولین کمک را بفرست' : 'افزایش مقام — کمک کن', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w800)),
             style: ElevatedButton.styleFrom(backgroundColor: theme.success, foregroundColor: Colors.white, elevation: 0, padding: const EdgeInsets.symmetric(vertical: 12), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
           ),
         ),
@@ -521,7 +521,7 @@ void showVipStickerPicker({
             Icon(Icons.workspace_premium_rounded, size: 14, color: theme.yellow),
             const SizedBox(width: 6),
             Text(unlocked ? 'استیکرهای اختصاصیِ اسطوره به بالا' : 'استیکر اختصاصی — از مقام «اسطوره» باز می‌شود',
-                style: TextStyle(color: theme.textFaint, fontSize: 10, fontWeight: FontWeight.w700)),
+                style: TextStyle(color: theme.textFaint, fontSize: 11.5, fontWeight: FontWeight.w700)),
           ]),
           const SizedBox(height: 10),
           Wrap(

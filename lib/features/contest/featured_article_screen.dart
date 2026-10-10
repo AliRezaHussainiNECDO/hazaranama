@@ -160,11 +160,11 @@ class _FeaturedArticleScreenState extends State<FeaturedArticleScreen> {
                     child: Row(mainAxisSize: MainAxisSize.min, children: [
                       Text(_placementEmoji, style: const TextStyle(fontSize: 13)),
                       const SizedBox(width: 5),
-                      Text('نفر ${article.placement}', style: TextStyle(color: _placementColor(theme), fontSize: 10.5, fontWeight: FontWeight.w800)),
+                      Text('نفر ${article.placement}', style: TextStyle(color: _placementColor(theme), fontSize: 12, fontWeight: FontWeight.w800)),
                     ]),
                   ),
                   const SizedBox(width: 8),
-                  Text(article.monthLabel, style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                  Text(article.monthLabel, style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 ]),
                 const SizedBox(height: 12),
                 Text(article.title, style: TextStyle(color: theme.textPrimary, fontSize: 17, fontWeight: FontWeight.w800, height: 1.5)),
@@ -182,7 +182,7 @@ class _FeaturedArticleScreenState extends State<FeaturedArticleScreen> {
                     DonorVipTick(color: app.donorTierForUserId(article.authorId ?? '')!.tickColor!, size: 12),
                   ],
                   const SizedBox(width: 6),
-                  if (article.publishedAtLabel.isNotEmpty) Text(article.publishedAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 10)),
+                  if (article.publishedAtLabel.isNotEmpty) Text(article.publishedAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
                 ]),
                 if (article.prize != null && article.prize!.isNotEmpty) ...[
                   const SizedBox(height: 14),
@@ -193,7 +193,7 @@ class _FeaturedArticleScreenState extends State<FeaturedArticleScreen> {
                     child: Row(children: [
                       Icon(Icons.card_giftcard, size: 16, color: theme.yellow),
                       const SizedBox(width: 8),
-                      Expanded(child: Text(article.prize!, style: TextStyle(color: theme.textPrimary, fontSize: 11.5, fontWeight: FontWeight.w700))),
+                      Expanded(child: Text(article.prize!, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700))),
                     ]),
                   ),
                 ],
@@ -227,7 +227,7 @@ class _FeaturedArticleScreenState extends State<FeaturedArticleScreen> {
                             Text(e, style: const TextStyle(fontSize: 14)),
                             if (count > 0) ...[
                               const SizedBox(width: 5),
-                              Text('$count', style: TextStyle(fontSize: 11.5, color: mine ? theme.blue : theme.textSecondary, fontWeight: mine ? FontWeight.w700 : FontWeight.w500)),
+                              Text('$count', style: TextStyle(fontSize: 12.5, color: mine ? theme.blue : theme.textSecondary, fontWeight: mine ? FontWeight.w700 : FontWeight.w500)),
                             ],
                           ]),
                         ),
@@ -253,7 +253,7 @@ class _FeaturedArticleScreenState extends State<FeaturedArticleScreen> {
                 else if (_comments.isEmpty)
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: Center(child: Text('اولین نفری باش که نظر می‌دهد', style: TextStyle(color: theme.textFaint, fontSize: 11.5))),
+                    child: Center(child: Text('اولین نفری باش که نظر می‌دهد', style: TextStyle(color: theme.textFaint, fontSize: 12.5))),
                   )
                 else
                   for (final c in pinTopTierComments<ArticleComment>(_comments, (c) => app.donorTierForUserId(c.authorId))) ...[
@@ -382,7 +382,7 @@ class _ArticleCommentTile extends StatelessWidget {
                 DonorVipTick(color: tier!.tickColor!, size: 12),
               ],
               const SizedBox(width: 6),
-              Text(comment.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
+              Text(comment.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 11)),
             ]),
             const SizedBox(height: 3),
             Text(comment.text, style: TextStyle(color: theme.textSecondary, fontSize: 12, height: 1.7)),
@@ -390,7 +390,7 @@ class _ArticleCommentTile extends StatelessWidget {
               const SizedBox(height: 4),
               InkWell(
                 onTap: onReplyTap,
-                child: Text('پاسخ', style: TextStyle(color: theme.blue, fontSize: 10.5, fontWeight: FontWeight.w700)),
+                child: Text('پاسخ', style: TextStyle(color: theme.blue, fontSize: 12, fontWeight: FontWeight.w700)),
               ),
               if (replying && replyController != null) ...[
                 const SizedBox(height: 8),

@@ -82,7 +82,7 @@ class _TermsSheetContent extends StatelessWidget {
                       child: Row(mainAxisSize: MainAxisSize.min, children: [
                         Icon(Icons.open_in_new, size: 13, color: theme.blue),
                         const SizedBox(width: 6),
-                        Text('مشاهده‌ی کامل سیاست حریم خصوصی و حذف حساب', style: TextStyle(color: theme.blue, fontSize: 11.5, fontWeight: FontWeight.w600)),
+                        Text('مشاهده‌ی کامل سیاست حریم خصوصی و حذف حساب', style: TextStyle(color: theme.blue, fontSize: 12.5, fontWeight: FontWeight.w600)),
                       ]),
                     ),
                   ),

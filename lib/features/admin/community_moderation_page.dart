@@ -109,7 +109,7 @@ class _TabChip extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: selected ? theme.success : theme.glassBorder),
         ),
-        child: Text(label, style: TextStyle(color: selected ? Colors.white : theme.textSecondary, fontSize: 11, fontWeight: FontWeight.w700)),
+        child: Text(label, style: TextStyle(color: selected ? Colors.white : theme.textSecondary, fontSize: 12.5, fontWeight: FontWeight.w700)),
       ),
     );
   }
@@ -174,7 +174,7 @@ class _StatsTab extends StatelessWidget {
         if (posts.isEmpty)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 40),
-            child: Center(child: Text('هنوز پستی در حافظه‌ی جمعی ثبت نشده است.', style: TextStyle(color: theme.textFaint, fontSize: 11.5))),
+            child: Center(child: Text('هنوز پستی در حافظه‌ی جمعی ثبت نشده است.', style: TextStyle(color: theme.textFaint, fontSize: 12.5))),
           ),
       ],
     );
@@ -200,7 +200,7 @@ class _StatCard extends StatelessWidget {
         Expanded(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(value, style: TextStyle(color: theme.textPrimary, fontSize: 17, fontWeight: FontWeight.w800)),
-            Text(label, style: TextStyle(color: theme.textFaint, fontSize: 10.5), maxLines: 1, overflow: TextOverflow.ellipsis),
+            Text(label, style: TextStyle(color: theme.textFaint, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis),
           ]),
         ),
       ]),
@@ -230,16 +230,16 @@ class _HighlightPostCard extends StatelessWidget {
         const SizedBox(width: 10),
         Expanded(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(post.authorName, style: TextStyle(color: theme.textPrimary, fontSize: 11.5, fontWeight: FontWeight.w700)),
+            Text(post.authorName, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700)),
             const SizedBox(height: 2),
-            Text(post.text.isEmpty ? '(بدون متن — فقط رسانه)' : post.text, style: TextStyle(color: theme.textFaint, fontSize: 10.5), maxLines: 1, overflow: TextOverflow.ellipsis),
+            Text(post.text.isEmpty ? '(بدون متن — فقط رسانه)' : post.text, style: TextStyle(color: theme.textFaint, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis),
           ]),
         ),
         const SizedBox(width: 8),
         Row(children: [
           Icon(trailingIcon, size: 13, color: trailingColor),
           const SizedBox(width: 4),
-          Text(trailingLabel, style: TextStyle(color: trailingColor, fontSize: 10.5, fontWeight: FontWeight.w700)),
+          Text(trailingLabel, style: TextStyle(color: trailingColor, fontSize: 12, fontWeight: FontWeight.w700)),
         ]),
       ]),
     );
@@ -291,7 +291,7 @@ class _PostsTab extends StatelessWidget {
                       borderRadius: BorderRadius.circular(999),
                       border: Border.all(color: selected ? theme.success : theme.glassBorder),
                     ),
-                    child: Text(_filters[key]!, style: TextStyle(color: selected ? theme.success : theme.textSecondary, fontSize: 11, fontWeight: FontWeight.w700)),
+                    child: Text(_filters[key]!, style: TextStyle(color: selected ? theme.success : theme.textSecondary, fontSize: 12.5, fontWeight: FontWeight.w700)),
                   ),
                 );
               },
@@ -301,7 +301,7 @@ class _PostsTab extends StatelessWidget {
           if (items.isEmpty)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 40),
-              child: Center(child: Text('پستی با این فیلتر یافت نشد.', style: TextStyle(color: theme.textFaint, fontSize: 11.5))),
+              child: Center(child: Text('پستی با این فیلتر یافت نشد.', style: TextStyle(color: theme.textFaint, fontSize: 12.5))),
             )
           else
             for (final (i, p) in items.indexed) ...[
@@ -382,11 +382,11 @@ class _PostAdminCardState extends State<_PostAdminCard> {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Expanded(child: Text(p.authorName, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700), maxLines: 1, overflow: TextOverflow.ellipsis)),
-                Text(p.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 10)),
+                Text(p.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
               ]),
               if (p.text.isNotEmpty) ...[
                 const SizedBox(height: 5),
-                Text(p.text, style: TextStyle(color: theme.textSecondary, fontSize: 11.5, height: 1.8)),
+                Text(p.text, style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.8)),
               ],
             ]),
           ),
@@ -413,7 +413,7 @@ class _PostAdminCardState extends State<_PostAdminCard> {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
                   decoration: BoxDecoration(color: theme.bgCardAlt, borderRadius: BorderRadius.circular(999)),
-                  child: Text('${entry.key} ${entry.value}', style: TextStyle(fontSize: 10.5, color: theme.textSecondary)),
+                  child: Text('${entry.key} ${entry.value}', style: TextStyle(fontSize: 12, color: theme.textSecondary)),
                 ),
               ),
             const Spacer(),
@@ -427,7 +427,7 @@ class _PostAdminCardState extends State<_PostAdminCard> {
               child: Row(mainAxisSize: MainAxisSize.min, children: [
                 Icon(Icons.mode_comment_outlined, size: 14, color: theme.blue),
                 const SizedBox(width: 4),
-                Text('${p.commentsCount} نظر', style: TextStyle(color: theme.blue, fontSize: 10.5, fontWeight: FontWeight.w700)),
+                Text('${p.commentsCount} نظر', style: TextStyle(color: theme.blue, fontSize: 12, fontWeight: FontWeight.w700)),
                 const SizedBox(width: 3),
                 Icon(_expanded ? Icons.keyboard_arrow_up_rounded : Icons.keyboard_arrow_down_rounded, size: 16, color: theme.blue),
               ]),
@@ -441,7 +441,7 @@ class _PostAdminCardState extends State<_PostAdminCard> {
           if (_loadingComments)
             const Padding(padding: EdgeInsets.symmetric(vertical: 14), child: Center(child: SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2))))
           else if ((_comments ?? []).isEmpty)
-            Padding(padding: const EdgeInsets.symmetric(vertical: 10), child: Text('نظری برای این پست ثبت نشده است.', style: TextStyle(color: theme.textFaint, fontSize: 10.5)))
+            Padding(padding: const EdgeInsets.symmetric(vertical: 10), child: Text('نظری برای این پست ثبت نشده است.', style: TextStyle(color: theme.textFaint, fontSize: 12)))
           else
             for (final c in _comments!) ...[
               _AdminCommentTile(theme: theme, comment: c, onDelete: () => _deleteComment(c)),
@@ -473,18 +473,18 @@ class _AdminCommentTile extends StatelessWidget {
         Expanded(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(children: [
-              Text(comment.authorName, style: TextStyle(color: theme.textPrimary, fontSize: 10.5, fontWeight: FontWeight.w700)),
+              Text(comment.authorName, style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w700)),
               const SizedBox(width: 6),
-              Text(comment.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
+              Text(comment.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 11)),
               if (comment.likeCount > 0) ...[
                 const SizedBox(width: 6),
                 Icon(Icons.favorite, size: 10, color: theme.danger),
                 const SizedBox(width: 2),
-                Text('${comment.likeCount}', style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
+                Text('${comment.likeCount}', style: TextStyle(color: theme.textFaint, fontSize: 11)),
               ],
             ]),
             const SizedBox(height: 2),
-            Text(comment.text, style: TextStyle(color: theme.textSecondary, fontSize: 11, height: 1.6)),
+            Text(comment.text, style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.6)),
           ]),
         ),
         IconButton(
@@ -512,7 +512,7 @@ class _MediaPreviewRow extends StatelessWidget {
         child: Row(children: [
           Icon(Icons.videocam_rounded, size: 16, color: theme.success),
           const SizedBox(width: 6),
-          Text('این پست شامل یک ویدیو است', style: TextStyle(color: theme.textSecondary, fontSize: 10.5, fontWeight: FontWeight.w600)),
+          Text('این پست شامل یک ویدیو است', style: TextStyle(color: theme.textSecondary, fontSize: 12, fontWeight: FontWeight.w600)),
         ]),
       );
     }
@@ -575,7 +575,7 @@ class _ReportsTab extends StatelessWidget {
                   child: Column(children: [
                     Icon(Icons.flag_outlined, size: 30, color: theme.textFaint),
                     const SizedBox(height: 10),
-                    Text('هیچ گزارشی ثبت نشده است.', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
+                    Text('هیچ گزارشی ثبت نشده است.', style: TextStyle(color: theme.textFaint, fontSize: 12.5)),
                   ]),
                 ),
               ],
@@ -629,7 +629,7 @@ class _ReportCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
             decoration: BoxDecoration(color: theme.bgCardAlt, borderRadius: BorderRadius.circular(999)),
-            child: Text(_typeLabels[report.targetType] ?? report.targetType, style: TextStyle(color: theme.textSecondary, fontSize: 10, fontWeight: FontWeight.w700)),
+            child: Text(_typeLabels[report.targetType] ?? report.targetType, style: TextStyle(color: theme.textSecondary, fontSize: 11.5, fontWeight: FontWeight.w700)),
           ),
           const SizedBox(width: 8),
           Expanded(
@@ -638,7 +638,7 @@ class _ReportCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
             decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(999)),
-            child: Text(_statusLabels[report.status] ?? report.status, style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w700)),
+            child: Text(_statusLabels[report.status] ?? report.status, style: TextStyle(color: color, fontSize: 11.5, fontWeight: FontWeight.w700)),
           ),
         ]),
         if ((report.targetPreview ?? '').isNotEmpty) ...[
@@ -647,18 +647,18 @@ class _ReportCard extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(9),
             decoration: BoxDecoration(color: theme.bgCardAlt, borderRadius: BorderRadius.circular(10)),
-            child: Text(report.targetPreview!, style: TextStyle(color: theme.textSecondary, fontSize: 11, height: 1.6), maxLines: 3, overflow: TextOverflow.ellipsis),
+            child: Text(report.targetPreview!, style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.6), maxLines: 3, overflow: TextOverflow.ellipsis),
           ),
         ],
         if ((report.note ?? '').isNotEmpty) ...[
           const SizedBox(height: 6),
-          Text('یادداشت گزارش‌دهنده: ${report.note}', style: TextStyle(color: theme.textFaint, fontSize: 10.5, height: 1.6)),
+          Text('یادداشت گزارش‌دهنده: ${report.note}', style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.6)),
         ],
         const SizedBox(height: 8),
         Row(children: [
-          Text('گزارش‌دهنده: ${report.reporterName}', style: TextStyle(color: theme.textFaint, fontSize: 10)),
+          Text('گزارش‌دهنده: ${report.reporterName}', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
           const Spacer(),
-          Text(report.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 10)),
+          Text(report.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
         ]),
         if (report.status == 'pending') ...[
           const SizedBox(height: 10),
@@ -667,7 +667,7 @@ class _ReportCard extends StatelessWidget {
               child: OutlinedButton(
                 onPressed: () => _act(context, 'dismissed'),
                 style: OutlinedButton.styleFrom(foregroundColor: theme.textFaint, side: BorderSide(color: theme.glassBorder), padding: const EdgeInsets.symmetric(vertical: 9)),
-                child: const Text('رد گزارش', style: TextStyle(fontSize: 11.5)),
+                child: const Text('رد گزارش', style: TextStyle(fontSize: 12.5)),
               ),
             ),
             const SizedBox(width: 8),
@@ -675,7 +675,7 @@ class _ReportCard extends StatelessWidget {
               child: FilledButton(
                 onPressed: () => _act(context, 'reviewed'),
                 style: FilledButton.styleFrom(backgroundColor: theme.success, padding: const EdgeInsets.symmetric(vertical: 9)),
-                child: const Text('بررسی‌شد', style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700)),
+                child: const Text('بررسی‌شد', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
               ),
             ),
           ]),

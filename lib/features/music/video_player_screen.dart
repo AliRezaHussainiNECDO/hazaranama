@@ -162,11 +162,11 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     Row(children: [
                       Icon(Icons.visibility_outlined, size: 13, color: theme.textFaint),
                       const SizedBox(width: 4),
-                      Text('$_views بازدید', style: TextStyle(color: theme.textFaint, fontSize: 11)),
+                      Text('$_views بازدید', style: TextStyle(color: theme.textFaint, fontSize: 12.5)),
                       const SizedBox(width: 8),
-                      Text('·', style: TextStyle(color: theme.textFaint, fontSize: 11)),
+                      Text('·', style: TextStyle(color: theme.textFaint, fontSize: 12.5)),
                       const SizedBox(width: 8),
-                      Text(video.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 11)),
+                      Text(video.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 12.5)),
                     ]),
                     if (video.description.isNotEmpty) ...[
                       const SizedBox(height: 10),
@@ -201,7 +201,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                 Text(e, style: const TextStyle(fontSize: 14)),
                                 if (count > 0) ...[
                                   const SizedBox(width: 5),
-                                  Text('$count', style: TextStyle(fontSize: 11.5, color: mine ? theme.blue : theme.textSecondary, fontWeight: mine ? FontWeight.w700 : FontWeight.w500)),
+                                  Text('$count', style: TextStyle(fontSize: 12.5, color: mine ? theme.blue : theme.textSecondary, fontWeight: mine ? FontWeight.w700 : FontWeight.w500)),
                                 ],
                               ]),
                             ),
@@ -227,7 +227,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     else if (_comments.isEmpty)
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: Center(child: Text('اولین نفری باش که نظر می‌دهد', style: TextStyle(color: theme.textFaint, fontSize: 11.5))),
+                        child: Center(child: Text('اولین نفری باش که نظر می‌دهد', style: TextStyle(color: theme.textFaint, fontSize: 12.5))),
                       )
                     else
                       for (final c in pinTopTierComments<VideoComment>(_comments, (c) => app.donorTierForUserId(c.authorId))) ...[
@@ -358,7 +358,7 @@ class _CommentTile extends StatelessWidget {
                 DonorVipTick(color: tier!.tickColor!, size: 12),
               ],
               const SizedBox(width: 6),
-              Text(comment.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
+              Text(comment.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 11)),
             ]),
             const SizedBox(height: 3),
             Text(comment.text, style: TextStyle(color: theme.textSecondary, fontSize: 12, height: 1.7)),
@@ -366,7 +366,7 @@ class _CommentTile extends StatelessWidget {
               const SizedBox(height: 4),
               InkWell(
                 onTap: onReplyTap,
-                child: Text('پاسخ', style: TextStyle(color: theme.blue, fontSize: 10.5, fontWeight: FontWeight.w700)),
+                child: Text('پاسخ', style: TextStyle(color: theme.blue, fontSize: 12, fontWeight: FontWeight.w700)),
               ),
               if (replying && replyController != null) ...[
                 const SizedBox(height: 8),

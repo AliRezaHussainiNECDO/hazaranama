@@ -217,7 +217,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                   const SizedBox(height: 10),
                   Text(
                     'با حذف حساب، پروفایل، پست‌ها، کامنت‌ها، پیام‌ها و تمام اطلاعات شخصی شما برای همیشه از هزاره‌نامه پاک می‌شود. این کار غیرقابل بازگشت است.',
-                    style: TextStyle(color: theme.textFaint, fontSize: 11.5, height: 1.8),
+                    style: TextStyle(color: theme.textFaint, fontSize: 12.5, height: 1.8),
                   ),
                   const SizedBox(height: 14),
                   SizedBox(
@@ -241,7 +241,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     child: TextButton.icon(
                       onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const BlockedUsersScreen())),
                       icon: Icon(Icons.block_outlined, size: 15, color: theme.textFaint),
-                      label: Text('کاربران مسدودشده', style: TextStyle(color: theme.textFaint, fontSize: 11, fontWeight: FontWeight.w600)),
+                      label: Text('کاربران مسدودشده', style: TextStyle(color: theme.textFaint, fontSize: 12.5, fontWeight: FontWeight.w600)),
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -249,7 +249,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     child: TextButton.icon(
                       onPressed: () => openContentUrl(context, 'https://hazaranama.pages.dev/privacy/'),
                       icon: Icon(Icons.privacy_tip_outlined, size: 15, color: theme.textFaint),
-                      label: Text('سیاست حریم خصوصی و حذف داده', style: TextStyle(color: theme.textFaint, fontSize: 11, fontWeight: FontWeight.w600)),
+                      label: Text('سیاست حریم خصوصی و حذف داده', style: TextStyle(color: theme.textFaint, fontSize: 12.5, fontWeight: FontWeight.w600)),
                     ),
                   ),
                 ]),
@@ -314,6 +314,6 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(color: theme.danger.withValues(alpha: 0.08), borderRadius: BorderRadius.circular(10)),
-        child: Text(msg, style: TextStyle(color: theme.danger, fontSize: 11.5)),
+        child: Text(msg, style: TextStyle(color: theme.danger, fontSize: 12.5)),
       );
 }

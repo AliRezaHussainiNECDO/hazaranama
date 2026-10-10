@@ -90,7 +90,7 @@ class _AiRecommendSectionState extends State<AiRecommendSection> {
         Text('پیشنهاد هوشمند برای تو', style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800)),
       ]),
       const SizedBox(height: 3),
-      Text('بر اساس پروفایل تو، این‌ها را دوست خواهی داشت', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+      Text('بر اساس پروفایل تو، این‌ها را دوست خواهی داشت', style: TextStyle(color: theme.textFaint, fontSize: 12)),
       const SizedBox(height: 10),
       SizedBox(
         height: 108,
@@ -125,9 +125,9 @@ class _AiRecommendSectionState extends State<AiRecommendSection> {
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                         StatIconBox(icon: iconForSection(section.id), color: theme.aiViolet, size: 30),
                         const Spacer(),
-                        Text(section.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 11.5, fontWeight: FontWeight.w700)),
+                        Text(section.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700)),
                         const SizedBox(height: 2),
-                        Text(pick.reason, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 9.5, height: 1.3)),
+                        Text(pick.reason, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 11, height: 1.3)),
                       ]),
                     ),
                   ).staggered(i);

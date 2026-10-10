@@ -75,7 +75,7 @@ class _PostCardState extends State<PostCard> {
                     DonorVipTick(color: app.donorTierForUserId(post.authorId)!.tickColor!),
                   ],
                 ]),
-                Text(post.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 10)),
+                Text(post.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
               ]),
             ),
             PopupMenuButton<String>(
@@ -134,7 +134,7 @@ class _PostCardState extends State<PostCard> {
                   child: Row(mainAxisSize: MainAxisSize.min, children: [
                     Icon(Icons.mode_comment_outlined, size: 16, color: theme.textFaint),
                     const SizedBox(width: 5),
-                    Text('${post.commentsCount}', style: TextStyle(color: theme.textFaint, fontSize: 11.5, fontWeight: FontWeight.w600)),
+                    Text('${post.commentsCount}', style: TextStyle(color: theme.textFaint, fontSize: 12.5, fontWeight: FontWeight.w600)),
                   ]),
                 ),
               ),
@@ -153,9 +153,9 @@ class _PostCardState extends State<PostCard> {
                       border: Border.all(color: mine ? theme.blue : theme.border),
                     ),
                     child: Row(mainAxisSize: MainAxisSize.min, children: [
-                      Text(e.key, style: const TextStyle(fontSize: 11)),
+                      Text(e.key, style: const TextStyle(fontSize: 12.5)),
                       const SizedBox(width: 3),
-                      Text('${e.value}', style: TextStyle(fontSize: 10, color: mine ? theme.blue : theme.textFaint, fontWeight: FontWeight.w600)),
+                      Text('${e.value}', style: TextStyle(fontSize: 11.5, color: mine ? theme.blue : theme.textFaint, fontWeight: FontWeight.w600)),
                     ]),
                   );
                 }).toList(),
@@ -245,7 +245,7 @@ Future<void> showReportDialog(
         child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text('چرا این را گزارش می‌دهید؟', style: TextStyle(color: theme.textPrimary, fontSize: 14.5, fontWeight: FontWeight.w800)),
           const SizedBox(height: 4),
-          Text('گزارش شما محرمانه است و فقط تیم هزاره‌نامه آن را می‌بیند.', style: TextStyle(color: theme.textFaint, fontSize: 11)),
+          Text('گزارش شما محرمانه است و فقط تیم هزاره‌نامه آن را می‌بیند.', style: TextStyle(color: theme.textFaint, fontSize: 12.5)),
           const SizedBox(height: 10),
           for (final reason in kReportReasons)
             ListTile(
@@ -292,7 +292,7 @@ class _LikeButton extends StatelessWidget {
           child: Row(mainAxisSize: MainAxisSize.min, children: [
             Icon(liked ? Icons.favorite : Icons.favorite_border, size: 19, color: liked ? _kLikeColor : theme.textFaint),
             const SizedBox(width: 5),
-            Text('لایک', style: TextStyle(fontSize: 11.5, color: liked ? _kLikeColor : theme.textFaint, fontWeight: FontWeight.w700)),
+            Text('لایک', style: TextStyle(fontSize: 12.5, color: liked ? _kLikeColor : theme.textFaint, fontWeight: FontWeight.w700)),
           ]),
         ),
       ),
@@ -382,7 +382,7 @@ class _PostMediaGalleryState extends State<_PostMediaGallery> {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
           decoration: BoxDecoration(color: Colors.black.withValues(alpha: 0.45), borderRadius: BorderRadius.circular(999)),
-          child: Text('${_page + 1}/${post.imageUrls.length}', style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w700)),
+          child: Text('${_page + 1}/${post.imageUrls.length}', style: const TextStyle(color: Colors.white, fontSize: 11.5, fontWeight: FontWeight.w700)),
         ),
       ),
       Padding(
@@ -554,7 +554,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                       else if (_comments.isEmpty)
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: Center(child: Text('اولین نفری باش که نظر می‌دهد', style: TextStyle(color: theme.textFaint, fontSize: 11.5))),
+                          child: Center(child: Text('اولین نفری باش که نظر می‌دهد', style: TextStyle(color: theme.textFaint, fontSize: 12.5))),
                         )
                       else
                         for (final c in pinTopTierComments<PostComment>(_comments, (c) => app.donorTierForUserId(c.authorId))) ...[
@@ -714,7 +714,7 @@ class _CommentTile extends StatelessWidget {
                 DonorVipTick(color: tier!.tickColor!, size: 12),
               ],
               const SizedBox(width: 6),
-              Text(comment.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
+              Text(comment.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 11)),
             ]),
             const SizedBox(height: 3),
             Text(comment.text, style: TextStyle(color: theme.textSecondary, fontSize: 12, height: 1.7)),
@@ -726,22 +726,22 @@ class _CommentTile extends StatelessWidget {
                   Icon(comment.likedByMe ? Icons.favorite : Icons.favorite_border, size: 13, color: comment.likedByMe ? _kLikeColor : theme.textFaint),
                   if (comment.likeCount > 0) ...[
                     const SizedBox(width: 3),
-                    Text('${comment.likeCount}', style: TextStyle(fontSize: 10, color: comment.likedByMe ? _kLikeColor : theme.textFaint, fontWeight: FontWeight.w600)),
+                    Text('${comment.likeCount}', style: TextStyle(fontSize: 11.5, color: comment.likedByMe ? _kLikeColor : theme.textFaint, fontWeight: FontWeight.w600)),
                   ],
                 ]),
               ),
               if (!isReply) ...[
                 const SizedBox(width: 14),
-                InkWell(onTap: onReplyTap, child: Text('پاسخ', style: TextStyle(color: theme.blue, fontSize: 10.5, fontWeight: FontWeight.w700))),
+                InkWell(onTap: onReplyTap, child: Text('پاسخ', style: TextStyle(color: theme.blue, fontSize: 12, fontWeight: FontWeight.w700))),
               ],
               if (onDeleteTap != null) ...[
                 const SizedBox(width: 14),
-                InkWell(onTap: onDeleteTap, child: Text('حذف', style: TextStyle(color: theme.danger, fontSize: 10.5, fontWeight: FontWeight.w700))),
+                InkWell(onTap: onDeleteTap, child: Text('حذف', style: TextStyle(color: theme.danger, fontSize: 12, fontWeight: FontWeight.w700))),
               ] else ...[
                 const SizedBox(width: 14),
                 InkWell(
                   onTap: () => showReportDialog(context, targetType: 'comment', targetId: comment.id, targetOwnerId: comment.authorId, targetPreview: comment.text),
-                  child: Text('گزارش', style: TextStyle(color: theme.textFaint, fontSize: 10.5, fontWeight: FontWeight.w700)),
+                  child: Text('گزارش', style: TextStyle(color: theme.textFaint, fontSize: 12, fontWeight: FontWeight.w700)),
                 ),
               ],
             ]),

@@ -92,7 +92,7 @@ class _TabChip extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: selected ? theme.success : theme.glassBorder),
         ),
-        child: Text(label, style: TextStyle(color: selected ? Colors.white : theme.textSecondary, fontSize: 11, fontWeight: FontWeight.w700)),
+        child: Text(label, style: TextStyle(color: selected ? Colors.white : theme.textSecondary, fontSize: 12.5, fontWeight: FontWeight.w700)),
       ),
     );
   }
@@ -135,7 +135,7 @@ class _TransfersTab extends StatelessWidget {
               child: Row(children: [
                 Icon(Icons.hourglass_bottom, size: 15, color: theme.yellow),
                 const SizedBox(width: 8),
-                Expanded(child: Text('$pendingCount حواله در انتظار تأیید شماست.', style: TextStyle(color: theme.textPrimary, fontSize: 11, fontWeight: FontWeight.w700))),
+                Expanded(child: Text('$pendingCount حواله در انتظار تأیید شماست.', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700))),
               ]),
             ),
           SizedBox(
@@ -158,7 +158,7 @@ class _TransfersTab extends StatelessWidget {
                       borderRadius: BorderRadius.circular(999),
                       border: Border.all(color: selected ? theme.success : theme.glassBorder),
                     ),
-                    child: Text(_filters[key]!, style: TextStyle(color: selected ? theme.success : theme.textSecondary, fontSize: 10.5, fontWeight: FontWeight.w700)),
+                    child: Text(_filters[key]!, style: TextStyle(color: selected ? theme.success : theme.textSecondary, fontSize: 12, fontWeight: FontWeight.w700)),
                   ),
                 );
               },
@@ -259,13 +259,13 @@ class _TransferCardState extends State<_TransferCard> {
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(t.senderName, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800)),
-              Text('${t.senderCountry} — ${afghanDateLabel(t.submittedAt)}', style: TextStyle(color: theme.textFaint, fontSize: 10)),
+              Text('${t.senderCountry} — ${afghanDateLabel(t.submittedAt)}', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
             ]),
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
             decoration: BoxDecoration(color: _statusColor.withValues(alpha: 0.14), borderRadius: BorderRadius.circular(999)),
-            child: Text(_statusLabel, style: TextStyle(color: _statusColor, fontSize: 9.5, fontWeight: FontWeight.w800)),
+            child: Text(_statusLabel, style: TextStyle(color: _statusColor, fontSize: 11, fontWeight: FontWeight.w800)),
           ),
         ]),
         const SizedBox(height: 10),
@@ -278,7 +278,7 @@ class _TransferCardState extends State<_TransferCard> {
         ]),
         if (t.note != null && t.note!.isNotEmpty) ...[
           const SizedBox(height: 8),
-          Text(t.note!, style: TextStyle(color: theme.textSecondary, fontSize: 11, height: 1.7)),
+          Text(t.note!, style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.7)),
         ],
         if (t.status == DonationTransferStatus.pending) ...[
           const SizedBox(height: 12),
@@ -287,7 +287,7 @@ class _TransferCardState extends State<_TransferCard> {
               child: OutlinedButton.icon(
                 onPressed: _busy ? null : () => _decide('confirmed'),
                 icon: const Icon(Icons.check_circle_outline, size: 15),
-                label: const Text('تأیید دریافت', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700)),
+                label: const Text('تأیید دریافت', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                 style: OutlinedButton.styleFrom(foregroundColor: theme.success, side: BorderSide(color: theme.success.withValues(alpha: 0.5)), padding: const EdgeInsets.symmetric(vertical: 10), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
               ),
             ),
@@ -296,14 +296,14 @@ class _TransferCardState extends State<_TransferCard> {
               child: OutlinedButton.icon(
                 onPressed: _busy ? null : () => _decide('rejected'),
                 icon: const Icon(Icons.cancel_outlined, size: 15),
-                label: const Text('رد کردن', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700)),
+                label: const Text('رد کردن', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                 style: OutlinedButton.styleFrom(foregroundColor: theme.danger, side: BorderSide(color: theme.danger.withValues(alpha: 0.4)), padding: const EdgeInsets.symmetric(vertical: 10), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
               ),
             ),
           ]),
         ] else if (t.confirmedAmount != null) ...[
           const SizedBox(height: 8),
-          Text('مبلغ تأییدشده: ${t.confirmedAmount!.toStringAsFixed(0)} ${t.currency}', style: TextStyle(color: theme.success, fontSize: 10.5, fontWeight: FontWeight.w700)),
+          Text('مبلغ تأییدشده: ${t.confirmedAmount!.toStringAsFixed(0)} ${t.currency}', style: TextStyle(color: theme.success, fontSize: 12, fontWeight: FontWeight.w700)),
         ],
       ]),
     );
@@ -315,7 +315,7 @@ class _TransferCardState extends State<_TransferCard> {
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           Icon(icon, size: 11, color: theme.textFaint),
           const SizedBox(width: 4),
-          Text(text, style: TextStyle(color: theme.textSecondary, fontSize: 9.5, fontWeight: FontWeight.w700)),
+          Text(text, style: TextStyle(color: theme.textSecondary, fontSize: 11, fontWeight: FontWeight.w700)),
         ]),
       );
 }
@@ -390,7 +390,7 @@ class _ReportAdminCard extends StatelessWidget {
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(report.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w800)),
             const SizedBox(height: 2),
-            Text('${donationCategoryLabel(report.category)} — ${report.publishedAtLabel}', style: TextStyle(color: theme.textFaint, fontSize: 10)),
+            Text('${donationCategoryLabel(report.category)} — ${report.publishedAtLabel}', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
           ]),
         ),
         IconButton(icon: Icon(Icons.edit_outlined, size: 16, color: theme.blue), onPressed: () => _openReportForm(context, app, ai, report, onRefresh)),
@@ -572,7 +572,7 @@ void _openReportForm(BuildContext context, AppState app, AiService ai, DonationR
                   Row(children: [
                     Icon(Icons.auto_awesome, size: 15, color: theme.aiViolet),
                     const SizedBox(width: 6),
-                    Expanded(child: Text('نکات خام را بنویسید — هوش مصنوعی گزارش نهایی را می‌سازد', style: TextStyle(color: theme.textPrimary, fontSize: 11, fontWeight: FontWeight.w800))),
+                    Expanded(child: Text('نکات خام را بنویسید — هوش مصنوعی گزارش نهایی را می‌سازد', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800))),
                   ]),
                   const SizedBox(height: 8),
                   _field(theme, rawNotesCtrl, hint: 'مثلاً: با این مبلغ ۵۰ کیسه آرد و روغن برای خانواده‌های بی‌بضاعت روستای… خریداری و توزیع شد…', maxLines: 4),
@@ -582,7 +582,7 @@ void _openReportForm(BuildContext context, AppState app, AiService ai, DonationR
                     child: OutlinedButton.icon(
                       onPressed: drafting ? null : draftWithAi,
                       icon: drafting ? SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: theme.aiViolet)) : const Icon(Icons.auto_awesome, size: 15),
-                      label: Text(drafting ? 'در حال نگارش…' : 'نوشتن با هوش مصنوعی', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700)),
+                      label: Text(drafting ? 'در حال نگارش…' : 'نوشتن با هوش مصنوعی', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                       style: OutlinedButton.styleFrom(foregroundColor: theme.aiViolet, side: BorderSide(color: theme.aiViolet.withValues(alpha: 0.5)), padding: const EdgeInsets.symmetric(vertical: 10), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
                     ),
                   ),
@@ -642,17 +642,17 @@ void _openReportForm(BuildContext context, AppState app, AiService ai, DonationR
               OutlinedButton.icon(
                 onPressed: uploadingImages ? null : pickImages,
                 icon: uploadingImages ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.add_photo_alternate_outlined, size: 16),
-                label: Text(uploadingImages ? 'در حال آپلود…' : 'افزودن عکس از گالری', style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700)),
+                label: Text(uploadingImages ? 'در حال آپلود…' : 'افزودن عکس از گالری', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                 style: OutlinedButton.styleFrom(foregroundColor: theme.success, side: BorderSide(color: theme.border), padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
               ),
               const SizedBox(height: 12),
               _label(theme, 'ویدیوی مستند (اختیاری)'),
               if (videoUrl != null && videoUrl!.isNotEmpty)
-                Padding(padding: const EdgeInsets.only(bottom: 8), child: Text(videoUrl!, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.success, fontSize: 10.5))),
+                Padding(padding: const EdgeInsets.only(bottom: 8), child: Text(videoUrl!, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.success, fontSize: 12))),
               OutlinedButton.icon(
                 onPressed: uploadingVideo ? null : pickVideo,
                 icon: uploadingVideo ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.videocam_outlined, size: 16),
-                label: Text(uploadingVideo ? 'در حال آپلود…' : 'افزودن ویدیو از گالری', style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700)),
+                label: Text(uploadingVideo ? 'در حال آپلود…' : 'افزودن ویدیو از گالری', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                 style: OutlinedButton.styleFrom(foregroundColor: theme.success, side: BorderSide(color: theme.border), padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
               ),
               const SizedBox(height: 20),
@@ -685,7 +685,7 @@ void _openReportForm(BuildContext context, AppState app, AiService ai, DonationR
 
 Widget _label(AppColors theme, String text) => Padding(
       padding: const EdgeInsets.only(bottom: 6),
-      child: Text(text, style: TextStyle(color: theme.textSecondary, fontSize: 11, fontWeight: FontWeight.w700)),
+      child: Text(text, style: TextStyle(color: theme.textSecondary, fontSize: 12.5, fontWeight: FontWeight.w700)),
     );
 
 Widget _field(AppColors theme, TextEditingController ctrl, {String hint = '', int maxLines = 1, TextInputType? keyboardType}) {
@@ -696,7 +696,7 @@ Widget _field(AppColors theme, TextEditingController ctrl, {String hint = '', in
     style: TextStyle(color: theme.textPrimary, fontSize: 12.5),
     decoration: InputDecoration(
       hintText: hint,
-      hintStyle: TextStyle(color: theme.textFaint, fontSize: 11.5),
+      hintStyle: TextStyle(color: theme.textFaint, fontSize: 12.5),
       filled: true, fillColor: theme.bgCard,
       contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: theme.border)),
@@ -779,7 +779,7 @@ class _SettingsStatsTabState extends State<_SettingsStatsTab> {
             Expanded(
               child: Text(
                 'چون پرداخت PayPal مستقیم به این اپ وصل نیست، این عددها را با جمع دستیِ پی‌پال + حواله‌های تأییدشده، خودتان به‌روز نگه دارید. این آمار در کارت خانه و صفحه‌ی کمک‌های مالی به کاربران نشان داده می‌شود.',
-                style: TextStyle(color: theme.textPrimary, fontSize: 11, height: 1.8, fontWeight: FontWeight.w600),
+                style: TextStyle(color: theme.textPrimary, fontSize: 12.5, height: 1.8, fontWeight: FontWeight.w600),
               ),
             ),
           ]),

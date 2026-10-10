@@ -88,7 +88,7 @@ class _UsersPageState extends State<UsersPage> {
         padding: const EdgeInsets.all(16),
         children: [
           Text('ثبت‌نام همیشه بلافاصله فعال می‌شود؛ نقش «مدیر» فقط از طریق ورود مستقیم با ایمیل مدیر در دسترس است. مسدودسازی صرفاً برای تخلف استفاده می‌شود.',
-              style: TextStyle(color: theme.textFaint, fontSize: 11, height: 1.8)),
+              style: TextStyle(color: theme.textFaint, fontSize: 12.5, height: 1.8)),
           const SizedBox(height: 14),
           GridView.count(
             crossAxisCount: 2, shrinkWrap: true, physics: const NeverScrollableScrollPhysics(),
@@ -139,7 +139,7 @@ class _UsersPageState extends State<UsersPage> {
         const SizedBox(width: 10),
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text('$value', style: TextStyle(color: theme.textPrimary, fontSize: 16, fontWeight: FontWeight.w800)),
-          Text(label, style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
+          Text(label, style: TextStyle(color: theme.textFaint, fontSize: 11)),
         ]),
       ]),
     );
@@ -162,8 +162,8 @@ class _UsersPageState extends State<UsersPage> {
             padding: const EdgeInsets.only(bottom: 8),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text(e.key, style: TextStyle(color: theme.textSecondary, fontSize: 10.5)),
-                Text('${e.value}', style: TextStyle(color: theme.textPrimary, fontSize: 10.5, fontWeight: FontWeight.w700)),
+                Text(e.key, style: TextStyle(color: theme.textSecondary, fontSize: 12)),
+                Text('${e.value}', style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w700)),
               ]),
               const SizedBox(height: 3),
               ClipRRect(
@@ -195,7 +195,7 @@ class _FilterDropdown extends StatelessWidget {
           isExpanded: true,
           dropdownColor: theme.bgElevated,
           icon: Icon(Icons.expand_more, size: 16, color: theme.textFaint),
-          style: TextStyle(fontFamily: 'Vazirmatn', color: theme.textSecondary, fontSize: 11, fontWeight: FontWeight.w700),
+          style: TextStyle(fontFamily: 'Vazirmatn', color: theme.textSecondary, fontSize: 12.5, fontWeight: FontWeight.w700),
           items: items.entries.map((e) => DropdownMenuItem(value: e.key, child: Text(e.value))).toList(),
           onChanged: (v) => onChanged(v ?? 'all'),
         ),
@@ -241,7 +241,7 @@ class _UserRow extends StatelessWidget {
                 ],
               ]),
               const SizedBox(height: 3),
-              Text('${user.country} · ${user.originProvince}', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 10)),
+              Text('${user.country} · ${user.originProvince}', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
               if (tier != null) ...[
                 const SizedBox(height: 4),
                 DonorTierChip(tier: tier),
@@ -252,7 +252,7 @@ class _UserRow extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
             decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(999)),
-            child: Text(user.status == UserStatus.active ? 'فعال' : 'مسدود', style: TextStyle(color: statusColor, fontSize: 9.5, fontWeight: FontWeight.w700)),
+            child: Text(user.status == UserStatus.active ? 'فعال' : 'مسدود', style: TextStyle(color: statusColor, fontSize: 11, fontWeight: FontWeight.w700)),
           ),
           Icon(Icons.keyboard_arrow_left_rounded, size: 18, color: theme.textFaint),
         ]),
@@ -263,6 +263,6 @@ class _UserRow extends StatelessWidget {
   Widget _tinyPill(Color color, String label) => Container(
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1.5),
         decoration: BoxDecoration(color: color.withValues(alpha: 0.14), borderRadius: BorderRadius.circular(999)),
-        child: Text(label, style: TextStyle(color: color, fontSize: 8.5, fontWeight: FontWeight.w700)),
+        child: Text(label, style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w700)),
       );
 }

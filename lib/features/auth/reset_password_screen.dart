@@ -189,7 +189,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     const SizedBox(width: 6),
                     Text(
                       _confirm.text == _password.text ? 'رمزها یکسان‌اند' : 'رمزها هنوز یکسان نیستند',
-                      style: TextStyle(fontSize: 11, color: _confirm.text == _password.text ? theme.success : theme.danger),
+                      style: TextStyle(fontSize: 12.5, color: _confirm.text == _password.text ? theme.success : theme.danger),
                     ),
                   ]),
                 ),
@@ -200,7 +200,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(color: theme.danger.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
-            child: Text(_error!, style: TextStyle(color: theme.danger, fontSize: 11.5)),
+            child: Text(_error!, style: TextStyle(color: theme.danger, fontSize: 12.5)),
           ),
         ],
         const SizedBox(height: 20),
@@ -215,7 +215,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         Center(
           child: TextButton(
             onPressed: _loading ? null : () => app.goTo(AuthStage.login),
-            child: Text('انصراف و بازگشت به ورود', style: TextStyle(color: theme.textFaint, fontSize: 11.5, fontWeight: FontWeight.w600)),
+            child: Text('انصراف و بازگشت به ورود', style: TextStyle(color: theme.textFaint, fontSize: 12.5, fontWeight: FontWeight.w600)),
           ),
         ),
       ]),
@@ -253,7 +253,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             meta.$1,
             key: ValueKey(meta.$1),
             textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.w700, color: meta.$2),
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: meta.$2),
           ),
         ),
       ),

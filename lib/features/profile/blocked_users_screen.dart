@@ -67,7 +67,7 @@ class _BlockedUsersScreenState extends State<BlockedUsersScreen> {
                             Text(
                               'برای مسدودکردن یک کاربر، از منوی سه‌نقطه‌ی روی پست او در «حافظه‌ی جمعی» استفاده کنید.',
                               textAlign: TextAlign.center,
-                              style: TextStyle(color: theme.textFaint, fontSize: 11, height: 1.7),
+                              style: TextStyle(color: theme.textFaint, fontSize: 12.5, height: 1.7),
                             ),
                           ]),
                         ),
@@ -90,7 +90,7 @@ class _BlockedUsersScreenState extends State<BlockedUsersScreen> {
                               Expanded(
                                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                                   Text(b.blockedName, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700)),
-                                  Text('مسدود از ${b.createdAtLabel}', style: TextStyle(color: theme.textFaint, fontSize: 10)),
+                                  Text('مسدود از ${b.createdAtLabel}', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
                                 ]),
                               ),
                               TextButton(
@@ -98,7 +98,7 @@ class _BlockedUsersScreenState extends State<BlockedUsersScreen> {
                                   await context.read<AppState>().unblockUser(b.blockedId);
                                   if (context.mounted) showHzToast(context, '${b.blockedName} از حالت مسدود خارج شد');
                                 },
-                                child: Text('لغو مسدودی', style: TextStyle(color: theme.blue, fontSize: 11.5, fontWeight: FontWeight.w700)),
+                                child: Text('لغو مسدودی', style: TextStyle(color: theme.blue, fontSize: 12.5, fontWeight: FontWeight.w700)),
                               ),
                             ]),
                           );

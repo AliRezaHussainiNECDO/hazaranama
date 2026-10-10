@@ -56,9 +56,9 @@ class TimelineBody extends StatelessWidget {
                 const SizedBox(height: 9),
                 Text(it['era'] as String, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w700, height: 1.4)),
                 const SizedBox(height: 6),
-                Expanded(child: Text(it['text'] as String, maxLines: 3, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 10.5, height: 1.7))),
+                Expanded(child: Text(it['text'] as String, maxLines: 3, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.7))),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                  Text('فصل ${_toFa(i + 1)} · مطالعه', style: TextStyle(color: theme.blue, fontSize: 9.5, fontWeight: FontWeight.w700)),
+                  Text('فصل ${_toFa(i + 1)} · مطالعه', style: TextStyle(color: theme.blue, fontSize: 11, fontWeight: FontWeight.w700)),
                   Icon(Icons.arrow_back, size: 13, color: theme.blue),
                 ]),
               ]),
@@ -147,9 +147,9 @@ class PeopleBody extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(10, 0, 10, 14),
                       child: Column(children: [
-                        Text(person['name'] as String, textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 11.5, fontWeight: FontWeight.w700)),
+                        Text(person['name'] as String, textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700)),
                         const SizedBox(height: 4),
-                        Text(person['field'] as String, textAlign: TextAlign.center, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 9.5, height: 1.6)),
+                        Text(person['field'] as String, textAlign: TextAlign.center, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 11, height: 1.6)),
                       ]),
                     ),
                   ]),
@@ -200,7 +200,7 @@ class IncidentsBody extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 12, 15, 14),
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text(it['date'] as String, style: TextStyle(color: theme.blue, fontSize: 10, fontWeight: FontWeight.w700)),
+                    Text(it['date'] as String, style: TextStyle(color: theme.blue, fontSize: 11.5, fontWeight: FontWeight.w700)),
                     const SizedBox(height: 5),
                     Text(it['title'] as String, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800, height: 1.5)),
                     const SizedBox(height: 7),
@@ -213,13 +213,13 @@ class IncidentsBody extends StatelessWidget {
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                       decoration: BoxDecoration(color: theme.danger.withValues(alpha: 0.07), borderRadius: BorderRadius.circular(10)),
-                      child: Text(it['deaths'] as String, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.danger, fontSize: 10.5, fontWeight: FontWeight.w700)),
+                      child: Text(it['deaths'] as String, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.danger, fontSize: 12, fontWeight: FontWeight.w700)),
                     ),
                     const SizedBox(height: 9),
-                    Text(it['text'] as String, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 11, height: 1.8)),
+                    Text(it['text'] as String, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.8)),
                     const SizedBox(height: 8),
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      Text('مشاهده‌ی شرح کامل', style: TextStyle(color: theme.blue, fontSize: 10, fontWeight: FontWeight.w700)),
+                      Text('مشاهده‌ی شرح کامل', style: TextStyle(color: theme.blue, fontSize: 11.5, fontWeight: FontWeight.w700)),
                       Icon(Icons.arrow_back, size: 13, color: theme.blue),
                     ]),
                   ]),
@@ -233,7 +233,7 @@ class IncidentsBody extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(top: 4),
             child: Text('منابع: ویکی‌پدیا · دیده‌بان حقوق بشر · یوناما · عفو بین‌الملل',
-                textAlign: TextAlign.center, style: TextStyle(color: theme.textFaint, fontSize: 9.5, height: 1.8)),
+                textAlign: TextAlign.center, style: TextStyle(color: theme.textFaint, fontSize: 11, height: 1.8)),
           ),
         ),
       ],
@@ -246,7 +246,7 @@ class IncidentsBody extends StatelessWidget {
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           Icon(icon, size: 11, color: theme.textSecondary),
           const SizedBox(width: 4),
-          Flexible(child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 10))),
+          Flexible(child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 11.5))),
         ]),
       );
 }
@@ -286,7 +286,7 @@ class GridBody extends StatelessWidget {
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(it['name'] as String, style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w700)),
                   const SizedBox(height: 3),
-                  Text(it['note'] as String, style: TextStyle(color: theme.textFaint, fontSize: 10.5, height: 1.6)),
+                  Text(it['note'] as String, style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.6)),
                 ]),
               ),
               Icon(Icons.chevron_left, size: 16, color: theme.textFaint),
@@ -331,13 +331,13 @@ class TracksBody extends StatelessWidget {
             Expanded(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(it['title'] as String, style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w700)),
-                Text(it['artist'] as String, style: TextStyle(color: theme.textFaint, fontSize: 10)),
+                Text(it['artist'] as String, style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
               ]),
             ),
             Row(children: [
               Icon(Icons.access_time, size: 11, color: theme.textFaint),
               const SizedBox(width: 4),
-              Text(it['duration'] as String, style: TextStyle(color: theme.textFaint, fontSize: 10)),
+              Text(it['duration'] as String, style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
             ]),
           ]),
           ),
@@ -404,7 +404,7 @@ class _RegionsBodyState extends State<RegionsBody> {
         ),
         const SizedBox(height: 6),
         Text('نقشه‌ای نمادین و ساده‌شده برای نمایش پراکندگی نسبی مناطق است، نه نقشه‌ی دقیق جغرافیایی.',
-            textAlign: TextAlign.center, style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
+            textAlign: TextAlign.center, style: TextStyle(color: theme.textFaint, fontSize: 11)),
         const SizedBox(height: 14),
         SizedBox(
           height: 34,
@@ -424,7 +424,7 @@ class _RegionsBodyState extends State<RegionsBody> {
                     border: Border.all(color: isActive ? theme.blue : theme.border),
                     borderRadius: BorderRadius.circular(999),
                   ),
-                  child: Text(r['name'] as String, style: TextStyle(color: isActive ? theme.blue : theme.textSecondary, fontSize: 11, fontWeight: isActive ? FontWeight.w700 : FontWeight.w500)),
+                  child: Text(r['name'] as String, style: TextStyle(color: isActive ? theme.blue : theme.textSecondary, fontSize: 12.5, fontWeight: isActive ? FontWeight.w700 : FontWeight.w500)),
                 ),
               );
             },
@@ -441,7 +441,7 @@ class _RegionsBodyState extends State<RegionsBody> {
               Text(active['name'] as String, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700)),
             ]),
             const SizedBox(height: 6),
-            Text(active['note'] as String, style: TextStyle(color: theme.textSecondary, fontSize: 11.5, height: 1.9)),
+            Text(active['note'] as String, style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.9)),
             const SizedBox(height: 10),
             ContentMediaCover(item: active, height: 110, radius: 12, fallback: SectionMediaPlaceholder(accent: theme.blue, icon: Icons.terrain_rounded, height: 110)),
           ]),
@@ -461,7 +461,7 @@ class _RegionsBodyState extends State<RegionsBody> {
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(d['name'] as String, style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w700)),
                   const SizedBox(height: 3),
-                  Text(d['note'] as String, style: TextStyle(color: theme.textFaint, fontSize: 10, height: 1.6)),
+                  Text(d['note'] as String, style: TextStyle(color: theme.textFaint, fontSize: 11.5, height: 1.6)),
                 ]),
               ),
             ]),
@@ -494,7 +494,7 @@ class _MapShapePainter extends CustomPainter {
     final kabulPaint = Paint()..color = theme.textFaint;
     canvas.drawCircle(Offset(size.width * 0.63, size.height * 0.38), 3, kabulPaint);
     final tp = TextPainter(
-      text: TextSpan(text: 'کابل', style: TextStyle(fontFamily: 'Vazirmatn', color: theme.textFaint, fontSize: 10)),
+      text: TextSpan(text: 'کابل', style: TextStyle(fontFamily: 'Vazirmatn', color: theme.textFaint, fontSize: 11.5)),
       textDirection: TextDirection.rtl,
     )..layout();
     tp.paint(canvas, Offset(size.width * 0.65, size.height * 0.40));
@@ -538,7 +538,7 @@ class PhotosBody extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-              child: Text(it['caption'] as String, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 10)),
+              child: Text(it['caption'] as String, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 11.5)),
             ),
           ]),
         ).staggered(i);
@@ -593,11 +593,11 @@ class NewsBody extends StatelessWidget {
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             ContentMediaCover(item: it, height: 130, radius: 12, fallback: SectionMediaPlaceholder(accent: theme.blue, icon: Icons.newspaper_rounded, height: 130)),
             const SizedBox(height: 10),
-            Text(it['date'] as String, style: TextStyle(color: theme.blue, fontSize: 10, fontWeight: FontWeight.w700)),
+            Text(it['date'] as String, style: TextStyle(color: theme.blue, fontSize: 11.5, fontWeight: FontWeight.w700)),
             const SizedBox(height: 6),
             Text(it['title'] as String, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700, height: 1.5)),
             const SizedBox(height: 5),
-            Text(it['snippet'] as String, style: TextStyle(color: theme.textFaint, fontSize: 10.5, height: 1.8)),
+            Text(it['snippet'] as String, style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.8)),
           ]),
         ).staggered(i);
       },
@@ -642,14 +642,14 @@ class BooksBody extends StatelessWidget {
                 fallback: SectionMediaPlaceholder(accent: theme.blue, icon: Icons.menu_book_rounded, height: 54),
               ),
               const SizedBox(height: 10),
-              Text(it['title'] as String, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 11, fontWeight: FontWeight.w700, height: 1.5)),
+              Text(it['title'] as String, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700, height: 1.5)),
               const SizedBox(height: 4),
-              Text(it['author'] as String, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
+              Text(it['author'] as String, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 11)),
               const Spacer(),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(color: theme.blue.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(999)),
-                child: Text(it['tag'] as String, style: TextStyle(color: theme.blue, fontSize: 9, fontWeight: FontWeight.w700)),
+                child: Text(it['tag'] as String, style: TextStyle(color: theme.blue, fontSize: 10.5, fontWeight: FontWeight.w700)),
               ),
             ]),
           ),

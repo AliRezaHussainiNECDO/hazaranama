@@ -130,7 +130,7 @@ class _RulesCard extends StatelessWidget {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text('مسابقه‌ی مقالات هزاره‌نامه', style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w800)),
               const SizedBox(height: 2),
-              Text('برای سه مقام برتر هر دوره جایزه در نظر گرفته شده', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+              Text('برای سه مقام برتر هر دوره جایزه در نظر گرفته شده', style: TextStyle(color: theme.textFaint, fontSize: 12)),
             ]),
           ),
         ]),
@@ -145,12 +145,12 @@ class _RulesCard extends StatelessWidget {
             Row(children: [
               Icon(Icons.edit_document, size: 14, color: theme.blue),
               const SizedBox(width: 6),
-              Text('موضوع این دوره', style: TextStyle(color: theme.blue, fontSize: 10.5, fontWeight: FontWeight.w800)),
+              Text('موضوع این دوره', style: TextStyle(color: theme.blue, fontSize: 12, fontWeight: FontWeight.w800)),
             ]),
             const SizedBox(height: 6),
             Text(settings.topic, style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w700, height: 1.7)),
             const SizedBox(height: 4),
-            Text('همه‌ی شرکت‌کنندگان مقاله‌شان را روی همین موضوع می‌نویسند.', style: TextStyle(color: theme.textFaint, fontSize: 10, height: 1.7)),
+            Text('همه‌ی شرکت‌کنندگان مقاله‌شان را روی همین موضوع می‌نویسند.', style: TextStyle(color: theme.textFaint, fontSize: 11.5, height: 1.7)),
           ]),
         ),
         const SizedBox(height: 10),
@@ -172,13 +172,13 @@ class _RulesCard extends StatelessWidget {
                     : settings.submissionsOpen
                         ? '${settings.timeUntilDeadline.inDays} روز تا پایان مهلت ارسال باقی است.'
                         : 'مهلت ارسال این دوره تمام شده؛ در انتظار رتبه‌بندی هستیم.',
-                style: TextStyle(color: theme.textPrimary, fontSize: 11, fontWeight: FontWeight.w700, height: 1.7),
+                style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700, height: 1.7),
               ),
             ),
           ]),
         ),
         const SizedBox(height: 14),
-        Text('جوایز این دوره', style: TextStyle(color: theme.textSecondary, fontSize: 11, fontWeight: FontWeight.w700)),
+        Text('جوایز این دوره', style: TextStyle(color: theme.textSecondary, fontSize: 12.5, fontWeight: FontWeight.w700)),
         const SizedBox(height: 8),
         _prizeRow('🥇', 'نفر اول', settings.prizeFirst, theme.yellow),
         _prizeRow('🥈', 'نفر دوم', settings.prizeSecond, theme.textSecondary),
@@ -199,12 +199,12 @@ class _RulesCard extends StatelessWidget {
         child: Row(children: [
           Text(emoji, style: const TextStyle(fontSize: 16)),
           const SizedBox(width: 8),
-          Text(label, style: TextStyle(color: color, fontSize: 11.5, fontWeight: FontWeight.w800)),
+          Text(label, style: TextStyle(color: color, fontSize: 12.5, fontWeight: FontWeight.w800)),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               (prize == null || prize.trim().isEmpty) ? 'به‌زودی اعلام می‌شود' : prize,
-              style: TextStyle(color: theme.textSecondary, fontSize: 11, height: 1.7),
+              style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.7),
               maxLines: 2, overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -216,7 +216,7 @@ class _RulesCard extends StatelessWidget {
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Icon(icon, size: 15, color: theme.blue),
           const SizedBox(width: 9),
-          Expanded(child: Text(text, style: TextStyle(color: theme.textSecondary, fontSize: 11.5, height: 1.9))),
+          Expanded(child: Text(text, style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.9))),
         ]),
       );
 }
@@ -255,7 +255,7 @@ class _MyArticleCard extends StatelessWidget {
           ],
         ]),
         const SizedBox(height: 6),
-        Text('ارسال: ${afghanDateLabel(article.submittedAt)}', style: TextStyle(color: theme.textFaint, fontSize: 10)),
+        Text('ارسال: ${afghanDateLabel(article.submittedAt)}', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
         const SizedBox(height: 10),
         _statusBadge(),
       ]),
@@ -285,7 +285,7 @@ class _MyArticleCard extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
         decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(10)),
-        child: Text(text, style: TextStyle(color: color, fontSize: 10.5, fontWeight: FontWeight.w700)),
+        child: Text(text, style: TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.w700)),
       );
 
   String _toFaNum(int n) {
@@ -386,7 +386,7 @@ class _ArticleSubmitScreenState extends State<ArticleSubmitScreen> {
                     Expanded(
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                         Text(user?.name ?? '—', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700)),
-                        Text(user?.email ?? '', style: TextStyle(color: theme.textFaint, fontSize: 10)),
+                        Text(user?.email ?? '', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
                       ]),
                     ),
                   ]),
@@ -405,7 +405,7 @@ class _ArticleSubmitScreenState extends State<ArticleSubmitScreen> {
                           app.contestSettings.hasActiveRound
                               ? 'مهلت ارسال این دوره تمام شده — فرم غیرفعال است تا دوره‌ی بعدی آغاز شود.'
                               : 'دوره‌ی مسابقه هنوز از سوی مدیریت آغاز نشده — فعلاً امکان ارسال نیست.',
-                          style: TextStyle(color: theme.danger, fontSize: 11, height: 1.8, fontWeight: FontWeight.w600),
+                          style: TextStyle(color: theme.danger, fontSize: 12.5, height: 1.8, fontWeight: FontWeight.w600),
                         ),
                       ),
                     ]),
@@ -427,7 +427,7 @@ class _ArticleSubmitScreenState extends State<ArticleSubmitScreen> {
                 _label(theme, 'متن مقاله'),
                 _field(theme, _bodyCtrl, hint: 'مقاله‌ی خودتان را همین‌جا بنویسید…', maxLines: 16),
                 const SizedBox(height: 6),
-                Text('حداقل ۵۰ نویسه؛ فقط نوشته‌ی خودتان — نه کپی از اینترنت یا هوش مصنوعی.', style: TextStyle(color: theme.textFaint, fontSize: 10, height: 1.8)),
+                Text('حداقل ۵۰ نویسه؛ فقط نوشته‌ی خودتان — نه کپی از اینترنت یا هوش مصنوعی.', style: TextStyle(color: theme.textFaint, fontSize: 11.5, height: 1.8)),
                 const SizedBox(height: 16),
                 InkWell(
                   onTap: () => setState(() => _agreed = !_agreed),
@@ -438,7 +438,7 @@ class _ArticleSubmitScreenState extends State<ArticleSubmitScreen> {
                     child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                       Icon(_agreed ? Icons.check_box : Icons.check_box_outline_blank, size: 19, color: _agreed ? theme.blue : theme.textFaint),
                       const SizedBox(width: 9),
-                      Expanded(child: Text('تأیید می‌کنم این نوشته کاملاً کار خودم است و از هوش مصنوعی یا منابع دیگر کپی نشده است.', style: TextStyle(color: theme.textSecondary, fontSize: 11, height: 1.8))),
+                      Expanded(child: Text('تأیید می‌کنم این نوشته کاملاً کار خودم است و از هوش مصنوعی یا منابع دیگر کپی نشده است.', style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.8))),
                     ]),
                   ),
                 ),
@@ -464,7 +464,7 @@ class _ArticleSubmitScreenState extends State<ArticleSubmitScreen> {
 
   Widget _label(AppColors theme, String text) => Padding(
         padding: const EdgeInsets.only(bottom: 6),
-        child: Text(text, style: TextStyle(color: theme.textSecondary, fontSize: 11, fontWeight: FontWeight.w700)),
+        child: Text(text, style: TextStyle(color: theme.textSecondary, fontSize: 12.5, fontWeight: FontWeight.w700)),
       );
 
   Widget _field(AppColors theme, TextEditingController ctrl, {String hint = '', int maxLines = 1}) {
@@ -474,7 +474,7 @@ class _ArticleSubmitScreenState extends State<ArticleSubmitScreen> {
       style: TextStyle(color: theme.textPrimary, fontSize: 12.5, height: 1.8),
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: TextStyle(color: theme.textFaint, fontSize: 11.5),
+        hintStyle: TextStyle(color: theme.textFaint, fontSize: 12.5),
         filled: true, fillColor: theme.bgCard.withValues(alpha: 0.5),
         contentPadding: const EdgeInsets.all(14),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide(color: theme.glassBorder)),

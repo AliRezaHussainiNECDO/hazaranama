@@ -85,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         alignment: Alignment.centerLeft,
                         child: TextButton(
                           onPressed: () => app.goTo(AuthStage.forgot),
-                          child: Text('رمز عبور را فراموش کرده‌اید؟', style: TextStyle(color: theme.blue, fontSize: 11.5, fontWeight: FontWeight.w700)),
+                          child: Text('رمز عبور را فراموش کرده‌اید؟', style: TextStyle(color: theme.blue, fontSize: 12.5, fontWeight: FontWeight.w700)),
                         ),
                       ),
                       if (_error != null) ...[
@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: double.infinity,
                           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                           decoration: BoxDecoration(color: theme.danger.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(10)),
-                          child: Text(_error!, style: TextStyle(color: theme.danger, fontSize: 11.5)),
+                          child: Text(_error!, style: TextStyle(color: theme.danger, fontSize: 12.5)),
                         ),
                       ],
                       const SizedBox(height: 18),

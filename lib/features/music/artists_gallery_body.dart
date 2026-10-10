@@ -56,7 +56,7 @@ class _ArtistsGalleryBodyState extends State<ArtistsGalleryBody> {
             const SizedBox(height: 12),
             Text('هنوز هیچ هنرمندی افزوده نشده', textAlign: TextAlign.center, style: TextStyle(color: theme.textFaint, fontSize: 12.5)),
             const SizedBox(height: 6),
-            Text('مدیر می‌تواند از پنل مدیریت، هنرمند و ویدیوهایش را اضافه کند.', textAlign: TextAlign.center, style: TextStyle(color: theme.textFaint, fontSize: 10.5, height: 1.8)),
+            Text('مدیر می‌تواند از پنل مدیریت، هنرمند و ویدیوهایش را اضافه کند.', textAlign: TextAlign.center, style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.8)),
           ],
         ),
       );
@@ -115,7 +115,7 @@ class _ArtistCard extends StatelessWidget {
           child: Row(mainAxisSize: MainAxisSize.min, children: [
             Icon(Icons.play_circle_fill_rounded, size: 12, color: theme.blue),
             const SizedBox(width: 4),
-            Text('${artist.videoCount} ویدیو', style: TextStyle(color: theme.blue, fontSize: 9.5, fontWeight: FontWeight.w700)),
+            Text('${artist.videoCount} ویدیو', style: TextStyle(color: theme.blue, fontSize: 11, fontWeight: FontWeight.w700)),
           ]),
         ),
         const Spacer(),

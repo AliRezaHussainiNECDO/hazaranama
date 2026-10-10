@@ -98,14 +98,14 @@ class _AiToolsPageState extends State<AiToolsPage> {
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text('دستیار هوش مصنوعی محتوا', style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800)),
                   const SizedBox(height: 2),
-                  Text('پیش‌نویس، خلاصه یا ترجمه بساز؛ سپس در «مدیریت محتوا» ثبت کن', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                  Text('پیش‌نویس، خلاصه یا ترجمه بساز؛ سپس در «مدیریت محتوا» ثبت کن', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 ]),
               ),
             ]),
           ),
           const SizedBox(height: 16),
 
-          Text('بخش هدف', style: TextStyle(color: theme.textFaint, fontSize: 10.5, fontWeight: FontWeight.w700)),
+          Text('بخش هدف', style: TextStyle(color: theme.textFaint, fontSize: 12, fontWeight: FontWeight.w700)),
           const SizedBox(height: 6),
           HzSelectField(
             value: sectionById(_sectionId).title,
@@ -120,7 +120,7 @@ class _AiToolsPageState extends State<AiToolsPage> {
           ),
           const SizedBox(height: 16),
 
-          Text('نوع تولید', style: TextStyle(color: theme.textFaint, fontSize: 10.5, fontWeight: FontWeight.w700)),
+          Text('نوع تولید', style: TextStyle(color: theme.textFaint, fontSize: 12, fontWeight: FontWeight.w700)),
           const SizedBox(height: 8),
           Row(children: [
             for (final a in _kActions)
@@ -140,7 +140,7 @@ class _AiToolsPageState extends State<AiToolsPage> {
                       child: Column(children: [
                         Icon(a['icon'] as IconData, size: 16, color: _action == a['id'] ? theme.aiViolet : theme.textFaint),
                         const SizedBox(height: 4),
-                        Text(a['label'] as String, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: _action == a['id'] ? theme.aiViolet : theme.textFaint)),
+                        Text(a['label'] as String, style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700, color: _action == a['id'] ? theme.aiViolet : theme.textFaint)),
                       ]),
                     ),
                   ),
@@ -150,11 +150,11 @@ class _AiToolsPageState extends State<AiToolsPage> {
           const SizedBox(height: 16),
 
           if (_action == 'draft') ...[
-            Text('موضوع پیش‌نویس', style: TextStyle(color: theme.textFaint, fontSize: 10.5, fontWeight: FontWeight.w700)),
+            Text('موضوع پیش‌نویس', style: TextStyle(color: theme.textFaint, fontSize: 12, fontWeight: FontWeight.w700)),
             const SizedBox(height: 6),
             HzTextField(controller: _topicCtrl, icon: Icons.lightbulb_outline, hint: 'مثلاً: نقش دمبوره در موسیقی هزارگی', theme: theme),
           ] else ...[
-            Text('متن مبدأ', style: TextStyle(color: theme.textFaint, fontSize: 10.5, fontWeight: FontWeight.w700)),
+            Text('متن مبدأ', style: TextStyle(color: theme.textFaint, fontSize: 12, fontWeight: FontWeight.w700)),
             const SizedBox(height: 6),
             TextField(
               controller: _sourceCtrl,
@@ -170,7 +170,7 @@ class _AiToolsPageState extends State<AiToolsPage> {
             ),
             if (_action == 'translate') ...[
               const SizedBox(height: 12),
-              Text('زبان مقصد', style: TextStyle(color: theme.textFaint, fontSize: 10.5, fontWeight: FontWeight.w700)),
+              Text('زبان مقصد', style: TextStyle(color: theme.textFaint, fontSize: 12, fontWeight: FontWeight.w700)),
               const SizedBox(height: 6),
               HzSelectField(
                 value: _targetLang,
@@ -200,7 +200,7 @@ class _AiToolsPageState extends State<AiToolsPage> {
               child: Row(children: [
                 Icon(Icons.error_outline, size: 16, color: theme.danger),
                 const SizedBox(width: 8),
-                Expanded(child: Text(_error!, style: TextStyle(color: theme.danger, fontSize: 11.5))),
+                Expanded(child: Text(_error!, style: TextStyle(color: theme.danger, fontSize: 12.5))),
               ]),
             ),
           ],
@@ -214,7 +214,7 @@ class _AiToolsPageState extends State<AiToolsPage> {
                 Row(children: [
                   Icon(Icons.check_circle_outline, size: 15, color: theme.success),
                   const SizedBox(width: 6),
-                  Text('نتیجه', style: TextStyle(color: theme.success, fontSize: 11, fontWeight: FontWeight.w800)),
+                  Text('نتیجه', style: TextStyle(color: theme.success, fontSize: 12.5, fontWeight: FontWeight.w800)),
                   const Spacer(),
                   InkWell(
                     onTap: () {

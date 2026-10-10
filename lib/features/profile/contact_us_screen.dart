@@ -85,7 +85,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                             Expanded(
                               child: Text(
                                 'پیام، پیشنهاد یا مشکلی دارید؟ مستقیم برای مدیر هزاره‌نامه بنویسید؛ پاسخ اینجا نمایش داده می‌شود.',
-                                style: TextStyle(color: theme.textSecondary, fontSize: 11.5, height: 1.8),
+                                style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.8),
                               ),
                             ),
                           ]),
@@ -159,7 +159,7 @@ class _MessageCard extends StatelessWidget {
           Row(children: [
             Icon(Icons.person, size: 13, color: theme.textFaint),
             const SizedBox(width: 5),
-            Text('پیام شما', style: TextStyle(color: theme.textFaint, fontSize: 10)),
+            Text('پیام شما', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
           ]),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
@@ -167,12 +167,12 @@ class _MessageCard extends StatelessWidget {
               color: (replied ? theme.success : theme.yellow).withValues(alpha: 0.14),
               borderRadius: BorderRadius.circular(999),
             ),
-            child: Text(messageStatusLabel(message.status), style: TextStyle(color: replied ? theme.success : theme.yellow, fontSize: 9, fontWeight: FontWeight.w700)),
+            child: Text(messageStatusLabel(message.status), style: TextStyle(color: replied ? theme.success : theme.yellow, fontSize: 10.5, fontWeight: FontWeight.w700)),
           ),
         ]),
         const SizedBox(height: 8),
         Text(message.message, style: TextStyle(color: theme.textSecondary, fontSize: 12, height: 1.8)),
-        Padding(padding: const EdgeInsets.only(top: 4), child: Text(message.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 9.5))),
+        Padding(padding: const EdgeInsets.only(top: 4), child: Text(message.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 11))),
         if (message.adminReply != null) ...[
           const SizedBox(height: 10),
           Container(
@@ -182,7 +182,7 @@ class _MessageCard extends StatelessWidget {
               Row(children: [
                 Icon(Icons.support_agent, size: 13, color: theme.blue),
                 const SizedBox(width: 5),
-                Text('پاسخ مدیر', style: TextStyle(color: theme.blue, fontSize: 10, fontWeight: FontWeight.w700)),
+                Text('پاسخ مدیر', style: TextStyle(color: theme.blue, fontSize: 11.5, fontWeight: FontWeight.w700)),
               ]),
               const SizedBox(height: 6),
               Text(message.adminReply!, style: TextStyle(color: theme.textPrimary, fontSize: 12, height: 1.8)),

@@ -156,7 +156,7 @@ class _ArtistHeader extends StatelessWidget {
         const SizedBox(height: 8),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 26),
-          child: Text(artist.bio, textAlign: TextAlign.center, style: TextStyle(color: theme.textSecondary, fontSize: 11.5, height: 1.9)),
+          child: Text(artist.bio, textAlign: TextAlign.center, style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.9)),
         ),
       ],
     ]);
@@ -210,12 +210,12 @@ class _VideoCard extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(video.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 11.5, fontWeight: FontWeight.w700, height: 1.4)),
+            Text(video.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700, height: 1.4)),
             const SizedBox(height: 4),
             Row(children: [
               Icon(Icons.visibility_outlined, size: 11, color: theme.textFaint),
               const SizedBox(width: 3),
-              Text('${_formatViews(video.viewsCount)} بازدید', style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
+              Text('${_formatViews(video.viewsCount)} بازدید', style: TextStyle(color: theme.textFaint, fontSize: 11)),
             ]),
           ]),
         ),

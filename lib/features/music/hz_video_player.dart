@@ -125,7 +125,7 @@ class _HzVideoPlayerState extends State<HzVideoPlayer> {
             const Column(mainAxisSize: MainAxisSize.min, children: [
               Icon(Icons.error_outline, color: Colors.white54, size: 34),
               SizedBox(height: 6),
-              Text('پخش ویدیو ممکن نشد', style: TextStyle(color: Colors.white54, fontSize: 11)),
+              Text('پخش ویدیو ممکن نشد', style: TextStyle(color: Colors.white54, fontSize: 12.5)),
             ]),
           if (_ready && _controlsVisible) ...[
             DecoratedBox(
@@ -171,7 +171,7 @@ class _HzVideoPlayerState extends State<HzVideoPlayer> {
                 ),
                 Row(children: [
                   const SizedBox(width: 4),
-                  Text('${_fmt(_controller.value.position)} / ${_fmt(_controller.value.duration)}', style: const TextStyle(color: Colors.white, fontSize: 10.5, fontWeight: FontWeight.w600)),
+                  Text('${_fmt(_controller.value.position)} / ${_fmt(_controller.value.duration)}', style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600)),
                   const Spacer(),
                   InkWell(onTap: _openFullscreen, child: const Icon(Icons.fullscreen, color: Colors.white, size: 20)),
                   const SizedBox(width: 4),

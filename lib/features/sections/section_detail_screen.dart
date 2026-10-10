@@ -58,7 +58,7 @@ class SectionDetailScreen extends StatelessWidget {
                   Expanded(
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
                       Text(section.title, style: TextStyle(color: theme.textPrimary, fontSize: 16, fontWeight: FontWeight.w900), maxLines: 1, overflow: TextOverflow.ellipsis),
-                      Text(section.description, style: TextStyle(color: theme.textSecondary, fontSize: 11), maxLines: 1, overflow: TextOverflow.ellipsis),
+                      Text(section.description, style: TextStyle(color: theme.textSecondary, fontSize: 12.5), maxLines: 1, overflow: TextOverflow.ellipsis),
                     ]),
                   ),
                 ]),

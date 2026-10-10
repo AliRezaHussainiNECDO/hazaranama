@@ -148,7 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(color: theme.danger.withValues(alpha: 0.08), borderRadius: BorderRadius.circular(10)),
-          child: Text(_error!, style: TextStyle(color: theme.danger, fontSize: 11.5)),
+          child: Text(_error!, style: TextStyle(color: theme.danger, fontSize: 12.5)),
         ),
       ],
       const SizedBox(height: 18),
@@ -219,7 +219,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(color: theme.danger.withValues(alpha: 0.08), borderRadius: BorderRadius.circular(10)),
-          child: Text(_error!, style: TextStyle(color: theme.danger, fontSize: 11.5)),
+          child: Text(_error!, style: TextStyle(color: theme.danger, fontSize: 12.5)),
         ),
         const SizedBox(height: 12),
       ],
@@ -231,7 +231,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Icon(Icons.verified_outlined, size: 16, color: theme.success),
           const SizedBox(width: 9),
-          Expanded(child: Text('حساب شما بلافاصله فعال می‌شود؛ نیازی به تأیید مدیر نیست.', style: TextStyle(color: theme.textSecondary, fontSize: 10.5, height: 1.8))),
+          Expanded(child: Text('حساب شما بلافاصله فعال می‌شود؛ نیازی به تأیید مدیر نیست.', style: TextStyle(color: theme.textSecondary, fontSize: 12, height: 1.8))),
         ]),
       ),
     ];
@@ -275,7 +275,7 @@ class _TermsCheckRow extends StatelessWidget {
           Expanded(
             child: RichText(
               text: TextSpan(
-                style: TextStyle(fontFamily: 'Vazirmatn', color: theme.textSecondary, fontSize: 11.5, height: 1.9),
+                style: TextStyle(fontFamily: 'Vazirmatn', color: theme.textSecondary, fontSize: 12.5, height: 1.9),
                 children: [
                   const TextSpan(text: 'با ساخت حساب، '),
                   TextSpan(

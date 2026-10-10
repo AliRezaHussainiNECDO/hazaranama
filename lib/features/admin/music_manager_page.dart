@@ -70,11 +70,11 @@ class _ArtistsManager extends StatelessWidget {
         child: Row(children: [
           StatIconBox(icon: Icons.mic_external_on, color: theme.blue, size: 36),
           const SizedBox(width: 10),
-          Expanded(child: Text('${artists.length} هنرمند', style: TextStyle(color: theme.textFaint, fontSize: 10.5))),
+          Expanded(child: Text('${artists.length} هنرمند', style: TextStyle(color: theme.textFaint, fontSize: 12))),
           ElevatedButton.icon(
             onPressed: () => _openArtistForm(context, app, null),
             icon: const Icon(Icons.add, size: 15),
-            label: const Text('هنرمند تازه', style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700)),
+            label: const Text('هنرمند تازه', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
             style: ElevatedButton.styleFrom(backgroundColor: theme.blue, foregroundColor: Colors.white, elevation: 0, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
           ),
         ]),
@@ -102,7 +102,7 @@ class _ArtistsManager extends StatelessWidget {
                           onTap: () => onOpenArtist(a.id),
                           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                             Text(a.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700)),
-                            Text('${a.videoCount} ویدیو — مدیریت ویدیوها', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.blue, fontSize: 10)),
+                            Text('${a.videoCount} ویدیو — مدیریت ویدیوها', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.blue, fontSize: 11.5)),
                           ]),
                         ),
                       ),
@@ -179,7 +179,7 @@ class _ArtistsManager extends StatelessWidget {
                 OutlinedButton.icon(
                   onPressed: uploading ? null : pickAvatar,
                   icon: uploading ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.image_outlined, size: 16),
-                  label: Text(uploading ? 'در حال آپلود…' : 'انتخاب آواتار از گالری', style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700)),
+                  label: Text(uploading ? 'در حال آپلود…' : 'انتخاب آواتار از گالری', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                   style: OutlinedButton.styleFrom(foregroundColor: theme.blue, side: BorderSide(color: theme.border), padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
                 ),
                 const SizedBox(height: 12),
@@ -258,7 +258,7 @@ class _VideosManager extends StatelessWidget {
           ElevatedButton.icon(
             onPressed: () => _openVideoForm(context, app, artist.id, null),
             icon: const Icon(Icons.upload_outlined, size: 14),
-            label: const Text('ویدیو تازه', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700)),
+            label: const Text('ویدیو تازه', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
             style: ElevatedButton.styleFrom(backgroundColor: theme.blue, foregroundColor: Colors.white, elevation: 0, padding: const EdgeInsets.symmetric(horizontal: 12), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
           ),
         ]),
@@ -290,7 +290,7 @@ class _VideosManager extends StatelessWidget {
                           Expanded(
                             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                               Text(v.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w700)),
-                              Text('${v.viewsCount} بازدید', style: TextStyle(color: theme.textFaint, fontSize: 10)),
+                              Text('${v.viewsCount} بازدید', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
                             ]),
                           ),
                           IconButton(icon: Icon(Icons.edit_outlined, size: 16, color: theme.blue), onPressed: () => _openVideoForm(context, app, artist.id, v)),
@@ -384,13 +384,13 @@ class _VideosManager extends StatelessWidget {
                     child: Row(children: [
                       Icon(Icons.check_circle, size: 14, color: theme.success),
                       const SizedBox(width: 6),
-                      Expanded(child: Text('فایل ویدیو انتخاب شد', style: TextStyle(color: theme.success, fontSize: 11))),
+                      Expanded(child: Text('فایل ویدیو انتخاب شد', style: TextStyle(color: theme.success, fontSize: 12.5))),
                     ]),
                   ),
                 OutlinedButton.icon(
                   onPressed: uploadingVideo ? null : pickVideo,
                   icon: uploadingVideo ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.video_file_outlined, size: 16),
-                  label: Text(uploadingVideo ? 'در حال آپلود ویدیو…' : 'انتخاب فایل ویدیو از گالری', style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700)),
+                  label: Text(uploadingVideo ? 'در حال آپلود ویدیو…' : 'انتخاب فایل ویدیو از گالری', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                   style: OutlinedButton.styleFrom(foregroundColor: theme.blue, side: BorderSide(color: theme.border), padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
                 ),
                 const SizedBox(height: 14),
@@ -404,7 +404,7 @@ class _VideosManager extends StatelessWidget {
                 OutlinedButton.icon(
                   onPressed: uploadingThumb ? null : pickThumb,
                   icon: uploadingThumb ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.image_outlined, size: 16),
-                  label: Text(uploadingThumb ? 'در حال آپلود…' : 'انتخاب تامبنیل از گالری', style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700)),
+                  label: Text(uploadingThumb ? 'در حال آپلود…' : 'انتخاب تامبنیل از گالری', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                   style: OutlinedButton.styleFrom(foregroundColor: theme.blue, side: BorderSide(color: theme.border), padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
                 ),
                 const SizedBox(height: 18),
@@ -451,7 +451,7 @@ class _VideosManager extends StatelessWidget {
   }
 }
 
-Widget _label(theme, String text) => Text(text, style: TextStyle(color: theme.textFaint, fontSize: 10.5));
+Widget _label(theme, String text) => Text(text, style: TextStyle(color: theme.textFaint, fontSize: 12));
 
 Widget _field(theme, TextEditingController ctrl, {String hint = '', int maxLines = 1}) {
   return Padding(
@@ -462,7 +462,7 @@ Widget _field(theme, TextEditingController ctrl, {String hint = '', int maxLines
       style: TextStyle(color: theme.textPrimary, fontSize: 12.5),
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: TextStyle(color: theme.textFaint, fontSize: 11.5),
+        hintStyle: TextStyle(color: theme.textFaint, fontSize: 12.5),
         filled: true, fillColor: theme.bgCard,
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: theme.border)),

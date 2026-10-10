@@ -86,7 +86,7 @@ class _DonorLeaderboardScreenState extends State<DonorLeaderboardScreen> {
                             Expanded(
                               child: Text(
                                 'با هر کمک، مقام و حلقه‌ی دور عکس پروفایلت زیباتر می‌شود — این فهرست از کمک‌های تأییدشده‌ی همه ساخته شده و به همه نشان داده می‌شود.',
-                                style: TextStyle(color: Colors.white, fontSize: 11, height: 1.9, fontWeight: FontWeight.w600),
+                                style: TextStyle(color: Colors.white, fontSize: 12.5, height: 1.9, fontWeight: FontWeight.w600),
                               ),
                             ),
                           ]),
@@ -173,7 +173,7 @@ class _DonorRow extends StatelessWidget {
               Expanded(
                 child: Text(
                   entry.lastDonationAt != null ? 'آخرین کمک: ${afghanDateLabel(entry.lastDonationAt!)}' : '',
-                  style: TextStyle(color: theme.textFaint, fontSize: 9.5),
+                  style: TextStyle(color: theme.textFaint, fontSize: 11),
                   maxLines: 1, overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -183,7 +183,7 @@ class _DonorRow extends StatelessWidget {
         const SizedBox(width: 8),
         Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
           Text('~${entry.totalUsd.toStringAsFixed(0)}\$', style: TextStyle(color: theme.success, fontSize: 13, fontWeight: FontWeight.w800)),
-          Text('${toFaDigits('${entry.donationCount}')} کمک', style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
+          Text('${toFaDigits('${entry.donationCount}')} کمک', style: TextStyle(color: theme.textFaint, fontSize: 11)),
         ]),
       ]),
     );
@@ -240,8 +240,8 @@ class _PodiumSpot extends StatelessWidget {
             child: Text(entry.name.isNotEmpty ? entry.name[0] : '؟', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: rank == 1 ? 18 : 14))),
       ),
       const SizedBox(height: 6),
-      Text(entry.name, maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center, style: TextStyle(color: theme.textPrimary, fontSize: 11, fontWeight: FontWeight.w800)),
-      Text('~${entry.totalUsd.toStringAsFixed(0)}\$', style: TextStyle(color: theme.success, fontSize: 10, fontWeight: FontWeight.w700)),
+      Text(entry.name, maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800)),
+      Text('~${entry.totalUsd.toStringAsFixed(0)}\$', style: TextStyle(color: theme.success, fontSize: 11.5, fontWeight: FontWeight.w700)),
       const SizedBox(height: 8),
       Container(
         width: double.infinity,

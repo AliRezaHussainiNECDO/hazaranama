@@ -179,7 +179,7 @@ class _DonationScreenState extends State<DonationScreen> {
                         Padding(
                           padding: const EdgeInsets.only(right: 22),
                           child: Text('این گزارش‌ها با کمک هوش مصنوعی نوشته می‌شوند تا مصرف واقعی کمک‌های شما همیشه شفاف بماند.',
-                              style: TextStyle(color: theme.textFaint, fontSize: 10.5, height: 1.7)),
+                              style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.7)),
                         ),
                         const SizedBox(height: 12),
                         if (reports.isEmpty)
@@ -238,7 +238,7 @@ class _HeroCard extends StatelessWidget {
               child: const Row(mainAxisSize: MainAxisSize.min, children: [
                 Icon(Icons.volunteer_activism, size: 13, color: Colors.white),
                 SizedBox(width: 5),
-                Text('کمک‌های مالی', style: TextStyle(color: Colors.white, fontSize: 10.5, fontWeight: FontWeight.w800)),
+                Text('کمک‌های مالی', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w800)),
               ]),
             ),
             const SizedBox(height: 12),
@@ -247,7 +247,7 @@ class _HeroCard extends StatelessWidget {
             const SizedBox(height: 6),
             const Text(
               'همین کمک کوچک شما می‌تواند برای یک خانواده‌ی بی‌بضاعت نان شب باشد، یا خشتی در ساخت یک شفاخانه، مکتب، پل یا سرک برای هزارستان. هر مبلغی، هرچند کوچک، با شفافیت کامل به مقصد می‌رسد.',
-              style: TextStyle(color: Colors.white, fontSize: 11, height: 1.9),
+              style: TextStyle(color: Colors.white, fontSize: 12.5, height: 1.9),
             ),
             if (settings.totalRaised > 0 || settings.familiesHelped > 0) ...[
               const SizedBox(height: 16),
@@ -268,7 +268,7 @@ class _HeroCard extends StatelessWidget {
         decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.16), borderRadius: BorderRadius.circular(12)),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(value, style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w800)),
-          Text(label, style: const TextStyle(color: Colors.white70, fontSize: 9.5)),
+          Text(label, style: const TextStyle(color: Colors.white70, fontSize: 11)),
         ]),
       );
 }
@@ -296,7 +296,7 @@ class _LeaderboardButton extends StatelessWidget {
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text('فهرست کمک‌کنندگان', style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w800)),
-              Text('رتبه و مقام همه‌ی کمک‌کنندگان را ببین', style: TextStyle(color: theme.textFaint, fontSize: 10)),
+              Text('رتبه و مقام همه‌ی کمک‌کنندگان را ببین', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
             ]),
           ),
           Icon(Icons.arrow_back_ios_new, size: 13, color: theme.textFaint),
@@ -330,7 +330,7 @@ class _TierGuideButton extends StatelessWidget {
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text('راهنمای مقام‌ها', style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w800)),
-              Text('۱۰ مرحله، از همراه تا پادشاه — با هر مبلغ چه می‌گیری؟', style: TextStyle(color: theme.textFaint, fontSize: 10)),
+              Text('۱۰ مرحله، از همراه تا پادشاه — با هر مبلغ چه می‌گیری؟', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
             ]),
           ),
           Icon(Icons.arrow_back_ios_new, size: 13, color: theme.textFaint),
@@ -357,7 +357,7 @@ class _ImpactCategoriesRow extends StatelessWidget {
               child: Column(children: [
                 Icon(donationCategoryIcon(c), size: 20, color: theme.success),
                 const SizedBox(height: 6),
-                Text(donationCategoryLabel(c), textAlign: TextAlign.center, maxLines: 2, style: TextStyle(color: theme.textSecondary, fontSize: 9.5, fontWeight: FontWeight.w700, height: 1.3)),
+                Text(donationCategoryLabel(c), textAlign: TextAlign.center, maxLines: 2, style: TextStyle(color: theme.textSecondary, fontSize: 11, fontWeight: FontWeight.w700, height: 1.3)),
               ]),
             ),
           ),
@@ -392,14 +392,14 @@ class _ExternalDonationCard extends StatelessWidget {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text('کمک مالی از طریق وب‌سایت', style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800)),
               const SizedBox(height: 2),
-              Text('PayPal و حواله‌ی بانکی — روی صفحه‌ی وب هزاره‌نامه', style: TextStyle(color: theme.textFaint, fontSize: 10)),
+              Text('PayPal و حواله‌ی بانکی — روی صفحه‌ی وب هزاره‌نامه', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
             ]),
           ),
         ]),
         const SizedBox(height: 12),
         Text(
           'برای رعایت قوانین اپ‌استور اپل، مشخصات پرداخت (ایمیل پی‌پال و اطلاعات حواله) را در یک صفحه‌ی وب جداگانه گذاشته‌ایم. با زدن دکمه‌ی زیر، همان مشخصات در مرورگرتان باز می‌شود.',
-          style: TextStyle(color: theme.textSecondary, fontSize: 11, height: 1.9),
+          style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.9),
         ),
         const SizedBox(height: 14),
         SizedBox(
@@ -421,7 +421,7 @@ class _ExternalDonationCard extends StatelessWidget {
           child: OutlinedButton.icon(
             onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const DonationTransferFormScreen())),
             icon: const Icon(Icons.edit_note, size: 16),
-            label: const Text('قبلاً کمک فرستاده‌اید؟ ثبتش کنید', style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w800)),
+            label: const Text('قبلاً کمک فرستاده‌اید؟ ثبتش کنید', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w800)),
             style: OutlinedButton.styleFrom(
               foregroundColor: theme.success, side: BorderSide(color: theme.success.withValues(alpha: 0.5)),
               padding: const EdgeInsets.symmetric(vertical: 12),
@@ -430,7 +430,7 @@ class _ExternalDonationCard extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 6),
-        Text('ثبت اعلام کمک، آن را به مقام و حلقه‌ی دور عکس پروفایلت وصل می‌کند.', style: TextStyle(color: theme.textFaint, fontSize: 9.5, height: 1.7)),
+        Text('ثبت اعلام کمک، آن را به مقام و حلقه‌ی دور عکس پروفایلت وصل می‌کند.', style: TextStyle(color: theme.textFaint, fontSize: 11, height: 1.7)),
       ]),
     );
   }
@@ -458,7 +458,7 @@ class _PaypalCard extends StatelessWidget {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text('ارسال از طریق PayPal', style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800)),
               const SizedBox(height: 2),
-              Text('ساده و آنی — برای کاربران خارج از افغانستان', style: TextStyle(color: theme.textFaint, fontSize: 10)),
+              Text('ساده و آنی — برای کاربران خارج از افغانستان', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
             ]),
           ),
         ]),
@@ -480,7 +480,7 @@ class _PaypalCard extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Text('در اپ یا سایت PayPal، گزینه‌ی Send را بزنید، همین ایمیل را وارد کنید و برای اینکه کارمزد کم‌تری کسر شود، گزینه‌ی «Friends & Family» را انتخاب کنید.',
-            style: TextStyle(color: theme.textSecondary, fontSize: 10.5, height: 1.9)),
+            style: TextStyle(color: theme.textSecondary, fontSize: 12, height: 1.9)),
         const SizedBox(height: 12),
         SizedBox(
           width: double.infinity,
@@ -501,7 +501,7 @@ class _PaypalCard extends StatelessWidget {
           child: OutlinedButton.icon(
             onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const DonationTransferFormScreen(method: DonationMethod.paypal))),
             icon: const Icon(Icons.edit_note, size: 16),
-            label: const Text('بعد از ارسال، اعلام کمکم را ثبت کن', style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w800)),
+            label: const Text('بعد از ارسال، اعلام کمکم را ثبت کن', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w800)),
             style: OutlinedButton.styleFrom(
               foregroundColor: theme.blue, side: BorderSide(color: theme.blue.withValues(alpha: 0.5)),
               padding: const EdgeInsets.symmetric(vertical: 12),
@@ -510,7 +510,7 @@ class _PaypalCard extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 6),
-        Text('ثبت اعلام کمک، آن را به مقام و حلقه‌ی دور عکس پروفایلت وصل می‌کند.', style: TextStyle(color: theme.textFaint, fontSize: 9.5, height: 1.7)),
+        Text('ثبت اعلام کمک، آن را به مقام و حلقه‌ی دور عکس پروفایلت وصل می‌کند.', style: TextStyle(color: theme.textFaint, fontSize: 11, height: 1.7)),
       ]),
     );
   }
@@ -538,7 +538,7 @@ class _TransferCard extends StatelessWidget {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text('ارسال از طریق حواله', style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800)),
               const SizedBox(height: 2),
-              Text('صرافی، ویسترن یونیون یا هر روش حواله‌ی دلخواه شما', style: TextStyle(color: theme.textFaint, fontSize: 10)),
+              Text('صرافی، ویسترن یونیون یا هر روش حواله‌ی دلخواه شما', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
             ]),
           ),
         ]),
@@ -557,7 +557,7 @@ class _TransferCard extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Text('بعد از ارسال حواله از طریق صرافی یا بانک محل خودتان، جزئیات آن را همین‌جا ثبت کنید تا مدیریت دریافت آن را تأیید کند و در گزارش شفافیت شما لحاظ شود.',
-            style: TextStyle(color: theme.textSecondary, fontSize: 10.5, height: 1.9)),
+            style: TextStyle(color: theme.textSecondary, fontSize: 12, height: 1.9)),
         const SizedBox(height: 12),
         SizedBox(
           width: double.infinity,
@@ -580,8 +580,8 @@ class _TransferCard extends StatelessWidget {
     return Row(children: [
       Icon(icon, size: 14, color: theme.yellow),
       const SizedBox(width: 8),
-      Text('$label: ', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
-      Expanded(child: Text(value, style: TextStyle(color: theme.textPrimary, fontSize: 11.5, fontWeight: FontWeight.w700))),
+      Text('$label: ', style: TextStyle(color: theme.textFaint, fontSize: 12)),
+      Expanded(child: Text(value, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700))),
       InkWell(
         onTap: () => onCopy(label, value),
         borderRadius: BorderRadius.circular(8),
@@ -614,13 +614,13 @@ class _MyTransferCard extends StatelessWidget {
             Text('${transfer.amount.toStringAsFixed(0)} ${transfer.currency} — ${donationCategoryLabel(transfer.category)}',
                 style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w800)),
             const SizedBox(height: 2),
-            Text('${donationMethodLabel(transfer.method)} · ${afghanDateLabel(transfer.submittedAt)}', style: TextStyle(color: theme.textFaint, fontSize: 10)),
+            Text('${donationMethodLabel(transfer.method)} · ${afghanDateLabel(transfer.submittedAt)}', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
           ]),
         ),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
           decoration: BoxDecoration(color: color.withValues(alpha: 0.14), borderRadius: BorderRadius.circular(999)),
-          child: Text(label, style: TextStyle(color: color, fontSize: 9.5, fontWeight: FontWeight.w800)),
+          child: Text(label, style: TextStyle(color: color, fontSize: 11, fontWeight: FontWeight.w800)),
         ),
       ]),
     );
@@ -673,7 +673,7 @@ class _ReportCard extends StatelessWidget {
                     child: Row(mainAxisSize: MainAxisSize.min, children: [
                       const Icon(Icons.photo_library_outlined, size: 11, color: Colors.white),
                       const SizedBox(width: 4),
-                      Text('${report.imageUrls.length}', style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w700)),
+                      Text('${report.imageUrls.length}', style: const TextStyle(color: Colors.white, fontSize: 11.5, fontWeight: FontWeight.w700)),
                     ]),
                   ),
                 ),
@@ -689,16 +689,16 @@ class _ReportCard extends StatelessWidget {
                 child: Row(mainAxisSize: MainAxisSize.min, children: [
                   Icon(donationCategoryIcon(report.category), size: 11, color: theme.success),
                   const SizedBox(width: 4),
-                  Text(donationCategoryLabel(report.category), style: TextStyle(color: theme.success, fontSize: 9.5, fontWeight: FontWeight.w800)),
+                  Text(donationCategoryLabel(report.category), style: TextStyle(color: theme.success, fontSize: 11, fontWeight: FontWeight.w800)),
                 ]),
               ),
               const Spacer(),
-              Text(report.publishedAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
+              Text(report.publishedAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 11)),
             ]),
             const SizedBox(height: 8),
             Text(report.title, style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800, height: 1.5)),
             const SizedBox(height: 5),
-            Text(report.summary, style: TextStyle(color: theme.textSecondary, fontSize: 11, height: 1.8)),
+            Text(report.summary, style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.8)),
             if (report.amountSpent != null || report.location != null || report.beneficiariesCount != null) ...[
               const SizedBox(height: 10),
               Wrap(spacing: 8, runSpacing: 6, children: [
@@ -719,7 +719,7 @@ class _ReportCard extends StatelessWidget {
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           Icon(icon, size: 11, color: theme.textFaint),
           const SizedBox(width: 4),
-          Text(text, style: TextStyle(color: theme.textSecondary, fontSize: 9.5, fontWeight: FontWeight.w700)),
+          Text(text, style: TextStyle(color: theme.textSecondary, fontSize: 11, fontWeight: FontWeight.w700)),
         ]),
       );
 }
@@ -845,7 +845,7 @@ class _DonationTransferFormScreenState extends State<DonationTransferFormScreen>
                         isPaypal
                             ? 'این فرم فقط جزئیات کمکی را ثبت می‌کند که خودتان از طریق PayPal به ایمیل «$kPaypalEmail» ارسال کرده‌اید یا در حال ارسال آن هستید — تا مدیر دریافت واقعی را تأیید کند و مقام شما فعال شود.'
                             : 'این فرم فقط جزئیات حواله‌ای را ثبت می‌کند که خودتان از طریق صرافی/بانک برای «$kTransferRecipientName» در $kTransferRecipientCity، $kTransferRecipientCountry ارسال کرده‌اید یا در حال ارسال آن هستید.',
-                        style: TextStyle(color: theme.textPrimary, fontSize: 11, height: 1.8, fontWeight: FontWeight.w600),
+                        style: TextStyle(color: theme.textPrimary, fontSize: 12.5, height: 1.8, fontWeight: FontWeight.w600),
                       ),
                     ),
                   ]),
@@ -924,7 +924,7 @@ class _DonationTransferFormScreenState extends State<DonationTransferFormScreen>
 
   Widget _label(AppColors theme, String text) => Padding(
         padding: const EdgeInsets.only(bottom: 6),
-        child: Text(text, style: TextStyle(color: theme.textSecondary, fontSize: 11, fontWeight: FontWeight.w700)),
+        child: Text(text, style: TextStyle(color: theme.textSecondary, fontSize: 12.5, fontWeight: FontWeight.w700)),
       );
 
   Widget _field(AppColors theme, TextEditingController ctrl, {String hint = '', int maxLines = 1, TextInputType? keyboardType}) {
@@ -935,7 +935,7 @@ class _DonationTransferFormScreenState extends State<DonationTransferFormScreen>
       style: TextStyle(color: theme.textPrimary, fontSize: 12.5, height: 1.8),
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: TextStyle(color: theme.textFaint, fontSize: 11.5),
+        hintStyle: TextStyle(color: theme.textFaint, fontSize: 12.5),
         filled: true, fillColor: theme.bgCard.withValues(alpha: 0.5),
         contentPadding: const EdgeInsets.all(14),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide(color: theme.glassBorder)),

@@ -247,7 +247,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         const SizedBox(height: 14),
         Center(
           child: _resendCooldown > 0
-              ? Text('ارسال دوباره‌ی کد تا $_resendCooldown ثانیه‌ی دیگر', style: TextStyle(color: theme.textFaint, fontSize: 11.5))
+              ? Text('ارسال دوباره‌ی کد تا $_resendCooldown ثانیه‌ی دیگر', style: TextStyle(color: theme.textFaint, fontSize: 12.5))
               : TextButton(
                   onPressed: _resending ? null : () => _sendResetEmail(app, isResend: true),
                   child: Text(
@@ -293,6 +293,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(color: theme.danger.withValues(alpha: 0.08), borderRadius: BorderRadius.circular(10)),
-        child: Text(_error!, style: TextStyle(color: theme.danger, fontSize: 11.5)),
+        child: Text(_error!, style: TextStyle(color: theme.danger, fontSize: 12.5)),
       );
 }

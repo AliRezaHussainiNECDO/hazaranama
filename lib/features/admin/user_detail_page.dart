@@ -111,7 +111,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
           SelectableText(code!, textDirection: TextDirection.ltr, style: TextStyle(color: theme.yellow, fontSize: 30, fontWeight: FontWeight.w800, letterSpacing: 6)),
           const SizedBox(height: 12),
           Text('این کد را برای ${user.email} بفرستید. کاربر در صفحه‌ی «فراموشی رمز» ایمیلش را وارد می‌کند و بعد این کد را؛ سپس رمز تازه می‌گذارد. اعتبار: ۲۴ ساعت، فقط یک‌بار.',
-              style: TextStyle(color: theme.textSecondary, fontSize: 11.5, height: 1.8)),
+              style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.8)),
         ]),
         actions: [
           TextButton(
@@ -189,7 +189,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
                       const SizedBox(height: 10),
                       Text(user.name, style: TextStyle(color: theme.textPrimary, fontSize: 16, fontWeight: FontWeight.w800)),
                       const SizedBox(height: 3),
-                      Text(user.email, style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                      Text(user.email, style: TextStyle(color: theme.textFaint, fontSize: 12)),
                       const SizedBox(height: 8),
                       Wrap(alignment: WrapAlignment.center, spacing: 6, runSpacing: 6, children: [
                         _pill(user.role == UserRole.admin ? theme.yellow : user.role == UserRole.editor ? theme.blue : theme.textFaint, roleLabel(user.role)),
@@ -226,13 +226,13 @@ class _UserDetailPageState extends State<UserDetailPage> {
                   _infoRow(theme, Icons.access_time, 'تاریخ عضویت', user.joined),
                   if (user.bio.isNotEmpty) ...[
                     const SizedBox(height: 4),
-                    Text('یادداشت / درباره‌ی ریشه‌ها', style: TextStyle(color: theme.textFaint, fontSize: 10)),
+                    Text('یادداشت / درباره‌ی ریشه‌ها', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
                     const SizedBox(height: 6),
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(12), border: Border.all(color: theme.glassBorder)),
-                      child: Text(user.bio, style: TextStyle(color: theme.textSecondary, fontSize: 11.5, height: 1.8)),
+                      child: Text(user.bio, style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.8)),
                     ),
                   ],
                   const SizedBox(height: 20),
@@ -243,7 +243,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
                       width: double.infinity,
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(color: theme.bgCardAlt, borderRadius: BorderRadius.circular(12)),
-                      child: Text('این حساب خودِ شماست — نقش و وضعیت آن از این‌جا قابل تغییر نیست.', style: TextStyle(color: theme.textFaint, fontSize: 10.5, height: 1.8)),
+                      child: Text('این حساب خودِ شماست — نقش و وضعیت آن از این‌جا قابل تغییر نیست.', style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.8)),
                     )
                   else ...[
                     _label(theme, 'نقش کاربر'),
@@ -297,13 +297,13 @@ class _UserDetailPageState extends State<UserDetailPage> {
                   const SizedBox(height: 4),
                   Padding(
                     padding: const EdgeInsets.only(right: 22),
-                    child: Text('همه‌ی کارهایی که این کاربر در اپ انجام داده — تازه‌ترین در بالا.', style: TextStyle(color: theme.textFaint, fontSize: 10.5, height: 1.7)),
+                    child: Text('همه‌ی کارهایی که این کاربر در اپ انجام داده — تازه‌ترین در بالا.', style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.7)),
                   ),
                   const SizedBox(height: 12),
                   if (_loadingActivity)
                     const Padding(padding: EdgeInsets.symmetric(vertical: 24), child: Center(child: CircularProgressIndicator()))
                   else if (_activity.isEmpty)
-                    Padding(padding: const EdgeInsets.symmetric(vertical: 20), child: Center(child: Text('هنوز فعالیتی ثبت نشده است.', style: TextStyle(color: theme.textFaint, fontSize: 11.5))))
+                    Padding(padding: const EdgeInsets.symmetric(vertical: 20), child: Center(child: Text('هنوز فعالیتی ثبت نشده است.', style: TextStyle(color: theme.textFaint, fontSize: 12.5))))
                   else
                     for (final (i, a) in _activity.indexed) ...[
                       _ActivityTile(theme: theme, entry: a).staggered(i, step: const Duration(milliseconds: 22)),
@@ -321,12 +321,12 @@ class _UserDetailPageState extends State<UserDetailPage> {
   Widget _pill(Color color, String label) => Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
         decoration: BoxDecoration(color: color.withValues(alpha: 0.14), borderRadius: BorderRadius.circular(999)),
-        child: Text(label, style: TextStyle(color: color, fontSize: 9.5, fontWeight: FontWeight.w700)),
+        child: Text(label, style: TextStyle(color: color, fontSize: 11, fontWeight: FontWeight.w700)),
       );
 
   Widget _label(AppColors theme, String text) => Padding(
         padding: const EdgeInsets.only(bottom: 6),
-        child: Text(text, style: TextStyle(color: theme.textSecondary, fontSize: 11, fontWeight: FontWeight.w700)),
+        child: Text(text, style: TextStyle(color: theme.textSecondary, fontSize: 12.5, fontWeight: FontWeight.w700)),
       );
 
   Widget _miniStat(AppColors theme, IconData icon, int value, String label) {
@@ -337,7 +337,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
         Icon(icon, size: 16, color: theme.blue),
         const SizedBox(height: 5),
         Text('$value', style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w800)),
-        Text(label, style: TextStyle(color: theme.textFaint, fontSize: 9)),
+        Text(label, style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
       ]),
     );
   }
@@ -353,7 +353,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
           const SizedBox(width: 10),
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(label, style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
+              Text(label, style: TextStyle(color: theme.textFaint, fontSize: 11)),
               Text(value, style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w600)),
             ]),
           ),
@@ -394,7 +394,7 @@ class _DonorSummaryCard extends StatelessWidget {
             child: LinearProgressIndicator(value: progress, minHeight: 6, backgroundColor: theme.bgCardAlt, color: theme.success),
           ),
           const SizedBox(height: 5),
-          Text('${(next.minUsd - totalUsd).clamp(0, next.minUsd).toStringAsFixed(0)} دلار دیگر تا مقام «${next.title}»', style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
+          Text('${(next.minUsd - totalUsd).clamp(0, next.minUsd).toStringAsFixed(0)} دلار دیگر تا مقام «${next.title}»', style: TextStyle(color: theme.textFaint, fontSize: 11)),
         ],
       ]),
     );
@@ -432,12 +432,12 @@ class _ActivityTile extends StatelessWidget {
         Expanded(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text(userActivityTypeLabel(entry.type), style: TextStyle(color: theme.textPrimary, fontSize: 11.5, fontWeight: FontWeight.w700)),
-              Text(afghanDateLabel(entry.occurredAt), style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
+              Text(userActivityTypeLabel(entry.type), style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700)),
+              Text(afghanDateLabel(entry.occurredAt), style: TextStyle(color: theme.textFaint, fontSize: 11)),
             ]),
             if (entry.summary.isNotEmpty) ...[
               const SizedBox(height: 3),
-              Text(entry.summary, style: TextStyle(color: theme.textSecondary, fontSize: 11, height: 1.7), maxLines: 2, overflow: TextOverflow.ellipsis),
+              Text(entry.summary, style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.7), maxLines: 2, overflow: TextOverflow.ellipsis),
             ],
           ]),
         ),

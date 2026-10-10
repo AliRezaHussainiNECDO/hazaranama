@@ -97,7 +97,7 @@ class _ContestSlideState extends State<_ContestSlide> {
               child: const Row(mainAxisSize: MainAxisSize.min, children: [
                 Icon(Icons.emoji_events, size: 13, color: Colors.white),
                 SizedBox(width: 5),
-                Text('مسابقه‌ی مقالات', style: TextStyle(color: Colors.white, fontSize: 10.5, fontWeight: FontWeight.w800)),
+                Text('مسابقه‌ی مقالات', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w800)),
               ]),
             ),
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -105,7 +105,7 @@ class _ContestSlideState extends State<_ContestSlide> {
                   style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800, height: 1.3)),
               const SizedBox(height: 4),
               const Text('مقاله‌تان را روی موضوع این دوره بنویسید؛ برای سه مقام برتر جایزه در نظر گرفته شده.',
-                  style: TextStyle(color: Colors.white70, fontSize: 11, height: 1.7)),
+                  style: TextStyle(color: Colors.white70, fontSize: 12.5, height: 1.7)),
               const SizedBox(height: 10),
               if (settings.hasActiveRound && settings.submissionsOpen)
                 _CountdownRow(remaining: remaining)
@@ -115,7 +115,7 @@ class _ContestSlideState extends State<_ContestSlide> {
                   decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.16), borderRadius: BorderRadius.circular(10)),
                   child: Text(
                     settings.hasActiveRound ? 'مهلت ارسال تمام شده — در انتظار رتبه‌بندی' : 'دوره‌ی تازه به‌زودی آغاز می‌شود',
-                    style: const TextStyle(color: Colors.white, fontSize: 10.5, fontWeight: FontWeight.w700),
+                    style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w700),
                   ),
                 ),
               const SizedBox(height: 10),
@@ -123,7 +123,7 @@ class _ContestSlideState extends State<_ContestSlide> {
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
                 decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(999)),
                 child: Row(mainAxisSize: MainAxisSize.min, children: [
-                  Text('شرکت در مسابقه', style: TextStyle(color: theme.blueDeep, fontSize: 11.5, fontWeight: FontWeight.w800)),
+                  Text('شرکت در مسابقه', style: TextStyle(color: theme.blueDeep, fontSize: 12.5, fontWeight: FontWeight.w800)),
                   const SizedBox(width: 5),
                   Icon(Icons.arrow_back, size: 13, color: theme.blueDeep),
                 ]),
@@ -174,7 +174,7 @@ class _CountdownRow extends StatelessWidget {
         child: Text(toFaDigits(value.toString().padLeft(2, '0')), style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w800)),
       ),
       const SizedBox(height: 2),
-      Text(label, style: const TextStyle(color: Colors.white70, fontSize: 8.5)),
+      Text(label, style: const TextStyle(color: Colors.white70, fontSize: 10)),
     ]);
   }
 }

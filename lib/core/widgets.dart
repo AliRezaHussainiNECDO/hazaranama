@@ -307,7 +307,7 @@ class HzTextField extends StatelessWidget {
                     borderRadius: BorderRadius.circular(999),
                     border: Border.all(color: theme.border),
                   ),
-                  child: Text(s, style: TextStyle(fontSize: 10.5, color: theme.textSecondary)),
+                  child: Text(s, style: TextStyle(fontSize: 12, color: theme.textSecondary)),
                 ),
               )).toList(),
         ),
@@ -408,7 +408,7 @@ class HzCheckbox extends StatelessWidget {
           child: value ? const Icon(Icons.check, size: 12, color: Colors.white) : null,
         ),
         const SizedBox(width: 8),
-        Text(label, style: TextStyle(fontSize: 11.5, color: theme.textSecondary)),
+        Text(label, style: TextStyle(fontSize: 12.5, color: theme.textSecondary)),
       ]),
     );
   }
@@ -615,7 +615,7 @@ class HzGlassNavBar extends StatelessWidget {
           const SizedBox(height: 4),
           AnimatedDefaultTextStyle(
             duration: const Duration(milliseconds: 220),
-            style: TextStyle(fontFamily: 'Vazirmatn', fontSize: 10.5, color: active ? theme.textPrimary : theme.textFaint, fontWeight: active ? FontWeight.w800 : FontWeight.w500),
+            style: TextStyle(fontFamily: 'Vazirmatn', fontSize: 12, color: active ? theme.textPrimary : theme.textFaint, fontWeight: active ? FontWeight.w800 : FontWeight.w500),
             child: Text(item.label, maxLines: 1, overflow: TextOverflow.ellipsis),
           ),
         ]),

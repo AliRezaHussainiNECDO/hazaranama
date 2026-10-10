@@ -35,7 +35,7 @@ class ProfileScreen extends StatelessWidget {
             child: OutlinedButton.icon(
               onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AccountSettingsScreen())),
               icon: Icon(Icons.settings_outlined, size: 16, color: theme.textSecondary),
-              label: Text('تنظیمات حساب', style: TextStyle(color: theme.textSecondary, fontSize: 11.5, fontWeight: FontWeight.w700)),
+              label: Text('تنظیمات حساب', style: TextStyle(color: theme.textSecondary, fontSize: 12.5, fontWeight: FontWeight.w700)),
               style: OutlinedButton.styleFrom(side: BorderSide(color: theme.border), padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
             ),
           ),
@@ -44,7 +44,7 @@ class ProfileScreen extends StatelessWidget {
             child: ElevatedButton.icon(
               onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ContactUsScreen())),
               icon: const Icon(Icons.support_agent, size: 16),
-              label: const Text('تماس با ما', style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700)),
+              label: const Text('تماس با ما', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
               style: ElevatedButton.styleFrom(backgroundColor: theme.blue, foregroundColor: Colors.white, elevation: 0, padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
             ),
           ),
@@ -57,7 +57,7 @@ class ProfileScreen extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 24),
             decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(16), border: Border.all(color: theme.glassBorder, style: BorderStyle.solid)),
-            child: Center(child: Text('هنوز پستی نساخته‌ای', style: TextStyle(color: theme.textFaint, fontSize: 11.5))),
+            child: Center(child: Text('هنوز پستی نساخته‌ای', style: TextStyle(color: theme.textFaint, fontSize: 12.5))),
           ).animate(delay: 180.ms).fadeIn(duration: 350.ms)
         else
           for (final (i, post) in myPosts.indexed) ...[

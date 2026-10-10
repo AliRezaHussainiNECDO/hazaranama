@@ -72,7 +72,7 @@ class ArticleScreen extends StatelessWidget {
                 children: [
                   Text(title, style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w800), maxLines: 1, overflow: TextOverflow.ellipsis),
                   if (subtitle != null)
-                    Text(subtitle!, style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                    Text(subtitle!, style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 ],
               ),
             ),

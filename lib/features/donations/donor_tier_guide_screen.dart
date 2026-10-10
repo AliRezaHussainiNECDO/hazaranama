@@ -56,7 +56,7 @@ class DonorTierGuideScreen extends StatelessWidget {
                     Expanded(
                       child: Text(
                         'با هر کمک مالی تأییدشده، مقام و قاب دور عکس پروفایلت یک پله بالاتر می‌رود — تا مرحله‌ی ۱۰: پادشاه (خاقان). مقام‌ها دائمی‌اند و هرگز افت نمی‌کنند.',
-                        style: TextStyle(color: Colors.white, fontSize: 11, height: 1.9, fontWeight: FontWeight.w600),
+                        style: TextStyle(color: Colors.white, fontSize: 12.5, height: 1.9, fontWeight: FontWeight.w600),
                       ),
                     ),
                   ]),
@@ -83,7 +83,7 @@ class DonorTierGuideScreen extends StatelessWidget {
                       '• پادشاه (خاقان): تیک طلایی، نام درشت و طلایی، و کامنت‌هایش همیشه بالای فهرست کامنت‌ها پین می‌شود.\n'
                       '• از مرحله‌ی اسطوره به بالا: دسترسی به استیکرهای اختصاصی برای واکنش و کامنت.\n'
                       '• رسیدن به مرحله‌ی پادشاه، با یک پیام سراسری به همه‌ی کاربران هزاره‌نامه اعلام می‌شود. 👑',
-                      style: TextStyle(color: theme.textSecondary, fontSize: 11, height: 2.1),
+                      style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 2.1),
                     ),
                   ]),
                 ),
@@ -145,9 +145,9 @@ class _TierGuideCard extends StatelessWidget {
               ],
             ]),
             const SizedBox(height: 3),
-            Text(_thresholdLabel, style: TextStyle(color: theme.success, fontSize: 10.5, fontWeight: FontWeight.w700)),
+            Text(_thresholdLabel, style: TextStyle(color: theme.success, fontSize: 12, fontWeight: FontWeight.w700)),
             const SizedBox(height: 5),
-            Text(_effectLabel, style: TextStyle(color: theme.textSecondary, fontSize: 10.5, height: 1.8)),
+            Text(_effectLabel, style: TextStyle(color: theme.textSecondary, fontSize: 12, height: 1.8)),
           ]),
         ),
       ]),

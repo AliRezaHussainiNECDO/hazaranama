@@ -33,13 +33,13 @@ class ContentManagerPage extends StatelessWidget {
           const SizedBox(width: 10),
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text('${items.length} مورد', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+              Text('${items.length} مورد', style: TextStyle(color: theme.textFaint, fontSize: 12)),
             ]),
           ),
           ElevatedButton.icon(
             onPressed: () => _openForm(context, app, section, null),
             icon: const Icon(Icons.add, size: 15),
-            label: const Text('افزودن مورد جدید', style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700)),
+            label: const Text('افزودن مورد جدید', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
             style: ElevatedButton.styleFrom(backgroundColor: theme.blue, foregroundColor: Colors.white, elevation: 0, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
           ),
         ]),
@@ -64,7 +64,7 @@ class ContentManagerPage extends StatelessWidget {
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     Text(primaryKey != null ? '${item[primaryKey] ?? ""}' : '', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w700)),
                     if (secondaryKey != null)
-                      Text('${item[secondaryKey] ?? ""}', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                      Text('${item[secondaryKey] ?? ""}', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 12)),
                   ]),
                 ),
                 IconButton(icon: Icon(Icons.edit_outlined, size: 17, color: theme.blue), onPressed: () => _openForm(context, app, section, item)),
@@ -132,7 +132,7 @@ class ContentManagerPage extends StatelessWidget {
                 const FlagStripe(width: 46),
                 const SizedBox(height: 16),
                 for (final f in section.fields) ...[
-                  Text(f.label, style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                  Text(f.label, style: TextStyle(color: theme.textFaint, fontSize: 12)),
                   const SizedBox(height: 5),
                   TextField(
                     controller: controllers[f.key],
@@ -146,7 +146,7 @@ class ContentManagerPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                 ],
-                Text('عکس (اختیاری)', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                Text('عکس (اختیاری)', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 const SizedBox(height: 8),
                 if (imageUrlController.text.trim().isNotEmpty)
                   Padding(
@@ -165,7 +165,7 @@ class ContentManagerPage extends StatelessWidget {
                       icon: uploading
                           ? SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: theme.blue))
                           : Icon(Icons.image_outlined, size: 16, color: theme.blue),
-                      label: Text(uploading ? 'در حال آپلود…' : 'انتخاب عکس از گالری', style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700)),
+                      label: Text(uploading ? 'در حال آپلود…' : 'انتخاب عکس از گالری', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                       style: OutlinedButton.styleFrom(foregroundColor: theme.blue, side: BorderSide(color: theme.border), padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
                     ),
                   ),
@@ -182,24 +182,24 @@ class ContentManagerPage extends StatelessWidget {
                 TextField(
                   controller: imageUrlController,
                   onChanged: (_) => setSheetState(() {}),
-                  style: TextStyle(color: theme.textPrimary, fontSize: 11.5),
+                  style: TextStyle(color: theme.textPrimary, fontSize: 12.5),
                   decoration: InputDecoration(
                     hintText: 'یا لینک مستقیم عکس را اینجا بچسبانید',
-                    hintStyle: TextStyle(color: theme.textFaint, fontSize: 10.5),
+                    hintStyle: TextStyle(color: theme.textFaint, fontSize: 12),
                     filled: true, fillColor: theme.bgCard,
                     contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: theme.border)),
                   ),
                 ),
                 const SizedBox(height: 16),
-                Text('لینک ویدیو (اختیاری — یوتیوب، آپارات و…)', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                Text('لینک ویدیو (اختیاری — یوتیوب، آپارات و…)', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 const SizedBox(height: 8),
                 TextField(
                   controller: videoUrlController,
                   style: TextStyle(color: theme.textPrimary, fontSize: 12.5),
                   decoration: InputDecoration(
                     hintText: 'https://…',
-                    hintStyle: TextStyle(color: theme.textFaint, fontSize: 10.5),
+                    hintStyle: TextStyle(color: theme.textFaint, fontSize: 12),
                     filled: true, fillColor: theme.bgCard,
                     contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: theme.border)),

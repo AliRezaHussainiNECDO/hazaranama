@@ -84,7 +84,7 @@ class _AdminShellState extends State<AdminShell> {
                 Expanded(
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     Text(app.displayName, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 13)),
-                    const Text('مدیر کل سامانه', style: TextStyle(color: Colors.white70, fontSize: 10)),
+                    const Text('مدیر کل سامانه', style: TextStyle(color: Colors.white70, fontSize: 11.5)),
                   ]),
                 ),
               ]),
@@ -102,7 +102,7 @@ class _AdminShellState extends State<AdminShell> {
                       if (entry.key != null)
                         Padding(
                           padding: const EdgeInsets.fromLTRB(16, 12, 16, 6),
-                          child: Text(entry.key!, style: TextStyle(color: theme.textFaint, fontSize: 10.5, fontWeight: FontWeight.w700)),
+                          child: Text(entry.key!, style: TextStyle(color: theme.textFaint, fontSize: 12, fontWeight: FontWeight.w700)),
                         ),
                       for (final item in entry.value)
                         ListTile(

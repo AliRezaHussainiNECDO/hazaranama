@@ -95,7 +95,7 @@ class _Feature extends StatelessWidget {
     return Column(children: [
       HzBadge(theme: theme, size: 44, child: Icon(icon, color: theme.blue, size: 18)),
       const SizedBox(height: 7),
-      Text(label, style: TextStyle(fontSize: 10, color: theme.textFaint)),
+      Text(label, style: TextStyle(fontSize: 11.5, color: theme.textFaint)),
     ]).animate(delay: Duration(milliseconds: delay)).fadeIn(duration: 350.ms).scale(begin: const Offset(0.7, 0.7));
   }
 }

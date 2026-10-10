@@ -123,7 +123,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
           const SizedBox(height: 4),
           Text(
             'روایت‌ها، خاطره‌ها و لحظه‌های تصویری‌ای که نسل‌ها را به‌هم پیوند می‌زنند — عکس و ویدیو بگذار، لایک کن، نظر بده.',
-            style: TextStyle(color: theme.textFaint, fontSize: 11.5, height: 1.8),
+            style: TextStyle(color: theme.textFaint, fontSize: 12.5, height: 1.8),
           ),
           const SizedBox(height: 14),
           _buildComposer(app, theme),
@@ -223,7 +223,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
               else
                 Icon(Icons.videocam_rounded, size: 18, color: theme.success),
               const SizedBox(width: 8),
-              Expanded(child: Text(_uploadingVideo ? 'در حال آپلود ویدیو…' : 'یک ویدیو افزوده شد', style: TextStyle(color: theme.textSecondary, fontSize: 11.5, fontWeight: FontWeight.w600))),
+              Expanded(child: Text(_uploadingVideo ? 'در حال آپلود ویدیو…' : 'یک ویدیو افزوده شد', style: TextStyle(color: theme.textSecondary, fontSize: 12.5, fontWeight: FontWeight.w600))),
               if (_videoUrl != null)
                 GestureDetector(
                   onTap: () => setState(() => _videoUrl = null),
@@ -281,7 +281,7 @@ class _EmptyFeed extends StatelessWidget {
         const SizedBox(height: 10),
         Text('هنوز پستی نیست', style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w700)),
         const SizedBox(height: 4),
-        Text('اولین خاطره یا عکس را تو به اشتراک بگذار.', style: TextStyle(color: theme.textFaint, fontSize: 11, height: 1.7), textAlign: TextAlign.center),
+        Text('اولین خاطره یا عکس را تو به اشتراک بگذار.', style: TextStyle(color: theme.textFaint, fontSize: 12.5, height: 1.7), textAlign: TextAlign.center),
       ]),
     ).animate().fadeIn(duration: 350.ms);
   }

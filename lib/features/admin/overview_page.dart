@@ -83,13 +83,13 @@ class _OverviewPageState extends State<OverviewPage> {
                       child: Row(children: [
                         Icon(Icons.trending_up, size: 10, color: theme.success),
                         const SizedBox(width: 2),
-                        Text('رشد', style: TextStyle(color: theme.success, fontSize: 8.5, fontWeight: FontWeight.w700)),
+                        Text('رشد', style: TextStyle(color: theme.success, fontSize: 10, fontWeight: FontWeight.w700)),
                       ]),
                     ),
                   ]),
                   const Spacer(),
                   Text('${s.value}', style: TextStyle(color: theme.textPrimary, fontSize: 18, fontWeight: FontWeight.w800)),
-                  Text(s.label, style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
+                  Text(s.label, style: TextStyle(color: theme.textFaint, fontSize: 11)),
                   const SizedBox(height: 6),
                   Sparkline(data: s.trend, color: s.color, width: 110, height: 22),
                 ]),
@@ -111,8 +111,8 @@ class _OverviewPageState extends State<OverviewPage> {
                 padding: const EdgeInsets.only(bottom: 8),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    Text(s.title, style: TextStyle(color: theme.textSecondary, fontSize: 11)),
-                    Text('${s.count}', style: TextStyle(color: theme.textPrimary, fontSize: 11, fontWeight: FontWeight.w700)),
+                    Text(s.title, style: TextStyle(color: theme.textSecondary, fontSize: 12.5)),
+                    Text('${s.count}', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700)),
                   ]),
                   const SizedBox(height: 4),
                   ClipRRect(
@@ -151,7 +151,7 @@ class _OverviewPageState extends State<OverviewPage> {
             else if (app.recentActivity.isEmpty)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 6),
-                child: Text('هنوز فعالیتی در اپ ثبت نشده است.', style: TextStyle(color: theme.textFaint, fontSize: 11)),
+                child: Text('هنوز فعالیتی در اپ ثبت نشده است.', style: TextStyle(color: theme.textFaint, fontSize: 12.5)),
               )
             else
               for (var i = 0; i < app.recentActivity.length; i++)
@@ -163,7 +163,7 @@ class _OverviewPageState extends State<OverviewPage> {
                     Expanded(
                       child: RichText(
                         text: TextSpan(
-                          style: TextStyle(fontFamily: 'Vazirmatn', color: theme.textSecondary, fontSize: 11, height: 1.7),
+                          style: TextStyle(fontFamily: 'Vazirmatn', color: theme.textSecondary, fontSize: 12.5, height: 1.7),
                           children: [
                             TextSpan(text: app.userNameById(app.recentActivity[i].userId), style: TextStyle(color: theme.textPrimary, fontWeight: FontWeight.w700)),
                             TextSpan(text: ' — ${userActivityTypeLabel(app.recentActivity[i].type)}'),
@@ -172,7 +172,7 @@ class _OverviewPageState extends State<OverviewPage> {
                       ),
                     ),
                     const SizedBox(width: 6),
-                    Text(_timeAgo(app.recentActivity[i].occurredAt), style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
+                    Text(_timeAgo(app.recentActivity[i].occurredAt), style: TextStyle(color: theme.textFaint, fontSize: 11)),
                   ]),
                 ).animate(delay: (60 * i).ms).fadeIn(duration: 260.ms).slideX(begin: 0.03, end: 0),
           ]),
@@ -232,7 +232,7 @@ class _AdminProfileCard extends StatelessWidget {
               Text('سلام، ${app.displayName} 👋', maxLines: 1, overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: theme.textPrimary, fontSize: 15.5, fontWeight: FontWeight.w800)),
               const SizedBox(height: 3),
-              Text('خلاصه‌ای از وضعیت هزاره‌نامه امروز', style: TextStyle(color: theme.textFaint, fontSize: 11)),
+              Text('خلاصه‌ای از وضعیت هزاره‌نامه امروز', style: TextStyle(color: theme.textFaint, fontSize: 12.5)),
               const SizedBox(height: 8),
               const FlagStripe(width: 46),
             ]),
@@ -268,7 +268,7 @@ class _InfoChip extends StatelessWidget {
       child: Row(mainAxisSize: MainAxisSize.min, children: [
         Icon(icon, size: 11, color: color),
         const SizedBox(width: 4),
-        Text(label, style: TextStyle(color: color, fontSize: 9.5, fontWeight: FontWeight.w700)),
+        Text(label, style: TextStyle(color: color, fontSize: 11, fontWeight: FontWeight.w700)),
       ]),
     );
   }
@@ -335,15 +335,15 @@ class _DonationsStrip extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(color: color.withValues(alpha: 0.14), borderRadius: BorderRadius.circular(999)),
-                  child: Text(_statusLabel(t.status), style: TextStyle(color: color, fontSize: 8, fontWeight: FontWeight.w800)),
+                  child: Text(_statusLabel(t.status), style: TextStyle(color: color, fontSize: 9.5, fontWeight: FontWeight.w800)),
                 ),
               ]),
               const Spacer(),
               Text('${t.amount.toStringAsFixed(0)} ${t.currency}', style: TextStyle(color: theme.textPrimary, fontSize: 15, fontWeight: FontWeight.w800)),
               const SizedBox(height: 2),
-              Text(t.senderName, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 10.5, fontWeight: FontWeight.w600)),
+              Text(t.senderName, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 12, fontWeight: FontWeight.w600)),
               const SizedBox(height: 3),
-              Text(_timeAgo(t.submittedAt), style: TextStyle(color: theme.textFaint, fontSize: 9)),
+              Text(_timeAgo(t.submittedAt), style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
             ]),
           ).animate(delay: (70 * i).ms).fadeIn(duration: 280.ms).slideY(begin: 0.08, end: 0);
         },
@@ -396,9 +396,9 @@ class _ArticlesStrip extends StatelessWidget {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
                 HzBadge(theme: theme, size: 22, filled: true, avatarPath: hasAvatar ? a.authorAvatar : null,
-                    child: Text(a.authorName.isNotEmpty ? a.authorName[0] : '؟', style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w800))),
+                    child: Text(a.authorName.isNotEmpty ? a.authorName[0] : '؟', style: const TextStyle(color: Colors.white, fontSize: 11.5, fontWeight: FontWeight.w800))),
                 const SizedBox(width: 6),
-                Expanded(child: Text(a.authorName, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 10, fontWeight: FontWeight.w600))),
+                Expanded(child: Text(a.authorName, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 11.5, fontWeight: FontWeight.w600))),
               ]),
               const SizedBox(height: 8),
               Expanded(
@@ -409,9 +409,9 @@ class _ArticlesStrip extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(color: color.withValues(alpha: 0.14), borderRadius: BorderRadius.circular(999)),
-                  child: Text(_statusLabel(a.status), style: TextStyle(color: color, fontSize: 8, fontWeight: FontWeight.w800)),
+                  child: Text(_statusLabel(a.status), style: TextStyle(color: color, fontSize: 9.5, fontWeight: FontWeight.w800)),
                 ),
-                Text(_timeAgo(a.submittedAt), style: TextStyle(color: theme.textFaint, fontSize: 9)),
+                Text(_timeAgo(a.submittedAt), style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
               ]),
             ]),
           ).animate(delay: (70 * i).ms).fadeIn(duration: 280.ms).slideY(begin: 0.08, end: 0);
@@ -457,7 +457,7 @@ class _StripEmpty extends StatelessWidget {
       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Icon(icon, size: 16, color: theme.textFaint),
         const SizedBox(width: 6),
-        Text(text, style: TextStyle(color: theme.textFaint, fontSize: 11)),
+        Text(text, style: TextStyle(color: theme.textFaint, fontSize: 12.5)),
       ]),
     );
   }

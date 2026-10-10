@@ -62,7 +62,7 @@ class _DonationHomeCardState extends State<DonationHomeCard> {
                       ? 'تاکنون ${settings.totalRaised.toStringAsFixed(0)} ${settings.currency} با کمک شما جمع شده'
                       : 'خانواده، شفاخانه، مکتب، پل و سرک — با شفافیت کامل',
                   maxLines: 1, overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.white70, fontSize: 10),
+                  style: const TextStyle(color: Colors.white70, fontSize: 11.5),
                 ),
               ]),
             ),
@@ -71,7 +71,7 @@ class _DonationHomeCardState extends State<DonationHomeCard> {
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(999)),
               child: Row(mainAxisSize: MainAxisSize.min, children: [
-                Text('کمک کنید', style: TextStyle(color: theme.blueDeep, fontSize: 10.5, fontWeight: FontWeight.w800)),
+                Text('کمک کنید', style: TextStyle(color: theme.blueDeep, fontSize: 12, fontWeight: FontWeight.w800)),
                 const SizedBox(width: 4),
                 Icon(Icons.arrow_back, size: 12, color: theme.blueDeep),
               ]),
