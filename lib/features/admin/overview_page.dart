@@ -514,7 +514,7 @@ class _PendingTasks extends StatelessWidget {
                     border: Border.all(color: t.n > 0 ? t.color.withValues(alpha: 0.45) : theme.glassBorder),
                   ),
                   child: Row(children: [
-                    Icon(t.icon, color: t.n > 0 ? t.color : theme.textFaint, size: 22),
+                    StatIconBox(icon: t.icon, color: t.n > 0 ? t.color : theme.textFaint, size: 38),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: [

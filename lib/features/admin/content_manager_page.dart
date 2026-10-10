@@ -79,7 +79,7 @@ class _ContentManagerPageState extends State<ContentManagerPage> {
           margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(color: st.a.withValues(alpha: 0.08), borderRadius: BorderRadius.circular(14), border: Border.all(color: st.a.withValues(alpha: 0.3))),
-          child: Text('به‌علاوه‌ی $kHazaragiGlossaryCount واژه‌ی واژه‌نامه‌ی محمد عوض نبی‌زاده که داخل خودِ اپ است و از این‌جا ویرایش نمی‌شود. واژه‌های این فهرست با دسته‌بندی، آوانویسی و نمونه نمایش داده می‌شوند.',
+          child: Text('به‌علاوه‌ی $kHazaragiGlossaryCount واژه‌ی واژه‌نامه‌ی محمد عوض نبی‌زاده که داخل خودِ اپ است و از این‌جا ویرایش نمی‌شود. واژه‌هایی که این‌جا می‌افزایید با دسته، آوانویسی و نمونه‌ی کاربرد در بالای واژه‌نامه نمایش داده می‌شوند.',
               style: TextStyle(color: theme.textSecondary, fontSize: 12, height: 1.7)),
         ),
       if (all.length > 8)
