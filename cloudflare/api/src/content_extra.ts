@@ -75,7 +75,7 @@ async function sha(s: string) {
 
 export async function fetchNews(env: Env, force = false): Promise<{ added: number; skipped?: string }> {
   if (!force) {
-    const last = await env.DB.prepare("SELECT value FROM _meta WHERE key = 'news_fetched_at_v3'").first<{ value: string }>();
+    const last = await env.DB.prepare("SELECT value FROM _meta WHERE key = 'news_fetched_at_v4'").first<{ value: string }>();
     if (last && Date.now() - Date.parse(last.value) < 60 * 60_000) return { added: 0, skipped: "recent" };
   }
   await env.DB.prepare("INSERT OR REPLACE INTO _meta (key, value) VALUES ('news_fetched_at_v3', ?)").bind(new Date().toISOString()).run();
@@ -97,7 +97,7 @@ export async function fetchNews(env: Env, force = false): Promise<{ added: numbe
       console.error("news feed fail", feed.name || "gdelt", String(e));
       continue;
     }
-    type Raw = { title: string; link: string; source: string; pub: number };
+    type Raw = { title: string; link: string; source: string; pub: number; extra?: string };
     const raws: Raw[] = [];
     if (feed.kind === "gdelt") {
       try {
@@ -113,14 +113,15 @@ export async function fetchNews(env: Env, force = false): Promise<{ added: numbe
       for (const m of xml.matchAll(/<item>([\s\S]*?)<\/item>/g)) {
         const body = m[1];
         const pick = (tag: string) => decode((body.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)</${tag}>`)) ?? [])[1] ?? "");
-        raws.push({ title: pick("title"), link: pick("link"), source: feed.name, pub: Date.parse(pick("pubDate")) });
+        const cats = [...body.matchAll(/<category[^>]*>([\s\S]*?)<\/category>/g)].map((c) => decode(c[1])).join(" ");
+        raws.push({ title: pick("title"), link: pick("link"), source: feed.name, pub: Date.parse(pick("pubDate")), extra: `${pick("description").slice(0, 600)} ${cats}` });
       }
     }
     for (const r of raws) {
       const { link, source, pub } = r;
       const title = r.title.replace(/\s+/g, " ").trim();
       if (!link.startsWith("http") || !title || Number.isNaN(pub)) continue;
-      if (!RELEVANT.test(title) || NOISE.test(title)) continue;
+      if (!RELEVANT.test(`${title} ${r.extra ?? ""}`) || NOISE.test(title)) continue;
       if (Date.now() - pub > 30 * 86_400_000) continue; // فقط خبرهای ۳۰ روز اخیر
       const key = title.toLowerCase();
       if (titles.has(key)) continue;
