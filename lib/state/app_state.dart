@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart' show XFile;
-import '../services/hz_backend.dart' show AuthChangeEvent, AuthException, AuthState;
+import 'package:http/http.dart' show ClientException;
+import '../services/hz_backend.dart' show AuthChangeEvent, AuthException, AuthState, PostgrestException;
 import '../core/app_colors.dart';
 import '../core/donor_tiers.dart';
 import '../models/models.dart';
@@ -104,6 +105,7 @@ class AppState extends ChangeNotifier {
       return;
     }
     try {
+      startupError = null;
       currentUser = await _service.fetchProfile(authUser.id);
       displayName = currentUser!.name;
       avatarPath = currentUser!.avatarPath;
@@ -125,12 +127,36 @@ class AppState extends ChangeNotifier {
       // مقاله و پیام‌ها نمایش داده شود؛ خطای احتمالی نباید جلوی ورود را بگیرد.
       unawaited(_loadRoleAndDonorCaches());
       unawaited(loadBlockedUsers());
-    } catch (_) {
-      // پروفایل یا محتوا لود نشد؛ کاربر را دوباره به ورود برگردان
+    } catch (e) {
+      if (_isTransientError(e)) {
+        // اینترنت یا سرور موقتاً در دسترس نیست: کاربر را بیرون نینداز؛
+        // صفحه‌ی بارگذاری پیام و دکمه‌ی «تلاش دوباره» نشان می‌دهد.
+        startupError = 'اتصال به سرور برقرار نشد. اینترنت را بررسی کنید و دوباره تلاش کنید.';
+        stage = AuthStage.checking;
+        notifyListeners();
+        return;
+      }
+      // نشست نامعتبر یا پروفایل حذف‌شده؛ کاربر را دوباره به ورود برگردان
       await _service.signOut();
       stage = AuthStage.welcome;
     }
     notifyListeners();
+  }
+
+  /// پیام خطای راه‌اندازی (قطعی اینترنت/سرور) — صفحه‌ی بارگذاری نشانش می‌دهد.
+  String? startupError;
+
+  Future<void> retryStartup() async {
+    startupError = null;
+    notifyListeners();
+    await _loadSessionUser();
+  }
+
+  bool _isTransientError(Object e) {
+    if (e is TimeoutException || e is ClientException) return true;
+    final m = e.toString();
+    if (e is PostgrestException) return m.startsWith('خطای سرور (5');
+    return m.contains('SocketException') || m.contains('Failed host lookup') || m.contains('XMLHttpRequest') || m.contains('Connection');
   }
 
   void toggleTheme() {

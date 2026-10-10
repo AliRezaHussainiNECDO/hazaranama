@@ -109,7 +109,31 @@ class _CheckingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.watch<AppState>().colors;
+    final app = context.watch<AppState>();
+    final theme = app.colors;
+    final error = app.startupError;
+    if (error != null) {
+      return Scaffold(
+        backgroundColor: theme.bg,
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(28),
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+              Icon(Icons.wifi_off_rounded, size: 46, color: theme.textFaint),
+              const SizedBox(height: 14),
+              Text(error, textAlign: TextAlign.center, style: TextStyle(color: theme.textSecondary, fontSize: 14, height: 1.7)),
+              const SizedBox(height: 18),
+              FilledButton.icon(
+                onPressed: () => app.retryStartup(),
+                icon: const Icon(Icons.refresh_rounded),
+                label: const Text('تلاش دوباره', style: TextStyle(fontWeight: FontWeight.w800)),
+                style: FilledButton.styleFrom(backgroundColor: theme.blue, padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14))),
+              ),
+            ]),
+          ),
+        ),
+      );
+    }
     return Scaffold(
       backgroundColor: theme.bg,
       body: Center(
