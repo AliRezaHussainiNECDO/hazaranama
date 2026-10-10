@@ -7,6 +7,9 @@ workers_dev = true
 [vars]
 ADMIN_EMAIL = "alireza.necdo@gmail.com"
 AI_MODEL = "@cf/google/gemma-3-12b-it"
+# فرستنده‌ی ایمیل‌ها (دامنه باید در Resend تأیید شده باشد). تا خالی است، ایمیل خاموش است
+# و بازیابی رمز از راه مدیر انجام می‌شود. نمونه: "هزاره‌نامه <no-reply@hazaranama.org>"
+EMAIL_FROM = ""
 
 [[d1_databases]]
 binding = "DB"
@@ -37,3 +40,4 @@ fallthrough = true
 #   JWT_SECRET           رشته‌ی تصادفی بلند برای امضای نشست‌ها
 #   MIGRATION_KEY        کلید یک‌بارمصرف انتقال داده از Supabase
 #   FCM_SERVICE_ACCOUNT  (اختیاری) JSON حساب سرویس Firebase برای پوش
+#   RESEND_API_KEY       (اختیاری) کلید Resend برای ایمیل (بازیابی رمز، خوش‌آمد، تغییر رمز)

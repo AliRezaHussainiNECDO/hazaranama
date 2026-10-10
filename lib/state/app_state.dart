@@ -214,7 +214,7 @@ class AppState extends ChangeNotifier {
     }
   }
 
-  Future<void> resetPasswordForEmail(String email) => _service.resetPasswordForEmail(email);
+  Future<String> resetPasswordForEmail(String email) => _service.resetPasswordForEmail(email);
 
   /// تأیید کد ۶ رقمیِ بازیابی — جایگزینِ قابل‌اعتمادِ کلیک روی پیوند ایمیل
   /// (نگاه کنید به توضیح در BackendService.verifyRecoveryOtp). در صورت

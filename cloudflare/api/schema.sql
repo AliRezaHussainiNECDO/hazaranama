@@ -344,3 +344,10 @@ GROUP BY dt.user_id, p.name, p.avatar_url;
 
 -- user_activity_log در خودِ Worker ساخته می‌شود (D1 اجتماع بیش از ۵ SELECT را نمی‌پذیرد).
 DROP VIEW IF EXISTS user_activity_log;
+
+-- شمار تلاش‌های نادرست برای کد بازیابی (پس از ۵ بار، کد باطل می‌شود)
+CREATE TABLE IF NOT EXISTS recovery_attempts (
+  user_id    TEXT PRIMARY KEY,
+  n          INTEGER NOT NULL DEFAULT 0,
+  updated_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
+);

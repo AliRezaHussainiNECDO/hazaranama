@@ -12,12 +12,13 @@ import { hashPassword, verifyPassword, signJwt, verifyJwt, sha256Hex } from "./a
 import { runQuery, HttpError, type User, type QueryReq, encodeValue, columnsOf } from "./db";
 import { insertNotifications, adminIds } from "./hooks";
 import { pushConfigured } from "./push";
+import { emailConfigured, sendEmail, recoveryEmail, welcomeEmail, passwordChangedEmail } from "./email";
 import { handleAi } from "./ai";
 import schemaSql from "../schema.sql";
 import seedContent from "../seed/content.json";
 import legacySeedKeys from "../seed/legacy_seed_keys.json";
 
-const SCHEMA_VERSION = 2;
+const SCHEMA_VERSION = 3;
 
 const CORS: Record<string, string> = {
   "Access-Control-Allow-Origin": "*",
@@ -102,6 +103,7 @@ async function handleAuth(env: Env, ctx: Ctx, req: Request, path: string): Promi
       env.DB.prepare("INSERT INTO users (id, email, password_hash) VALUES (?, ?, ?)").bind(id, email, await hashPassword(password)),
       env.DB.prepare("INSERT INTO profiles (id, name, email, role, status) VALUES (?, ?, ?, ?, 'active')").bind(id, name, email, role),
     ]);
+    if (emailConfigured(env)) ctx.waitUntil(sendEmail(env, { to: email, ...welcomeEmail(name) }).then(() => undefined));
     const admins = (await adminIds(env)).filter((a) => a !== id);
     if (admins.length) {
       await insertNotifications(env, ctx, admins.map((a) => ({ user_id: a, type: "admin_new_user", title: `کاربر تازه پیوست: ${name}`, body: email, ref_id: id, ref_type: "user" })));
@@ -139,19 +141,44 @@ async function handleAuth(env: Env, ctx: Ctx, req: Request, path: string): Promi
     await env.DB.prepare("UPDATE users SET password_hash = ?, token_version = ?, recovery_code_hash = NULL, recovery_expires = NULL WHERE id = ?")
       .bind(await hashPassword(password), tv, user.id)
       .run();
+    if (emailConfigured(env)) {
+      const p = await env.DB.prepare("SELECT name FROM profiles WHERE id = ?").bind(user.id).first<{ name: string }>();
+      ctx.waitUntil(sendEmail(env, { to: user.email, ...passwordChangedEmail(p?.name ?? "") }).then(() => undefined));
+    }
     return json(await session(env, { id: user.id, email: user.email, token_version: tv }));
   }
 
-  // درخواست بازیابی رمز: چون ایمیل نداریم، مدیر باخبر می‌شود و برای کاربر کد می‌سازد
+  // درخواست بازیابی رمز: اگر ایمیل (Resend) تنظیم شده، کد ۸ رقمی به ایمیل کاربر می‌رود؛
+  // وگرنه مدیر باخبر می‌شود و از پنل برای کاربر کد می‌سازد. پاسخ برای ایمیلِ موجود و
+  // ناموجود یکسان است تا معلوم نشود چه کسی حساب دارد.
   if (path === "/auth/recover") {
     const b = await readJson(req);
     const email = String(b.email ?? "").trim().toLowerCase();
+    const via = emailConfigured(env) ? "email" : "admin";
     const u = await env.DB.prepare("SELECT u.id, u.recovery_requested_at, p.name FROM users u JOIN profiles p ON p.id = u.id WHERE u.email = ?")
       .bind(email)
       .first<{ id: string; recovery_requested_at: string | null; name: string }>();
     if (u) {
       const last = u.recovery_requested_at ? Date.parse(u.recovery_requested_at) : 0;
-      if (Date.now() - last > 10 * 60_000) {
+      if (via === "email") {
+        // هر دقیقه حداکثر یک ایمیل
+        if (Date.now() - last > 60_000) {
+          const n = crypto.getRandomValues(new Uint32Array(1))[0] % 100_000_000;
+          const code = String(n).padStart(8, "0");
+          const minutes = 30;
+          const now = new Date();
+          await env.DB.batch([
+            env.DB.prepare("UPDATE users SET recovery_code_hash = ?, recovery_expires = ?, recovery_requested_at = ? WHERE id = ?").bind(
+              await sha256Hex(`${u.id}:${code}`),
+              new Date(now.getTime() + minutes * 60_000).toISOString(),
+              now.toISOString(),
+              u.id,
+            ),
+            env.DB.prepare("DELETE FROM recovery_attempts WHERE user_id = ?").bind(u.id),
+          ]);
+          ctx.waitUntil(sendEmail(env, { to: email, ...recoveryEmail(u.name, code, minutes) }).then(() => undefined));
+        }
+      } else if (Date.now() - last > 10 * 60_000) {
         await env.DB.prepare("UPDATE users SET recovery_requested_at = ? WHERE id = ?").bind(new Date().toISOString(), u.id).run();
         const admins = await env.DB.prepare("SELECT id FROM profiles WHERE role = 'admin'").all<{ id: string }>();
         await insertNotifications(
@@ -168,7 +195,7 @@ async function handleAuth(env: Env, ctx: Ctx, req: Request, path: string): Promi
         );
       }
     }
-    return json({ ok: true }); // عمداً نمی‌گوییم ایمیل وجود دارد یا نه
+    return json({ ok: true, via }); // عمداً نمی‌گوییم ایمیل وجود دارد یا نه
   }
 
   if (path === "/auth/verify-recovery") {
@@ -181,8 +208,26 @@ async function handleAuth(env: Env, ctx: Ctx, req: Request, path: string): Promi
     if (!u || !u.recovery_code_hash || !u.recovery_expires || Date.parse(u.recovery_expires) < Date.now()) {
       return err(400, "Token has expired or is invalid", "otp_expired");
     }
-    if ((await sha256Hex(`${u.id}:${token}`)) !== u.recovery_code_hash) return err(400, "Token has expired or is invalid", "otp_invalid");
-    await env.DB.prepare("UPDATE users SET recovery_code_hash = NULL, recovery_expires = NULL, recovery_requested_at = NULL WHERE id = ?").bind(u.id).run();
+    if ((await sha256Hex(`${u.id}:${token}`)) !== u.recovery_code_hash) {
+      // پس از ۵ تلاش نادرست، کد باطل می‌شود و باید کد تازه گرفت
+      const a = await env.DB.prepare(
+        "INSERT INTO recovery_attempts (user_id, n, updated_at) VALUES (?, 1, ?) ON CONFLICT(user_id) DO UPDATE SET n = n + 1, updated_at = excluded.updated_at RETURNING n",
+      )
+        .bind(u.id, new Date().toISOString())
+        .first<{ n: number }>();
+      if ((a?.n ?? 0) >= 5) {
+        await env.DB.batch([
+          env.DB.prepare("UPDATE users SET recovery_code_hash = NULL, recovery_expires = NULL WHERE id = ?").bind(u.id),
+          env.DB.prepare("DELETE FROM recovery_attempts WHERE user_id = ?").bind(u.id),
+        ]);
+        return err(400, "Token has expired or is invalid", "otp_expired");
+      }
+      return err(400, "Token has expired or is invalid", "otp_invalid");
+    }
+    await env.DB.batch([
+      env.DB.prepare("UPDATE users SET recovery_code_hash = NULL, recovery_expires = NULL, recovery_requested_at = NULL WHERE id = ?").bind(u.id),
+      env.DB.prepare("DELETE FROM recovery_attempts WHERE user_id = ?").bind(u.id),
+    ]);
     return json(await session(env, u));
   }
 
@@ -471,6 +516,8 @@ async function handleAdmin(env: Env, ctx: Ctx, req: Request, path: string, url: 
       const last = await env.DB.prepare("SELECT title, body, created_at FROM notifications WHERE type = 'announcement' ORDER BY created_at DESC LIMIT 1").first();
       return json({
         configured: pushConfigured(env),
+        email_configured: emailConfigured(env),
+        email_from: env.EMAIL_FROM ?? null,
         devices: d?.devices ?? 0,
         users_with_devices: d?.users ?? 0,
         android: d?.android ?? 0,

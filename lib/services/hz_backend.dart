@@ -372,9 +372,12 @@ class HzAuth {
   }
 
   /// بدون سرویس ایمیل: درخواست برای مدیر ثبت می‌شود و مدیر یک کد ۸ رقمی می‌سازد.
-  Future<void> resetPasswordForEmail(String email, {String? redirectTo}) async {
+  /// درخواست کد بازیابی. خروجی: «email» اگر کد به ایمیل فرستاده شد، «admin» اگر
+  /// مدیر باید کد را بسازد (وقتی ایمیل روی سرور تنظیم نشده).
+  Future<String> resetPasswordForEmail(String email, {String? redirectTo}) async {
     try {
-      await _b.post('/auth/recover', {'email': email});
+      final data = await _b.post('/auth/recover', {'email': email});
+      return (data is Map && data['via'] == 'email') ? 'email' : 'admin';
     } on HzHttpException catch (e) {
       throw AuthException(e.message, statusCode: e.status);
     }

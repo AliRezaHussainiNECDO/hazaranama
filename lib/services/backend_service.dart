@@ -43,7 +43,7 @@ class BackendService {
     }
   }
 
-  Future<void> resetPasswordForEmail(String email) => _db.auth.resetPasswordForEmail(
+  Future<String> resetPasswordForEmail(String email) => _db.auth.resetPasswordForEmail(
         email,
         redirectTo: BackendConfig.passwordResetRedirect,
       );

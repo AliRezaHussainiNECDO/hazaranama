@@ -27,6 +27,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   static const String _codeLengthFa = '۸'; // معادل فارسیِ _codeLength — فقط برای نمایش در متن
 
   String _step = 'email'; // email | code
+  String _via = 'email'; // email: کد به ایمیل رفت | admin: مدیر کد می‌سازد
   final _email = TextEditingController();
   bool _loading = false;
   String? _error;
@@ -59,9 +60,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     }
     setState(() => isResend ? _resending = true : _loading = true);
     try {
-      await app.resetPasswordForEmail(_email.text.trim());
+      final via = await app.resetPasswordForEmail(_email.text.trim());
       if (!mounted) return;
       setState(() {
+        _via = via;
         _loading = false;
         _resending = false;
         _step = 'code';
@@ -198,7 +200,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   List<Widget> _emailStep(theme, AppState app) {
     return [
-      Text('ایمیل حساب‌تان را وارد کنید تا درخواست بازیابی برای مدیر هزاره‌نامه ارسال شود. مدیر یک کد $_codeLengthFa رقمی (با اعتبار ۲۴ ساعت) برایتان می‌فرستد. برای سرعت بیشتر می‌توانید از همان ایمیل حساب به alireza.necdo@gmail.com هم بنویسید.', style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.9)),
+      Text('ایمیل حساب‌تان را وارد کنید. یک کد $_codeLengthFa رقمی برای ساختن رمز تازه دریافت می‌کنید.', style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.9)),
       const SizedBox(height: 16),
       HzTextField(controller: _email, icon: Icons.mail_outline, hint: 'ایمیل', theme: theme, keyboardType: TextInputType.emailAddress),
       if (_error != null) ...[const SizedBox(height: 10), _errorBox(theme)],
@@ -224,7 +226,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         Text('کد را وارد کنید', style: TextStyle(color: theme.textPrimary, fontSize: 19, fontWeight: FontWeight.w800)),
         const SizedBox(height: 6),
         Text(
-          'کد $_codeLengthFa رقمی‌ای را که مدیر برای حساب ${_email.text} فرستاده، وارد کنید.',
+          _via == 'email'
+              ? 'اگر حسابی با ${_email.text} وجود داشته باشد، یک کد $_codeLengthFa رقمی به همین ایمیل فرستاده شد (تا ۳۰ دقیقه معتبر). پوشه‌ی هرزنامه (Spam) را هم نگاه کنید.'
+              : 'درخواست شما برای مدیر هزاره‌نامه فرستاده شد. مدیر یک کد $_codeLengthFa رقمی (با اعتبار ۲۴ ساعت) برای حساب ${_email.text} می‌سازد و برایتان می‌فرستد؛ برای سرعت بیشتر از همان ایمیل به alireza.necdo@gmail.com هم بنویسید.',
           style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.9),
         ),
         const SizedBox(height: 22),
@@ -251,7 +255,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               : TextButton(
                   onPressed: _resending ? null : () => _sendResetEmail(app, isResend: true),
                   child: Text(
-                    _resending ? 'در حال ارسال…' : 'یادآوری دوباره به مدیر',
+                    _resending ? 'در حال ارسال…' : (_via == 'email' ? 'ارسال دوباره‌ی کد' : 'یادآوری دوباره به مدیر'),
                     style: TextStyle(color: theme.blue, fontSize: 12, fontWeight: FontWeight.w700),
                   ),
                 ),

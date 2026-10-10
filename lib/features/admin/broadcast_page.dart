@@ -217,6 +217,22 @@ class _PushStatusCard extends StatelessWidget {
             stat('آیفون', s['ios']),
           ]),
         ],
+        if (s != null) ...[
+          const SizedBox(height: 12),
+          Row(children: [
+            Icon(s['email_configured'] == true ? Icons.mark_email_read_rounded : Icons.unsubscribe_rounded,
+                size: 18, color: s['email_configured'] == true ? theme.success : theme.textFaint),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                s['email_configured'] == true
+                    ? 'ایمیل فعال است — بازیابی رمز، خوش‌آمد و هشدار تغییر رمز از ${s['email_from'] ?? ''} فرستاده می‌شود'
+                    : 'ایمیل خاموش است — بازیابی رمز از راه مدیر (ساخت کد در صفحه‌ی کاربر)',
+                style: TextStyle(color: theme.textSecondary, fontSize: 12, height: 1.6),
+              ),
+            ),
+          ]),
+        ],
         if (s != null && !configured) ...[
           const SizedBox(height: 14),
           Container(
