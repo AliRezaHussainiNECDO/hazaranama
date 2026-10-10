@@ -53,7 +53,7 @@ class _DictionaryBodyState extends State<DictionaryBody> {
 
   Color _catColor(String cat) {
     final t = widget.theme;
-    final palette = [t.blue, t.aiViolet, t.aiTeal, t.yellow, t.success, t.blueDeep, t.danger];
+    final palette = [t.blue, t.aiViolet, t.aiTeal, t.yellow, t.success, const Color(0xFFF472B6), const Color(0xFFFB923C), const Color(0xFF38BDF8), const Color(0xFFA78BFA)];
     final i = _cats.indexOf(cat);
     return palette[(i < 0 ? 0 : i) % palette.length];
   }
