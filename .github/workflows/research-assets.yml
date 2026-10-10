@@ -1,0 +1,26 @@
+name: Research assets (Commons images, book links)
+# Runs when scripts/research changes; publishes results to branch ci-reports/research
+on:
+  push:
+    branches: [main]
+    paths: ["scripts/research/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run
+        run: python3 scripts/research/commons.py
+      - name: Publish
+        run: |
+          cd out
+          git init -q -b ci-reports/research
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A && git commit -qm "research results $GITHUB_SHA"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" ci-reports/research

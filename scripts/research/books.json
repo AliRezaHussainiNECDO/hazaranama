@@ -1,0 +1,57 @@
+[
+{
+"id": "lib01",
+"q": "title:(Hazaras of Afghanistan) AND creator:(Mousavi)",
+"g": "intitle:\"Hazaras of Afghanistan\" inauthor:Mousavi"
+},
+{
+"id": "lib02",
+"q": "title:(Hazaras) AND creator:(Poladi)",
+"g": "intitle:Hazaras inauthor:Poladi"
+},
+{
+"id": "lib03",
+"q": "title:(سراج التواریخ) OR title:(siraj al-tawarikh) OR title:(Siraj ul-Tawarikh)",
+"g": "Siraj al-tawarikh Fayz Muhammad"
+},
+{
+"id": "lib04",
+"q": "title:(Kabul under siege)",
+"g": "intitle:\"Kabul under siege\" McChesney"
+},
+{
+"id": "lib05",
+"q": "title:(Afghanistan cultural and political history) AND creator:(Barfield)",
+"g": "intitle:\"Afghanistan: A Cultural and Political History\" Barfield"
+},
+{
+"id": "lib08",
+"q": "title:(War and Migration) AND creator:(Monsutti)",
+"g": "intitle:\"War and Migration\" Monsutti"
+},
+{
+"id": "lib09",
+"q": "title:(Hazaras and the Afghan State)",
+"g": "intitle:\"The Hazaras and the Afghan State\" Ibrahimi"
+},
+{
+"id": "lib10",
+"q": "title:(history of the Hazara Mongols) AND creator:(Bacon)",
+"g": "\"Hazara Mongols\" Bacon 1951"
+},
+{
+"id": "lib11",
+"q": "title:(Mongols of Afghanistan) AND creator:(Schurmann)",
+"g": "intitle:\"Mongols of Afghanistan\" Schurmann"
+},
+{
+"id": "lib12",
+"q": "title:(Hazaragi dialect)",
+"g": "intitle:\"Hazaragi dialect\" Dulling"
+},
+{
+"id": "lib19",
+"q": "title:(Kite Runner)",
+"g": "intitle:\"The Kite Runner\" Hosseini"
+}
+]
