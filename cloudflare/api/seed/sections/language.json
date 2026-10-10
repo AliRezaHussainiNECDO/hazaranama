@@ -1,51 +1,331 @@
 [
  {
   "fields": {
-   "hazaragi": "آبیست",
-   "fa": "خویشاوند، بستگان",
-   "en": "relative / kin"
+   "hazaragi": "آته",
+   "fa": "پدر (وام‌واژه‌ی ترکی)",
+   "en": "father (Turkic)"
   }
  },
  {
   "fields": {
-   "hazaragi": "ستادن",
-   "fa": "گرفتن",
-   "en": "to take"
+   "hazaragi": "کټه / کته",
+   "fa": "بزرگ، کلان (وام‌واژه‌ی ترکی)",
+   "en": "big, large (Turkic)"
   }
  },
  {
   "fields": {
-   "hazaragi": "هشتن",
-   "fa": "گذاشتن، رها کردن",
-   "en": "to put / to leave"
+   "hazaragi": "قره",
+   "fa": "سیاه (وام‌واژه‌ی ترکی)",
+   "en": "black (Turkic)"
   }
  },
  {
   "fields": {
-   "hazaragi": "کاکا",
-   "fa": "عمو (برادر پدر)",
-   "en": "paternal uncle"
+   "hazaragi": "بیری",
+   "fa": "عروس (وام‌واژه‌ی مغولی)",
+   "en": "bride (Mongolic)"
   }
  },
  {
   "fields": {
-   "hazaragi": "بچگک",
-   "fa": "پسربچه، پسرکوچک",
-   "en": "little boy"
+   "hazaragi": "الغه",
+   "fa": "کف دست (وام‌واژه‌ی مغولی)",
+   "en": "palm of the hand (Mongolic)"
   }
  },
  {
   "fields": {
-   "hazaragi": "خو",
-   "fa": "بله / باشد (تأیید در گفتگو)",
-   "en": "okay / alright"
+   "hazaragi": "قلغی",
+   "fa": "دزد (وام‌واژه‌ی مغولی)",
+   "en": "thief (Mongolic)"
   }
  },
  {
   "fields": {
-   "hazaragi": "چطو استی؟",
-   "fa": "چطور هستی؟",
-   "en": "how are you?"
+   "hazaragi": "پوشُم",
+   "fa": "پشم — از «پشم» با واکه‌ی میانجی",
+   "en": "wool"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "خوت",
+   "fa": "خود، خویش",
+   "en": "self, own"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "ډَل",
+   "fa": "گروه، دسته",
+   "en": "group"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "ما / تو",
+   "fa": "من / تو (ضمیر)",
+   "en": "I / you (sg.)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "مو / شیمو",
+   "fa": "ما / شما (ضمیر)",
+   "en": "we / you (pl.)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "یو / وو",
+   "fa": "این‌ها / آن‌ها — از «ای‌ها» و «او‌ها»",
+   "en": "they (these / those)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "آتی / اَرِی",
+   "fa": "بله، آری",
+   "en": "yes"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "شایتی",
+   "fa": "شاید",
+   "en": "perhaps"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "بایتی",
+   "fa": "باید، لازم است",
+   "en": "it is necessary"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "اینجی / اونجی",
+   "fa": "این‌جا / آن‌جا",
+   "en": "here / there"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "اولی",
+   "fa": "اکنون، حالا",
+   "en": "now"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "وخته",
+   "fa": "آن‌وقت، سپس",
+   "en": "then"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "-قتی",
+   "fa": "همراهِ، با (پسوند همراهی)",
+   "en": "together with"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "-وری",
+   "fa": "مانندِ، مثلِ (پسوند)",
+   "en": "like"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "کُدَم",
+   "fa": "کدام؛ و نیز «کسی»",
+   "en": "which; someone"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "خون / خونی",
+   "fa": "با، به‌وسیله‌ی",
+   "en": "with, by means of"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "دَ",
+   "fa": "در؛ و اغلب به‌جای «به»",
+   "en": "in; to"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "کتابو",
+   "fa": "کتاب‌ها (نشانه‌ی جمع «-و» از «-ها»)",
+   "en": "books"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "بیرارو",
+   "fa": "برادران (جمع جانداران «-و» از «-ان»)",
+   "en": "brothers"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "کلوتر",
+   "fa": "بزرگ‌تر",
+   "en": "bigger"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "می‌زنُم",
+   "fa": "می‌زنم",
+   "en": "I hit / I am hitting"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "نمی‌زدُم",
+   "fa": "نمی‌زدم",
+   "en": "I was not hitting"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "زدیم",
+   "fa": "زده‌ام — با معنای «ندیده/گزارشی»",
+   "en": "(apparently) I have hit — non-witnessed"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "خوت (فعل کمکی)",
+   "fa": "نشانه‌ی احتمال: «ممکن است، شاید بشود» — از «خواهد»",
+   "en": "potential/assumptive marker"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "تانِستن",
+   "fa": "توانستن",
+   "en": "can, to be able"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "کدگی",
+   "fa": "انجام‌شده، کرده‌شده",
+   "en": "having been done"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "قُلبه",
+   "fa": "شخم؛ زمین شخم‌زده",
+   "en": "ploughing; ploughed field"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "بچه‌عمه",
+   "fa": "پسرعمه — خویشاوندی گرم و مورد اعتماد",
+   "en": "father's sister's son"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "بچه‌ماما",
+   "fa": "پسردایی",
+   "en": "mother's brother's son"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "بوله",
+   "fa": "پسرخاله",
+   "en": "mother's sister's son"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "باجه",
+   "fa": "باجناق (شوهر خواهرِ همسر)",
+   "en": "wife's sister's husband"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "جیه",
+   "fa": "خواهرزاده",
+   "en": "sister's child"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "خانه‌وار",
+   "fa": "تبار، دودمان",
+   "en": "lineage"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "ریش‌سفید / موی‌سفید",
+   "fa": "بزرگ و ریش‌سفید خانواده یا روستا",
+   "en": "elder"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "آغیل / قریه",
+   "fa": "روستای کوچک، دهکده",
+   "en": "hamlet, village"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "چپری",
+   "fa": "کلبه، خانه‌ی کوچک (در شمال هزارستان)",
+   "en": "hut, small house"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "ییلاق / قشلاق",
+   "fa": "چراگاه تابستانی مرتفع / سکونتگاه زمستانی دره",
+   "en": "summer pasture / winter quarters"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "للمی",
+   "fa": "زمین یا کشت دیم (بدون آبیاری)",
+   "en": "rain-fed cultivation"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "ترماهی",
+   "fa": "گندم پاییزه",
+   "en": "autumn wheat"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "منبر",
+   "fa": "تکیه‌خانه‌ی روستا: نمازخانه، تالار و مهمان‌خانه",
+   "en": "village prayer & meeting hall"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "قومندان",
+   "fa": "فرمانده‌ی نظامی محلی",
+   "en": "(militia) commander"
   }
  }
 ]

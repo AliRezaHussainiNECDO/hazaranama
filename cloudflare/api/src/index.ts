@@ -42,9 +42,14 @@ async function ensureSchema(env: Env) {
     .filter((s) => s && !/^PRAGMA/i.test(s));
   for (const s of statements) await env.DB.prepare(s).run();
   await env.DB.prepare("INSERT OR REPLACE INTO _meta (key, value) VALUES ('schema_version', ?)").bind(String(SCHEMA_VERSION)).run();
-  // پایگاه‌داده‌ی تازه: محتوای اولیه‌ی بخش‌ها را بلافاصله بارگذاری کن
-  const c = await env.DB.prepare("SELECT COUNT(*) AS c FROM content_items").first<{ c: number }>();
-  if ((c?.c ?? 0) === 0) await seed(env, []);
+}
+
+/** اگر نسخه‌ی محتوای اولیه‌ی بسته‌بندی‌شده تغییر کرده باشد، آن را بازنویسی کن. */
+async function ensureContent(env: Env) {
+  const v = (seedContent as { version?: string }).version ?? "";
+  const row = await env.DB.prepare("SELECT value FROM _meta WHERE key = 'content_version'").first<{ value: string }>();
+  if (row?.value === v) return;
+  await seed(env, []);
 }
 
 // ---------------- کاربر جاری ----------------
@@ -363,23 +368,25 @@ interface SeedItem {
 }
 
 async function seed(env: Env, replaceSections: string[]) {
-  const items = (seedContent as { items: SeedItem[] }).items ?? [];
+  const content = seedContent as { version?: string; items: SeedItem[] };
+  const items = content.items ?? [];
   const stmts: D1PreparedStatement[] = [];
+  // محتوای اولیه (seed-*) هر بار کامل بازنویسی می‌شود؛ آنچه مدیر خودش افزوده دست‌نخورده می‌ماند
+  stmts.push(env.DB.prepare("DELETE FROM content_items WHERE id LIKE 'seed-%'"));
   for (const sec of replaceSections) {
-    // فقط ردیف‌های «محتوای اولیه» (بدون سازنده) جایگزین می‌شوند؛ آنچه مدیر خودش افزوده دست‌نخورده می‌ماند
-    stmts.push(env.DB.prepare("DELETE FROM content_items WHERE section_id = ? AND created_by IS NULL AND id NOT LIKE 'seed-%'").bind(sec));
+    stmts.push(env.DB.prepare("DELETE FROM content_items WHERE section_id = ? AND id NOT LIKE 'seed-%'").bind(sec));
   }
   const now = new Date().toISOString();
   for (const it of items) {
     stmts.push(
-      env.DB.prepare(
-        `INSERT INTO content_items (id, section_id, fields, sort_order, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)
-         ON CONFLICT(id) DO UPDATE SET fields = excluded.fields, sort_order = excluded.sort_order, section_id = excluded.section_id, updated_at = excluded.updated_at`,
-      ).bind(it.id, it.section_id, JSON.stringify(it.fields), it.sort_order, now, now),
+      env.DB.prepare("INSERT INTO content_items (id, section_id, fields, sort_order, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)").bind(
+        it.id, it.section_id, JSON.stringify(it.fields), it.sort_order, now, now,
+      ),
     );
   }
-  for (let i = 0; i < stmts.length; i += 50) await env.DB.batch(stmts.slice(i, i + 50));
-  return { seeded: items.length };
+  stmts.push(env.DB.prepare("INSERT OR REPLACE INTO _meta (key, value) VALUES ('content_version', ?)").bind(content.version ?? ""));
+  await env.DB.batch(stmts); // یک تراکنش: یا همه یا هیچ
+  return { seeded: items.length, version: content.version };
 }
 
 async function handleAdmin(env: Env, ctx: Ctx, req: Request, path: string, url: URL): Promise<Response> {
@@ -445,7 +452,7 @@ export default {
       }
       if (path === "/") return json({ ok: true, service: "hazaranama-api" });
 
-      schemaReady ??= ensureSchema(env).catch((e) => {
+      schemaReady ??= ensureSchema(env).then(() => ensureContent(env)).catch((e) => {
         schemaReady = null;
         throw e;
       });

@@ -393,7 +393,10 @@ class _RegionsBodyState extends State<RegionsBody> {
   @override
   Widget build(BuildContext context) {
     final theme = widget.theme;
-    final items = widget.items;
+    // مدخل‌هایی با diaspora=true اجتماعات برون‌مرزی‌اند: روی نقشه نقطه نمی‌گیرند و در فهرست پایین می‌آیند.
+    final items = widget.items.where((i) => i.fields['diaspora'] != true).toList();
+    final diaspora = widget.items.where((i) => i.fields['diaspora'] == true).map((i) => i.fields).toList();
+    final diasporaList = diaspora.isNotEmpty ? diaspora : kDiaspora;
     if (items.isEmpty) return const SizedBox.shrink();
     _activeId ??= items.first.id;
     final active = items.firstWhere((i) => i.id == _activeId, orElse: () => items.first);
@@ -476,7 +479,7 @@ class _RegionsBodyState extends State<RegionsBody> {
         const SizedBox(height: 20),
         Text('اجتماعات برون‌مرزی', style: TextStyle(color: theme.textSecondary, fontSize: 12, fontWeight: FontWeight.w700)),
         const SizedBox(height: 10),
-        for (final d in kDiaspora) ...[
+        for (final d in diasporaList) ...[
           Container(
             margin: const EdgeInsets.only(bottom: 8),
             padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 11),

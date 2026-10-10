@@ -13,5 +13,7 @@ for path in sorted(glob.glob(os.path.join(here, 'sections', '*.json'))):
     rows = json.load(open(path, encoding='utf-8'))
     for i, r in enumerate(rows, 1):
         items.append({"id": f"seed-{sec}-{i:03d}", "section_id": sec, "sort_order": i, "fields": r["fields"]})
-json.dump({"items": items}, open(os.path.join(here, 'content.json'), 'w', encoding='utf-8'), ensure_ascii=False)
-print(len(items), "items")
+import hashlib
+version = hashlib.sha256(json.dumps(items, ensure_ascii=False, sort_keys=True).encode()).hexdigest()[:16]
+json.dump({"version": version, "items": items}, open(os.path.join(here, 'content.json'), 'w', encoding='utf-8'), ensure_ascii=False)
+print(len(items), "items", "version", version)

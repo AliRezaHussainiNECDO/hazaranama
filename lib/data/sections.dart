@@ -19,7 +19,7 @@ const List<ContentSection> kSections = [
   ContentSection(
     id: 'identity',
     title: 'هویت و تاریخچه',
-    description: '۱۰ فصل مستند، از خاستگاه تا امروز',
+    description: '۱۳ فصل مستند، از خاستگاه تا امروز',
     group: 'history',
     kind: SectionKind.timeline,
     fields: [
@@ -44,7 +44,7 @@ const List<ContentSection> kSections = [
   ContentSection(
     id: 'genocide',
     title: 'نسل‌کشی هزاره‌ها در تاریخ',
-    description: '۳۰ رویداد مستند، از ۱۸۸۸ تا امروز',
+    description: '۵۳ رویداد مستند، از ۱۸۸۸ تا امروز',
     group: 'history',
     kind: SectionKind.incidents,
     fields: [
