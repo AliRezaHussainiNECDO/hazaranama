@@ -273,26 +273,9 @@ class GridBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // تازه‌ترین خبر بالا؛ خبرهای بدون تاریخ انتشار (افزوده‌ی دستی) به ترتیب مدیر
-    final sorted = [...items]..sort((a, b) {
-        final da = DateTime.tryParse((a['published'] ?? '').toString());
-        final db = DateTime.tryParse((b['published'] ?? '').toString());
-        if (da == null && db == null) return 0;
-        if (da == null) return -1;
-        if (db == null) return 1;
-        return db.compareTo(da);
-      });
-    if (sorted.isEmpty) {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(30),
-          child: Text('هنوز خبری ثبت نشده است.', style: TextStyle(color: theme.textFaint, fontSize: 13)),
-        ),
-      );
-    }
     return ListView.separated(
       padding: const EdgeInsets.fromLTRB(18, 14, 18, 24),
-      itemCount: sorted.length,
+      itemCount: items.length,
       separatorBuilder: (_, __) => const SizedBox(height: 10),
       itemBuilder: (context, i) {
         final it = items[i];
@@ -524,7 +507,9 @@ class _RegionsBodyState extends State<RegionsBody> {
     );
   }
 
-  void _openRegion(BuildContext context, ContentItem r) {
+  void _openRegion(BuildContext context, dynamic r) {
+    final theme = widget.theme;
+    final item = r is ContentItem ? r : null;
     final full = (r['full'] ?? '').toString();
     Navigator.of(context).push(ArticleScreen.route(
       theme: theme,
@@ -532,9 +517,9 @@ class _RegionsBodyState extends State<RegionsBody> {
       title: r['name'] as String,
       subtitle: 'نقشه‌ی هزارستان',
       body: full.isNotEmpty ? full : r['note'] as String,
-      imageUrl: r.imageUrl,
-      videoUrl: r.videoUrl,
-      item: r,
+      imageUrl: item?.imageUrl,
+      videoUrl: item?.videoUrl,
+      item: item,
     ));
   }
 }
@@ -677,9 +662,26 @@ class NewsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // تازه‌ترین خبر بالا؛ خبرهای بدون تاریخ انتشار (افزوده‌ی دستی) به ترتیب مدیر
+    final sorted = [...items]..sort((a, b) {
+        final da = DateTime.tryParse((a['published'] ?? '').toString());
+        final db = DateTime.tryParse((b['published'] ?? '').toString());
+        if (da == null && db == null) return 0;
+        if (da == null) return -1;
+        if (db == null) return 1;
+        return db.compareTo(da);
+      });
+    if (sorted.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(30),
+          child: Text('هنوز خبری ثبت نشده است.', style: TextStyle(color: theme.textFaint, fontSize: 13)),
+        ),
+      );
+    }
     return ListView.separated(
       padding: const EdgeInsets.fromLTRB(18, 14, 18, 24),
-      itemCount: items.length,
+      itemCount: sorted.length,
       separatorBuilder: (_, __) => const SizedBox(height: 10),
       itemBuilder: (context, i) {
         final it = sorted[i];
