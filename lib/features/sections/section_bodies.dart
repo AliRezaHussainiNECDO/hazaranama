@@ -347,36 +347,6 @@ class TracksBody extends StatelessWidget {
   }
 }
 
-/// ---------------- زبان و گویش هزارگی ----------------
-class DictionaryBody extends StatelessWidget {
-  final AppColors theme;
-  final List<ContentItem> items;
-  const DictionaryBody({super.key, required this.theme, required this.items});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.fromLTRB(18, 14, 18, 24),
-      itemCount: items.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 9),
-      itemBuilder: (context, i) {
-        final it = items[i];
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-          decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(16), border: Border.all(color: theme.glassBorder)),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            ContentMediaCover(item: it, height: 90, radius: 12, fallback: SectionMediaPlaceholder(accent: theme.blue, icon: Icons.translate, height: 90)),
-            const SizedBox(height: 10),
-            Text(it['hazaragi'] as String, style: TextStyle(color: theme.blue, fontSize: 14, fontWeight: FontWeight.w800)),
-            const SizedBox(height: 4),
-            Text('${it['fa']}  ·  ${it['en']}', style: TextStyle(color: theme.textSecondary, fontSize: 11)),
-          ]),
-        ).staggered(i);
-      },
-    );
-  }
-}
-
 /// ---------------- نقشه‌ی هزارستان: مناطق + اجتماعات برون‌مرزی ----------------
 class RegionsBody extends StatefulWidget {
   final AppColors theme;

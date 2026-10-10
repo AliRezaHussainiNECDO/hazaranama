@@ -1,331 +1,803 @@
 [
  {
   "fields": {
-   "hazaragi": "آته",
-   "fa": "پدر (وام‌واژه‌ی ترکی)",
-   "en": "father (Turkic)"
+   "hazaragi": "آته / آتی",
+   "fa": "پدر",
+   "en": "father",
+   "cat": "خانواده و خویشاوندی",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "āta",
+   "note": "در ایرانیکا وام‌واژه‌ای ترکی شمرده شده است."
   }
  },
  {
   "fields": {
-   "hazaragi": "کټه / کته",
-   "fa": "بزرگ، کلان (وام‌واژه‌ی ترکی)",
-   "en": "big, large (Turkic)"
+   "hazaragi": "آبه",
+   "fa": "مادر",
+   "en": "mother",
+   "cat": "خانواده و خویشاوندی",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "āba"
   }
  },
  {
   "fields": {
-   "hazaragi": "قره",
-   "fa": "سیاه (وام‌واژه‌ی ترکی)",
-   "en": "black (Turkic)"
+   "hazaragi": "آجه",
+   "fa": "مادربزرگ",
+   "en": "grandmother",
+   "cat": "خانواده و خویشاوندی",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "āja"
   }
  },
  {
   "fields": {
-   "hazaragi": "بیری",
-   "fa": "عروس (وام‌واژه‌ی مغولی)",
-   "en": "bride (Mongolic)"
+   "hazaragi": "تغایی",
+   "fa": "مامای، دایی (برادرِ مادر)",
+   "en": "maternal uncle",
+   "cat": "خانواده و خویشاوندی",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "tağāyī"
   }
  },
  {
   "fields": {
-   "hazaragi": "الغه",
-   "fa": "کف دست (وام‌واژه‌ی مغولی)",
-   "en": "palm of the hand (Mongolic)"
+   "hazaragi": "آغه",
+   "fa": "خواهر بزرگ‌تر (خطاب مهرآمیز)",
+   "en": "older sister (endearing)",
+   "cat": "خانواده و خویشاوندی",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "āğa"
   }
  },
  {
   "fields": {
-   "hazaragi": "قلغی",
-   "fa": "دزد (وام‌واژه‌ی مغولی)",
-   "en": "thief (Mongolic)"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "پوشُم",
-   "fa": "پشم — از «پشم» با واکه‌ی میانجی",
-   "en": "wool"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "خوت",
-   "fa": "خود، خویش",
-   "en": "self, own"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "ډَل",
-   "fa": "گروه، دسته",
-   "en": "group"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "ما / تو",
-   "fa": "من / تو (ضمیر)",
-   "en": "I / you (sg.)"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "مو / شیمو",
-   "fa": "ما / شما (ضمیر)",
-   "en": "we / you (pl.)"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "یو / وو",
-   "fa": "این‌ها / آن‌ها — از «ای‌ها» و «او‌ها»",
-   "en": "they (these / those)"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "آتی / اَرِی",
-   "fa": "بله، آری",
-   "en": "yes"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "شایتی",
-   "fa": "شاید",
-   "en": "perhaps"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "بایتی",
-   "fa": "باید، لازم است",
-   "en": "it is necessary"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "اینجی / اونجی",
-   "fa": "این‌جا / آن‌جا",
-   "en": "here / there"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "اولی",
-   "fa": "اکنون، حالا",
-   "en": "now"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "وخته",
-   "fa": "آن‌وقت، سپس",
-   "en": "then"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "-قتی",
-   "fa": "همراهِ، با (پسوند همراهی)",
-   "en": "together with"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "-وری",
-   "fa": "مانندِ، مثلِ (پسوند)",
-   "en": "like"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "کُدَم",
-   "fa": "کدام؛ و نیز «کسی»",
-   "en": "which; someone"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "خون / خونی",
-   "fa": "با، به‌وسیله‌ی",
-   "en": "with, by means of"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "دَ",
-   "fa": "در؛ و اغلب به‌جای «به»",
-   "en": "in; to"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "کتابو",
-   "fa": "کتاب‌ها (نشانه‌ی جمع «-و» از «-ها»)",
-   "en": "books"
+   "hazaragi": "برار / بیرار",
+   "fa": "برادر",
+   "en": "brother",
+   "cat": "خانواده و خویشاوندی",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "birār"
   }
  },
  {
   "fields": {
    "hazaragi": "بیرارو",
-   "fa": "برادران (جمع جانداران «-و» از «-ان»)",
-   "en": "brothers"
+   "fa": "برادران",
+   "en": "brothers",
+   "cat": "خانواده و خویشاوندی",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)",
+   "note": "جمع جانداران با «-و» از «-ان» ساخته می‌شود."
   }
  },
  {
   "fields": {
-   "hazaragi": "کلوتر",
-   "fa": "بزرگ‌تر",
-   "en": "bigger"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "می‌زنُم",
-   "fa": "می‌زنم",
-   "en": "I hit / I am hitting"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "نمی‌زدُم",
-   "fa": "نمی‌زدم",
-   "en": "I was not hitting"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "زدیم",
-   "fa": "زده‌ام — با معنای «ندیده/گزارشی»",
-   "en": "(apparently) I have hit — non-witnessed"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "خوت (فعل کمکی)",
-   "fa": "نشانه‌ی احتمال: «ممکن است، شاید بشود» — از «خواهد»",
-   "en": "potential/assumptive marker"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "تانِستن",
-   "fa": "توانستن",
-   "en": "can, to be able"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "کدگی",
-   "fa": "انجام‌شده، کرده‌شده",
-   "en": "having been done"
-  }
- },
- {
-  "fields": {
-   "hazaragi": "قُلبه",
-   "fa": "شخم؛ زمین شخم‌زده",
-   "en": "ploughing; ploughed field"
+   "hazaragi": "بیری",
+   "fa": "عروس",
+   "en": "bride",
+   "cat": "وام‌واژه‌های مغولی و ترکی",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)",
+   "note": "وام‌واژه‌ی مغولی."
   }
  },
  {
   "fields": {
    "hazaragi": "بچه‌عمه",
-   "fa": "پسرعمه — خویشاوندی گرم و مورد اعتماد",
-   "en": "father's sister's son"
+   "fa": "پسرعمه",
+   "en": "father's sister's son",
+   "cat": "خانواده و خویشاوندی",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)",
+   "note": "در جامعه‌ی هزاره خویشاوندی‌ای گرم و مورد اعتماد."
   }
  },
  {
   "fields": {
    "hazaragi": "بچه‌ماما",
-   "fa": "پسردایی",
-   "en": "mother's brother's son"
+   "fa": "پسرِ مامای (پسردایی)",
+   "en": "mother's brother's son",
+   "cat": "خانواده و خویشاوندی",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
   }
  },
  {
   "fields": {
    "hazaragi": "بوله",
    "fa": "پسرخاله",
-   "en": "mother's sister's son"
+   "en": "mother's sister's son",
+   "cat": "خانواده و خویشاوندی",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
   }
  },
  {
   "fields": {
    "hazaragi": "باجه",
-   "fa": "باجناق (شوهر خواهرِ همسر)",
-   "en": "wife's sister's husband"
+   "fa": "باجناق (شوهرِ خواهرِ همسر)",
+   "en": "wife's sister's husband",
+   "cat": "خانواده و خویشاوندی",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
   }
  },
  {
   "fields": {
    "hazaragi": "جیه",
    "fa": "خواهرزاده",
-   "en": "sister's child"
+   "en": "sister's child",
+   "cat": "خانواده و خویشاوندی",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
   }
  },
  {
   "fields": {
    "hazaragi": "خانه‌وار",
    "fa": "تبار، دودمان",
-   "en": "lineage"
+   "en": "lineage",
+   "cat": "خانواده و خویشاوندی",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
   }
  },
  {
   "fields": {
    "hazaragi": "ریش‌سفید / موی‌سفید",
-   "fa": "بزرگ و ریش‌سفید خانواده یا روستا",
-   "en": "elder"
+   "fa": "بزرگِ خانواده یا روستا",
+   "en": "elder",
+   "cat": "خانواده و خویشاوندی",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
   }
  },
  {
   "fields": {
-   "hazaragi": "آغیل / قریه",
-   "fa": "روستای کوچک، دهکده",
-   "en": "hamlet, village"
+   "hazaragi": "الیجو",
+   "fa": "عزیز، دلبر",
+   "en": "dear, sweetheart",
+   "cat": "خانواده و خویشاوندی",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "note": "بیشتر در بامیان شنیده می‌شود."
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "آغیل",
+   "fa": "قریه، دهکده‌ی کوچک",
+   "en": "village, hamlet",
+   "cat": "روستا، طبیعت و کشاورزی",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "āğil"
   }
  },
  {
   "fields": {
    "hazaragi": "چپری",
    "fa": "کلبه، خانه‌ی کوچک (در شمال هزارستان)",
-   "en": "hut, small house"
+   "en": "hut, small house",
+   "cat": "روستا، طبیعت و کشاورزی",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
   }
  },
  {
   "fields": {
-   "hazaragi": "ییلاق / قشلاق",
-   "fa": "چراگاه تابستانی مرتفع / سکونتگاه زمستانی دره",
-   "en": "summer pasture / winter quarters"
+   "hazaragi": "ییلاق",
+   "fa": "چراگاه تابستانیِ مرتفع",
+   "en": "summer pasture",
+   "cat": "روستا، طبیعت و کشاورزی",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "قشلاق",
+   "fa": "سکونتگاه زمستانی در دره",
+   "en": "winter quarters",
+   "cat": "روستا، طبیعت و کشاورزی",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
   }
  },
  {
   "fields": {
    "hazaragi": "للمی",
-   "fa": "زمین یا کشت دیم (بدون آبیاری)",
-   "en": "rain-fed cultivation"
+   "fa": "زمین یا کشتِ دیم (بی‌آبیاری)",
+   "en": "rain-fed cultivation",
+   "cat": "روستا، طبیعت و کشاورزی",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
   }
  },
  {
   "fields": {
    "hazaragi": "ترماهی",
    "fa": "گندم پاییزه",
-   "en": "autumn wheat"
+   "en": "autumn wheat",
+   "cat": "روستا، طبیعت و کشاورزی",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "قُلبه",
+   "fa": "شخم؛ زمینِ شخم‌زده",
+   "en": "ploughing; ploughed field",
+   "cat": "روستا، طبیعت و کشاورزی",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "پوشُم",
+   "fa": "پشم",
+   "en": "wool",
+   "cat": "روستا، طبیعت و کشاورزی",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "بلک",
+   "fa": "برگ",
+   "en": "leaf",
+   "cat": "روستا، طبیعت و کشاورزی",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "balk"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "سیو",
+   "fa": "سیب",
+   "en": "apple",
+   "cat": "روستا، طبیعت و کشاورزی",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "sēw"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "اُشتر",
+   "fa": "شتر",
+   "en": "camel",
+   "cat": "روستا، طبیعت و کشاورزی",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "uštur"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "طنو",
+   "fa": "طناب، ریسمان",
+   "en": "rope",
+   "cat": "روستا، طبیعت و کشاورزی",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "tanaw"
   }
  },
  {
   "fields": {
    "hazaragi": "منبر",
    "fa": "تکیه‌خانه‌ی روستا: نمازخانه، تالار و مهمان‌خانه",
-   "en": "village prayer & meeting hall"
+   "en": "village prayer and meeting hall",
+   "cat": "خانه و زندگی روزمره",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "جاغه",
+   "fa": "یقه",
+   "en": "collar",
+   "cat": "خانه و زندگی روزمره",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "jāğa"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "گُدی",
+   "fa": "عروسک",
+   "en": "doll",
+   "cat": "خانه و زندگی روزمره",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "guḍī"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "گُدی‌پران",
+   "fa": "بادبادک",
+   "en": "kite",
+   "cat": "خانه و زندگی روزمره",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "guḍīparān"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "ایلک / الک",
+   "fa": "غربال، الک",
+   "en": "sieve",
+   "cat": "خانه و زندگی روزمره",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "ēlak"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "جنتری",
+   "fa": "تقویم، سالنامه",
+   "en": "calendar, almanac",
+   "cat": "خانه و زندگی روزمره",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "jantarī"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "با",
+   "fa": "بها، قیمت",
+   "en": "price",
+   "cat": "خانه و زندگی روزمره",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "bā"
   }
  },
  {
   "fields": {
    "hazaragi": "قومندان",
    "fa": "فرمانده‌ی نظامی محلی",
-   "en": "(militia) commander"
+   "en": "(militia) commander",
+   "cat": "خانه و زندگی روزمره",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "چِم / چیم",
+   "fa": "چشم",
+   "en": "eye",
+   "cat": "بدن و صفت‌ها",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "čim"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "الغه",
+   "fa": "کفِ دست",
+   "en": "palm of the hand",
+   "cat": "وام‌واژه‌های مغولی و ترکی",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)",
+   "note": "وام‌واژه‌ی مغولی."
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "کټه / کته",
+   "fa": "بزرگ، کلان؛ و نیز پیر",
+   "en": "big, large; old",
+   "cat": "بدن و صفت‌ها",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "kaṭa"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "کلوتر",
+   "fa": "بزرگ‌تر",
+   "en": "bigger",
+   "cat": "بدن و صفت‌ها",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "غدر",
+   "fa": "زیاد، بسیار",
+   "en": "much, a lot",
+   "cat": "بدن و صفت‌ها",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "ğadar",
+   "note": "ویژه‌ی هزارگی؛ احتمالاً از ترکی یا مغولی."
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "قره",
+   "fa": "سیاه",
+   "en": "black",
+   "cat": "وام‌واژه‌های مغولی و ترکی",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)",
+   "note": "وام‌واژه‌ی ترکی."
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "دیده",
+   "fa": "شتاب، عجله",
+   "en": "haste, hurry",
+   "cat": "بدن و صفت‌ها",
+   "src": "ویکی‌واژه (CC BY-SA)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "اټاله",
+   "fa": "تخمین، حدس",
+   "en": "estimate, guess",
+   "cat": "بدن و صفت‌ها",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "aṭāla"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "ما / تو",
+   "fa": "من / تو",
+   "en": "I / you (sg.)",
+   "cat": "ضمیرها و دستور زبان",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "مو / شیمو",
+   "fa": "ما / شما",
+   "en": "we / you (pl.)",
+   "cat": "ضمیرها و دستور زبان",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "یو / وو",
+   "fa": "این‌ها / آن‌ها",
+   "en": "these / those (they)",
+   "cat": "ضمیرها و دستور زبان",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)",
+   "note": "از «ای‌ها» و «او‌ها»."
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "او",
+   "fa": "آن",
+   "en": "that, it",
+   "cat": "ضمیرها و دستور زبان",
+   "src": "ویکی‌واژه (CC BY-SA)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "مره",
+   "fa": "مرا",
+   "en": "me (object)",
+   "cat": "ضمیرها و دستور زبان",
+   "src": "ویکی‌واژه (CC BY-SA)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "خوت",
+   "fa": "خود، خویش",
+   "en": "self, own",
+   "cat": "ضمیرها و دستور زبان",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "کُدَم",
+   "fa": "کدام؛ و نیز «کسی»",
+   "en": "which; someone",
+   "cat": "ضمیرها و دستور زبان",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "کتابو",
+   "fa": "کتاب‌ها",
+   "en": "books",
+   "cat": "ضمیرها و دستور زبان",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)",
+   "note": "نشانه‌ی جمع «-و» از «-ها» آمده است."
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "-قتی",
+   "fa": "همراهِ، با (پسوند همراهی)",
+   "en": "together with",
+   "cat": "ضمیرها و دستور زبان",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "کتی",
+   "fa": "همراهِ، با",
+   "en": "with",
+   "cat": "ضمیرها و دستور زبان",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "katī",
+   "example": "کتی از وا موری؟",
+   "example_fa": "با آن‌ها می‌روی؟"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "-وری / واری",
+   "fa": "مانندِ، مثلِ",
+   "en": "like, as",
+   "cat": "ضمیرها و دستور زبان",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "اَدلی",
+   "fa": "مانندِ، مثلِ",
+   "en": "like",
+   "cat": "ضمیرها و دستور زبان",
+   "src": "ویکی‌واژه (CC BY-SA)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "خون / خونی",
+   "fa": "با، به‌وسیله‌ی",
+   "en": "with, by means of",
+   "cat": "ضمیرها و دستور زبان",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "دَ",
+   "fa": "در؛ و اغلب به‌جای «به»",
+   "en": "in; to",
+   "cat": "ضمیرها و دستور زبان",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "ډَل",
+   "fa": "گروه، دسته",
+   "en": "group",
+   "cat": "ضمیرها و دستور زبان",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "چکه",
+   "fa": "چرا؟",
+   "en": "why?",
+   "cat": "قید و پرسش",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "čika"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "ایقه",
+   "fa": "این‌قدر",
+   "en": "this much",
+   "cat": "قید و پرسش",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "īqa"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "اینجی / اونجی",
+   "fa": "این‌جا / آن‌جا",
+   "en": "here / there",
+   "cat": "قید و پرسش",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "ایسو",
+   "fa": "این‌سو، این‌جا",
+   "en": "here, this way",
+   "cat": "قید و پرسش",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "īsō"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "جه",
+   "fa": "جا",
+   "en": "place",
+   "cat": "قید و پرسش",
+   "src": "ویکی‌واژه (CC BY-SA)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "اولی",
+   "fa": "اکنون، حالا",
+   "en": "now",
+   "cat": "قید و پرسش",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "وخته",
+   "fa": "آن‌وقت، سپس",
+   "en": "then",
+   "cat": "قید و پرسش",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "شایتی",
+   "fa": "شاید",
+   "en": "perhaps",
+   "cat": "قید و پرسش",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "بایتی",
+   "fa": "باید، لازم است",
+   "en": "it is necessary",
+   "cat": "قید و پرسش",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "آتی / اَرِی",
+   "fa": "بله، آری",
+   "en": "yes",
+   "cat": "قید و پرسش",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "نیه",
+   "fa": "نیست",
+   "en": "is not",
+   "cat": "فعل‌ها",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "example": "اینجی نیه",
+   "example_fa": "این‌جا نیست"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "کد",
+   "fa": "کرد",
+   "en": "did",
+   "cat": "فعل‌ها",
+   "src": "ویکی‌واژه (CC BY-SA)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "مـ (پیشوند فعل)",
+   "fa": "مـی (نشانه‌ی استمرار)",
+   "en": "continuous prefix",
+   "cat": "فعل‌ها",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "example": "چی مخری؟",
+   "example_fa": "چه می‌خوری؟"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "می‌زنُم",
+   "fa": "می‌زنم",
+   "en": "I hit / I am hitting",
+   "cat": "فعل‌ها",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "نمی‌زدُم",
+   "fa": "نمی‌زدم",
+   "en": "I was not hitting",
+   "cat": "فعل‌ها",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "زدیم",
+   "fa": "زده‌ام (گزارشی و نادیده)",
+   "en": "(apparently) I have hit",
+   "cat": "فعل‌ها",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)",
+   "note": "این ساخت برای رویدادی به کار می‌رود که گوینده خودش ندیده است."
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "خوت (فعل کمکی)",
+   "fa": "نشانه‌ی احتمال: «شاید بشود»",
+   "en": "potential marker",
+   "cat": "فعل‌ها",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)",
+   "note": "از «خواهد»."
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "تانِستن",
+   "fa": "توانستن",
+   "en": "to be able",
+   "cat": "فعل‌ها",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "کدگی",
+   "fa": "انجام‌شده، کرده‌شده",
+   "en": "having been done",
+   "cat": "فعل‌ها",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "چی مخری؟",
+   "fa": "چه می‌خوری؟",
+   "en": "what are you eating?",
+   "cat": "گفت‌وگوی روزمره",
+   "src": "ویکی‌واژه (CC BY-SA)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "کتی از وا موری؟",
+   "fa": "با آن‌ها می‌روی؟",
+   "en": "are you going with them?",
+   "cat": "گفت‌وگوی روزمره",
+   "src": "ویکی‌واژه (CC BY-SA)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "اینجی نیه",
+   "fa": "این‌جا نیست",
+   "en": "it isn't here",
+   "cat": "گفت‌وگوی روزمره",
+   "src": "ویکی‌واژه (CC BY-SA)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "پیسه پیشُم نیه",
+   "fa": "پول پیشم نیست",
+   "en": "I have no money on me",
+   "cat": "گفت‌وگوی روزمره",
+   "src": "ویکی‌واژه (CC BY-SA)"
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "قلغی",
+   "fa": "دزد",
+   "en": "thief",
+   "cat": "وام‌واژه‌های مغولی و ترکی",
+   "src": "دانشنامه‌ی ایرانیکا (Kieffer)",
+   "note": "وام‌واژه‌ی مغولی."
+  }
+ },
+ {
+  "fields": {
+   "hazaragi": "اوغو",
+   "fa": "افغان (پشتون)",
+   "en": "Afghan (Pashtun)",
+   "cat": "وام‌واژه‌های مغولی و ترکی",
+   "src": "ویکی‌واژه (CC BY-SA)",
+   "tr": "awğō"
   }
  }
 ]

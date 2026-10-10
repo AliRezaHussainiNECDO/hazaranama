@@ -80,13 +80,19 @@ const List<ContentSection> kSections = [
   ContentSection(
     id: 'language',
     title: 'زبان و گویش هزارگی',
-    description: 'واژه‌ها و اصطلاحات زنده',
+    description: 'واژه‌نامه‌ی هزارگی با جست‌وجو، دسته‌ها و واژه‌ی روز',
     group: 'culture',
     kind: SectionKind.dictionary,
     fields: [
       ContentFieldSpec('hazaragi', 'واژه هزارگی'),
       ContentFieldSpec('fa', 'معنی فارسی'),
       ContentFieldSpec('en', 'معنی انگلیسی'),
+      ContentFieldSpec('cat', 'دسته (مثلاً: خانواده و خویشاوندی)'),
+      ContentFieldSpec('tr', 'آوانویسی لاتین (اختیاری)'),
+      ContentFieldSpec('example', 'نمونه‌ی کاربرد به هزارگی (اختیاری)'),
+      ContentFieldSpec('example_fa', 'معنی نمونه (اختیاری)'),
+      ContentFieldSpec('note', 'توضیح (اختیاری)', multiline: true),
+      ContentFieldSpec('src', 'منبع (اختیاری)'),
     ],
   ),
   ContentSection(

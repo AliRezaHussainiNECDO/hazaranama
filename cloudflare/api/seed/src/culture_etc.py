@@ -231,6 +231,7 @@ if __name__ == "__main__":
             f["x"], f["y"] = COORDS[f["name"]]
         return {"fields": f}
     dump("map", [region(r) for r in REGIONS])
-    dump("language", [{"fields": {"hazaragi": h, "fa": f, "en": e}} for h, f, e in WORDS])
+    from language import LANG
+    dump("language", [{"fields": f} for f in LANG])
     dump("library", [{"fields": b} for b in LIBRARY])
     dump("dailyStory", [{"fields": {"date": d, "title": t, "desc": s, "full": f}} for d, t, s, f in STORIES])
