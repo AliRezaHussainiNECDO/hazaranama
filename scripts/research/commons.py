@@ -175,3 +175,29 @@ def books():
 
 if __name__ == "__main__":
     books()
+
+
+def wiki():
+    """Search English Wikipedia and return intro extracts, to confirm facts and cite articles."""
+    if not os.path.exists("scripts/research/wiki.json"):
+        return
+    res = {}
+    for w in json.load(open("scripts/research/wiki.json", encoding="utf-8")):
+        d = api("https://en.wikipedia.org/w/api.php", action="query", list="search", srsearch=w["q"], srlimit=3)
+        hits = [h["title"] for h in d.get("query", {}).get("search", [])]
+        out = []
+        if hits:
+            e = api("https://en.wikipedia.org/w/api.php", action="query", prop="extracts|info", inprop="url", exintro=1, explaintext=1,
+                    titles="|".join(hits), redirects=1)
+            pages = {p["title"]: p for p in e.get("query", {}).get("pages", [])}
+            for h in hits:
+                p = pages.get(h)
+                if p:
+                    out.append({"title": p["title"], "url": p.get("fullurl"), "extract": (p.get("extract") or "")[:1500]})
+        res[w["id"]] = out
+        time.sleep(0.3)
+    json.dump(res, open(f"{OUT}/wiki.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+
+
+if __name__ == "__main__":
+    wiki()
