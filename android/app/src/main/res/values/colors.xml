@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- رنگ برند برای آیکون اعلان‌ها -->
+    <color name="hz_notification">#2159C4</color>
+</resources>
