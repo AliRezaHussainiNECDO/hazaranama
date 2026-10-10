@@ -149,7 +149,8 @@ class _StatsTab extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           mainAxisSpacing: 10,
           crossAxisSpacing: 10,
-          childAspectRatio: 1.55,
+          childAspectRatio: 2.1,
+          padding: EdgeInsets.zero,
           children: [
             _StatCard(theme: theme, icon: Icons.dynamic_feed_rounded, color: theme.blue, label: 'کل پست‌ها', value: '$totalPosts'),
             _StatCard(theme: theme, icon: Icons.mode_comment_rounded, color: theme.success, label: 'کل نظرات', value: '$totalComments'),
@@ -190,22 +191,7 @@ class _StatCard extends StatelessWidget {
   const _StatCard({required this.theme, required this.icon, required this.color, required this.label, required this.value});
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(13),
-      decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(16), border: Border.all(color: theme.glassBorder)),
-      child: Row(children: [
-        StatIconBox(icon: icon, color: color, size: 38),
-        const SizedBox(width: 10),
-        Expanded(
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(value, style: TextStyle(color: theme.textPrimary, fontSize: 17, fontWeight: FontWeight.w800)),
-            Text(label, style: TextStyle(color: theme.textFaint, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis),
-          ]),
-        ),
-      ]),
-    );
-  }
+  Widget build(BuildContext context) => HzStatTile(theme: theme, icon: icon, color: color, value: value, label: label);
 }
 
 class _HighlightPostCard extends StatelessWidget {

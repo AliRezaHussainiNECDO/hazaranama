@@ -92,7 +92,7 @@ class _UsersPageState extends State<UsersPage> {
           const SizedBox(height: 14),
           GridView.count(
             crossAxisCount: 2, shrinkWrap: true, physics: const NeverScrollableScrollPhysics(),
-            mainAxisSpacing: 10, crossAxisSpacing: 10, childAspectRatio: 1.7,
+            mainAxisSpacing: 10, crossAxisSpacing: 10, childAspectRatio: 2.1, padding: EdgeInsets.zero,
             children: [
               _statCard(theme, 'کل کاربران', users.length, Icons.groups, theme.blue),
               _statCard(theme, 'فعال', active, Icons.verified_user, theme.success),
@@ -130,20 +130,8 @@ class _UsersPageState extends State<UsersPage> {
     );
   }
 
-  Widget _statCard(theme, String label, int value, IconData icon, Color color) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(16), border: Border.all(color: theme.glassBorder)),
-      child: Row(children: [
-        StatIconBox(icon: icon, color: color, size: 32),
-        const SizedBox(width: 10),
-        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('$value', style: TextStyle(color: theme.textPrimary, fontSize: 16, fontWeight: FontWeight.w800)),
-          Text(label, style: TextStyle(color: theme.textFaint, fontSize: 11)),
-        ]),
-      ]),
-    );
-  }
+  Widget _statCard(theme, String label, int value, IconData icon, Color color) =>
+      HzStatTile(theme: theme, icon: icon, color: color, value: '$value', label: label);
 
   Widget _breakdown(theme, String title, IconData icon, List<MapEntry<String, int>> rows, Color color) {
     final maxV = rows.isEmpty ? 1 : rows.map((e) => e.value).reduce((a, b) => a > b ? a : b);

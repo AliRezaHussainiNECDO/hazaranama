@@ -96,18 +96,59 @@ class StatIconBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // همان زبان بصری کارت‌های بخش در اپ کاربران: کاشی گرادیانی با آیکون سفید
     return Container(
       width: size,
       height: size,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topLeft, end: Alignment.bottomRight,
-          colors: [color.withValues(alpha: 0.22), color.withValues(alpha: 0.08)],
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [color, Color.lerp(color, const Color(0xFF1A1036), 0.28)!],
         ),
         borderRadius: BorderRadius.circular(size * 0.32),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
+        boxShadow: [BoxShadow(color: color.withValues(alpha: 0.28), blurRadius: size * 0.3, offset: Offset(0, size * 0.1))],
       ),
-      child: Icon(icon, color: color, size: size * 0.46),
+      child: Icon(icon, color: Colors.white, size: size * 0.5),
+    );
+  }
+}
+
+/// کاشی آمار مشترک پنل مدیر و اپ کاربران — آیکون گرادیانی، عدد درشت و برچسب.
+class HzStatTile extends StatelessWidget {
+  final AppColors theme;
+  final IconData icon;
+  final Color color;
+  final String value;
+  final String label;
+  final Widget? trailing;
+  final VoidCallback? onTap;
+  const HzStatTile({super.key, required this.theme, required this.icon, required this.color, required this.value, required this.label, this.trailing, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: theme.bgCard.withValues(alpha: 0.6),
+      borderRadius: BorderRadius.circular(18),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(18),
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 12),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(18), border: Border.all(color: theme.glassBorder)),
+          child: Row(children: [
+            StatIconBox(icon: icon, color: color, size: 40),
+            const SizedBox(width: 11),
+            Expanded(
+              child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(value, maxLines: 1, style: TextStyle(color: theme.textPrimary, fontSize: 20, fontWeight: FontWeight.w900, height: 1.15)),
+                Text(label, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 12)),
+              ]),
+            ),
+            if (trailing != null) trailing!,
+          ]),
+        ),
+      ),
     );
   }
 }
@@ -342,7 +383,7 @@ class HzSelectField extends StatelessWidget {
       initialValue: value,
       icon: const Icon(Icons.keyboard_arrow_down, size: 18),
       dropdownColor: theme.bgCard,
-      style: TextStyle(color: theme.textPrimary, fontSize: 13),
+      style: TextStyle(fontFamily: 'Vazirmatn', color: theme.textPrimary, fontSize: 13),
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: TextStyle(color: theme.textFaint, fontSize: 13),
@@ -352,7 +393,7 @@ class HzSelectField extends StatelessWidget {
         contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: theme.glassBorder)),
       ),
-      items: options.map((o) => DropdownMenuItem(value: o, child: Text(o))).toList(),
+      items: options.map((o) => DropdownMenuItem(value: o, child: Text(o, style: TextStyle(fontFamily: 'Vazirmatn', color: theme.textPrimary, fontSize: 13)))).toList(),
       onChanged: onChanged,
     );
   }

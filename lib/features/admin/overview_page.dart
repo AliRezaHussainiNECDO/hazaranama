@@ -44,7 +44,7 @@ class _OverviewPageState extends State<OverviewPage> {
     final app = context.watch<AppState>();
     final theme = app.colors;
 
-    final totalItems = app.content.values.fold<int>(0, (s, list) => s + list.length);
+    final totalItems = kSections.where((s) => s.id != 'oral' && s.id != 'articleWinners').fold<int>(0, (n, s) => n + app.sectionItemCount(s.id));
     final totalComments = app.posts.fold<int>(0, (s, p) => s + p.commentsCount);
     final activeUsers = app.users.where((u) => u.status.name == 'active').length;
 
@@ -55,7 +55,7 @@ class _OverviewPageState extends State<OverviewPage> {
       _Stat('نظرها روی پست‌ها', totalComments, Icons.mode_comment_rounded, theme.aiTeal, null),
     ];
     final sectionStats = kSections.where((s) => s.id != 'oral' && s.id != 'dailyStory' && s.id != 'articleWinners').map((s) {
-      return (id: s.id, title: s.title, count: s.id == 'music' ? app.artists.length : (app.content[s.id] ?? []).length);
+      return (id: s.id, title: s.title, count: app.sectionItemCount(s.id));
     }).toList();
     final maxCount = sectionStats.map((s) => s.count).fold(1, (a, b) => a > b ? a : b);
 
@@ -74,26 +74,17 @@ class _OverviewPageState extends State<OverviewPage> {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.zero,
-          mainAxisSpacing: 12, crossAxisSpacing: 12, childAspectRatio: 1.25,
-          children: stats.map((s) => Container(
-                padding: const EdgeInsets.all(13),
-                decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(18), border: Border.all(color: theme.glassBorder)),
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Row(children: [
-                    Container(
-                      width: 36,
-                      height: 36,
-                      decoration: BoxDecoration(color: s.color.withValues(alpha: 0.16), borderRadius: BorderRadius.circular(12)),
-                      child: Icon(s.icon, color: s.color, size: 19),
-                    ),
-                    const Spacer(),
-                    if (s.trend != null) Sparkline(data: s.trend!, color: s.color, width: 70, height: 22),
-                  ]),
-                  const Spacer(),
-                  Text('${s.value}', style: TextStyle(color: theme.textPrimary, fontSize: 24, fontWeight: FontWeight.w900)),
-                  Text(s.label, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 12)),
-                ]),
-              )).toList(),
+          mainAxisSpacing: 10, crossAxisSpacing: 10, childAspectRatio: 2.1,
+          children: stats
+              .map((s) => HzStatTile(
+                    theme: theme,
+                    icon: s.icon,
+                    color: s.color,
+                    value: '${s.value}',
+                    label: s.label,
+                    trailing: s.trend == null ? null : Sparkline(data: s.trend!, color: s.color, width: 44, height: 20),
+                  ))
+              .toList(),
         ),
         const SizedBox(height: 18),
         Container(

@@ -5,6 +5,7 @@ import 'package:http/http.dart' show ClientException;
 import '../services/hz_backend.dart' show AuthChangeEvent, AuthException, AuthState, PostgrestException;
 import '../core/app_colors.dart';
 import '../core/donor_tiers.dart';
+import '../core/section_style.dart' show kHazaragiGlossaryCount;
 import '../models/models.dart';
 import '../services/push_service.dart';
 import '../services/backend_service.dart';
@@ -1081,6 +1082,14 @@ class AppState extends ChangeNotifier {
     posts = [...posts, post];
     notifyListeners();
     return true;
+  }
+
+  /// شمار مطالب هر بخش — یک منبع برای اپ کاربران و پنل مدیر تا عددها همه‌جا یکی باشد.
+  /// (موسیقی = شمار هنرمندان؛ زبان = واژه‌های پایگاه‌داده + واژه‌نامه‌ی داخل اپ)
+  int sectionItemCount(String id) {
+    if (id == 'music') return artists.length;
+    final n = content[id]?.length ?? 0;
+    return id == 'language' ? n + kHazaragiGlossaryCount : n;
   }
 
   // ---------------- مدیر: صندوق کارهای در انتظار ----------------

@@ -350,7 +350,7 @@ class _ContentHub extends StatelessWidget {
         const SizedBox(height: 12),
         SizedBox(
           height: 130,
-          child: SectionCard(theme: theme, section: daily, wide: true, count: app.content['dailyStory']?.length ?? 0, onTap: () => onOpen('dailyStory')),
+          child: SectionCard(theme: theme, section: daily, wide: true, count: app.sectionItemCount('dailyStory'), onTap: () => onOpen('dailyStory')),
         ).staggered(0),
         const SizedBox(height: 12),
         GridView.builder(
@@ -361,7 +361,7 @@ class _ContentHub extends StatelessWidget {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 12, crossAxisSpacing: 12, childAspectRatio: 1.0),
           itemBuilder: (context, i) {
             final s = sections[i];
-            final count = s.id == 'music' ? app.artists.length : (app.content[s.id]?.length ?? 0);
+            final count = app.sectionItemCount(s.id);
             return SectionCard(theme: theme, section: s, count: count, onTap: () => onOpen(s.id)).staggered(i + 1);
           },
         ),
