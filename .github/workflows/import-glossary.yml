@@ -1,0 +1,26 @@
+name: Import Hazaragi glossary (Mashal)
+# یک‌بار مصرف: فایل واژه‌نامه را از R2 (بارگذاری‌شده با اجازه‌ی سایت مشعل) می‌گیرد،
+# اثر SHA-256 را بررسی می‌کند و در مخزن ذخیره می‌کند.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download and verify
+        run: |
+          set -e
+          curl -fsSL https://hazaranama-api.alireza-necdo.workers.dev/media/imports/mashal-glossary.json -o cloudflare/api/seed/mashal_glossary.json
+          echo "e01f0a81f65e6b36a77a59ec990d7c8275fc23358aad01df700da6fa43f653ef  cloudflare/api/seed/mashal_glossary.json" | sha256sum -c -
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add cloudflare/api/seed/mashal_glossary.json
+          git commit -m "Seed: Hazaragi glossary by Mohammad Awaz Nabizada (mashal.org, used with permission)" || echo "no changes"
+          git push

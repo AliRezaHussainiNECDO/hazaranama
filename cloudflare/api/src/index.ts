@@ -409,6 +409,7 @@ async function seed(env: Env, replaceSections: string[]) {
 }
 
 // اثر SHA-256 (روی JSON مرتب‌شده) بسته‌ی نهایی داده‌های Supabase: یک کاربر، پروفایل، هنرمند، تنظیمات، بازدیدها و توکن دستگاه
+const GLOSSARY_SHA = "e01f0a81f65e6b36a77a59ec990d7c8275fc23358aad01df700da6fa43f653ef";
 const LEGACY_IMPORT_SHA = "6de9bef007ed30060e82e19be1491197f346db70acd472bc1b9cd440d9aa91f8";
 
 function canonicalJson(v: unknown): string {
@@ -448,6 +449,15 @@ async function handleAdmin(env: Env, ctx: Ctx, req: Request, path: string, url: 
     await env.DB.prepare("INSERT OR REPLACE INTO _meta (key, value) VALUES ('legacy_import', ?)").bind(new Date().toISOString()).run();
     ctx.waitUntil(migrateMedia(env, PUBLIC_ORIGIN, 20));
     return json({ ok: true, imported: result });
+  }
+
+  if (path === "/admin/upload-glossary" && req.method === "POST") {
+    // بارگذاری یک‌باره‌ی واژه‌نامه‌ی هزارگی (با اجازه‌ی سایت مشعل) — فقط همان فایلی
+    // پذیرفته می‌شود که اثر SHA-256 آن از پیش در کد ثبت شده است.
+    const text = await req.text();
+    if ((await sha256Hex(text)) !== GLOSSARY_SHA) return err(403, "فایل با نسخه‌ی تأییدشده یکی نیست.");
+    await env.MEDIA.put("imports/mashal-glossary.json", text, { httpMetadata: { contentType: "application/json; charset=utf-8" } });
+    return json({ ok: true, bytes: text.length });
   }
 
   if (path === "/admin/push-status" || path === "/admin/broadcast") {
