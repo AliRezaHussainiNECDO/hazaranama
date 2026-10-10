@@ -43,10 +43,18 @@ export async function prewarmMirror(env: Env, budget: number) {
 
 // ---------------- خبرنامه‌ی خودکار ----------------
 // فقط عنوان، نام رسانه، تاریخ و لینک به خبر اصلی ذخیره می‌شود (نه متن خبر).
-const FEEDS = [
-  "https://news.google.com/rss/search?q=%22Hazara%22+(Afghanistan+OR+Taliban+OR+Quetta+OR+Bamyan+OR+Kabul+OR+refugees)&hl=en-US&gl=US&ceid=US:en",
-  "https://news.google.com/rss/search?q=Hazaras&hl=en-GB&gl=GB&ceid=GB:en",
-  "https://news.google.com/rss/search?q=%D9%87%D8%B2%D8%A7%D8%B1%D9%87%E2%80%8C%D9%87%D8%A7&hl=fa&gl=IR&ceid=IR:fa",
+const FEEDS: { name: string; url: string; kind: "rss" | "gdelt" }[] = [
+  { name: "KabulNow", url: "https://kabulnow.com/feed/", kind: "rss" },
+  { name: "Amu TV", url: "https://amu.tv/feed/", kind: "rss" },
+  { name: "Hasht-e Subh", url: "https://8am.media/eng/feed/", kind: "rss" },
+  { name: "هشت صبح", url: "https://8am.media/feed/", kind: "rss" },
+  { name: "Rukhshana Media", url: "https://rukhshana.com/en/feed/", kind: "rss" },
+  { name: "اطلاعات روز", url: "https://www.etilaatroz.com/feed/", kind: "rss" },
+  {
+    name: "",
+    url: "https://api.gdeltproject.org/api/v2/doc/doc?query=hazara%20(afghanistan%20OR%20taliban%20OR%20quetta%20OR%20kabul)&mode=artlist&format=json&maxrecords=60&timespan=14d&sort=datedesc",
+    kind: "gdelt",
+  },
 ];
 const RELEVANT = /hazara|هزاره|هزارگی|بامیان|bamyan|bamiyan|daykundi|دایکندی|dasht-e-barchi|دشت.?برچی|quetta|کویته/i;
 // «هزاره» در پاکستان نام یک منطقه‌ی جغرافیایی (ایبت‌آباد، مانسهره…) هم هست
@@ -67,10 +75,10 @@ async function sha(s: string) {
 
 export async function fetchNews(env: Env, force = false): Promise<{ added: number; skipped?: string }> {
   if (!force) {
-    const last = await env.DB.prepare("SELECT value FROM _meta WHERE key = 'news_fetched_at_v2'").first<{ value: string }>();
+    const last = await env.DB.prepare("SELECT value FROM _meta WHERE key = 'news_fetched_at_v3'").first<{ value: string }>();
     if (last && Date.now() - Date.parse(last.value) < 60 * 60_000) return { added: 0, skipped: "recent" };
   }
-  await env.DB.prepare("INSERT OR REPLACE INTO _meta (key, value) VALUES ('news_fetched_at_v2', ?)").bind(new Date().toISOString()).run();
+  await env.DB.prepare("INSERT OR REPLACE INTO _meta (key, value) VALUES ('news_fetched_at_v3', ?)").bind(new Date().toISOString()).run();
 
   const seenRow = await env.DB.prepare("SELECT value FROM _meta WHERE key = 'news_seen'").first<{ value: string }>();
   const seen: string[] = seenRow ? JSON.parse(seenRow.value) : [];
@@ -81,26 +89,40 @@ export async function fetchNews(env: Env, force = false): Promise<{ added: numbe
   for (const feed of FEEDS) {
     let xml = "";
     try {
-      const r = await fetch(feed, { headers: { "User-Agent": "Mozilla/5.0 (compatible; " + UA + ")", Accept: "application/rss+xml, application/xml" } });
+      const r = await fetch(feed.url, { headers: { "User-Agent": "Mozilla/5.0 (compatible; " + UA + ")", Accept: "application/rss+xml, application/xml" } });
       xml = await r.text();
-      console.log("news feed", r.status, xml.length, (xml.match(/<item>/g) ?? []).length, feed.slice(37, 90));
+      console.log("news feed", feed.name || "gdelt", r.status, xml.length);
       if (!r.ok) continue;
     } catch (e) {
-      console.error("news feed fail", feed.slice(37, 90), String(e));
+      console.error("news feed fail", feed.name || "gdelt", String(e));
       continue;
     }
-    for (const m of xml.matchAll(/<item>([\s\S]*?)<\/item>/g)) {
-      const body = m[1];
-      const pick = (tag: string) => decode((body.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)</${tag}>`)) ?? [])[1] ?? "");
-      const link = pick("link");
-      let title = pick("title");
-      const source = pick("source");
-      const pub = Date.parse(pick("pubDate"));
-      if (!link || !title || Number.isNaN(pub)) continue;
-      if (source && title.endsWith(` - ${source}`)) title = title.slice(0, -(source.length + 3)).trim();
+    type Raw = { title: string; link: string; source: string; pub: number };
+    const raws: Raw[] = [];
+    if (feed.kind === "gdelt") {
+      try {
+        const j = JSON.parse(xml) as { articles?: { url: string; title: string; seendate: string; domain: string }[] };
+        for (const a of j.articles ?? []) {
+          const d = a.seendate.match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z$/);
+          raws.push({ title: a.title, link: a.url, source: a.domain.replace(/^www\./, ""), pub: d ? Date.UTC(+d[1], +d[2] - 1, +d[3], +d[4], +d[5], +d[6]) : NaN });
+        }
+      } catch {
+        continue;
+      }
+    } else {
+      for (const m of xml.matchAll(/<item>([\s\S]*?)<\/item>/g)) {
+        const body = m[1];
+        const pick = (tag: string) => decode((body.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)</${tag}>`)) ?? [])[1] ?? "");
+        raws.push({ title: pick("title"), link: pick("link"), source: feed.name, pub: Date.parse(pick("pubDate")) });
+      }
+    }
+    for (const r of raws) {
+      const { link, source, pub } = r;
+      const title = r.title.replace(/\s+/g, " ").trim();
+      if (!link.startsWith("http") || !title || Number.isNaN(pub)) continue;
       if (!RELEVANT.test(title) || NOISE.test(title)) continue;
       if (Date.now() - pub > 30 * 86_400_000) continue; // فقط خبرهای ۳۰ روز اخیر
-      const key = title.replace(/\s+/g, " ").toLowerCase();
+      const key = title.toLowerCase();
       if (titles.has(key)) continue;
       titles.add(key);
       const id = `news-${await sha(link)}`;
