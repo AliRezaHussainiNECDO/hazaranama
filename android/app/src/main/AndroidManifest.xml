@@ -27,16 +27,6 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-            <!-- پیوند بازگشتی بازیابی رمز عبور — Supabase پس از کلیک روی پیوند
-                 ایمیل‌شده، کاربر را از طریق این scheme دوباره به داخل خودِ اپ
-                 برمی‌گرداند (به‌جای بازشدن در مرورگر)، همراه با یک نشست موقت
-                 بازیابی که صفحه‌ی «تنظیم رمز تازه» از آن استفاده می‌کند. -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="hazaranama" android:host="reset-callback"/>
-            </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
@@ -53,6 +43,11 @@
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
+        </intent>
+        <!-- باز کردن پیوندهای وب (ویدیوها، سایت مشعل و…) در مرورگر — اندروید ۱۱+ -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="https"/>
         </intent>
     </queries>
 </manifest>

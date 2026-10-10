@@ -31,21 +31,6 @@
 	     در بازبینی اپ استور رد می‌شود. دوربین در این اپ استفاده نمی‌شود. -->
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>برای انتخاب عکس یا ویدیوی پروفایل و محتوا از گالری گوشی شما، هزاره‌نامه به دسترسی گالری نیاز دارد.</string>
-	<!-- پیوند بازگشتی بازیابی رمز عبور — Supabase پس از کلیک روی پیوند ایمیل‌شده
-	     کاربر را از طریق این scheme دوباره به داخل خودِ اپ برمی‌گرداند. -->
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>com.hazaranama.resetcallback</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>hazaranama</string>
-			</array>
-		</dict>
-	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
