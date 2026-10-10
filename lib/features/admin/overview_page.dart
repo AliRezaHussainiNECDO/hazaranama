@@ -103,7 +103,7 @@ class _OverviewPageState extends State<OverviewPage> {
             Row(children: [
               StatIconBox(icon: Icons.dashboard, color: theme.blue, size: 26),
               const SizedBox(width: 8),
-              Text('پربازدیدترین بخش‌ها ($totalItems مورد)', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700)),
+              Text('محتوای بخش‌ها ($totalItems مطلب)', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700)),
             ]),
             const SizedBox(height: 12),
             for (final s in sectionStats) ...[

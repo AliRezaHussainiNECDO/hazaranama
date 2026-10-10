@@ -35,6 +35,14 @@ class HazaranamaApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: 'Vazirmatn', // اگر فونت را اضافه نکردید، فلاتر خودکار به فونت پیش‌فرض برمی‌گردد
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1E5FA8)),
+        // گذار نرم و مدرن میان صفحه‌ها
+        pageTransitionsTheme: const PageTransitionsTheme(builders: {
+          TargetPlatform.android: FadeForwardsPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.windows: FadeForwardsPageTransitionsBuilder(),
+          TargetPlatform.linux: FadeForwardsPageTransitionsBuilder(),
+          TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+        }),
       ),
       onGenerateRoute: (settings) {
         if (settings.name == '/section') {
@@ -60,6 +68,20 @@ class _AuthGate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final stage = context.watch<AppState>().stage;
+    // جابه‌جایی میان خوش‌آمد، ورود، ثبت‌نام و خودِ اپ با محوشدن و بزرگ‌نمایی نرم
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 420),
+      switchInCurve: Curves.easeOutCubic,
+      switchOutCurve: Curves.easeInCubic,
+      transitionBuilder: (child, anim) => FadeTransition(
+        opacity: anim,
+        child: ScaleTransition(scale: Tween<double>(begin: 0.97, end: 1).animate(anim), child: child),
+      ),
+      child: KeyedSubtree(key: ValueKey(stage), child: _screenFor(stage)),
+    );
+  }
+
+  Widget _screenFor(AuthStage stage) {
     switch (stage) {
       case AuthStage.checking:
         return const _CheckingScreen();
