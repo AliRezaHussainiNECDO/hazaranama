@@ -86,6 +86,8 @@ def info(titles):
 
 
 def main():
+    if not os.path.exists("scripts/research/targets.json"):
+        return
     targets = json.load(open("scripts/research/targets.json", encoding="utf-8"))
     result = {}
     for t in targets:
@@ -201,3 +203,23 @@ def wiki():
 
 if __name__ == "__main__":
     wiki()
+
+
+def pages():
+    """Save full plain text of selected Wikipedia pages for offline fact-checking."""
+    if not os.path.exists("scripts/research/pages.json"):
+        return
+    os.makedirs(f"{OUT}/pages", exist_ok=True)
+    for t in json.load(open("scripts/research/pages.json", encoding="utf-8")):
+        d = api("https://en.wikipedia.org/w/api.php", action="query", prop="extracts|info", inprop="url", explaintext=1, titles=t, redirects=1)
+        for p in d.get("query", {}).get("pages", []):
+            txt = (p.get("fullurl") or "") + "\n\n" + (p.get("extract") or "")
+            # wikitext too (tables in list pages are dropped by extracts)
+            w = api("https://en.wikipedia.org/w/api.php", action="parse", page=p.get("title", t), prop="wikitext", redirects=1)
+            txt += "\n\n=====WIKITEXT=====\n" + (w.get("parse", {}).get("wikitext", "") if isinstance(w.get("parse", {}).get("wikitext"), str) else "")
+            open(f"{OUT}/pages/{re.sub(r'[^A-Za-z0-9]+', '_', t)[:80]}.txt", "w", encoding="utf-8").write(txt)
+        time.sleep(0.5)
+
+
+if __name__ == "__main__":
+    pages()
