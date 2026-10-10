@@ -157,6 +157,7 @@ class _ContentManagerPageState extends State<ContentManagerPage> {
     final controllers = {for (final f in section.fields) f.key: TextEditingController(text: existing != null ? '${existing[f.key] ?? ""}' : '')};
     final imageUrlController = TextEditingController(text: existing?.imageUrl ?? '');
     final videoUrlController = TextEditingController(text: existing?.videoUrl ?? '');
+    final creditController = TextEditingController(text: existing?.imageCredit ?? '');
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -250,6 +251,18 @@ class _ContentManagerPageState extends State<ContentManagerPage> {
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: theme.border)),
                   ),
                 ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: creditController,
+                  style: TextStyle(color: theme.textPrimary, fontSize: 12.5),
+                  decoration: InputDecoration(
+                    hintText: 'اعتبار عکس: نام عکاس / منبع و مجوز (مثلاً CC BY-SA 4.0)',
+                    hintStyle: TextStyle(color: theme.textFaint, fontSize: 12),
+                    filled: true, fillColor: theme.bgCard,
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: theme.border)),
+                  ),
+                ),
                 const SizedBox(height: 16),
                 Text('لینک ویدیو (اختیاری — یوتیوب، آپارات و…)', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 const SizedBox(height: 8),
@@ -269,7 +282,12 @@ class _ContentManagerPageState extends State<ContentManagerPage> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        final values = {for (final f in section.fields) f.key: controllers[f.key]!.text};
+                        // فیلدهای دیگر آیتم (اعتبار عکس، منبع، مختصات نقشه…) دست‌نخورده می‌مانند
+                        final values = <String, dynamic>{
+                          ...?existing?.fields,
+                          for (final f in section.fields) f.key: controllers[f.key]!.text,
+                          'img_credit': creditController.text.trim(),
+                        };
                         final imageUrl = imageUrlController.text.trim();
                         final videoUrl = videoUrlController.text.trim();
                         if (existing != null) {

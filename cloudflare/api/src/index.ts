@@ -16,6 +16,7 @@ import { emailConfigured, sendEmail, recoveryEmail, welcomeEmail, passwordChange
 import { handleAi } from "./ai";
 import schemaSql from "../schema.sql";
 import seedContent from "../seed/content.json";
+import { fetchNews, mirrorCommons, prewarmMirror } from "./content_extra";
 import legacySeedKeys from "../seed/legacy_seed_keys.json";
 
 const SCHEMA_VERSION = 3;
@@ -281,7 +282,10 @@ async function serveMedia(env: Env, req: Request, key: string): Promise<Response
       else r2Range = { offset: Number(m[1]), length: Number(m[2]) - Number(m[1]) + 1 };
     }
   }
-  const obj = await env.MEDIA.get(key, r2Range ? { range: r2Range } : undefined);
+  let obj = await env.MEDIA.get(key, r2Range ? { range: r2Range } : undefined);
+  if (!obj && key.startsWith("commons/") && (await mirrorCommons(env, key))) {
+    obj = await env.MEDIA.get(key, r2Range ? { range: r2Range } : undefined);
+  }
   if (!obj) return new Response("پیدا نشد", { status: 404, headers: CORS });
   const headers = new Headers(CORS);
   obj.writeHttpMetadata(headers);
@@ -428,6 +432,7 @@ interface SeedItem {
   id: string;
   section_id: string;
   sort_order: number;
+  image_url?: string;
   fields: Record<string, unknown>;
 }
 
@@ -435,16 +440,17 @@ async function seed(env: Env, replaceSections: string[]) {
   const content = seedContent as { version?: string; items: SeedItem[] };
   const items = content.items ?? [];
   const stmts: D1PreparedStatement[] = [];
-  // محتوای اولیه (seed-*) هر بار کامل بازنویسی می‌شود؛ آنچه مدیر خودش افزوده دست‌نخورده می‌ماند
-  stmts.push(env.DB.prepare("DELETE FROM content_items WHERE id LIKE 'seed-%'"));
+  // محتوای اولیه (seed-*) بازنویسی می‌شود، مگر آیتمی که مدیر ویرایشش کرده (updated_at ≠ created_at)؛
+  // آنچه مدیر خودش افزوده هم دست‌نخورده می‌ماند
+  stmts.push(env.DB.prepare("DELETE FROM content_items WHERE id LIKE 'seed-%' AND updated_at = created_at"));
   for (const sec of replaceSections) {
     stmts.push(env.DB.prepare("DELETE FROM content_items WHERE section_id = ? AND id NOT LIKE 'seed-%'").bind(sec));
   }
   const now = new Date().toISOString();
   for (const it of items) {
     stmts.push(
-      env.DB.prepare("INSERT INTO content_items (id, section_id, fields, sort_order, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)").bind(
-        it.id, it.section_id, JSON.stringify(it.fields), it.sort_order, now, now,
+      env.DB.prepare("INSERT OR IGNORE INTO content_items (id, section_id, fields, image_url, sort_order, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)").bind(
+        it.id, it.section_id, JSON.stringify(it.fields), it.image_url ?? null, it.sort_order, now, now,
       ),
     );
   }
@@ -503,6 +509,12 @@ async function handleAdmin(env: Env, ctx: Ctx, req: Request, path: string, url: 
     if ((await sha256Hex(text)) !== GLOSSARY_SHA) return err(403, "فایل با نسخه‌ی تأییدشده یکی نیست.");
     await env.MEDIA.put("imports/mashal-glossary.json", text, { httpMetadata: { contentType: "application/json; charset=utf-8" } });
     return json({ ok: true, bytes: text.length });
+  }
+
+  if (path === "/admin/fetch-news") {
+    const u = await currentUser(env, req);
+    if (!u || u.role !== "admin") return err(403, "فقط مدیر.");
+    return json(await fetchNews(env, true));
   }
 
   if (path === "/admin/push-status" || path === "/admin/broadcast") {
@@ -626,6 +638,8 @@ async function scheduled(env: Env) {
     worked = true;
   }
   if (!worked) await migrateMedia(env, PUBLIC_ORIGIN, 20);
+  await prewarmMirror(env, 6).catch((e) => console.error("prewarm", e));
+  await fetchNews(env).catch((e) => console.error("news", e));
 }
 
 // ---------------- ورودی اصلی ----------------

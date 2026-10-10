@@ -103,7 +103,8 @@ const List<ContentSection> kSections = [
     kind: SectionKind.regions,
     fields: [
       ContentFieldSpec('name', 'نام منطقه'),
-      ContentFieldSpec('note', 'توضیح', multiline: true),
+      ContentFieldSpec('note', 'توضیح کوتاه', multiline: true),
+      ContentFieldSpec('full', 'متن کامل و منابع (اختیاری)', multiline: true),
     ],
   ),
   ContentSection(
@@ -112,7 +113,10 @@ const List<ContentSection> kSections = [
     description: 'تصاویر و مستندات دیداری',
     group: 'resources',
     kind: SectionKind.photos,
-    fields: [ContentFieldSpec('caption', 'عنوان تصویر')],
+    fields: [
+      ContentFieldSpec('caption', 'عنوان تصویر'),
+      ContentFieldSpec('desc', 'توضیح (اختیاری)', multiline: true),
+    ],
   ),
   ContentSection(
     id: 'news',
@@ -121,9 +125,11 @@ const List<ContentSection> kSections = [
     group: 'resources',
     kind: SectionKind.news,
     fields: [
-      ContentFieldSpec('date', 'تاریخ'),
       ContentFieldSpec('title', 'عنوان خبر'),
+      ContentFieldSpec('date', 'تاریخ'),
+      ContentFieldSpec('source', 'منبع خبر (نام رسانه)'),
       ContentFieldSpec('snippet', 'خلاصه', multiline: true),
+      ContentFieldSpec('url', 'لینک خبر (اختیاری)'),
     ],
   ),
   ContentSection(
@@ -137,6 +143,10 @@ const List<ContentSection> kSections = [
       ContentFieldSpec('author', 'نویسنده'),
       ContentFieldSpec('tag', 'دسته‌بندی'),
       ContentFieldSpec('note', 'معرفی کتاب', multiline: true),
+      ContentFieldSpec('year', 'سال نشر'),
+      ContentFieldSpec('lang', 'زبان'),
+      ContentFieldSpec('read_url', 'لینک خواندن آنلاین (اختیاری)'),
+      ContentFieldSpec('buy_url', 'لینک خرید یا صفحه‌ی ناشر (اختیاری)'),
     ],
   ),
   ContentSection(

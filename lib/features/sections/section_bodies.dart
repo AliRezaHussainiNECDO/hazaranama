@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/app_colors.dart';
+import '../../core/afghan_calendar.dart';
 import '../../core/app_logo.dart';
 import '../../core/article_screen.dart';
 import '../../core/widgets.dart';
@@ -41,6 +42,7 @@ class TimelineBody extends StatelessWidget {
             body: (it['full'] ?? it['text']) as String,
             imageUrl: it.imageUrl,
             videoUrl: it.videoUrl,
+            item: it,
           )),
           child: Container(
             padding: const EdgeInsets.fromLTRB(14, 16, 14, 13),
@@ -124,16 +126,27 @@ class PeopleBody extends StatelessWidget {
                   body: (person['bio'] ?? person['field']) as String,
                   imageUrl: person.imageUrl,
                   videoUrl: person.videoUrl,
+                  item: person,
                 )),
                 child: Container(
                   decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(20), border: Border.all(color: theme.glassBorder)),
                   clipBehavior: Clip.antiAlias,
                   child: Column(children: [
-                    ContentMediaCover(item: person, height: 44, radius: 0, fallback: SectionMediaPlaceholder(accent: color, icon: icon, height: 44)),
+                    SectionMediaPlaceholder(accent: color, icon: icon, height: 44),
                     Transform.translate(
                       offset: const Offset(0, -27),
                       child: Stack(alignment: Alignment.center, children: [
-                        HzBadge(theme: theme, size: 54, filled: true, child: Text((person['name'] as String)[0], style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 17))),
+                        (person.imageUrl ?? '').isNotEmpty
+                            ? Container(
+                                width: 58,
+                                height: 58,
+                                decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: color, width: 2), boxShadow: [BoxShadow(color: color.withValues(alpha: 0.35), blurRadius: 10)]),
+                                child: ClipOval(
+                                  child: Image.network(person.imageUrl!, fit: BoxFit.cover, alignment: const Alignment(0, -0.6),
+                                      errorBuilder: (_, __, ___) => HzBadge(theme: theme, size: 54, filled: true, child: Text((person['name'] as String)[0], style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 17)))),
+                                ),
+                              )
+                            : HzBadge(theme: theme, size: 54, filled: true, child: Text((person['name'] as String)[0], style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 17))),
                         Positioned(
                           bottom: -2, left: 8,
                           child: Container(
@@ -186,6 +199,7 @@ class IncidentsBody extends StatelessWidget {
               body: ((it['full'] as String?)?.isNotEmpty == true ? it['full'] : it['text']) as String,
               imageUrl: it.imageUrl,
               videoUrl: it.videoUrl,
+              item: it,
             )),
             child: Container(
               decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(18), border: Border.all(color: theme.glassBorder)),
@@ -259,9 +273,26 @@ class GridBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // تازه‌ترین خبر بالا؛ خبرهای بدون تاریخ انتشار (افزوده‌ی دستی) به ترتیب مدیر
+    final sorted = [...items]..sort((a, b) {
+        final da = DateTime.tryParse((a['published'] ?? '').toString());
+        final db = DateTime.tryParse((b['published'] ?? '').toString());
+        if (da == null && db == null) return 0;
+        if (da == null) return -1;
+        if (db == null) return 1;
+        return db.compareTo(da);
+      });
+    if (sorted.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(30),
+          child: Text('هنوز خبری ثبت نشده است.', style: TextStyle(color: theme.textFaint, fontSize: 13)),
+        ),
+      );
+    }
     return ListView.separated(
       padding: const EdgeInsets.fromLTRB(18, 14, 18, 24),
-      itemCount: items.length,
+      itemCount: sorted.length,
       separatorBuilder: (_, __) => const SizedBox(height: 10),
       itemBuilder: (context, i) {
         final it = items[i];
@@ -275,6 +306,7 @@ class GridBody extends StatelessWidget {
             body: (it['full'] ?? it['note']) as String,
             imageUrl: it.imageUrl,
             videoUrl: it.videoUrl,
+            item: it,
           )),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
@@ -435,22 +467,41 @@ class _RegionsBodyState extends State<RegionsBody> {
           padding: const EdgeInsets.all(13),
           decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(16), border: Border.all(color: theme.glassBorder)),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            if ((active.imageUrl ?? '').isNotEmpty) ...[
+              ContentMediaCover(item: active, height: 160, radius: 12, fallback: SectionMediaPlaceholder(accent: theme.blue, icon: Icons.terrain_rounded, height: 160)),
+              if (active.imageCredit.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Text('📷 ${active.imageCredit}', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
+                ),
+              const SizedBox(height: 10),
+            ],
             Row(children: [
               Icon(Icons.location_on, size: 14, color: theme.blue),
               const SizedBox(width: 7),
-              Text(active['name'] as String, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700)),
+              Expanded(child: Text(active['name'] as String, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700))),
             ]),
             const SizedBox(height: 6),
             Text(active['note'] as String, style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.9)),
-            const SizedBox(height: 10),
-            ContentMediaCover(item: active, height: 110, radius: 12, fallback: SectionMediaPlaceholder(accent: theme.blue, icon: Icons.terrain_rounded, height: 110)),
+            if ((active['full'] ?? '').toString().isNotEmpty)
+              Align(
+                alignment: AlignmentDirectional.centerEnd,
+                child: TextButton.icon(
+                  onPressed: () => _openRegion(context, active),
+                  icon: Icon(Icons.arrow_back_rounded, size: 15, color: theme.blue),
+                  label: Text('بیشتر بخوانید', style: TextStyle(color: theme.blue, fontSize: 12, fontWeight: FontWeight.w800)),
+                ),
+              ),
           ]),
         ),
         const SizedBox(height: 20),
         Text('اجتماعات برون‌مرزی', style: TextStyle(color: theme.textSecondary, fontSize: 12, fontWeight: FontWeight.w700)),
         const SizedBox(height: 10),
         for (final d in diasporaList) ...[
-          Container(
+          InkWell(
+            borderRadius: BorderRadius.circular(16),
+            onTap: () => _openRegion(context, d),
+            child: Container(
             margin: const EdgeInsets.only(bottom: 8),
             padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 11),
             decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(16), border: Border.all(color: theme.glassBorder)),
@@ -464,11 +515,27 @@ class _RegionsBodyState extends State<RegionsBody> {
                   Text(d['note'] as String, style: TextStyle(color: theme.textFaint, fontSize: 11.5, height: 1.6)),
                 ]),
               ),
+              Icon(Icons.chevron_left_rounded, size: 18, color: theme.textFaint),
             ]),
+          ),
           ),
         ],
       ],
     );
+  }
+
+  void _openRegion(BuildContext context, ContentItem r) {
+    final full = (r['full'] ?? '').toString();
+    Navigator.of(context).push(ArticleScreen.route(
+      theme: theme,
+      badge: HzBadge(theme: theme, size: 34, child: Icon(Icons.location_on, size: 15, color: theme.blue)),
+      title: r['name'] as String,
+      subtitle: 'نقشه‌ی هزارستان',
+      body: full.isNotEmpty ? full : r['note'] as String,
+      imageUrl: r.imageUrl,
+      videoUrl: r.videoUrl,
+      item: r,
+    ));
   }
 }
 
@@ -526,7 +593,7 @@ class PhotosBody extends StatelessWidget {
           child: Column(children: [
             Expanded(
               child: InkWell(
-                onTap: hasImage ? () => _openFullscreen(context, it.imageUrl!, it['caption'] as String) : null,
+                onTap: hasImage ? () => _openFullscreen(context, it) : null,
                 child: ContentMediaCover(
                   item: it,
                   height: double.infinity,
@@ -537,8 +604,12 @@ class PhotosBody extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-              child: Text(it['caption'] as String, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 11.5)),
+              padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(it['caption'] as String, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 11.5)),
+                if (it.imageCredit.isNotEmpty)
+                  Text(it.imageCredit, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 9.5)),
+              ]),
             ),
           ]),
         ).staggered(i);
@@ -546,7 +617,10 @@ class PhotosBody extends StatelessWidget {
     );
   }
 
-  void _openFullscreen(BuildContext context, String imageUrl, String caption) {
+  void _openFullscreen(BuildContext context, ContentItem it) {
+    final imageUrl = it.imageUrl!;
+    final caption = it['caption'] as String;
+    final desc = (it['desc'] ?? '').toString();
     Navigator.of(context).push(PageRouteBuilder(
       opaque: false,
       barrierColor: Colors.black87,
@@ -560,13 +634,35 @@ class PhotosBody extends StatelessWidget {
             leading: IconButton(icon: const Icon(Icons.close, color: Colors.white), onPressed: () => Navigator.of(context).pop()),
             title: Text(caption, style: const TextStyle(color: Colors.white, fontSize: 13)),
           ),
-          body: Center(
-            child: InteractiveViewer(
-              minScale: 0.8,
-              maxScale: 4,
-              child: Image.network(imageUrl, fit: BoxFit.contain, errorBuilder: (_, __, ___) => const Icon(Icons.broken_image, color: Colors.white54, size: 48)),
+          body: Column(children: [
+            Expanded(
+              child: Center(
+                child: InteractiveViewer(
+                  minScale: 0.8,
+                  maxScale: 4,
+                  child: Image.network(imageUrl, fit: BoxFit.contain, errorBuilder: (_, __, ___) => const Icon(Icons.broken_image, color: Colors.white54, size: 48)),
+                ),
+              ),
             ),
-          ),
+            if (desc.isNotEmpty || it.imageCredit.isNotEmpty)
+              SafeArea(
+                top: false,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(18, 10, 18, 14),
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    if (desc.isNotEmpty) Text(desc, style: const TextStyle(color: Colors.white, fontSize: 12.5, height: 1.8)),
+                    if (it.imageCredit.isNotEmpty)
+                      InkWell(
+                        onTap: it.imagePage.isEmpty ? null : () => openContentUrl(context, it.imagePage),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 6),
+                          child: Text('📷 ${it.imageCredit}', style: const TextStyle(color: Colors.white60, fontSize: 10.5)),
+                        ),
+                      ),
+                  ]),
+                ),
+              ),
+          ]),
         ),
       ),
     ));
@@ -586,19 +682,47 @@ class NewsBody extends StatelessWidget {
       itemCount: items.length,
       separatorBuilder: (_, __) => const SizedBox(height: 10),
       itemBuilder: (context, i) {
-        final it = items[i];
-        return Container(
-          padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(14), border: Border.all(color: theme.glassBorder)),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            ContentMediaCover(item: it, height: 130, radius: 12, fallback: SectionMediaPlaceholder(accent: theme.blue, icon: Icons.newspaper_rounded, height: 130)),
-            const SizedBox(height: 10),
-            Text(it['date'] as String, style: TextStyle(color: theme.blue, fontSize: 11.5, fontWeight: FontWeight.w700)),
-            const SizedBox(height: 6),
-            Text(it['title'] as String, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700, height: 1.5)),
-            const SizedBox(height: 5),
-            Text(it['snippet'] as String, style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.8)),
-          ]),
+        final it = sorted[i];
+        final url = (it['url'] ?? '').toString();
+        final source = (it['source'] ?? '').toString();
+        final published = DateTime.tryParse((it['published'] ?? '').toString());
+        final date = published != null ? afghanDateLabel(published.toLocal()) : (it['date'] ?? '').toString();
+        final snippet = (it['snippet'] ?? '').toString();
+        final hasImage = (it.imageUrl ?? '').isNotEmpty;
+        return Material(
+          color: theme.bgCard.withValues(alpha: 0.55),
+          borderRadius: BorderRadius.circular(16),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(16),
+            onTap: url.startsWith('http') ? () => openContentUrl(context, url) : null,
+            child: Container(
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), border: Border.all(color: theme.glassBorder)),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                if (hasImage) ...[
+                  ContentMediaCover(item: it, height: 130, radius: 12, fallback: SectionMediaPlaceholder(accent: theme.blue, icon: Icons.newspaper_rounded, height: 130)),
+                  const SizedBox(height: 10),
+                ],
+                Row(children: [
+                  Icon(Icons.schedule_rounded, size: 13, color: theme.blue),
+                  const SizedBox(width: 4),
+                  Text(date, style: TextStyle(color: theme.blue, fontSize: 11.5, fontWeight: FontWeight.w700)),
+                  if (source.isNotEmpty) ...[
+                    Text('  ·  ', style: TextStyle(color: theme.textFaint, fontSize: 11)),
+                    Expanded(child: Text(source, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 11, fontWeight: FontWeight.w600))),
+                  ] else
+                    const Spacer(),
+                  if (url.startsWith('http')) Icon(Icons.open_in_new_rounded, size: 15, color: theme.textFaint),
+                ]),
+                const SizedBox(height: 7),
+                Text(it['title'] as String, style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800, height: 1.6)),
+                if (snippet.isNotEmpty) ...[
+                  const SizedBox(height: 5),
+                  Text(snippet, maxLines: 4, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.8)),
+                ],
+              ]),
+            ),
+          ),
         ).staggered(i);
       },
     );
@@ -616,20 +740,21 @@ class BooksBody extends StatelessWidget {
     return GridView.builder(
       padding: const EdgeInsets.fromLTRB(18, 14, 18, 24),
       itemCount: items.length,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 11, crossAxisSpacing: 11, childAspectRatio: 0.82),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 11, crossAxisSpacing: 11, childAspectRatio: 0.74),
       itemBuilder: (context, i) {
         final it = items[i];
         final note = it['note'] as String?;
         return InkWell(
           borderRadius: BorderRadius.circular(18),
-          onTap: (note == null || note.isEmpty) ? null : () => Navigator.of(context).push(ArticleScreen.route(
+          onTap: ((note == null || note.isEmpty) && it.links.isEmpty) ? null : () => Navigator.of(context).push(ArticleScreen.route(
             theme: theme,
             badge: HzBadge(theme: theme, size: 34, child: Icon(Icons.menu_book_rounded, size: 15, color: theme.blue)),
             title: it['title'] as String,
             subtitle: it['author'] as String,
-            body: note,
+            body: [note ?? '', if ((it['year'] ?? '').toString().isNotEmpty || (it['lang'] ?? '').toString().isNotEmpty) [if ((it['year'] ?? '').toString().isNotEmpty) 'سال نشر: ${it['year']}', if ((it['lang'] ?? '').toString().isNotEmpty) 'زبان: ${it['lang']}'].join('  ·  ')].where((e) => e.isNotEmpty).join('\n\n'),
             imageUrl: it.imageUrl,
             videoUrl: it.videoUrl,
+            item: it,
           )),
           child: Container(
             padding: const EdgeInsets.all(14),
@@ -646,11 +771,15 @@ class BooksBody extends StatelessWidget {
               const SizedBox(height: 4),
               Text(it['author'] as String, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 11)),
               const Spacer(),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                decoration: BoxDecoration(color: theme.blue.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(999)),
-                child: Text(it['tag'] as String, style: TextStyle(color: theme.blue, fontSize: 10.5, fontWeight: FontWeight.w700)),
-              ),
+              Text(it['tag'] as String, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.blue, fontSize: 10.5, fontWeight: FontWeight.w700, height: 1.5)),
+              if (it.links.isNotEmpty) ...[
+                const SizedBox(height: 6),
+                Row(children: [
+                  Icon(it['read_url'] != null && it['read_url'].toString().isNotEmpty ? Icons.chrome_reader_mode_outlined : Icons.shopping_bag_outlined, size: 13, color: theme.success),
+                  const SizedBox(width: 4),
+                  Text(it['read_url'] != null && it['read_url'].toString().isNotEmpty ? 'قابل خواندن آنلاین' : 'لینک ناشر', style: TextStyle(color: theme.success, fontSize: 10.5, fontWeight: FontWeight.w700)),
+                ]),
+              ],
             ]),
           ),
         ).staggered(i);

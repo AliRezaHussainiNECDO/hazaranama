@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../../core/app_colors.dart';
 import '../../core/widgets.dart';
+import '../../core/youtube.dart';
 import '../../models/models.dart';
 import '../../state/app_state.dart';
 
@@ -393,6 +394,11 @@ class _VideosManager extends StatelessWidget {
                   label: Text(uploadingVideo ? 'در حال آپلود ویدیو…' : 'انتخاب فایل ویدیو از گالری', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                   style: OutlinedButton.styleFrom(foregroundColor: theme.blue, side: BorderSide(color: theme.border), padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
                 ),
+                const SizedBox(height: 8),
+                _field(theme, videoUrlCtrl, hint: 'یا لینک یوتیوب از کانال رسمی هنرمند'),
+                const SizedBox(height: 4),
+                Text('برای آپلود مستقیم، اجازه‌ی کتبی هنرمند لازم است. لینک یوتیوب از کانال رسمی هنرمند اجازه‌ی جدا نمی‌خواهد.',
+                    style: TextStyle(color: theme.textFaint, fontSize: 11, height: 1.6)),
                 const SizedBox(height: 14),
                 _label(theme, 'تامبنیل (اختیاری)'),
                 const SizedBox(height: 6),
@@ -416,8 +422,10 @@ class _VideosManager extends StatelessWidget {
                           showHzToast(context, 'عنوان را وارد کنید.');
                           return;
                         }
+                        final yt = youtubeId(videoUrlCtrl.text);
+                        if (yt != null && thumbUrlCtrl.text.trim().isEmpty) thumbUrlCtrl.text = youtubeThumb(yt);
                         if (videoUrlCtrl.text.trim().isEmpty) {
-                          showHzToast(context, 'ابتدا فایل ویدیو را آپلود کنید.');
+                          showHzToast(context, 'فایل ویدیو را آپلود کنید یا لینک یوتیوب را بگذارید.');
                           return;
                         }
                         if (existing != null) {

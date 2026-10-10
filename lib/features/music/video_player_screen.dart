@@ -7,6 +7,7 @@ import '../../core/app_colors.dart';
 import '../../core/app_constants.dart';
 import '../../core/donor_tiers.dart';
 import '../../core/widgets.dart';
+import '../../core/youtube.dart';
 import '../../models/models.dart';
 import '../../state/app_state.dart';
 import 'hz_video_player.dart';
@@ -152,7 +153,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(14, 12, 14, 0),
-                  child: HzVideoPlayer(videoUrl: video.videoUrl, thumbnailUrl: video.thumbnailUrl, theme: theme, onFirstPlay: _onFirstPlay),
+                  child: youtubeId(video.videoUrl) != null
+                      ? _YoutubeCard(theme: theme, url: video.videoUrl, id: youtubeId(video.videoUrl)!, thumbnailUrl: video.thumbnailUrl, onOpen: _onFirstPlay)
+                      : HzVideoPlayer(videoUrl: video.videoUrl, thumbnailUrl: video.thumbnailUrl, theme: theme, onFirstPlay: _onFirstPlay),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(18, 14, 18, 0),
@@ -379,6 +382,59 @@ class _CommentTile extends StatelessWidget {
           ]),
         ),
       ]),
+    );
+  }
+}
+
+
+/// ویدیوی یوتیوب (از کانال رسمی هنرمند): تامبنیل با دکمه‌ی پخش که ویدیو را در یوتیوب باز می‌کند؛
+/// بازدید و درآمد آن برای خود هنرمند ثبت می‌شود.
+class _YoutubeCard extends StatelessWidget {
+  final AppColors theme;
+  final String url;
+  final String id;
+  final String? thumbnailUrl;
+  final VoidCallback onOpen;
+  const _YoutubeCard({required this.theme, required this.url, required this.id, required this.thumbnailUrl, required this.onOpen});
+
+  @override
+  Widget build(BuildContext context) {
+    final thumb = (thumbnailUrl ?? '').isNotEmpty ? thumbnailUrl! : youtubeThumb(id);
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(18),
+      child: AspectRatio(
+        aspectRatio: 16 / 9,
+        child: Material(
+          color: Colors.black,
+          child: InkWell(
+            onTap: () {
+              onOpen();
+              openContentUrl(context, url);
+            },
+            child: Stack(fit: StackFit.expand, children: [
+              Image.network(thumb, fit: BoxFit.cover, errorBuilder: (_, __, ___) => Container(color: theme.bgCard)),
+              const DecoratedBox(decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Colors.transparent, Color(0xB3000000)]))),
+              Center(
+                child: Container(
+                  width: 64,
+                  height: 46,
+                  decoration: BoxDecoration(color: const Color(0xFFFF0033), borderRadius: BorderRadius.circular(14)),
+                  child: const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 34),
+                ),
+              ),
+              const PositionedDirectional(
+                start: 12,
+                bottom: 10,
+                child: Row(children: [
+                  Icon(Icons.open_in_new_rounded, size: 14, color: Colors.white70),
+                  SizedBox(width: 5),
+                  Text('پخش در یوتیوب', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w700)),
+                ]),
+              ),
+            ]),
+          ),
+        ),
+      ),
     );
   }
 }

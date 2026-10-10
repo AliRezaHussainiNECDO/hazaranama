@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import '../models/models.dart';
 import 'app_colors.dart';
 import 'widgets.dart';
 
@@ -14,6 +15,9 @@ class ArticleScreen extends StatelessWidget {
   final String body;
   final String? imageUrl;
   final String? videoUrl;
+  final String imageCredit;
+  final String imagePage;
+  final List<(String, String)> links;
 
   const ArticleScreen({
     super.key,
@@ -24,6 +28,9 @@ class ArticleScreen extends StatelessWidget {
     this.subtitle,
     this.imageUrl,
     this.videoUrl,
+    this.imageCredit = '',
+    this.imagePage = '',
+    this.links = const [],
   });
 
   static Route<void> route({
@@ -34,6 +41,7 @@ class ArticleScreen extends StatelessWidget {
     String? subtitle,
     String? imageUrl,
     String? videoUrl,
+    ContentItem? item,
   }) {
     return MaterialPageRoute(
       builder: (_) => ArticleScreen(
@@ -44,6 +52,9 @@ class ArticleScreen extends StatelessWidget {
         subtitle: subtitle,
         imageUrl: imageUrl,
         videoUrl: videoUrl,
+        imageCredit: item?.imageCredit ?? '',
+        imagePage: item?.imagePage ?? '',
+        links: item?.links ?? const [],
       ),
     );
   }
@@ -117,6 +128,18 @@ class ArticleScreen extends StatelessWidget {
                     ]),
                   ),
                 ).animate().fadeIn(duration: 420.ms).scale(begin: const Offset(0.97, 0.97)),
+                if (imageCredit.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 7),
+                    child: InkWell(
+                      onTap: imagePage.isEmpty ? null : () => openContentUrl(context, imagePage),
+                      child: Row(children: [
+                        Icon(Icons.photo_camera_outlined, size: 13, color: theme.textFaint),
+                        const SizedBox(width: 5),
+                        Expanded(child: Text(imageCredit, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 10.5, height: 1.5))),
+                      ]),
+                    ),
+                  ),
                 const SizedBox(height: 18),
               ] else if (videoUrl != null && videoUrl!.isNotEmpty) ...[
                 Material(
@@ -143,6 +166,31 @@ class ArticleScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: Text(p, style: TextStyle(color: theme.textSecondary, fontSize: 13, height: 2.0)),
+                ),
+              for (final (label, url) in links)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Material(
+                    color: theme.blue.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(14),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(14),
+                      onTap: () => openContentUrl(context, url),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                        child: Row(children: [
+                          Icon(Icons.open_in_new_rounded, size: 18, color: theme.blue),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                              Text(label, style: TextStyle(color: theme.blue, fontSize: 12.5, fontWeight: FontWeight.w800)),
+                              Text(Uri.tryParse(url)?.host.replaceFirst('www.', '') ?? url, textDirection: TextDirection.ltr, style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                            ]),
+                          ),
+                        ]),
+                      ),
+                    ),
+                  ),
                 ),
             ],
           ),

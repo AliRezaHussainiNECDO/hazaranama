@@ -221,6 +221,28 @@ class ContentItem {
 
   dynamic operator [](String key) => fields[key];
   void operator []=(String key, dynamic value) => fields[key] = value;
+
+  String _s(String k) => (fields[k] ?? '').toString().trim();
+
+  /// اعتبار عکس (نام عکاس و مجوز) — برای عکس‌های Wikimedia Commons و مانند آن
+  String get imageCredit => _s('img_credit');
+
+  /// صفحه‌ی اصلی عکس (مثلاً صفحه‌ی فایل در Commons)
+  String get imagePage => _s('img_page');
+
+  /// لینک‌های بیرونی آیتم: [(برچسب، نشانی)] — خواندن، خرید، منبع خبر…
+  List<(String, String)> get links {
+    final out = <(String, String)>[];
+    void add(String key, String label) {
+      final u = _s(key);
+      if (u.startsWith('http')) out.add((_s('${key}_label').isNotEmpty ? _s('${key}_label') : label, u));
+    }
+    add('read_url', 'خواندن آنلاین');
+    add('buy_url', 'خرید / صفحه‌ی ناشر');
+    add('url', 'خواندن کامل خبر');
+    add('src_url', 'دیدن منبع');
+    return out;
+  }
 }
 
 /// یک پیام «تماس با ما» از یک کاربر به مدیر
