@@ -90,7 +90,7 @@ export async function runAfterHooks(env: Env, ctx: Ctx, table: string, op: "inse
         notes.push({
           user_id: owner as string,
           type: "post_reaction",
-          title: `${who} به پست شما واکنش ${String(r.emoji ?? "❤️")} نشان داد`,
+          title: `${who} پست شما را پسندید`,
           body: "",
           ref_id: r.post_id as string,
           ref_type: "post",
