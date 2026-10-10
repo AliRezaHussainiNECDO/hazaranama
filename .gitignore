@@ -66,3 +66,4 @@ supabase/.temp/
 *firebase-adminsdk*.json
 *serviceAccount*.json
 android/key.properties
+__pycache__/
