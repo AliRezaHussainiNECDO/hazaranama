@@ -103,6 +103,7 @@ class ArticleScreen extends StatelessWidget {
                       Image.network(
                         imageUrl!,
                         fit: BoxFit.cover,
+                        alignment: const Alignment(0, -0.45),
                         errorBuilder: (_, __, ___) => Container(color: theme.bgCard),
                       ),
                       if (videoUrl != null && videoUrl!.isNotEmpty)
