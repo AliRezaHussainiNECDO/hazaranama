@@ -68,3 +68,6 @@ const Map<String, String> kSectionShortTitles = {
 };
 
 String sectionShortTitle(ContentSection s) => kSectionShortTitles[s.id] ?? s.title.split(' ').first;
+
+/// شمار واژه‌های واژه‌نامه‌ی نبی‌زاده که داخل خودِ اپ است (assets/data/hazaragi_glossary.json)
+const int kHazaragiGlossaryCount = 2005;
