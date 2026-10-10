@@ -5,11 +5,26 @@ import '../../core/widgets.dart';
 import '../../data/sections.dart';
 import '../../models/models.dart';
 import '../../state/app_state.dart';
-import 'admin_shell.dart';
+import '../../core/section_style.dart';
 
-class ContentManagerPage extends StatelessWidget {
+class ContentManagerPage extends StatefulWidget {
   final String sectionId;
   const ContentManagerPage({super.key, required this.sectionId});
+
+  @override
+  State<ContentManagerPage> createState() => _ContentManagerPageState();
+}
+
+class _ContentManagerPageState extends State<ContentManagerPage> {
+  final _q = TextEditingController();
+
+  @override
+  void dispose() {
+    _q.dispose();
+    super.dispose();
+  }
+
+  String get sectionId => widget.sectionId;
 
   @override
   Widget build(BuildContext context) {
@@ -21,29 +36,71 @@ class ContentManagerPage extends StatelessWidget {
             ContentFieldSpec('desc', 'توضیح کوتاه', multiline: true), ContentFieldSpec('full', 'متن کامل', multiline: true),
           ])
         : sectionById(sectionId);
-    final items = app.content[sectionId] ?? [];
+    final all = app.content[sectionId] ?? [];
+    final q = _q.text.trim().toLowerCase();
+    final items = q.isEmpty ? all : all.where((it) => it.fields.values.whereType<String>().any((v) => v.toLowerCase().contains(q))).toList();
     final primaryKey = section.fields.isNotEmpty ? section.fields[0].key : null;
     final secondaryKey = section.fields.length > 1 ? section.fields[1].key : null;
+    final st = sectionStyle(sectionId);
 
     return Column(children: [
       Padding(
         padding: const EdgeInsets.fromLTRB(16, 14, 16, 4),
         child: Row(children: [
-          StatIconBox(icon: sectionId == 'dailyStory' ? Icons.auto_awesome : iconForSectionId(sectionId), color: theme.blue, size: 36),
+          Container(
+            width: 44,
+            height: 44,
+            decoration: BoxDecoration(gradient: st.gradient, borderRadius: BorderRadius.circular(14)),
+            child: Icon(st.icon, color: Colors.white, size: 22),
+          ),
           const SizedBox(width: 10),
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text('${items.length} مورد', style: TextStyle(color: theme.textFaint, fontSize: 12)),
+              Text(section.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 15, fontWeight: FontWeight.w900)),
+              Text('${all.length} مورد در پایگاه‌داده', style: TextStyle(color: theme.textSecondary, fontSize: 12)),
             ]),
           ),
+          if (sectionId != 'dailyStory')
+            IconButton(
+              tooltip: 'دیدن در اپ کاربران',
+              icon: Icon(Icons.visibility_rounded, color: st.a),
+              onPressed: () => Navigator.of(context).pushNamed('/section', arguments: sectionId),
+            ),
           ElevatedButton.icon(
             onPressed: () => _openForm(context, app, section, null),
-            icon: const Icon(Icons.add, size: 15),
-            label: const Text('افزودن مورد جدید', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
-            style: ElevatedButton.styleFrom(backgroundColor: theme.blue, foregroundColor: Colors.white, elevation: 0, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+            icon: const Icon(Icons.add, size: 16),
+            label: const Text('افزودن', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800)),
+            style: ElevatedButton.styleFrom(backgroundColor: st.b, foregroundColor: Colors.white, elevation: 0, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
           ),
         ]),
       ),
+      if (sectionId == 'language')
+        Container(
+          margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(color: st.a.withValues(alpha: 0.08), borderRadius: BorderRadius.circular(14), border: Border.all(color: st.a.withValues(alpha: 0.3))),
+          child: Text('به‌علاوه‌ی $kHazaragiGlossaryCount واژه‌ی واژه‌نامه‌ی محمد عوض نبی‌زاده که داخل خودِ اپ است و از این‌جا ویرایش نمی‌شود. واژه‌های این فهرست با دسته‌بندی، آوانویسی و نمونه نمایش داده می‌شوند.',
+              style: TextStyle(color: theme.textSecondary, fontSize: 12, height: 1.7)),
+        ),
+      if (all.length > 8)
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
+          child: TextField(
+            controller: _q,
+            onChanged: (_) => setState(() {}),
+            style: TextStyle(color: theme.textPrimary, fontSize: 13.5),
+            decoration: InputDecoration(
+              hintText: 'جست‌وجو در موارد این بخش…',
+              hintStyle: TextStyle(color: theme.textFaint, fontSize: 13),
+              prefixIcon: Icon(Icons.search_rounded, color: theme.textFaint, size: 19),
+              isDense: true,
+              filled: true,
+              fillColor: theme.bgCard.withValues(alpha: 0.6),
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide(color: theme.glassBorder)),
+              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide(color: theme.glassBorder)),
+            ),
+          ),
+        ),
       const SizedBox(height: 6),
       Expanded(
         child: ListView.separated(
@@ -60,9 +117,11 @@ class ContentManagerPage extends StatelessWidget {
                   ContentMediaCover(item: item, height: 40, width: 40, radius: 10, fallback: const SizedBox.shrink()),
                   const SizedBox(width: 10),
                 ],
+                Container(width: 4, height: 34, decoration: BoxDecoration(color: st.a, borderRadius: BorderRadius.circular(4))),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text(primaryKey != null ? '${item[primaryKey] ?? ""}' : '', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w700)),
+                    Text(primaryKey != null ? '${item[primaryKey] ?? ""}' : '', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 13.5, fontWeight: FontWeight.w800)),
                     if (secondaryKey != null)
                       Text('${item[secondaryKey] ?? ""}', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 12)),
                   ]),

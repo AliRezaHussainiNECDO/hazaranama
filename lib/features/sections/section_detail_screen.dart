@@ -63,6 +63,16 @@ class SectionDetailScreen extends StatelessWidget {
                   ),
                 ]),
                 actions: [
+                  // مدیر: مستقیم به ویرایش همین بخش در پنل مدیریت
+                  if (app.currentUser?.role == UserRole.admin && section.id != 'oral' && section.id != 'articleWinners')
+                    IconButton(
+                      tooltip: 'ویرایش در پنل مدیریت',
+                      icon: Icon(Icons.edit_note_rounded, size: 22, color: sectionStyle(section.id).a),
+                      onPressed: () {
+                        Navigator.of(context).popUntil((r) => r.isFirst);
+                        app.requestAdminPage('content-${section.id}');
+                      },
+                    ),
                   IconButton(
                     icon: Icon(Icons.ios_share, size: 18, color: theme.textSecondary),
                     tooltip: 'هم‌رسانی',
