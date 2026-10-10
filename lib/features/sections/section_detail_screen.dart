@@ -79,7 +79,7 @@ class SectionDetailScreen extends StatelessWidget {
         ),
         body: Stack(children: [
           Positioned.fill(child: AnimatedBackdrop(theme: theme, intensity: 0.6)),
-          SafeArea(child: _body(theme, section, items)),
+          SafeArea(child: _body(theme.withAccent(app.isDark ? sectionStyle(section.id).a : sectionStyle(section.id).b), section, items)),
         ]),
       ),
     );

@@ -4,6 +4,7 @@ import '../../core/animated_backdrop.dart';
 import '../../core/app_colors.dart';
 import '../../core/app_logo.dart';
 import '../../core/widgets.dart';
+import '../../core/section_style.dart';
 import '../../state/app_state.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -51,14 +52,18 @@ class WelcomeScreen extends StatelessWidget {
                     style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 2),
                   ).animate(delay: 500.ms).fadeIn(duration: 450.ms).slideY(begin: 0.1, end: 0),
                   const SizedBox(height: 26),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  GridView.count(
+                    crossAxisCount: 2,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    childAspectRatio: 1.75,
                     children: [
-                      _Feature(theme: theme, icon: Icons.account_balance, label: 'تاریخ و هویت', delay: 600),
-                      const SizedBox(width: 20),
-                      _Feature(theme: theme, icon: Icons.auto_awesome, label: 'فرهنگ و هنر', delay: 660),
-                      const SizedBox(width: 20),
-                      _Feature(theme: theme, icon: Icons.forum, label: 'حافظه جمعی', delay: 720),
+                      _Feature(theme: theme, sectionId: 'identity', label: 'تاریخ و هویت', sub: '۱۳ فصل مستند', delay: 600),
+                      _Feature(theme: theme, sectionId: 'culture', label: 'فرهنگ و هنر', sub: 'آیین‌ها، موسیقی، شعر', delay: 660),
+                      _Feature(theme: theme, sectionId: 'language', label: 'زبان هزارگی', sub: 'واژه‌نامه‌ی زنده', delay: 720),
+                      _Feature(theme: theme, sectionId: 'oral', label: 'حافظه‌ی جمعی', sub: 'روایت‌های شما', delay: 780),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -85,17 +90,37 @@ class WelcomeScreen extends StatelessWidget {
 
 class _Feature extends StatelessWidget {
   final AppColors theme;
-  final IconData icon;
+  final String sectionId;
   final String label;
+  final String sub;
   final int delay;
-  const _Feature({required this.theme, required this.icon, required this.label, required this.delay});
+  const _Feature({required this.theme, required this.sectionId, required this.label, required this.sub, required this.delay});
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      HzBadge(theme: theme, size: 44, child: Icon(icon, color: theme.blue, size: 18)),
-      const SizedBox(height: 7),
-      Text(label, style: TextStyle(fontSize: 11.5, color: theme.textFaint)),
-    ]).animate(delay: Duration(milliseconds: delay)).fadeIn(duration: 350.ms).scale(begin: const Offset(0.7, 0.7));
+    final st = sectionStyle(sectionId);
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: theme.bgCard.withValues(alpha: 0.6),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: st.a.withValues(alpha: 0.3)),
+      ),
+      child: Row(children: [
+        Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(gradient: st.gradient, borderRadius: BorderRadius.circular(13)),
+          child: Icon(st.icon, color: Colors.white, size: 20),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(label, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800)),
+            Text(sub, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 11)),
+          ]),
+        ),
+      ]),
+    ).animate(delay: delay.ms).fadeIn(duration: 380.ms).slideY(begin: 0.15, end: 0);
   }
 }

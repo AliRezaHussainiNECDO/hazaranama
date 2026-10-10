@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
     final app = context.watch<AppState>();
     final theme = app.colors;
     final sections = kSections.where((s) => s.id != 'dailyStory').toList();
-    final quickAccess = sections.take(8).toList();
+    final quickAccess = sections.toList();
     final hero = sections.first;
     final rest = sections.skip(1).toList();
     int countOf(String id) => app.content[id]?.length ?? 0;
@@ -63,7 +63,7 @@ class HomeScreen extends StatelessWidget {
                       child: Icon(st.icon, color: Colors.white, size: 25),
                     ),
                     const SizedBox(height: 7),
-                    Text(s.title.split(' ').take(2).join(' '),
+                    Text(sectionShortTitle(s),
                         textAlign: TextAlign.center,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,

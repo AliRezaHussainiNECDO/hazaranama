@@ -363,7 +363,7 @@ class _PostMediaGalleryState extends State<_PostMediaGallery> {
     if (post.imageUrls.length == 1) {
       return AspectRatio(
         aspectRatio: 4 / 5,
-        child: Image.network(post.imageUrls.first, fit: BoxFit.cover, errorBuilder: (_, __, ___) => ColoredBox(color: theme.bgCardAlt)),
+        child: _postImage(post.imageUrls.first, theme),
       );
     }
 
@@ -374,7 +374,7 @@ class _PostMediaGalleryState extends State<_PostMediaGallery> {
           controller: _pageCtrl,
           onPageChanged: (i) => setState(() => _page = i),
           itemCount: post.imageUrls.length,
-          itemBuilder: (_, i) => Image.network(post.imageUrls[i], fit: BoxFit.cover, errorBuilder: (_, __, ___) => ColoredBox(color: theme.bgCardAlt)),
+          itemBuilder: (_, i) => _postImage(post.imageUrls[i], theme),
         ),
       ),
       Positioned(
@@ -757,4 +757,27 @@ class _CommentTile extends StatelessWidget {
       ]),
     );
   }
+}
+
+/// عکس پست با حالت «در حال بارگذاری» و جایگزین آبرومند وقتی فایل در دسترس نیست
+Widget _postImage(String url, AppColors theme) {
+  Widget box(Widget child) => Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(begin: Alignment.topRight, end: Alignment.bottomLeft, colors: [theme.bgCardAlt, theme.bgCard]),
+        ),
+        alignment: Alignment.center,
+        child: child,
+      );
+  return Image.network(
+    url,
+    fit: BoxFit.cover,
+    loadingBuilder: (context, child, progress) => progress == null
+        ? child
+        : box(SizedBox(width: 26, height: 26, child: CircularProgressIndicator(strokeWidth: 2.4, color: theme.blue))),
+    errorBuilder: (_, __, ___) => box(Column(mainAxisSize: MainAxisSize.min, children: [
+      Icon(Icons.image_not_supported_outlined, size: 34, color: theme.textFaint),
+      const SizedBox(height: 8),
+      Text('تصویر در دسترس نیست', style: TextStyle(color: theme.textFaint, fontSize: 12)),
+    ])),
+  );
 }

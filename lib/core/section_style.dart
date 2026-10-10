@@ -48,3 +48,21 @@ String sectionCountLabel(ContentSection s, int n) {
   };
   return '$n ${unit[s.id] ?? 'مطلب'}';
 }
+
+/// نام کوتاه هر بخش برای جاهای تنگ (دسترسی سریع)
+const Map<String, String> kSectionShortTitles = {
+  'identity': 'تاریخ',
+  'figures': 'چهره‌ها',
+  'genocide': 'نسل‌کشی',
+  'culture': 'فرهنگ',
+  'music': 'موسیقی',
+  'language': 'زبان',
+  'map': 'نقشه',
+  'album': 'آلبوم',
+  'news': 'خبرنامه',
+  'library': 'کتابخانه',
+  'oral': 'حافظه جمعی',
+  'articleWinners': 'برگزیدگان',
+};
+
+String sectionShortTitle(ContentSection s) => kSectionShortTitles[s.id] ?? s.title.split(' ').first;

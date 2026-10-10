@@ -89,6 +89,33 @@ class AppColors {
         colors: [bg, bgElevated, bg],
       );
 
+  /// همان تم با رنگ تأکیدی دیگر — صفحه‌ی هر بخش با رنگ هویتی همان بخش رنگ می‌گیرد.
+  AppColors withAccent(Color accent) => AppColors(
+        bg: bg,
+        bgElevated: bgElevated,
+        bgCard: bgCard,
+        bgCardAlt: bgCardAlt,
+        border: border,
+        blue: accent,
+        blueDeep: blueDeep,
+        blueSoft: blueSoft,
+        yellow: yellow,
+        yellowSoft: yellowSoft,
+        white: white,
+        textPrimary: textPrimary,
+        textSecondary: textSecondary,
+        textFaint: textFaint,
+        danger: danger,
+        success: success,
+        aiViolet: aiViolet,
+        aiTeal: aiTeal,
+        glassOverlay: glassOverlay,
+        glassTint: glassTint,
+        glassBorder: glassBorder,
+        glassSheenAlpha: glassSheenAlpha,
+        meshColors: meshColors,
+      );
+
   static const dark = AppColors(
     bg: Color(0xFF05070F),
     bgElevated: Color(0xFF0D1226),
