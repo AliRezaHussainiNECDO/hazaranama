@@ -63,7 +63,7 @@ class _OverviewPageState extends State<OverviewPage> {
     final latestArticles = app.allArticleSubmissions.take(8).toList();
 
     return ListView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
       children: [
         _AdminProfileCard(theme: theme, app: app, activeUsers: activeUsers),
         const SizedBox(height: 18),
@@ -73,6 +73,7 @@ class _OverviewPageState extends State<OverviewPage> {
           crossAxisCount: 2,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.zero,
           mainAxisSpacing: 12, crossAxisSpacing: 12, childAspectRatio: 1.25,
           children: stats.map((s) => Container(
                 padding: const EdgeInsets.all(13),
@@ -503,6 +504,7 @@ class _PendingTasks extends StatelessWidget {
         crossAxisCount: 2,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.zero,
         mainAxisSpacing: 10,
         crossAxisSpacing: 10,
         childAspectRatio: 2.1,

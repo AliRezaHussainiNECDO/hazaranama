@@ -51,7 +51,7 @@ class _AdminShellState extends State<AdminShell> {
     _NavItem('content-hub', 'همه‌ی بخش‌ها', Icons.grid_view_rounded),
     _NavItem('content-dailyStory', 'روایت امروز', Icons.auto_stories_rounded, sectionId: 'dailyStory'),
     ...kSections
-        .where((s) => s.id != 'oral' && s.id != 'articleWinners')
+        .where((s) => s.id != 'oral' && s.id != 'articleWinners' && s.id != 'dailyStory')
         .map((s) => _NavItem('content-${s.id}', s.title, sectionStyle(s.id).icon, sectionId: s.id)),
   ];
   static final List<_NavItem> _communityGroup = [
@@ -122,7 +122,6 @@ class _AdminShellState extends State<AdminShell> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.transparent,
-      extendBody: true,
       drawer: _drawer(theme, app),
       body: Column(children: [
         Container(
@@ -342,10 +341,10 @@ class _ContentHub extends StatelessWidget {
   Widget build(BuildContext context) {
     final app = context.watch<AppState>();
     final theme = app.colors;
-    final sections = kSections.where((s) => s.id != 'oral' && s.id != 'articleWinners').toList();
+    final sections = kSections.where((s) => s.id != 'oral' && s.id != 'articleWinners' && s.id != 'dailyStory').toList();
     final daily = sectionById('dailyStory');
     return ListView(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 110),
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
       children: [
         Text('بخشی را برای افزودن یا ویرایش محتوا انتخاب کنید', style: TextStyle(color: theme.textSecondary, fontSize: 12.5)),
         const SizedBox(height: 12),
