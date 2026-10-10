@@ -48,7 +48,7 @@ class MainShell extends StatelessWidget {
                 title: Row(children: [
                   const AppLogo(size: 32),
                   const SizedBox(width: 8),
-                  Text('هزاره‌نامه', style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w800)),
+                  Text('هزاره‌نامه', style: TextStyle(color: theme.textPrimary, fontSize: 17, fontWeight: FontWeight.w900)),
                   if (isAdmin) ...[
                     const SizedBox(width: 8),
                     Container(
@@ -80,12 +80,9 @@ class MainShell extends StatelessWidget {
                       onPressed: () => app.toggleAdminPreview(),
                     ),
                   IconButton(
+                    tooltip: app.isDark ? 'حالت روشن' : 'حالت تیره',
                     icon: Icon(app.isDark ? Icons.light_mode : Icons.dark_mode, color: app.isDark ? theme.yellow : theme.blue, size: 20),
                     onPressed: () => app.toggleTheme(),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.logout, color: theme.danger, size: 20),
-                    onPressed: () => app.logout(),
                   ),
                   const SizedBox(width: 6),
                 ],

@@ -493,26 +493,26 @@ class HzGlassCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final panel = ClipRRect(
-      borderRadius: BorderRadius.circular(radius),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(radius),
-            border: Border.all(color: theme.glassBorder, width: 1.2),
-            boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.16), blurRadius: 28, offset: const Offset(0, 14))],
-          ),
-          child: Stack(children: [
-            // پرشدگی شیشه‌ای پایه
-            Positioned.fill(
-              child: DecoratedBox(decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55))),
-            ),
-            // درخشش موربِ بالا — حس واقعی نور روی شیشه
-            if (sheen) Positioned.fill(child: DecoratedBox(decoration: BoxDecoration(gradient: theme.glassSheen))),
-            Padding(padding: padding, child: child),
-          ]),
+    // بدون BackdropFilter: پس‌زمینه‌ی اپ خودش نرم و محو است، و blur جداگانه
+    // برای هر کارت در فهرست‌های بلند روی گوشی‌های اندرویدی باعث لگ می‌شد.
+    final panel = Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(radius),
+        border: Border.all(color: theme.glassBorder, width: 1),
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [theme.bgCard.withValues(alpha: 0.82), theme.bgCardAlt.withValues(alpha: 0.62)],
         ),
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.14), blurRadius: 24, offset: const Offset(0, 10))],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(radius),
+        child: Stack(children: [
+          // درخشش موربِ بالا — حس نور روی شیشه
+          if (sheen) Positioned.fill(child: IgnorePointer(child: DecoratedBox(decoration: BoxDecoration(gradient: theme.glassSheen)))),
+          Padding(padding: padding, child: child),
+        ]),
       ),
     );
     if (onTap == null) return panel;
@@ -602,17 +602,22 @@ class HzGlassNavBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           AnimatedContainer(
-            duration: const Duration(milliseconds: 260),
-            curve: Curves.easeOut,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+            duration: const Duration(milliseconds: 320),
+            curve: Curves.easeOutBack,
+            padding: EdgeInsets.symmetric(horizontal: active ? 18 : 12, vertical: 6),
             decoration: BoxDecoration(
-              gradient: active ? LinearGradient(colors: [theme.blue.withValues(alpha: 0.28), theme.blue.withValues(alpha: 0.1)]) : null,
-              borderRadius: BorderRadius.circular(14),
+              gradient: active ? LinearGradient(colors: [theme.blue, theme.aiViolet]) : null,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: active ? [BoxShadow(color: theme.blue.withValues(alpha: 0.35), blurRadius: 14, offset: const Offset(0, 5))] : null,
             ),
-            child: Icon(active ? item.activeIcon : item.icon, size: 20, color: active ? theme.blue : theme.textFaint),
+            child: Icon(active ? item.activeIcon : item.icon, size: 21, color: active ? Colors.white : theme.textFaint),
           ),
-          const SizedBox(height: 3),
-          Text(item.label, style: TextStyle(fontSize: 9.5, color: active ? theme.blue : theme.textFaint, fontWeight: active ? FontWeight.w700 : FontWeight.w500)),
+          const SizedBox(height: 4),
+          AnimatedDefaultTextStyle(
+            duration: const Duration(milliseconds: 220),
+            style: TextStyle(fontFamily: 'Vazirmatn', fontSize: 10.5, color: active ? theme.textPrimary : theme.textFaint, fontWeight: active ? FontWeight.w800 : FontWeight.w500),
+            child: Text(item.label, maxLines: 1, overflow: TextOverflow.ellipsis),
+          ),
         ]),
       ),
     );

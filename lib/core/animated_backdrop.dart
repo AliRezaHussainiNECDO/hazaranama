@@ -1,5 +1,4 @@
 import 'dart:math' as math;
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
@@ -40,7 +39,7 @@ class _AnimatedBackdropState extends State<AnimatedBackdrop> with SingleTickerPr
     final theme = widget.theme;
     final colors = theme.meshColors;
     return IgnorePointer(
-      child: DecoratedBox(
+      child: RepaintBoundary(child: DecoratedBox(
         decoration: BoxDecoration(gradient: theme.meshBaseGradient),
         child: ClipRect(
           child: LayoutBuilder(builder: (context, constraints) {
@@ -72,7 +71,7 @@ class _AnimatedBackdropState extends State<AnimatedBackdrop> with SingleTickerPr
             );
           }),
         ),
-      ),
+      )),
     );
   }
 
@@ -91,14 +90,19 @@ class _AnimatedBackdropState extends State<AnimatedBackdrop> with SingleTickerPr
     final cx = w * 0.5 + w * radiusX * math.cos(angle);
     final cy = h * 0.5 + h * radiusY * math.sin(angle * 0.85 + phase);
     return Positioned(
-      left: cx - size / 2,
-      top: cy - size / 2,
-      child: ImageFiltered(
-        imageFilter: ImageFilter.blur(sigmaX: 70, sigmaY: 70),
-        child: Container(
-          width: size,
-          height: size,
-          decoration: BoxDecoration(shape: BoxShape.circle, color: color.withValues(alpha: alpha)),
+      left: cx - size * 0.75,
+      top: cy - size * 0.75,
+      // دایره‌ی نرم با گرادیان شعاعی — همان ظاهر محوِ قبلی بدون فیلتر blur
+      // (blur هر فریم روی ۴ دایره‌ی بزرگ در گوشی‌های اندرویدی سنگین بود).
+      child: Container(
+        width: size * 1.5,
+        height: size * 1.5,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          gradient: RadialGradient(
+            colors: [color.withValues(alpha: alpha * 1.25), color.withValues(alpha: alpha * 0.55), color.withValues(alpha: 0)],
+            stops: const [0.0, 0.45, 1.0],
+          ),
         ),
       ),
     );

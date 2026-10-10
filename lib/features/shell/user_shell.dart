@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../core/widgets.dart';
 import '../../state/app_state.dart';
-import '../ai/ai_assistant_screen.dart';
 import '../home/home_screen.dart';
 import '../explore/explore_screen.dart';
 import '../community/community_screen.dart';
@@ -31,7 +30,7 @@ class UserShellState extends State<UserShell> {
     final theme = app.colors;
 
     final pages = [
-      HomeScreen(onOpenExplore: () => goToTab(1), onOpenSection: _openSection),
+      HomeScreen(onOpenExplore: () => goToTab(1), onOpenSection: _openSection, onOpenProfile: () => goToTab(4)),
       ExploreScreen(onOpenSection: _openSection),
       const CommunityScreen(),
       SearchScreen(onOpenSection: _openSection),
@@ -42,10 +41,6 @@ class UserShellState extends State<UserShell> {
       backgroundColor: Colors.transparent,
       extendBody: true,
       body: SafeArea(bottom: false, child: IndexedStack(index: _tab, children: pages)),
-      floatingActionButton: AiFab(
-        theme: theme,
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AiAssistantScreen())),
-      ),
       bottomNavigationBar: SafeArea(
         child: HzGlassNavBar(
           theme: theme,

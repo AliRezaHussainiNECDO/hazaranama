@@ -111,9 +111,9 @@ class _ProfileHeaderState extends State<ProfileHeader> with TickerProviderStateM
                 ])
               else
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Text(app.displayName, style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w800, color: theme.textPrimary)),
+                  Text(app.displayName, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: theme.textPrimary)),
                   const SizedBox(width: 5),
-                  InkWell(onTap: () => setState(() => _editingName = true), child: Icon(Icons.edit, size: 11.5, color: theme.textFaint)),
+                  InkWell(onTap: () => setState(() => _editingName = true), child: Icon(Icons.edit, size: 15, color: theme.textFaint)),
                   if (user != null && user.role != UserRole.user) ...[
                     const SizedBox(width: 7),
                     _RoleBadge(theme: theme, role: user.role),
@@ -125,7 +125,7 @@ class _ProfileHeaderState extends State<ProfileHeader> with TickerProviderStateM
                 ]),
               if (user?.email != null) ...[
                 const SizedBox(height: 3),
-                Text(user!.email, style: TextStyle(fontSize: 9.5, color: theme.textFaint)),
+                Text(user!.email, style: TextStyle(fontSize: 12, color: theme.textFaint)),
               ],
               const SizedBox(height: 9),
               _buildLocationChips(theme, user),
@@ -142,7 +142,7 @@ class _ProfileHeaderState extends State<ProfileHeader> with TickerProviderStateM
     return ClipRRect(
       borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
       child: SizedBox(
-        height: 66,
+        height: 84,
         width: double.infinity,
         child: LayoutBuilder(builder: (context, constraints) {
           final w = constraints.maxWidth;
@@ -257,9 +257,9 @@ class _RoleBadge extends StatelessWidget {
         border: Border.all(color: color.withValues(alpha: 0.4)),
       ),
       child: Row(mainAxisSize: MainAxisSize.min, children: [
-        Icon(isAdmin ? Icons.workspace_premium_rounded : Icons.edit_note_rounded, size: 9.5, color: color),
+        Icon(isAdmin ? Icons.workspace_premium_rounded : Icons.edit_note_rounded, size: 12, color: color),
         const SizedBox(width: 2.5),
-        Text(roleLabel(role), style: TextStyle(fontSize: 8.5, fontWeight: FontWeight.w800, color: color)),
+        Text(roleLabel(role), style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.w800, color: color)),
       ]),
     );
   }
@@ -278,9 +278,9 @@ class _InfoChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(color: theme.bgCardAlt, borderRadius: BorderRadius.circular(999), border: Border.all(color: theme.border)),
       child: Row(mainAxisSize: MainAxisSize.min, children: [
-        Icon(icon, size: 10.5, color: theme.textFaint),
+        Icon(icon, size: 13, color: theme.textFaint),
         const SizedBox(width: 4),
-        Text(label, style: TextStyle(fontSize: 9.5, color: theme.textSecondary, fontWeight: FontWeight.w600)),
+        Text(label, style: TextStyle(fontSize: 11.5, color: theme.textSecondary, fontWeight: FontWeight.w600)),
       ]),
     );
   }
@@ -345,8 +345,8 @@ class _StatsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      decoration: BoxDecoration(color: theme.bgCardAlt.withValues(alpha: 0.6), borderRadius: BorderRadius.circular(14), border: Border.all(color: theme.glassBorder)),
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      decoration: BoxDecoration(color: theme.bgCardAlt.withValues(alpha: 0.6), borderRadius: BorderRadius.circular(16), border: Border.all(color: theme.glassBorder)),
       child: Row(children: [
         Expanded(child: _StatCell(theme: theme, icon: Icons.dynamic_feed_rounded, value: posts, label: 'پست')),
         _StatDivider(theme: theme),
@@ -368,16 +368,16 @@ class _StatCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      Icon(icon, size: 13, color: theme.blue),
+      Icon(icon, size: 16, color: theme.blue),
       const SizedBox(height: 3),
       TweenAnimationBuilder<int>(
         tween: IntTween(begin: 0, end: value),
         duration: const Duration(milliseconds: 900),
         curve: Curves.easeOutCubic,
-        builder: (context, v, _) => Text('$v', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: theme.textPrimary)),
+        builder: (context, v, _) => Text('$v', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w900, color: theme.textPrimary)),
       ),
       const SizedBox(height: 1),
-      Text(label, style: TextStyle(fontSize: 8.5, color: theme.textFaint)),
+      Text(label, style: TextStyle(fontSize: 11, color: theme.textSecondary)),
     ]);
   }
 }

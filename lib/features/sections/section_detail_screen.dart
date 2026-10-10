@@ -1,7 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../core/animated_backdrop.dart';
+import '../../core/section_style.dart';
 import '../../core/widgets.dart';
 import '../../data/sections.dart';
 import '../../models/models.dart';
@@ -29,28 +31,45 @@ class SectionDetailScreen extends StatelessWidget {
         backgroundColor: theme.bg,
         extendBodyBehindAppBar: false,
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(kToolbarHeight),
+          preferredSize: const Size.fromHeight(kToolbarHeight + 2),
           child: ClipRect(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 22, sigmaY: 22),
               child: AppBar(
                 backgroundColor: theme.bgElevated.withValues(alpha: 0.5),
                 elevation: 0,
+                bottom: PreferredSize(
+                  preferredSize: const Size.fromHeight(2),
+                  child: Container(height: 2, decoration: BoxDecoration(gradient: sectionStyle(section.id).gradient)),
+                ),
                 leading: IconButton(icon: Icon(Icons.arrow_forward, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
                 title: Row(children: [
-                  StatIconBox(icon: iconForSection(section.id), color: theme.blue, size: 34),
+                  Container(
+                    width: 38,
+                    height: 38,
+                    decoration: BoxDecoration(
+                      gradient: sectionStyle(section.id).gradient,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [BoxShadow(color: sectionStyle(section.id).a.withValues(alpha: 0.35), blurRadius: 10, offset: const Offset(0, 4))],
+                    ),
+                    child: Icon(iconForSection(section.id), color: Colors.white, size: 20),
+                  ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
-                      Text(section.title, style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w800), maxLines: 1, overflow: TextOverflow.ellipsis),
-                      Text(section.description, style: TextStyle(color: theme.textFaint, fontSize: 10), maxLines: 1, overflow: TextOverflow.ellipsis),
+                      Text(section.title, style: TextStyle(color: theme.textPrimary, fontSize: 16, fontWeight: FontWeight.w900), maxLines: 1, overflow: TextOverflow.ellipsis),
+                      Text(section.description, style: TextStyle(color: theme.textSecondary, fontSize: 11), maxLines: 1, overflow: TextOverflow.ellipsis),
                     ]),
                   ),
                 ]),
                 actions: [
                   IconButton(
                     icon: Icon(Icons.ios_share, size: 18, color: theme.textSecondary),
-                    onPressed: () => showHzToast(context, 'پیوند کپی شد'),
+                    tooltip: 'هم‌رسانی',
+                    onPressed: () async {
+                      await Clipboard.setData(ClipboardData(text: '«${section.title}» در هزاره‌نامه — ${section.description}\nhttps://hazaranama.pages.dev'));
+                      if (context.mounted) showHzToast(context, 'متن و پیوند هزاره‌نامه کپی شد');
+                    },
                   ),
                   const SizedBox(width: 4),
                 ],

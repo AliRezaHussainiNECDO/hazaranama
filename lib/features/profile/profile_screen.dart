@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../core/app_colors.dart';
 import '../../core/donor_tiers.dart';
-import '../../core/widgets.dart';
 import '../../core/app_logo.dart';
 import '../../models/models.dart';
 import '../../state/app_state.dart';
 import '../community/post_widgets.dart';
+import '../home/profile_header.dart';
 import '../donations/donation_screen.dart';
 import 'account_settings_screen.dart';
 import 'contact_us_screen.dart';
@@ -19,28 +18,13 @@ class ProfileScreen extends StatelessWidget {
     final app = context.watch<AppState>();
     final theme = app.colors;
     final myPosts = app.myPosts;
-    final reactionsReceived = app.myReactionsReceived;
-    final myComments = myPosts.fold<int>(0, (sum, p) => sum + p.commentsCount);
-    final donorTier = donorTierForUser(app.currentUser, app.myDonationTotalUsd);
     final isAdmin = app.currentUser?.role == UserRole.admin;
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(18, 16, 18, 24),
       children: [
-        Center(
-          child: Column(children: [
-            DonorRing(
-              theme: theme, tier: donorTier, size: 92, childSize: 72,
-              child: HzBadge(theme: theme, size: 72, filled: true, avatarPath: app.avatarPath,
-                child: const Icon(Icons.person, color: Colors.white, size: 28)),
-            ),
-            const SizedBox(height: 10),
-            Text(app.displayName, style: TextStyle(color: theme.textPrimary, fontSize: 15, fontWeight: FontWeight.w800)),
-            const SizedBox(height: 6),
-            const FlagStripe(width: 60),
-          ]),
-        ).animate().fadeIn(duration: 380.ms).scale(begin: const Offset(0.9, 0.9)),
-        const SizedBox(height: 16),
+        const ProfileHeader().animate().fadeIn(duration: 380.ms).slideY(begin: -0.04, end: 0),
+        const SizedBox(height: 4),
         DonorTierCard(
           theme: theme, totalUsd: app.myDonationTotalUsd, isAdmin: isAdmin,
           onDonateTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const DonationScreen())),
@@ -66,14 +50,6 @@ class ProfileScreen extends StatelessWidget {
           ),
         ]).animate(delay: 100.ms).fadeIn(duration: 350.ms).slideY(begin: 0.1, end: 0),
         const SizedBox(height: 20),
-        Row(children: [
-          Expanded(child: _StatMini(theme: theme, label: 'پست‌های من', value: myPosts.length)),
-          const SizedBox(width: 8),
-          Expanded(child: _StatMini(theme: theme, label: 'واکنش‌های دریافتی', value: reactionsReceived)),
-          const SizedBox(width: 8),
-          Expanded(child: _StatMini(theme: theme, label: 'نظرهای من', value: myComments)),
-        ]).animate(delay: 120.ms).fadeIn(duration: 350.ms).slideY(begin: 0.08, end: 0),
-        const SizedBox(height: 20),
         Text('پست‌های من', style: TextStyle(color: theme.textSecondary, fontSize: 12, fontWeight: FontWeight.w700)),
         const SizedBox(height: 10),
         if (myPosts.isEmpty)
@@ -88,27 +64,43 @@ class ProfileScreen extends StatelessWidget {
             PostCard(post: post, onTap: () => Navigator.of(context).pushNamed('/post', arguments: post.id)).staggered(i),
             const SizedBox(height: 10),
           ],
+        const SizedBox(height: 18),
+        OutlinedButton.icon(
+          onPressed: () => _confirmLogout(context, app),
+          icon: Icon(Icons.logout_rounded, size: 18, color: theme.danger),
+          label: Text('خروج از حساب', style: TextStyle(color: theme.danger, fontSize: 13, fontWeight: FontWeight.w800)),
+          style: OutlinedButton.styleFrom(
+            side: BorderSide(color: theme.danger.withValues(alpha: 0.45)),
+            padding: const EdgeInsets.symmetric(vertical: 13),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+          ),
+        ),
       ],
     );
   }
-}
 
-class _StatMini extends StatelessWidget {
-  final AppColors theme;
-  final String label;
-  final int value;
-  const _StatMini({required this.theme, required this.label, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(14), border: Border.all(color: theme.glassBorder)),
-      child: Column(children: [
-        Text('$value', style: TextStyle(color: theme.blue, fontSize: 17, fontWeight: FontWeight.w800)),
-        const SizedBox(height: 3),
-        Text(label, style: TextStyle(color: theme.textFaint, fontSize: 9.5), textAlign: TextAlign.center),
-      ]),
+  Future<void> _confirmLogout(BuildContext context, AppState app) async {
+    final theme = app.colors;
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => Directionality(
+        textDirection: TextDirection.rtl,
+        child: AlertDialog(
+          backgroundColor: theme.bgElevated,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
+          title: Text('خروج از حساب؟', style: TextStyle(color: theme.textPrimary, fontSize: 17, fontWeight: FontWeight.w900)),
+          content: Text('برای استفاده‌ی دوباره باید با ایمیل و رمز عبور وارد شوید.', style: TextStyle(color: theme.textSecondary, fontSize: 13, height: 1.6)),
+          actions: [
+            TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text('انصراف', style: TextStyle(color: theme.textSecondary, fontWeight: FontWeight.w700))),
+            FilledButton(
+              style: FilledButton.styleFrom(backgroundColor: theme.danger, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+              onPressed: () => Navigator.of(ctx).pop(true),
+              child: const Text('خروج', style: TextStyle(fontWeight: FontWeight.w800)),
+            ),
+          ],
+        ),
+      ),
     );
+    if (ok == true) await app.logout();
   }
 }
