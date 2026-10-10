@@ -67,10 +67,10 @@ async function sha(s: string) {
 
 export async function fetchNews(env: Env, force = false): Promise<{ added: number; skipped?: string }> {
   if (!force) {
-    const last = await env.DB.prepare("SELECT value FROM _meta WHERE key = 'news_fetched_at'").first<{ value: string }>();
+    const last = await env.DB.prepare("SELECT value FROM _meta WHERE key = 'news_fetched_at_v2'").first<{ value: string }>();
     if (last && Date.now() - Date.parse(last.value) < 60 * 60_000) return { added: 0, skipped: "recent" };
   }
-  await env.DB.prepare("INSERT OR REPLACE INTO _meta (key, value) VALUES ('news_fetched_at', ?)").bind(new Date().toISOString()).run();
+  await env.DB.prepare("INSERT OR REPLACE INTO _meta (key, value) VALUES ('news_fetched_at_v2', ?)").bind(new Date().toISOString()).run();
 
   const seenRow = await env.DB.prepare("SELECT value FROM _meta WHERE key = 'news_seen'").first<{ value: string }>();
   const seen: string[] = seenRow ? JSON.parse(seenRow.value) : [];
@@ -81,10 +81,12 @@ export async function fetchNews(env: Env, force = false): Promise<{ added: numbe
   for (const feed of FEEDS) {
     let xml = "";
     try {
-      const r = await fetch(feed, { headers: { "User-Agent": UA } });
-      if (!r.ok) continue;
+      const r = await fetch(feed, { headers: { "User-Agent": "Mozilla/5.0 (compatible; " + UA + ")", Accept: "application/rss+xml, application/xml" } });
       xml = await r.text();
-    } catch {
+      console.log("news feed", r.status, xml.length, (xml.match(/<item>/g) ?? []).length, feed.slice(37, 90));
+      if (!r.ok) continue;
+    } catch (e) {
+      console.error("news feed fail", feed.slice(37, 90), String(e));
       continue;
     }
     for (const m of xml.matchAll(/<item>([\s\S]*?)<\/item>/g)) {
@@ -124,5 +126,6 @@ export async function fetchNews(env: Env, force = false): Promise<{ added: numbe
   const nextSeen = [...batch.map((b) => b.id), ...seen].slice(0, 800);
   stmts.push(env.DB.prepare("INSERT OR REPLACE INTO _meta (key, value) VALUES ('news_seen', ?)").bind(JSON.stringify(nextSeen)));
   await env.DB.batch(stmts);
+  console.log("news added", batch.length, "candidates", fresh.length);
   return { added: batch.length };
 }
