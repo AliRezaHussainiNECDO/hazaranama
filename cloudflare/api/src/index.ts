@@ -403,6 +403,18 @@ async function seed(env: Env, replaceSections: string[]) {
   return { seeded: items.length, version: content.version };
 }
 
+// اثر SHA-256 (روی JSON مرتب‌شده) بسته‌ی نهایی داده‌های Supabase: یک کاربر، پروفایل، هنرمند، تنظیمات، بازدیدها و توکن دستگاه
+const LEGACY_IMPORT_SHA = "6de9bef007ed30060e82e19be1491197f346db70acd472bc1b9cd440d9aa91f8";
+
+function canonicalJson(v: unknown): string {
+  if (Array.isArray(v)) return `[${v.map(canonicalJson).join(",")}]`;
+  if (v && typeof v === "object") {
+    const o = v as Record<string, unknown>;
+    return `{${Object.keys(o).sort().map((k) => `${JSON.stringify(k)}:${canonicalJson(o[k])}`).join(",")}}`;
+  }
+  return JSON.stringify(v);
+}
+
 async function handleAdmin(env: Env, ctx: Ctx, req: Request, path: string, url: URL): Promise<Response> {
   if (path === "/admin/recovery-code") {
     const u = await currentUser(env, req);
@@ -416,6 +428,21 @@ async function handleAdmin(env: Env, ctx: Ctx, req: Request, path: string, url: 
     const expires = new Date(Date.now() + 24 * 3600_000).toISOString();
     await env.DB.prepare("UPDATE users SET recovery_code_hash = ?, recovery_expires = ? WHERE id = ?").bind(await sha256Hex(`${target}:${code}`), expires, target).run();
     return json({ code, expires_at: expires });
+  }
+
+  if (path === "/admin/legacy-import" && req.method === "POST") {
+    // ورود یک‌باره‌ی باقی‌مانده‌ی داده‌های Supabase (ارسال‌شده با pg_net از خود Supabase).
+    // بدون کلید: فقط همان بسته‌ای پذیرفته می‌شود که اثر SHA-256 آن از پیش در کد ثبت شده است.
+    const done = await env.DB.prepare("SELECT value FROM _meta WHERE key = 'legacy_import'").first();
+    if (done) return err(409, "این داده‌ها قبلاً وارد شده‌اند.");
+    const body = await readJson(req);
+    if ((await sha256Hex(canonicalJson(body))) !== LEGACY_IMPORT_SHA) return err(403, "بسته‌ی داده با نسخه‌ی تأییدشده یکی نیست.");
+    const tables = (body.tables ?? {}) as Record<string, Record<string, unknown>[]>;
+    const result: Record<string, number> = {};
+    for (const t of IMPORT_ORDER) if (tables[t]) result[t] = await importRows(env, t, tables[t]);
+    await env.DB.prepare("INSERT OR REPLACE INTO _meta (key, value) VALUES ('legacy_import', ?)").bind(new Date().toISOString()).run();
+    ctx.waitUntil(migrateMedia(env, PUBLIC_ORIGIN, 20));
+    return json({ ok: true, imported: result });
   }
 
   await requireAdminOrKey(env, req);
