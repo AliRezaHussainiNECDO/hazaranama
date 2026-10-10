@@ -81,4 +81,37 @@ class PushService {
 
   static Stream<String> get onTokenRefresh =>
       (kIsWeb || !_initialized) ? const Stream<String>.empty() : FirebaseMessaging.instance.onTokenRefresh;
+
+  /// عضویت در موضوع «all» — اعلان‌های همگانی مدیر با یک پیام به همه می‌رسند.
+  static Future<void> subscribeToAll() async {
+    if (kIsWeb || !_initialized) return;
+    try {
+      await FirebaseMessaging.instance.subscribeToTopic('all');
+    } catch (_) {}
+  }
+
+  static Future<void> unsubscribeFromAll() async {
+    if (kIsWeb || !_initialized) return;
+    try {
+      await FirebaseMessaging.instance.unsubscribeFromTopic('all');
+    } catch (_) {}
+  }
+
+  /// پیامی که وقتی اپ باز است می‌رسد (سیستم‌عامل خودش آن را نشان نمی‌دهد).
+  static Stream<RemoteMessage> get onForegroundMessage =>
+      (kIsWeb || !_initialized) ? const Stream<RemoteMessage>.empty() : FirebaseMessaging.onMessage;
+
+  /// کاربر روی پوش لمس کرده و اپ از پس‌زمینه بالا آمده.
+  static Stream<RemoteMessage> get onOpenedFromPush =>
+      (kIsWeb || !_initialized) ? const Stream<RemoteMessage>.empty() : FirebaseMessaging.onMessageOpenedApp;
+
+  /// اگر اپ با لمس یک پوش از حالت کاملاً بسته باز شده باشد، همان پیام.
+  static Future<RemoteMessage?> initialMessage() async {
+    if (kIsWeb || !_initialized) return null;
+    try {
+      return await FirebaseMessaging.instance.getInitialMessage();
+    } catch (_) {
+      return null;
+    }
+  }
 }

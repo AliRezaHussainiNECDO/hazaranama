@@ -855,3 +855,12 @@ class AppNotification {
     required this.createdAt,
   });
 }
+
+
+/// مقصد یک اعلان — برای باز کردن صفحه‌ی مربوط با لمس اعلان یا پوش.
+class NotificationTarget {
+  final String type;
+  final String? refType;
+  final String? refId;
+  const NotificationTarget({required this.type, this.refType, this.refId});
+}

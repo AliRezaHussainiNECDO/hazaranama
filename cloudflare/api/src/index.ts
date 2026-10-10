@@ -10,7 +10,8 @@
 import type { Env, Ctx } from "./types";
 import { hashPassword, verifyPassword, signJwt, verifyJwt, sha256Hex } from "./auth";
 import { runQuery, HttpError, type User, type QueryReq, encodeValue, columnsOf } from "./db";
-import { insertNotifications } from "./hooks";
+import { insertNotifications, adminIds } from "./hooks";
+import { pushConfigured } from "./push";
 import { handleAi } from "./ai";
 import schemaSql from "../schema.sql";
 import seedContent from "../seed/content.json";
@@ -101,6 +102,10 @@ async function handleAuth(env: Env, ctx: Ctx, req: Request, path: string): Promi
       env.DB.prepare("INSERT INTO users (id, email, password_hash) VALUES (?, ?, ?)").bind(id, email, await hashPassword(password)),
       env.DB.prepare("INSERT INTO profiles (id, name, email, role, status) VALUES (?, ?, ?, ?, 'active')").bind(id, name, email, role),
     ]);
+    const admins = (await adminIds(env)).filter((a) => a !== id);
+    if (admins.length) {
+      await insertNotifications(env, ctx, admins.map((a) => ({ user_id: a, type: "admin_new_user", title: `کاربر تازه پیوست: ${name}`, body: email, ref_id: id, ref_type: "user" })));
+    }
     return json(await session(env, { id, email, token_version: 0 }));
   }
 
@@ -443,6 +448,41 @@ async function handleAdmin(env: Env, ctx: Ctx, req: Request, path: string, url: 
     await env.DB.prepare("INSERT OR REPLACE INTO _meta (key, value) VALUES ('legacy_import', ?)").bind(new Date().toISOString()).run();
     ctx.waitUntil(migrateMedia(env, PUBLIC_ORIGIN, 20));
     return json({ ok: true, imported: result });
+  }
+
+  if (path === "/admin/push-status" || path === "/admin/broadcast") {
+    // فقط با نشست مدیر (نه کلید انتقال)
+    const u = await currentUser(env, req);
+    if (!u || u.role !== "admin") return err(403, "فقط مدیر.");
+
+    if (path === "/admin/push-status") {
+      const d = await env.DB.prepare("SELECT COUNT(*) AS devices, COUNT(DISTINCT user_id) AS users, SUM(platform = 'android') AS android, SUM(platform = 'ios') AS ios FROM device_tokens").first<Record<string, number>>();
+      const p = await env.DB.prepare("SELECT COUNT(*) AS c FROM profiles WHERE status = 'active'").first<{ c: number }>();
+      const last = await env.DB.prepare("SELECT title, body, created_at FROM notifications WHERE type = 'announcement' ORDER BY created_at DESC LIMIT 1").first();
+      return json({
+        configured: pushConfigured(env),
+        devices: d?.devices ?? 0,
+        users_with_devices: d?.users ?? 0,
+        android: d?.android ?? 0,
+        ios: d?.ios ?? 0,
+        active_users: p?.c ?? 0,
+        last_announcement: last ?? null,
+      });
+    }
+
+    // /admin/broadcast — اعلان همگانی (درون‌اپ برای همه + پوش برای گوشی‌ها)
+    const b = await readJson(req);
+    const title = String(b.title ?? "").trim().slice(0, 120);
+    const body = String(b.body ?? "").trim().slice(0, 500);
+    if (!title) return err(400, "عنوان اعلان خالی است.");
+    const audience = b.audience === "admins" ? "admins" : "all";
+    const recipients =
+      audience === "admins"
+        ? await adminIds(env)
+        : ((await env.DB.prepare("SELECT id FROM profiles WHERE status = 'active'").all<{ id: string }>()).results ?? []).map((r) => r.id);
+    const list = recipients.map((id) => ({ user_id: id, type: "announcement", title, body, ref_id: null, ref_type: null }));
+    await insertNotifications(env, ctx, list, { broadcast: audience === "all" });
+    return json({ ok: true, recipients: list.length, push: pushConfigured(env) });
   }
 
   await requireAdminOrKey(env, req);

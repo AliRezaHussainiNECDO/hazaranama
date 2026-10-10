@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/widgets.dart' show AppLifecycleListener;
 import 'package:image_picker/image_picker.dart' show XFile;
 import 'hz_backend.dart';
 import '../core/afghan_calendar.dart';
@@ -202,8 +203,8 @@ class BackendService {
   /// یک کانال Realtime باز می‌کند و هر اعلانِ تازه‌ی همین کاربر را همان لحظه‌ای
   /// که در دیتابیس ساخته می‌شود (توسط trigger) به onInsert می‌دهد. باید هنگام
   /// خروج از حساب یا بستن اپ با removeChannel بسته شود.
-  NotificationSubscription subscribeToNotifications(String userId, void Function(AppNotification) onInsert) {
-    return NotificationSubscription._(this, userId, onInsert);
+  NotificationSubscription subscribeToNotifications(String userId, void Function(AppNotification) onInsert, {String? sinceIso, Iterable<String> knownIds = const []}) {
+    return NotificationSubscription._(this, userId, onInsert, sinceIso: sinceIso, knownIds: knownIds);
   }
 
   Future<void> removeChannel(NotificationSubscription channel) async => channel.cancel();
@@ -311,6 +312,18 @@ class BackendService {
   Future<String> createRecoveryCode(String userId) async {
     final data = await _db.post('/admin/recovery-code', {'user_id': userId});
     return (data as Map)['code'] as String;
+  }
+
+  // ================= اعلان همگانی و وضعیت پوش (مدیر) =================
+
+  Future<Map<String, dynamic>> fetchPushStatus() async {
+    final data = await _db.post('/admin/push-status', {});
+    return Map<String, dynamic>.from(data as Map);
+  }
+
+  Future<int> sendBroadcast({required String title, required String body, required bool adminsOnly}) async {
+    final data = await _db.post('/admin/broadcast', {'title': title, 'body': body, 'audience': adminsOnly ? 'admins' : 'all'});
+    return ((data as Map)['recipients'] as num?)?.toInt() ?? 0;
   }
 
   // ================= تماس با ما =================
@@ -511,6 +524,12 @@ class BackendService {
   Future<List<Post>> fetchPosts(String? currentUserId, {int limit = 15}) async {
     final rows = await _db.from('posts').select(_postSelect).order('created_at', ascending: false).limit(limit);
     return (rows as List).map((r) => _postFromRow(r as Map<String, dynamic>, currentUserId)).toList();
+  }
+
+  /// یک پست مشخص (مثلاً پستی که اعلانش لمس شده و هنوز در فید بارگذاری نشده).
+  Future<Post?> fetchPostById(String id, String? currentUserId) async {
+    final row = await _db.from('posts').select(_postSelect).eq('id', id).maybeSingle();
+    return row == null ? null : _postFromRow(row as Map<String, dynamic>, currentUserId);
   }
 
   /// صفحه‌بندی «بارگذاری بیشتر» — پست‌های قدیمی‌تر از [before].
@@ -1332,26 +1351,55 @@ class BackendService {
 /// جایگزین کانال Realtime سوپابیس: هر ۲۰ ثانیه (فقط وقتی اپ باز است) اعلان‌های
 /// تازه‌ی همین کاربر را از سرور می‌پرسد و به onInsert می‌دهد.
 class NotificationSubscription {
-  NotificationSubscription._(this._service, this._userId, this._onInsert) {
-    _since = DateTime.now().toUtc().toIso8601String();
-    _timer = Timer.periodic(const Duration(seconds: 20), (_) => _poll());
+  NotificationSubscription._(this._service, this._userId, this._onInsert, {String? sinceIso, Iterable<String> knownIds = const []}) {
+    // نقطه‌ی شروع از زمانِ سرورِ تازه‌ترین اعلانِ موجود — نه ساعت گوشی (که ممکن
+    // است جلو باشد و باعث شود اعلان‌های تازه هرگز دیده نشوند).
+    _since = sinceIso ?? '1970-01-01T00:00:00.000Z';
+    _seen.addAll(knownIds);
+    _resume();
+    _lifecycle = AppLifecycleListener(
+      onResume: () {
+        _resume();
+        pollNow();
+      },
+      onHide: _pause,
+    );
   }
+
+  static const _interval = Duration(seconds: 25);
 
   final BackendService _service;
   final String _userId;
   final void Function(AppNotification) _onInsert;
+  final Set<String> _seen = {};
   late String _since;
   Timer? _timer;
+  AppLifecycleListener? _lifecycle;
   bool _busy = false;
+  bool _cancelled = false;
 
-  Future<void> _poll() async {
-    if (_busy || _timer == null) return;
+  void _resume() {
+    if (_cancelled) return;
+    _timer?.cancel();
+    _timer = Timer.periodic(_interval, (_) => pollNow());
+  }
+
+  // وقتی اپ در پس‌زمینه است، درخواست بی‌فایده نفرست (باتری و سهمیه‌ی سرور)
+  void _pause() {
+    _timer?.cancel();
+    _timer = null;
+  }
+
+  /// همین حالا اعلان‌های تازه را بگیر — مثلاً وقتی یک پوش رسید یا اپ دوباره باز شد.
+  Future<void> pollNow() async {
+    if (_busy || _cancelled) return;
     _busy = true;
     try {
       final fresh = await _service._fetchNotificationsSince(_userId, _since);
       for (final n in fresh) {
-        _since = n.createdAt.toUtc().toIso8601String();
-        _onInsert(n);
+        final iso = n.createdAt.toUtc().toIso8601String();
+        if (iso.compareTo(_since) > 0) _since = iso;
+        if (_seen.add(n.id)) _onInsert(n);
       }
     } catch (_) {
       // قطعی موقت شبکه — دور بعد دوباره تلاش می‌شود
@@ -1361,7 +1409,10 @@ class NotificationSubscription {
   }
 
   void cancel() {
+    _cancelled = true;
     _timer?.cancel();
     _timer = null;
+    _lifecycle?.dispose();
+    _lifecycle = null;
   }
 }

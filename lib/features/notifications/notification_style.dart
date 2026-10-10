@@ -26,6 +26,20 @@ IconData notificationTypeIcon(String type) {
       return Icons.support_agent_rounded;
     case 'password_recovery_request':
       return Icons.key_rounded;
+    case 'post_reaction':
+      return Icons.favorite_rounded;
+    case 'announcement':
+      return Icons.campaign_rounded;
+    case 'admin_message':
+      return Icons.mark_email_unread_rounded;
+    case 'admin_donation':
+      return Icons.volunteer_activism_rounded;
+    case 'admin_article':
+      return Icons.edit_note_rounded;
+    case 'admin_report':
+      return Icons.flag_rounded;
+    case 'admin_new_user':
+      return Icons.person_add_alt_1_rounded;
     default:
       return Icons.notifications_rounded;
   }
@@ -51,6 +65,20 @@ Color notificationTypeColor(String type, AppColors theme) {
       return theme.aiTeal;
     case 'password_recovery_request':
       return theme.yellow;
+    case 'post_reaction':
+      return theme.danger;
+    case 'announcement':
+      return theme.aiViolet;
+    case 'admin_message':
+      return theme.aiTeal;
+    case 'admin_donation':
+      return theme.success;
+    case 'admin_article':
+      return theme.blue;
+    case 'admin_report':
+      return theme.danger;
+    case 'admin_new_user':
+      return theme.blue;
     default:
       return theme.blue;
   }

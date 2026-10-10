@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
     final quickAccess = sections.toList();
     final hero = sections.first;
     final rest = sections.skip(1).toList();
-    int countOf(String id) => app.content[id]?.length ?? 0;
+    int countOf(String id) => id == 'music' ? app.artists.length : (app.content[id]?.length ?? 0);
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(18, 14, 18, 110),

@@ -23,7 +23,7 @@ class ExploreScreen extends StatelessWidget {
     final theme = app.colors;
     final visible = kSections.where((s) => kGroupOrder.contains(s.group)).toList();
     final totalItems = app.content.entries.where((e) => e.key != 'dailyStory').fold<int>(0, (n, e) => n + e.value.length);
-    int countOf(String id) => app.content[id]?.length ?? 0;
+    int countOf(String id) => id == 'music' ? app.artists.length : (app.content[id]?.length ?? 0);
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(18, 16, 18, 110),

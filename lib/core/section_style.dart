@@ -45,6 +45,8 @@ String sectionCountLabel(ContentSection s, int n) {
     'album': 'تصویر',
     'news': 'خبر',
     'library': 'منبع',
+    'music': 'هنرمند',
+    'dailyStory': 'روایت',
   };
   return '$n ${unit[s.id] ?? 'مطلب'}';
 }

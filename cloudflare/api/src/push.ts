@@ -56,7 +56,8 @@ export async function sendPushForNotifications(env: Env, rows: Array<Record<stri
             token: t.token,
             notification: { title: String(n.title ?? "هزاره‌نامه"), body: String(n.body ?? "") },
             data: { type: String(n.type ?? ""), ref_id: String(n.ref_id ?? ""), ref_type: String(n.ref_type ?? "") },
-            android: { priority: "high", notification: { sound: "default", channel_id: "hazaranama_default" } },
+            // بدون channel_id: اپ کانال اختصاصی نمی‌سازد و FCM خودش کانال پیش‌فرض را می‌سازد
+            android: { priority: "high", notification: { sound: "default" } },
             apns: { headers: { "apns-priority": "10" }, payload: { aps: { sound: "default" } } },
           },
         }),
@@ -69,4 +70,36 @@ export async function sendPushForNotifications(env: Env, rows: Array<Record<stri
       }
     }),
   );
+}
+
+export function pushConfigured(env: Env): boolean {
+  if (!env.FCM_SERVICE_ACCOUNT) return false;
+  try {
+    const sa = JSON.parse(env.FCM_SERVICE_ACCOUNT);
+    return Boolean(sa.client_email && sa.private_key && sa.project_id);
+  } catch {
+    return false;
+  }
+}
+
+/// یک پیام برای همه‌ی دستگاه‌هایی که در اپ عضو موضوع «all» شده‌اند —
+/// برای اعلان‌های همگانی (به‌جای صدها درخواست جدا که پلن رایگان اجازه نمی‌دهد).
+export async function sendTopicPush(env: Env, topic: string, n: { title: string; body: string; type: string; ref_id?: string | null; ref_type?: string | null }) {
+  if (!pushConfigured(env)) return { sent: false, reason: "not_configured" };
+  const sa = JSON.parse(env.FCM_SERVICE_ACCOUNT!);
+  const at = await accessToken(sa);
+  const res = await fetch(`https://fcm.googleapis.com/v1/projects/${sa.project_id}/messages:send`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${at}`, "Content-Type": "application/json; charset=utf-8" },
+    body: JSON.stringify({
+      message: {
+        topic,
+        notification: { title: n.title, body: n.body },
+        data: { type: n.type, ref_id: String(n.ref_id ?? ""), ref_type: String(n.ref_type ?? "") },
+        android: { priority: "high", notification: { sound: "default" } },
+        apns: { headers: { "apns-priority": "10" }, payload: { aps: { sound: "default" } } },
+      },
+    }),
+  });
+  return { sent: res.ok, status: res.status, reason: res.ok ? undefined : (await res.text()).slice(0, 300) };
 }

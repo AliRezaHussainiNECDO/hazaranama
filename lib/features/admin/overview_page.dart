@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../core/app_colors.dart';
 import '../../core/donor_tiers.dart';
 import '../../core/widgets.dart';
+import '../../core/section_style.dart';
 import '../../data/sections.dart';
 import '../../models/models.dart';
 import '../../state/app_state.dart';
@@ -11,7 +12,8 @@ import '../donations/donation_screen.dart' show donationCategoryIcon;
 import '../profile/account_settings_screen.dart';
 
 class OverviewPage extends StatefulWidget {
-  const OverviewPage({super.key});
+  final void Function(String page)? onOpenPage;
+  const OverviewPage({super.key, this.onOpenPage});
 
   @override
   State<OverviewPage> createState() => _OverviewPageState();
@@ -30,9 +32,9 @@ class _OverviewPageState extends State<OverviewPage> {
     final app = context.read<AppState>();
     await Future.wait([
       app.loadRecentActivity(),
-      app.loadAllDonationTransfers(),
-      app.loadAllArticleSubmissions(),
+      app.loadAdminInbox(),
       app.loadTodayVisitCount(),
+      app.loadUsers().catchError((_) {}),
     ]);
     if (mounted) setState(() => _loadingExtras = false);
   }
@@ -47,14 +49,13 @@ class _OverviewPageState extends State<OverviewPage> {
     final activeUsers = app.users.where((u) => u.status.name == 'active').length;
 
     final stats = [
-      _Stat('کاربران فعال', activeUsers, Icons.groups, theme.blue, [4, 6, 5, 8, 7, 9, activeUsers.toDouble()]),
-      _Stat('بازدید امروز', app.todayVisitCount, Icons.visibility, theme.yellow, app.visitTrend.isEmpty ? List.filled(7, 0.0) : app.visitTrend),
-      _Stat('پست‌های تازه', app.posts.length, Icons.forum, theme.blue, [1, 1, 2, 2, 3, 3, app.posts.length.toDouble()]),
-      _Stat('نظرهای تازه', totalComments, Icons.mode_comment, theme.yellow, [0, 1, 1, 2, 2, 3, totalComments.toDouble()]),
+      _Stat('کاربران فعال', activeUsers, Icons.groups_rounded, theme.blue, null),
+      _Stat('بازدید امروز', app.todayVisitCount, Icons.visibility_rounded, theme.yellow, app.visitTrend.isEmpty ? null : app.visitTrend),
+      _Stat('پست‌های حافظه جمعی', app.posts.length, Icons.forum_rounded, theme.aiViolet, null),
+      _Stat('نظرها روی پست‌ها', totalComments, Icons.mode_comment_rounded, theme.aiTeal, null),
     ];
-
     final sectionStats = kSections.where((s) => s.id != 'oral' && s.id != 'dailyStory' && s.id != 'articleWinners').map((s) {
-      return (title: s.title, count: (app.content[s.id] ?? []).length);
+      return (id: s.id, title: s.title, count: s.id == 'music' ? app.artists.length : (app.content[s.id] ?? []).length);
     }).toList();
     final maxCount = sectionStats.map((s) => s.count).fold(1, (a, b) => a > b ? a : b);
 
@@ -66,6 +67,8 @@ class _OverviewPageState extends State<OverviewPage> {
       children: [
         _AdminProfileCard(theme: theme, app: app, activeUsers: activeUsers),
         const SizedBox(height: 18),
+        _PendingTasks(theme: theme, app: app, onOpenPage: widget.onOpenPage),
+        const SizedBox(height: 18),
         GridView.count(
           crossAxisCount: 2,
           shrinkWrap: true,
@@ -75,23 +78,19 @@ class _OverviewPageState extends State<OverviewPage> {
                 padding: const EdgeInsets.all(13),
                 decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(18), border: Border.all(color: theme.glassBorder)),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    StatIconBox(icon: s.icon, color: s.color, size: 30),
+                  Row(children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                      decoration: BoxDecoration(color: theme.success.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(999)),
-                      child: Row(children: [
-                        Icon(Icons.trending_up, size: 10, color: theme.success),
-                        const SizedBox(width: 2),
-                        Text('رشد', style: TextStyle(color: theme.success, fontSize: 10, fontWeight: FontWeight.w700)),
-                      ]),
+                      width: 36,
+                      height: 36,
+                      decoration: BoxDecoration(color: s.color.withValues(alpha: 0.16), borderRadius: BorderRadius.circular(12)),
+                      child: Icon(s.icon, color: s.color, size: 19),
                     ),
+                    const Spacer(),
+                    if (s.trend != null) Sparkline(data: s.trend!, color: s.color, width: 70, height: 22),
                   ]),
                   const Spacer(),
-                  Text('${s.value}', style: TextStyle(color: theme.textPrimary, fontSize: 18, fontWeight: FontWeight.w800)),
-                  Text(s.label, style: TextStyle(color: theme.textFaint, fontSize: 11)),
-                  const SizedBox(height: 6),
-                  Sparkline(data: s.trend, color: s.color, width: 110, height: 22),
+                  Text('${s.value}', style: TextStyle(color: theme.textPrimary, fontSize: 24, fontWeight: FontWeight.w900)),
+                  Text(s.label, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 12)),
                 ]),
               )).toList(),
         ),
@@ -117,7 +116,7 @@ class _OverviewPageState extends State<OverviewPage> {
                   const SizedBox(height: 4),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(4),
-                    child: LinearProgressIndicator(value: s.count / maxCount, minHeight: 6, backgroundColor: theme.bgCardAlt, valueColor: AlwaysStoppedAnimation(theme.blue)),
+                    child: LinearProgressIndicator(value: s.count / maxCount, minHeight: 6, backgroundColor: theme.bgCardAlt, valueColor: AlwaysStoppedAnimation(sectionStyle(s.id).a)),
                   ),
                 ]),
               ),
@@ -187,7 +186,7 @@ class _Stat {
   final int value;
   final IconData icon;
   final Color color;
-  final List<double> trend;
+  final List<double>? trend; // فقط وقتی داده‌ی واقعی روزانه داریم
   _Stat(this.label, this.value, this.icon, this.color, this.trend);
 }
 
@@ -470,4 +469,72 @@ String _timeAgo(DateTime dt) {
   if (diff.inDays < 1) return '${diff.inHours} ساعت پیش';
   if (diff.inDays < 30) return '${diff.inDays} روز پیش';
   return '${(diff.inDays / 30).floor()} ماه پیش';
+}
+
+/// «کارهای در انتظار» — هر کارت مستقیم به همان صفحه‌ی بررسی می‌رود.
+class _PendingTasks extends StatelessWidget {
+  final AppColors theme;
+  final AppState app;
+  final void Function(String page)? onOpenPage;
+  const _PendingTasks({required this.theme, required this.app, this.onOpenPage});
+
+  @override
+  Widget build(BuildContext context) {
+    final tasks = [
+      (page: 'messages', label: 'پیام بی‌پاسخ', n: app.pendingMessagesCount, icon: Icons.mark_email_unread_rounded, color: theme.aiTeal),
+      (page: 'donations', label: 'کمک مالی برای تأیید', n: app.pendingDonationsCount, icon: Icons.volunteer_activism_rounded, color: theme.success),
+      (page: 'community', label: 'گزارش برای بررسی', n: app.pendingReportsCount, icon: Icons.flag_rounded, color: theme.danger),
+      (page: 'contest', label: 'مقاله در دوره‌ی جاری', n: app.activeSubmissionsCount, icon: Icons.edit_note_rounded, color: theme.aiViolet),
+    ];
+    final total = tasks.fold<int>(0, (a, t) => a + t.n);
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Row(children: [
+        Text('کارهای در انتظار', style: TextStyle(color: theme.textPrimary, fontSize: 16, fontWeight: FontWeight.w900)),
+        const SizedBox(width: 8),
+        if (total == 0)
+          Row(children: [
+            Icon(Icons.check_circle_rounded, size: 16, color: theme.success),
+            const SizedBox(width: 4),
+            Text('همه‌چیز رسیدگی شده', style: TextStyle(color: theme.success, fontSize: 12, fontWeight: FontWeight.w700)),
+          ]),
+      ]),
+      const SizedBox(height: 10),
+      GridView.count(
+        crossAxisCount: 2,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+        childAspectRatio: 2.1,
+        children: [
+          for (final t in tasks)
+            Material(
+              color: t.n > 0 ? Color.alphaBlend(t.color.withValues(alpha: 0.12), theme.bgCard.withValues(alpha: 0.85)) : theme.bgCard.withValues(alpha: 0.55),
+              borderRadius: BorderRadius.circular(18),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(18),
+                onTap: onOpenPage == null ? null : () => onOpenPage!(t.page),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18),
+                    border: Border.all(color: t.n > 0 ? t.color.withValues(alpha: 0.45) : theme.glassBorder),
+                  ),
+                  child: Row(children: [
+                    Icon(t.icon, color: t.n > 0 ? t.color : theme.textFaint, size: 22),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: [
+                        Text('${t.n}', style: TextStyle(color: theme.textPrimary, fontSize: 20, fontWeight: FontWeight.w900, height: 1.1)),
+                        Text(t.label, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 11.5)),
+                      ]),
+                    ),
+                  ]),
+                ),
+              ),
+            ),
+        ],
+      ),
+    ]);
+  }
 }

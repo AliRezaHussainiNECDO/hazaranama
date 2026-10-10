@@ -556,7 +556,8 @@ class HzGlassNavItem {
   final IconData icon;
   final IconData activeIcon;
   final String label;
-  const HzGlassNavItem({required this.icon, required this.activeIcon, required this.label});
+  final int badge; // شمار موارد در انتظار (۰ = بدون نشان)
+  const HzGlassNavItem({required this.icon, required this.activeIcon, required this.label, this.badge = 0});
 }
 
 /// نوار پایین شناور و شیشه‌ای — جایگزین NavigationBar استاندارد؛ روی
@@ -610,7 +611,21 @@ class HzGlassNavBar extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
               boxShadow: active ? [BoxShadow(color: theme.blue.withValues(alpha: 0.35), blurRadius: 14, offset: const Offset(0, 5))] : null,
             ),
-            child: Icon(active ? item.activeIcon : item.icon, size: 21, color: active ? Colors.white : theme.textFaint),
+            child: Stack(clipBehavior: Clip.none, children: [
+              Icon(active ? item.activeIcon : item.icon, size: 21, color: active ? Colors.white : theme.textFaint),
+              if (item.badge > 0)
+                PositionedDirectional(
+                  top: -6,
+                  end: -10,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                    constraints: const BoxConstraints(minWidth: 17),
+                    decoration: BoxDecoration(color: theme.danger, borderRadius: BorderRadius.circular(999), border: Border.all(color: theme.bgElevated, width: 1.5)),
+                    child: Text(item.badge > 99 ? '۹۹+' : '${item.badge}',
+                        textAlign: TextAlign.center, style: const TextStyle(fontFamily: 'Vazirmatn', color: Colors.white, fontSize: 9.5, fontWeight: FontWeight.w800, height: 1.3)),
+                  ),
+                ),
+            ]),
           ),
           const SizedBox(height: 4),
           AnimatedDefaultTextStyle(

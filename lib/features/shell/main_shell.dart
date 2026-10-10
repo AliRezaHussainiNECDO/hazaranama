@@ -11,7 +11,9 @@ import '../../state/app_state.dart';
 import '../admin/admin_shell.dart';
 import '../ai/ai_assistant_screen.dart';
 import '../notifications/notification_permission_sheet.dart';
+import '../notifications/notification_router.dart';
 import '../notifications/notification_style.dart';
+import '../../core/nav.dart';
 import '../notifications/notifications_screen.dart';
 import 'user_shell.dart';
 
@@ -27,6 +29,15 @@ class MainShell extends StatelessWidget {
     final theme = app.colors;
     final isAdmin = app.currentUser?.role == UserRole.admin;
     final showAdmin = isAdmin && !app.adminPreviewAsUser;
+    // لمس پوش یا اعلان: صفحه‌ی مربوط از ناوبر اصلی باز شود
+    if (app.notificationOpener == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        app.attachNotificationOpener((t) {
+          final ctx = rootNavigatorKey.currentContext;
+          if (ctx != null) openNotificationTarget(ctx, app, t);
+        });
+      });
+    }
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -106,8 +117,10 @@ class MainShell extends StatelessWidget {
                   theme: theme,
                   onDismiss: () => app.clearIncomingToast(),
                   onTap: () {
+                    final n = app.incomingToast!;
                     app.clearIncomingToast();
-                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const NotificationsScreen()));
+                    app.markNotificationRead(n.id);
+                    openNotificationTarget(context, app, NotificationTarget(type: n.type, refType: n.refType, refId: n.refId));
                   },
                 ),
               ),

@@ -1,6 +1,6 @@
 // جایگزین تریگرهای پستگرس: شمارنده‌ی نظرها، اعلان‌های درون‌اپی و پوش.
 import type { Env, Ctx } from "./types";
-import { sendPushForNotifications } from "./push";
+import { sendPushForNotifications, sendTopicPush } from "./push";
 
 type Row = Record<string, unknown>;
 
@@ -12,6 +12,7 @@ export async function loadRowsForHooks(env: Env, table: string, where: string, p
 
 const HOOKED = new Set([
   "comments",
+  "content_reports",
   "video_comments",
   "article_comments",
   "featured_articles",
@@ -29,7 +30,7 @@ interface NewNotification {
   ref_type: string | null;
 }
 
-export async function insertNotifications(env: Env, ctx: Ctx, list: NewNotification[]) {
+export async function insertNotifications(env: Env, ctx: Ctx, list: NewNotification[], opts: { broadcast?: boolean } = {}) {
   if (!list.length) return;
   const now = new Date().toISOString();
   const rows = list.map((n) => ({ id: crypto.randomUUID(), created_at: now, is_read: 0, ...n }));
@@ -41,7 +42,23 @@ export async function insertNotifications(env: Env, ctx: Ctx, list: NewNotificat
       rows.slice(i, i + 50).map((r) => stmt.bind(r.id, r.user_id, r.type, r.title, r.body, r.ref_id, r.ref_type, 0, r.created_at)),
     );
   }
-  ctx.waitUntil(sendPushForNotifications(env, rows).catch((e) => console.error("push", e)));
+  if (opts.broadcast) {
+    // اعلان همگانی: یک پیام برای موضوع «all» به‌جای یک درخواست برای هر نفر
+    const n = rows[0];
+    ctx.waitUntil(sendTopicPush(env, "all", { title: n.title, body: n.body, type: n.type, ref_id: n.ref_id, ref_type: n.ref_type }).catch((e) => console.error("push", e)));
+  } else {
+    ctx.waitUntil(sendPushForNotifications(env, rows).catch((e) => console.error("push", e)));
+  }
+}
+
+export async function adminIds(env: Env): Promise<string[]> {
+  const r = await env.DB.prepare("SELECT id FROM profiles WHERE role = 'admin'").all<{ id: string }>();
+  return (r.results ?? []).map((x) => x.id);
+}
+
+/// اعلان برای همه‌ی مدیران (به‌جز خودِ کسی که کار را انجام داده)
+async function toAdmins(env: Env, except: unknown, n: Omit<NewNotification, "user_id">): Promise<NewNotification[]> {
+  return (await adminIds(env)).filter((id) => id !== except).map((id) => ({ user_id: id, ...n }));
 }
 
 async function nameOf(env: Env, id: unknown): Promise<string> {
@@ -56,6 +73,46 @@ const LEVEL10_USD = 1000; // باید با kDonorTiers.last.minUsd هماهنگ 
 
 export async function runAfterHooks(env: Env, ctx: Ctx, table: string, op: "insert" | "update" | "delete", rows: Row[], changes: Row | null) {
   const notes: NewNotification[] = [];
+
+  // ---- واکنش به پست: صاحب پست باخبر شود (نه برای واکنش به پست خودش) ----
+  if (table === "reactions" && op === "insert") {
+    for (const r of rows) {
+      const owner = (await env.DB.prepare("SELECT author_id FROM posts WHERE id = ?").bind(r.post_id).first<Row>())?.author_id;
+      if (owner && owner !== r.user_id) {
+        // برداشتن و دوباره زدن «لایک» نباید پشت‌سرهم اعلان بسازد: هر نفر برای هر پست حداکثر روزی یک بار
+        const who = await nameOf(env, r.user_id);
+        const recent = await env.DB.prepare(
+          "SELECT 1 FROM notifications WHERE user_id = ? AND type = 'post_reaction' AND ref_id = ? AND title LIKE ? AND created_at > strftime('%Y-%m-%dT%H:%M:%fZ','now','-1 day') LIMIT 1",
+        )
+          .bind(owner, r.post_id, `${who} %`)
+          .first();
+        if (recent) continue;
+        notes.push({
+          user_id: owner as string,
+          type: "post_reaction",
+          title: `${who} به پست شما واکنش ${String(r.emoji ?? "❤️")} نشان داد`,
+          body: "",
+          ref_id: r.post_id as string,
+          ref_type: "post",
+        });
+      }
+    }
+  }
+
+  // ---- اعلان‌های مدیر: کارهای تازه‌ای که بررسی لازم دارند ----
+  if (op === "insert") {
+    for (const r of rows) {
+      if (table === "contact_messages") {
+        notes.push(...(await toAdmins(env, r.user_id, { type: "admin_message", title: `پیام تازه از ${await nameOf(env, r.user_id)}`, body: left(r.message), ref_id: r.id as string, ref_type: "contact_message" })));
+      } else if (table === "donation_transfers") {
+        notes.push(...(await toAdmins(env, r.user_id, { type: "admin_donation", title: `کمک مالی تازه برای بررسی: ${r.amount} ${r.currency}`, body: `${r.sender_name ?? ""} — ${r.sender_country ?? ""}`, ref_id: r.id as string, ref_type: "donation_transfer" })));
+      } else if (table === "article_submissions") {
+        notes.push(...(await toAdmins(env, r.author_id, { type: "admin_article", title: `مقاله‌ی تازه در مسابقه از ${await nameOf(env, r.author_id)}`, body: left(r.title), ref_id: r.id as string, ref_type: "article_submission" })));
+      } else if (table === "content_reports") {
+        notes.push(...(await toAdmins(env, r.reporter_id, { type: "admin_report", title: "گزارش تازه برای بررسی", body: `${left(r.reason, 60)}${r.target_preview ? " — " + left(r.target_preview, 80) : ""}`, ref_id: r.id as string, ref_type: "content_report" })));
+      }
+    }
+  }
 
   if (table === "comments") {
     const postIds = [...new Set(rows.map((r) => r.post_id as string))];
@@ -183,5 +240,7 @@ export async function runAfterHooks(env: Env, ctx: Ctx, table: string, op: "inse
     }
   }
 
-  await insertNotifications(env, ctx, notes);
+  const broadcast = notes.filter((n) => n.type === "level10_reached");
+  await insertNotifications(env, ctx, notes.filter((n) => n.type !== "level10_reached"));
+  if (broadcast.length) await insertNotifications(env, ctx, broadcast, { broadcast: true });
 }

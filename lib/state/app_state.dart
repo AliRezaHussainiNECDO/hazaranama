@@ -118,8 +118,7 @@ class AppState extends ChangeNotifier {
       stage = AuthStage.app;
       // شمارنده‌ی «بازدید امروز» — یک بار در هر نشست، بدون این‌که جلوی ورود را بگیرد
       unawaited(_service.incrementDailyVisit().catchError((_) {}));
-      unawaited(loadNotifications());
-      _startNotificationsRealtime();
+      unawaited(_initNotifications());
       unawaited(_maybeAskNotificationPermission(authUser.id));
       // نقش‌ی همه‌ی کاربران + فهرست کمک‌کنندگان — برای هر کاربری (نه فقط مدیر)
       // تا حلقه‌ی مقام درست دور عکس پروفایل بقیه‌ی کاربران هم در فید، کامنت‌ها،
@@ -232,6 +231,14 @@ class AppState extends ChangeNotifier {
 
   Future<void> logout() async {
     await _stopNotificationsRealtime();
+    for (final sub in _pushSubs) {
+      await sub.cancel();
+    }
+    _pushSubs.clear();
+    notificationOpener = null;
+    pendingNotificationTarget = null;
+    adminRequestedPage = null;
+    await PushService.unsubscribeFromAll();
     await _pushTokenRefreshSub?.cancel();
     _pushTokenRefreshSub = null;
     if (_pushToken != null) {
@@ -965,17 +972,112 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// یک بار در هر نشست صدا زده می‌شود — کانال Realtime باز می‌کند تا اعلان‌های
-  /// تازه‌ی این کاربر، همان لحظه‌ای که در Supabase ساخته می‌شوند (با trigger)،
-  /// بدون رفرش در اپ ظاهر شوند.
-  void _startNotificationsRealtime() {
+  /// یک بار در هر نشست: اعلان‌های موجود را می‌گیرد، سپس از همان نقطه (زمان سرور)
+  /// به‌طور دوره‌ای اعلان‌های تازه را می‌پرسد؛ و پوش‌های رسیده را هم وصل می‌کند —
+  /// پوشِ رسیده وقتی اپ باز است فوراً فهرست را تازه می‌کند و لمس روی پوش،
+  /// صفحه‌ی مربوط (پست، پیام، کمک مالی…) را باز می‌کند.
+  Future<void> _initNotifications() async {
     if (currentUser == null) return;
-    _notificationsChannel = _service.subscribeToNotifications(currentUser!.id, (n) {
-      notifications.insert(0, n);
-      incomingToast = n;
-      notifyListeners();
-    });
+    try {
+      await loadNotifications();
+    } catch (_) {}
+    if (currentUser == null) return;
+    final newest = notifications.isEmpty ? null : notifications.first.createdAt.toUtc().toIso8601String();
+    _notificationsChannel = _service.subscribeToNotifications(
+      currentUser!.id,
+      (n) {
+        notifications.insert(0, n);
+        incomingToast = n;
+        notifyListeners();
+        // کار تازه برای مدیر رسید: نشان‌های عددی پنل را هم تازه کن
+        if (n.type.startsWith('admin_')) unawaited(loadAdminInbox());
+      },
+      sinceIso: newest,
+      knownIds: notifications.map((n) => n.id),
+    );
+    _pushSubs.add(PushService.onForegroundMessage.listen((_) => _notificationsChannel?.pollNow()));
+    _pushSubs.add(PushService.onOpenedFromPush.listen((m) => _openFromPush(m.data)));
+    final initial = await PushService.initialMessage();
+    if (initial != null) _openFromPush(initial.data);
   }
+
+  final List<StreamSubscription> _pushSubs = [];
+
+  void _openFromPush(Map<String, dynamic> data) {
+    _requestOpen(NotificationTarget(
+      type: (data['type'] ?? '').toString(),
+      refType: (data['ref_type'] ?? '').toString().isEmpty ? null : data['ref_type'].toString(),
+      refId: (data['ref_id'] ?? '').toString().isEmpty ? null : data['ref_id'].toString(),
+    ));
+    _notificationsChannel?.pollNow();
+  }
+
+  /// صفحه‌ای که باید برای یک اعلان باز شود — MainShell آن را اجرا می‌کند.
+  /// اگر پوش پیش از آماده‌شدن رابط کاربری لمس شده باشد، اینجا منتظر می‌ماند.
+  NotificationTarget? pendingNotificationTarget;
+  void Function(NotificationTarget target)? notificationOpener;
+
+  void _requestOpen(NotificationTarget t) {
+    final opener = notificationOpener;
+    if (opener != null) {
+      opener(t);
+    } else {
+      pendingNotificationTarget = t;
+    }
+  }
+
+  void attachNotificationOpener(void Function(NotificationTarget target) opener) {
+    notificationOpener = opener;
+    final pending = pendingNotificationTarget;
+    pendingNotificationTarget = null;
+    if (pending != null) opener(pending);
+  }
+
+  /// صفحه‌ای از پنل مدیریت که باید باز شود (مثلاً با لمس اعلان «پیام تازه»).
+  String? adminRequestedPage;
+  void requestAdminPage(String page) {
+    adminPreviewAsUser = false;
+    adminRequestedPage = page;
+    notifyListeners();
+  }
+
+  String? consumeAdminRequestedPage() {
+    final p = adminRequestedPage;
+    adminRequestedPage = null;
+    return p;
+  }
+
+  /// پستی که در فید نیست را می‌گیرد و به فهرست اضافه می‌کند (برای باز کردن از اعلان).
+  Future<bool> ensurePostLoaded(String id) async {
+    if (posts.any((p) => p.id == id)) return true;
+    final post = await _service.fetchPostById(id, currentUser?.id);
+    if (post == null) return false;
+    posts = [...posts, post];
+    notifyListeners();
+    return true;
+  }
+
+  // ---------------- مدیر: صندوق کارهای در انتظار ----------------
+  int get pendingMessagesCount => allMessages.where((m) => m.status == MessageStatus.newMsg).length;
+  int get pendingDonationsCount => allDonationTransfers.where((d) => d.status == DonationTransferStatus.pending).length;
+  int get pendingReportsCount => contentReports.where((r) => r.status == 'pending').length;
+  int get activeSubmissionsCount => allArticleSubmissions.where((a) => a.status == ArticleStatus.active).length;
+
+  /// همه‌ی صف‌های بررسی مدیر را یک‌جا تازه می‌کند (نشان‌های عددی منو و نمای کلی).
+  Future<void> loadAdminInbox() async {
+    if (currentUser?.role != UserRole.admin) return;
+    await Future.wait([
+      loadAllMessages().catchError((_) {}),
+      loadAllDonationTransfers().catchError((_) {}),
+      loadContentReports().catchError((_) {}),
+      loadAllArticleSubmissions().catchError((_) {}),
+    ]);
+  }
+
+  // ---------------- مدیر: اعلان همگانی و وضعیت پوش ----------------
+  Future<Map<String, dynamic>> fetchPushStatus() => _service.fetchPushStatus();
+  Future<int> sendBroadcast({required String title, required String body, bool adminsOnly = false}) =>
+      _service.sendBroadcast(title: title, body: body, adminsOnly: adminsOnly);
 
   Future<void> _stopNotificationsRealtime() async {
     final channel = _notificationsChannel;
@@ -1039,6 +1141,7 @@ class AppState extends ChangeNotifier {
       if (token != null) {
         _pushToken = token;
         await _service.registerDeviceToken(userId, token);
+        await PushService.subscribeToAll();
       }
       _pushTokenRefreshSub?.cancel();
       _pushTokenRefreshSub = PushService.onTokenRefresh.listen((newToken) {

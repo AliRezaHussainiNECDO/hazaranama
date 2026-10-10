@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/cupertino.dart' show CupertinoPageTransitionsBuilder;
 import 'package:flutter/material.dart';
+import 'core/nav.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'state/app_state.dart';
@@ -21,6 +22,7 @@ class HazaranamaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'هزاره‌نامه',
+      navigatorKey: rootNavigatorKey,
       debugShowCheckedModeBanner: false,
       locale: const Locale('fa'),
       supportedLocales: const [Locale('fa'), Locale('en')],
