@@ -20,6 +20,10 @@ bucket_name = "hazaranama-media"
 [ai]
 binding = "AI"
 
+# هر دقیقه: پردازش داده‌های منتقل‌شده از Supabase و انتقال فایل‌ها به R2
+[triggers]
+crons = ["* * * * *"]
+
 [observability]
 enabled = true
 

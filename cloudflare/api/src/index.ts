@@ -14,8 +14,9 @@ import { insertNotifications } from "./hooks";
 import { handleAi } from "./ai";
 import schemaSql from "../schema.sql";
 import seedContent from "../seed/content.json";
+import legacySeedKeys from "../seed/legacy_seed_keys.json";
 
-const SCHEMA_VERSION = 1;
+const SCHEMA_VERSION = 2;
 
 const CORS: Record<string, string> = {
   "Access-Control-Allow-Origin": "*",
@@ -286,6 +287,19 @@ async function importRows(env: Env, table: string, rows: Record<string, unknown>
     return stmts.length;
   }
   if (!IMPORT_ORDER.includes(table)) throw new HttpError(400, `جدول نامعتبر برای ورود: ${table}`);
+  if (table === "content_items") {
+    // محتوای اولیه‌ی قدیمی (همان SQL-seed های Supabase) تکرار نشود؛ نسخه‌ی گسترش‌یافته‌اش در seed هست
+    const legacy = new Set(legacySeedKeys as string[]);
+    rows = rows.filter((r) => {
+      let f = r.fields as Record<string, unknown> | string | undefined;
+      if (typeof f === "string") {
+        try { f = JSON.parse(f) as Record<string, unknown>; } catch { f = {}; }
+      }
+      const ff = (f ?? {}) as Record<string, unknown>;
+      const k = ["title", "name", "era", "hazaragi", "caption"].map((x) => ff[x]).find((v) => typeof v === "string" && v.trim());
+      return !(k && legacy.has(`${r.section_id}|${String(k).trim()}`));
+    });
+  }
   const cols = await columnsOf(env, table);
   const stmts: D1PreparedStatement[] = [];
   for (const raw of rows) {
@@ -417,6 +431,20 @@ async function handleAdmin(env: Env, ctx: Ctx, req: Request, path: string, url: 
     return json({ ok: true, imported: result });
   }
 
+  if (path === "/admin/stage") {
+    // فقط ذخیره‌ی خام (بدون پردازش سنگین) — کار اصلی را cron هر دقیقه انجام می‌دهد
+    const table = url.searchParams.get("table") ?? "";
+    if (!IMPORT_ORDER.includes(table)) return err(400, `جدول نامعتبر: ${table}`);
+    const body = await req.text();
+    await env.DB.prepare("INSERT INTO _import_staging (tbl, data) VALUES (?, ?)").bind(table, body).run();
+    return json({ ok: true, staged: table, bytes: body.length });
+  }
+
+  if (path === "/admin/import-status") {
+    const r = await env.DB.prepare("SELECT tbl, applied, result, length(data) AS bytes FROM _import_staging ORDER BY id").all();
+    return json(r.results ?? []);
+  }
+
   if (path === "/admin/migrate-media") {
     const budget = Math.min(40, Number(url.searchParams.get("limit") ?? 25));
     return json(await migrateMedia(env, url.origin, budget));
@@ -440,8 +468,48 @@ async function handleAdmin(env: Env, ctx: Ctx, req: Request, path: string, url: 
   return err(404, "مسیر پیدا نشد.");
 }
 
+// ---------------- پردازش زمان‌بندی‌شده (هر دقیقه) ----------------
+/** یک تکه از داده‌های staged را — به ترتیب وابستگی جدول‌ها — وارد می‌کند. */
+async function applyStaged(env: Env): Promise<boolean> {
+  const pending = await env.DB.prepare("SELECT id, tbl FROM _import_staging WHERE applied = 0").all<{ id: number; tbl: string }>();
+  const list = pending.results ?? [];
+  if (!list.length) return false;
+  list.sort((a, b) => IMPORT_ORDER.indexOf(a.tbl) - IMPORT_ORDER.indexOf(b.tbl) || a.id - b.id);
+  const next = list[0];
+  const row = await env.DB.prepare("SELECT data FROM _import_staging WHERE id = ?").bind(next.id).first<{ data: string }>();
+  let result: string;
+  try {
+    const parsed = JSON.parse(row?.data ?? "[]");
+    const rows = Array.isArray(parsed) ? parsed : [];
+    const n = await importRows(env, next.tbl, rows);
+    result = `ok:${n}`;
+  } catch (e) {
+    result = `error:${e instanceof Error ? e.message : String(e)}`.slice(0, 500);
+  }
+  await env.DB.prepare("UPDATE _import_staging SET applied = 1, result = ?, data = '' WHERE id = ?").bind(result, next.id).run();
+  return true;
+}
+
+const PUBLIC_ORIGIN = "https://hazaranama-api.alireza-necdo.workers.dev";
+
+async function scheduled(env: Env) {
+  if (!schemaReady) schemaReady = ensureSchema(env).then(() => ensureContent(env));
+  await schemaReady;
+  // تا ۳ تکه در هر اجرا؛ وقتی چیزی برای ورود نماند، نوبت انتقال فایل‌هاست
+  let worked = false;
+  for (let i = 0; i < 3; i++) {
+    if (!(await applyStaged(env))) break;
+    worked = true;
+  }
+  if (!worked) await migrateMedia(env, PUBLIC_ORIGIN, 20);
+}
+
 // ---------------- ورودی اصلی ----------------
 export default {
+  async scheduled(_event: ScheduledController, env: Env, ctx: Ctx) {
+    ctx.waitUntil(scheduled(env));
+  },
+
   async fetch(req: Request, env: Env, ctx: Ctx): Promise<Response> {
     if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: CORS });
     const url = new URL(req.url);

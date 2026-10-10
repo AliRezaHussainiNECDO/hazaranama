@@ -315,6 +315,16 @@ CREATE TABLE IF NOT EXISTS blocked_users (
   CHECK (blocker_id <> blocked_id)
 );
 
+-- ---------------- انتقال داده از Supabase ----------------
+CREATE TABLE IF NOT EXISTS _import_staging (
+  id         INTEGER PRIMARY KEY AUTOINCREMENT,
+  tbl        TEXT NOT NULL,
+  data       TEXT NOT NULL,
+  applied    INTEGER NOT NULL DEFAULT 0,
+  result     TEXT,
+  created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
+);
+
 -- ---------------- ویوها ----------------
 DROP VIEW IF EXISTS donor_leaderboard;
 CREATE VIEW donor_leaderboard AS
