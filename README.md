@@ -3,7 +3,7 @@
 این پوشه، تبدیل کامل دموی React هزاره‌نامه (نسخه‌ی نهایی v14) به یک پروژه‌ی Flutter
 با ساخت‌وساز تمیز و مبتنی بر feature است. سرور برنامه کاملاً روی Cloudflare است
 (Worker + D1 + R2 + Workers AI در پوشه‌ی `cloudflare/api`)؛ نسخه‌ی وب روی
-Cloudflare Pages (hazaranama.pages.dev) منتشر می‌شود.
+Cloudflare Pages (https://hazaranama.com — نشانی پشتیبان: hazaranama.pages.dev) منتشر می‌شود.
 
 ## ساخت‌وساز پوشه‌ها
 

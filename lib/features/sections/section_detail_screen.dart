@@ -77,7 +77,7 @@ class SectionDetailScreen extends StatelessWidget {
                     icon: Icon(Icons.ios_share, size: 18, color: theme.textSecondary),
                     tooltip: 'هم‌رسانی',
                     onPressed: () async {
-                      await Clipboard.setData(ClipboardData(text: '«${section.title}» در هزاره‌نامه — ${section.description}\nhttps://hazaranama.pages.dev'));
+                      await Clipboard.setData(ClipboardData(text: '«${section.title}» در هزاره‌نامه — ${section.description}\nhttps://hazaranama.com'));
                       if (context.mounted) showHzToast(context, 'متن و پیوند هزاره‌نامه کپی شد');
                     },
                   ),

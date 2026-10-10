@@ -27,7 +27,7 @@ const String kTransferRecipientCountry = 'Switzerland';
 /// می‌پذیرد، نه نمایش مستقیم مشخصات پرداخت در صفحه‌ی خودِ اپ. نسخه‌ی اندروید
 /// (که گوگل‌پلی چنین محدودیتی ندارد) همچنان کارت‌های PayPal/حواله را مستقیم
 /// نشان می‌دهد.
-const String kDonationWebUrl = 'https://hazaranama.pages.dev/donate/';
+const String kDonationWebUrl = 'https://hazaranama.com/donate/';
 
 const List<String> kDonationCurrencies = ['USD', 'EUR', 'CHF', 'GBP', 'AFN'];
 

@@ -7,7 +7,7 @@ export interface Env {
   MIGRATION_KEY?: string;
   FCM_SERVICE_ACCOUNT?: string;
   RESEND_API_KEY?: string; // Secret — کلید Resend برای ایمیل
-  EMAIL_FROM?: string; // مثلاً «هزاره‌نامه <no-reply@hazaranama.org>» (دامنه در Resend تأییدشده)
+  EMAIL_FROM?: string; // مثلاً «هزاره‌نامه <no-reply@hazaranama.com>» (دامنه در Resend تأییدشده)
   AI_MODEL?: string;
   SUPABASE_URL?: string;
 }

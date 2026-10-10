@@ -8,8 +8,8 @@ workers_dev = true
 ADMIN_EMAIL = "alireza.necdo@gmail.com"
 AI_MODEL = "@cf/google/gemma-3-12b-it"
 # فرستنده‌ی ایمیل‌ها (دامنه باید در Resend تأیید شده باشد). تا خالی است، ایمیل خاموش است
-# و بازیابی رمز از راه مدیر انجام می‌شود. نمونه: "هزاره‌نامه <no-reply@hazaranama.org>"
-EMAIL_FROM = ""
+# و بازیابی رمز از راه مدیر انجام می‌شود. نمونه: "هزاره‌نامه <no-reply@hazaranama.com>"
+EMAIL_FROM = "هزاره‌نامه <no-reply@hazaranama.com>"
 
 [[d1_databases]]
 binding = "DB"

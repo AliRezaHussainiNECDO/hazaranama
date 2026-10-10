@@ -1,6 +1,6 @@
 // ایمیل‌های هزاره‌نامه از طریق Resend (https://resend.com).
 // فقط وقتی فعال است که هر دو تنظیم شده باشند:
-//   RESEND_API_KEY (Secret)  و  EMAIL_FROM (مثلاً «هزاره‌نامه <no-reply@hazaranama.org>»)
+//   RESEND_API_KEY (Secret)  و  EMAIL_FROM (مثلاً «هزاره‌نامه <no-reply@hazaranama.com>»)
 // و دامنه‌ی EMAIL_FROM در Resend تأیید شده باشد. در غیر این صورت اپ به روش
 // قبلی (کد بازیابی از طریق مدیر) برمی‌گردد.
 import type { Env } from "./types";
@@ -40,7 +40,8 @@ function layout(title: string, inner: string): string {
 </td></tr>
 <tr><td style="padding:26px 24px;color:#f5f7ff;font-size:15px;line-height:1.9;text-align:right;direction:rtl;">${inner}</td></tr>
 <tr><td style="padding:16px 24px 24px;color:#7d86b0;font-size:12px;line-height:1.8;text-align:right;border-top:1px solid #2c3559;">
-این ایمیل خودکار از سوی اپلیکیشن هزاره‌نامه فرستاده شده است؛ لطفاً به آن پاسخ ندهید.
+این ایمیل خودکار از سوی اپلیکیشن هزاره‌نامه فرستاده شده است؛ لطفاً به آن پاسخ ندهید.<br>
+<a href="https://hazaranama.com" style="color:#8fb2ff;text-decoration:none;" dir="ltr">hazaranama.com</a>
 </td></tr>
 </table></td></tr></table></body></html>`;
 }
