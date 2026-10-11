@@ -67,3 +67,8 @@ supabase/.temp/
 *serviceAccount*.json
 android/key.properties
 __pycache__/
+
+# کلیدهای امضا هرگز در گیت نباشند
+*.jks
+*.keystore
+key.properties
