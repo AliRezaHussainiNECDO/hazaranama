@@ -83,5 +83,13 @@
 			</array>
 		</dict>
 	</array>
+	<!-- رمزنگاری فقط HTTPS استاندارد — پرسش «Export Compliance» در App Store Connect حذف می‌شود -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<!-- پوش نوتیفیکیشن (FCM/APNs) در پس‌زمینه -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 </dict>
 </plist>

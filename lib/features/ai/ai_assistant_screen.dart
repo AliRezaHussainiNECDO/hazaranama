@@ -115,8 +115,36 @@ class _AiAssistantScreenState extends State<AiAssistantScreen> {
                             return _Bubble(theme: theme, fromUser: false, child: TypingDots(color: theme.aiViolet));
                           }
                           final m = _messages[i];
-                          return _Bubble(theme: theme, fromUser: m.fromUser, child: Text(m.text, style: TextStyle(color: m.fromUser ? Colors.white : theme.textPrimary, fontSize: 12.5, height: 1.6)))
-                              .staggered(0, step: Duration.zero);
+                          final text = Text(m.text, style: TextStyle(color: m.fromUser ? Colors.white : theme.textPrimary, fontSize: 12.5, height: 1.6));
+                          return _Bubble(
+                            theme: theme,
+                            fromUser: m.fromUser,
+                            child: m.fromUser || i == 0
+                                ? text
+                                : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                    text,
+                                    // گزارش پاسخ نادرست یا نامناسب هوش مصنوعی (قانون محتوای تولیدی گوگل‌پلی)
+                                    Align(
+                                      alignment: AlignmentDirectional.centerEnd,
+                                      child: InkWell(
+                                        borderRadius: BorderRadius.circular(8),
+                                        onTap: () async {
+                                          final messenger = ScaffoldMessenger.of(context);
+                                          await context.read<AppState>().sendContactMessage('🚩 گزارش پاسخ دستیار هوش مصنوعی:\n${m.text}');
+                                          messenger.showSnackBar(const SnackBar(content: Text('ممنون؛ گزارش شما برای مدیر فرستاده شد.')));
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(top: 6),
+                                          child: Row(mainAxisSize: MainAxisSize.min, children: [
+                                            Icon(Icons.flag_outlined, size: 12, color: theme.textFaint),
+                                            const SizedBox(width: 3),
+                                            Text('گزارش پاسخ', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                                          ]),
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
+                          ).staggered(0, step: Duration.zero);
                         },
                       ),
               ),
