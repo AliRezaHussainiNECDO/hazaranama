@@ -372,6 +372,9 @@ class HzAuth {
   /// کد ورود یک‌بارمصرفی که پس از ورود با فیسبوک/ایکس برگشته را به نشست تبدیل می‌کند.
   Future<AuthResponse> exchangeOAuthCode(String code) => _authCall('/auth/oauth/exchange', {'code': code}, AuthChangeEvent.signedIn);
 
+  /// افزودن ایمیل واقعی به حساب بی‌ایمیل (شماره/اپل) — نشست با ایمیل تازه نو می‌شود
+  Future<AuthResponse> setAccountEmail(String email) => _authCall('/auth/set-email', {'email': email}, AuthChangeEvent.userUpdated);
+
   /// ورود بومی اپل (iOS): identityToken به سرور می‌رود و آن‌جا با کلیدهای اپل بررسی می‌شود.
   Future<AuthResponse> appleNativeSignIn(String identityToken, String name) =>
       _authCall('/auth/apple/native', {'identity_token': identityToken, 'name': name}, AuthChangeEvent.signedIn);

@@ -37,6 +37,7 @@ class BackendService {
   Future<AuthResponse> exchangeOAuthCode(String code) => _db.auth.exchangeOAuthCode(code);
   Future<AuthResponse> appleNativeSignIn(String token, String name) => _db.auth.appleNativeSignIn(token, name);
   Future<AuthResponse> phoneSignIn(String idToken, String name) => _db.auth.phoneSignIn(idToken, name);
+  Future<AuthResponse> setAccountEmail(String email) => _db.auth.setAccountEmail(email);
 
   /// حذف کامل و برگشت‌ناپذیر حساب کاربری — از طریق Edge Function امن
   /// «delete-account» (که با نشست خودِ کاربر صدا زده می‌شود و فقط اجازه
@@ -300,6 +301,7 @@ class BackendService {
       nativeLanguage: (r['native_language'] as String?) ?? 'نامشخص',
       bio: (r['bio'] as String?) ?? '',
       joined: _dateLabel(r['created_at'] as String?),
+      needsCompletion: r['terms_accepted_at'] == null && r['country'] == null,
     );
   }
 

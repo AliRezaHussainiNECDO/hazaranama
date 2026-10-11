@@ -18,7 +18,7 @@ import '../models/models.dart';
 import '../services/push_service.dart';
 import '../services/backend_service.dart';
 
-enum AuthStage { checking, welcome, login, register, forgot, resetPassword, app }
+enum AuthStage { checking, welcome, login, register, forgot, resetPassword, completeProfile, app }
 
 /// وضعیت سراسری برنامه — حالا هر خواندن/نوشتنی واقعاً از سرور هزاره‌نامه (Cloudflare) می‌آید.
 /// شکل بیرونی این کلاس (فیلدها و اسم متدها) عمداً همان چیزی مانده که
@@ -143,7 +143,8 @@ class AppState extends ChangeNotifier {
       if (currentUser!.role == UserRole.admin) {
         users = await _service.fetchAllProfiles();
       }
-      stage = AuthStage.app;
+      // حساب تازه از راه اپل/فیسبوک/شماره: اول پروفایل و پذیرش شرایط
+      stage = currentUser!.needsCompletion ? AuthStage.completeProfile : AuthStage.app;
       // شمارنده‌ی «بازدید امروز» — یک بار در هر نشست، بدون این‌که جلوی ورود را بگیرد
       unawaited(_service.incrementDailyVisit().catchError((_) {}));
       unawaited(_initNotifications());
@@ -405,6 +406,33 @@ class AppState extends ChangeNotifier {
       return _translateAuthError(e.message);
     } catch (_) {
       return 'خطایی رخ داد؛ اتصال اینترنت را بررسی کنید و دوباره تلاش کنید.';
+    }
+  }
+
+  /// تکمیل پروفایل پس از ثبت‌نام با اپل/فیسبوک/شماره. خروجی: خطا یا null.
+  Future<String?> completeProfile({
+    required String name, String email = '', String country = '', String originProvince = '', String district = '',
+    String tribe = '', String nativeLanguage = '', String bio = '',
+  }) async {
+    final u = currentUser;
+    if (u == null) return 'ابتدا وارد شوید.';
+    try {
+      if (email.trim().isNotEmpty && u.hasPlaceholderEmail) {
+        await _service.setAccountEmail(email.trim());
+      }
+      String or(String v, String d) => v.trim().isEmpty ? d : v.trim();
+      await _service.updateProfileFields(u.id, {
+        'name': or(name, u.name),
+        'country': or(country, 'نامشخص'), 'origin_province': or(originProvince, 'نامشخص'), 'district': or(district, 'نامشخص'),
+        'tribe': or(tribe, '—'), 'native_language': or(nativeLanguage, 'نامشخص'), 'bio': bio.trim(),
+        'terms_accepted_at': DateTime.now().toIso8601String(),
+      });
+      await _loadSessionUser();
+      return null;
+    } on AuthException catch (e) {
+      return e.message;
+    } catch (_) {
+      return 'ذخیره نشد؛ اتصال اینترنت را بررسی کنید و دوباره تلاش کنید.';
     }
   }
 

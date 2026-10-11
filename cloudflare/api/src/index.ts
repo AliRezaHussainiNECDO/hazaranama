@@ -113,6 +113,25 @@ async function handleAuth(env: Env, ctx: Ctx, req: Request, path: string): Promi
     return json(await session(env, { id, email, token_version: 0 }));
   }
 
+  // افزودن ایمیل واقعی برای حساب‌هایی که با شماره/اپل/ایکس و بدون ایمیل ساخته شده‌اند (برای بازیابی رمز)
+  if (path === "/auth/set-email") {
+    const user = await currentUser(env, req);
+    if (!user) return err(401, "ابتدا وارد شوید.");
+    const b = await readJson(req);
+    const email = String(b.email ?? "").trim().toLowerCase();
+    if (!EMAIL_RE.test(email)) return err(400, "ایمیل معتبر نیست.", "invalid_email");
+    const u = await env.DB.prepare("SELECT id, email, token_version FROM users WHERE id = ?").bind(user.id).first<{ id: string; email: string; token_version: number }>();
+    if (!u) return err(400, "حساب پیدا نشد.");
+    if (!u.email.endsWith("@users.hazaranama.com")) return err(400, "ایمیل این حساب از قبل ثبت شده است.", "email_locked");
+    const taken = await env.DB.prepare("SELECT 1 FROM users WHERE email = ? AND id != ?").bind(email, u.id).first();
+    if (taken) return err(409, "این ایمیل به حساب دیگری تعلق دارد.", "email_exists");
+    await env.DB.batch([
+      env.DB.prepare("UPDATE users SET email = ? WHERE id = ?").bind(email, u.id),
+      env.DB.prepare("UPDATE profiles SET email = ? WHERE id = ?").bind(email, u.id),
+    ]);
+    return json(await session(env, { ...u, email }));
+  }
+
   // ورود بومی با اپل (iOS) و ورود با شماره‌ی تلفن (پس از تأیید پیامک در Firebase)
   if (path === "/auth/apple/native" || path === "/auth/phone") {
     const b = await readJson(req);

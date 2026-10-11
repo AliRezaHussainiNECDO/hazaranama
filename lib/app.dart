@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'state/app_state.dart';
 import 'features/auth/welcome_screen.dart';
+import 'features/auth/complete_profile_screen.dart';
 import 'features/auth/login_screen.dart';
 import 'features/auth/register_screen.dart';
 import 'features/auth/forgot_password_screen.dart';
@@ -98,6 +99,8 @@ class _AuthGate extends StatelessWidget {
         return const ForgotPasswordScreen();
       case AuthStage.resetPassword:
         return const ResetPasswordScreen();
+      case AuthStage.completeProfile:
+        return const CompleteProfileScreen();
       case AuthStage.app:
         return const MainShell();
     }

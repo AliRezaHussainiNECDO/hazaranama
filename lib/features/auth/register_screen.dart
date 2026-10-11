@@ -209,7 +209,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
       const SizedBox(height: 18),
-      _TermsCheckRow(
+      TermsCheckRow(
         theme: theme,
         accepted: _acceptedTerms,
         onToggle: () => setState(() => _acceptedTerms = !_acceptedTerms),
@@ -244,12 +244,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 }
 
-class _TermsCheckRow extends StatelessWidget {
+class TermsCheckRow extends StatelessWidget {
   final AppColors theme;
   final bool accepted;
   final VoidCallback onToggle;
   final VoidCallback onReadTerms;
-  const _TermsCheckRow({required this.theme, required this.accepted, required this.onToggle, required this.onReadTerms});
+  const TermsCheckRow({required this.theme, required this.accepted, required this.onToggle, required this.onReadTerms});
 
   @override
   Widget build(BuildContext context) {

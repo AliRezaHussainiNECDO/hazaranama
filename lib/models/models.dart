@@ -53,6 +53,11 @@ class UserProfile {
   String nativeLanguage;
   String bio;
   String joined; // برچسب نمایشی تاریخ عضویت (بعداً: created_at واقعی)
+  /// حسابی که با اپل/فیسبوک/شماره ساخته شده و هنوز پروفایل و شرایط را تکمیل نکرده
+  bool needsCompletion;
+
+  /// ایمیل داخلی (حساب‌های بی‌ایمیل مثل شماره‌ی تلفن)؛ کاربر می‌تواند ایمیل واقعی بیفزاید
+  bool get hasPlaceholderEmail => email.endsWith('@users.hazaranama.com');
 
   UserProfile({
     required this.id,
@@ -68,6 +73,7 @@ class UserProfile {
     this.nativeLanguage = 'نامشخص',
     this.bio = '',
     this.joined = 'امروز',
+    this.needsCompletion = false,
   });
 
   /// کلیدی که پست‌ها/نظرها با آن به این کاربر نسبت داده می‌شوند
