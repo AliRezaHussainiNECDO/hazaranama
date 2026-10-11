@@ -454,6 +454,15 @@ async function seed(env: Env, replaceSections: string[]) {
       ),
     );
   }
+  // هنرمندان و ویدیوهای اولیه (لینک کانال‌های رسمی یوتیوب) — فقط اگر نباشند افزوده می‌شوند
+  const music = (seedContent as { music?: { artist: Record<string, string>; videos: Record<string, string>[] }[] }).music ?? [];
+  music.forEach((m, ai) => {
+    const a = m.artist;
+    stmts.push(env.DB.prepare("INSERT OR IGNORE INTO artists (id, name, bio, avatar_url, cover_url, sort_order) VALUES (?, ?, ?, ?, ?, ?)").bind(a.id, a.name, a.bio ?? "", a.avatar_url ?? null, a.cover_url ?? null, ai));
+    m.videos.forEach((v, vi) => {
+      stmts.push(env.DB.prepare("INSERT OR IGNORE INTO artist_videos (id, artist_id, title, description, video_url, thumbnail_url, sort_order) VALUES (?, ?, ?, ?, ?, ?, ?)").bind(v.id, a.id, v.title, v.description ?? "", v.video_url, v.thumbnail_url ?? null, vi));
+    });
+  });
   stmts.push(env.DB.prepare("INSERT OR REPLACE INTO _meta (key, value) VALUES ('content_version', ?)").bind(content.version ?? ""));
   await env.DB.batch(stmts); // یک تراکنش: یا همه یا هیچ
   return { seeded: items.length, version: content.version };
