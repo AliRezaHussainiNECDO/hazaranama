@@ -249,7 +249,7 @@ class TermsCheckRow extends StatelessWidget {
   final bool accepted;
   final VoidCallback onToggle;
   final VoidCallback onReadTerms;
-  const TermsCheckRow({required this.theme, required this.accepted, required this.onToggle, required this.onReadTerms});
+  const TermsCheckRow({super.key, required this.theme, required this.accepted, required this.onToggle, required this.onReadTerms});
 
   @override
   Widget build(BuildContext context) {
