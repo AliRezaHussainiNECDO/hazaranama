@@ -132,33 +132,15 @@ class PeopleBody extends StatelessWidget {
                   decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(20), border: Border.all(color: theme.glassBorder)),
                   clipBehavior: Clip.antiAlias,
                   child: Column(children: [
-                    SectionMediaPlaceholder(accent: color, icon: icon, height: 44),
-                    Transform.translate(
-                      offset: const Offset(0, -27),
-                      child: Stack(alignment: Alignment.center, children: [
-                        (person.imageUrl ?? '').isNotEmpty
-                            ? Container(
-                                width: 58,
-                                height: 58,
-                                decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: color, width: 2), boxShadow: [BoxShadow(color: color.withValues(alpha: 0.35), blurRadius: 10)]),
-                                child: ClipOval(
-                                  child: Image.network(person.imageUrl!, fit: BoxFit.cover, alignment: const Alignment(0, -0.6),
-                                      errorBuilder: (_, __, ___) => HzBadge(theme: theme, size: 54, filled: true, child: Text((person['name'] as String)[0], style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 17)))),
-                                ),
-                              )
-                            : HzBadge(theme: theme, size: 54, filled: true, child: Text((person['name'] as String)[0], style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 17))),
-                        Positioned(
-                          bottom: -2, left: 8,
-                          child: Container(
-                            width: 20, height: 20,
-                            decoration: BoxDecoration(shape: BoxShape.circle, color: color, border: Border.all(color: theme.bgCard, width: 2)),
-                            child: Icon(icon, size: 10, color: theme.bg),
-                          ),
-                        ),
-                      ]),
+                    // عکس کامل شخصیت (بی‌برش)؛ اگر عکس نباشد، حرف نخست نام روی زمینه‌ی رنگی
+                    Expanded(
+                      child: (person.imageUrl ?? '').isNotEmpty
+                          ? HzFullImage(url: person.imageUrl!, error: _PersonInitial(name: person['name'] as String, color: color, icon: icon))
+                          : _PersonInitial(name: person['name'] as String, color: color, icon: icon),
                     ),
+                    const SizedBox(height: 10),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 14),
+                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 12),
                       child: Column(children: [
                         Text(person['name'] as String, textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700)),
                         const SizedBox(height: 4),
@@ -786,6 +768,26 @@ class BooksBody extends StatelessWidget {
           ),
         ).staggered(i);
       },
+    );
+  }
+}
+
+
+/// جای عکس برای شخصیتی که عکس آزاد ندارد
+class _PersonInitial extends StatelessWidget {
+  final String name;
+  final Color color;
+  final IconData icon;
+  const _PersonInitial({required this.name, required this.color, required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(begin: Alignment.topRight, end: Alignment.bottomLeft, colors: [color.withValues(alpha: 0.55), color.withValues(alpha: 0.12)]),
+      ),
+      alignment: Alignment.center,
+      child: Text(name.isNotEmpty ? name.characters.first : '؟', style: const TextStyle(color: Colors.white, fontSize: 44, fontWeight: FontWeight.w900)),
     );
   }
 }
