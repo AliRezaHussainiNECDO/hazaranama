@@ -160,6 +160,13 @@ async function appleClientSecret(env: Env): Promise<string> {
 
 const jwksCache = new Map<string, { at: number; keys: JsonWebKey[] }>();
 async function verifyRs256(token: string, jwksUrl: string): Promise<Record<string, unknown> | null> {
+  try {
+    return await verifyRs256Inner(token, jwksUrl);
+  } catch {
+    return null; // توکن خراب یا نامعتبر
+  }
+}
+async function verifyRs256Inner(token: string, jwksUrl: string): Promise<Record<string, unknown> | null> {
   const [h, p, sg] = token.split(".");
   if (!h || !p || !sg) return null;
   const header = JSON.parse(new TextDecoder().decode(b64urlBytes(h))) as { kid?: string; alg?: string };
