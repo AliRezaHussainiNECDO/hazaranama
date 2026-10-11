@@ -21,6 +21,8 @@ dependencies:
   url_launcher: ^6.3.0       # باز کردن لینک ویدیو (یوتیوب و…) در مرورگر/اپ خارجی
   video_player: ^2.9.2       # پخش واقعی و بومی ویدیوهای آپلودشده‌ی هنرمندان، داخل خود اپ
   firebase_core: ^3.6.0      # اتصال پایه به پروژه‌ی Firebase (پیش‌نیاز پوش نوتیفیکیشن)
+  firebase_auth: ^5.3.1      # ورود با شماره‌ی تلفن (کد پیامکی Firebase)
+  sign_in_with_apple: ^6.1.3 # ورود با اپل (بومی در iOS)
   firebase_messaging: ^15.1.3 # پوش نوتیفیکیشن واقعی (FCM) — حتی وقتی اپ بسته است
 
 dev_dependencies:

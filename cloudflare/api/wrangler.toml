@@ -43,3 +43,5 @@ fallthrough = true
 #   RESEND_API_KEY       (اختیاری) کلید Resend برای ایمیل (بازیابی رمز، خوش‌آمد، تغییر رمز)
 #   FACEBOOK_APP_ID, FACEBOOK_APP_SECRET   (اختیاری) ورود با فیسبوک — هر دو را Secret بگذارید
 #   X_CLIENT_ID, X_CLIENT_SECRET           (اختیاری) ورود با ایکس/توییتر — هر دو را Secret بگذارید
+#   APPLE_TEAM_ID, APPLE_KEY_ID, APPLE_PRIVATE_KEY, APPLE_SERVICES_ID   (اختیاری) ورود با اپل در وب/اندروید — Secret
+#   PHONE_LOGIN = on   (اختیاری) ورود با شماره‌ی تلفن (Firebase Phone Auth باید روشن باشد) — Secret

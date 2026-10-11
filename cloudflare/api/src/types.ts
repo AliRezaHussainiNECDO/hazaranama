@@ -13,6 +13,13 @@ export interface Env {
   FACEBOOK_APP_SECRET?: string; // Secret
   X_CLIENT_ID?: string; // ورود با ایکس/توییتر (Variable)
   X_CLIENT_SECRET?: string; // Secret
+  APPLE_TEAM_ID?: string; // ورود با اپل
+  APPLE_KEY_ID?: string;
+  APPLE_PRIVATE_KEY?: string; // محتوای فایل ‎.p8‎
+  APPLE_SERVICES_ID?: string; // مثلاً com.hazaranama.signin
+  APPLE_BUNDLE_ID?: string;
+  PHONE_LOGIN?: string; // «on» = ورود با شماره‌ی تلفن (Firebase) فعال
+  FIREBASE_PROJECT_ID?: string;
   SUPABASE_URL?: string;
 }
 export type Ctx = ExecutionContext;

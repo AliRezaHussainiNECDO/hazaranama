@@ -14,7 +14,7 @@ import { insertNotifications, adminIds } from "./hooks";
 import { pushConfigured } from "./push";
 import { emailConfigured, sendEmail, recoveryEmail, welcomeEmail, passwordChangedEmail } from "./email";
 import { handleAi } from "./ai";
-import { oauthProviders, oauthStart, oauthCallback, oauthExchange, type Profile } from "./oauth";
+import { oauthProviders, oauthStart, oauthCallback, oauthExchange, verifyAppleIdentity, verifyFirebasePhone, type Profile } from "./oauth";
 import schemaSql from "../schema.sql";
 import seedContent from "../seed/content.json";
 import { fetchNews, mirrorCommons, prewarmMirror } from "./content_extra";
@@ -111,6 +111,30 @@ async function handleAuth(env: Env, ctx: Ctx, req: Request, path: string): Promi
       await insertNotifications(env, ctx, admins.map((a) => ({ user_id: a, type: "admin_new_user", title: `کاربر تازه پیوست: ${name}`, body: email, ref_id: id, ref_type: "user" })));
     }
     return json(await session(env, { id, email, token_version: 0 }));
+  }
+
+  // ورود بومی با اپل (iOS) و ورود با شماره‌ی تلفن (پس از تأیید پیامک در Firebase)
+  if (path === "/auth/apple/native" || path === "/auth/phone") {
+    const b = await readJson(req);
+    const providers = oauthProviders(env);
+    let provider: "apple" | "phone";
+    let profile: Profile;
+    if (path === "/auth/apple/native") {
+      const a = await verifyAppleIdentity(env, String(b.identity_token ?? ""));
+      if (!a) return err(400, "تأیید اپل ناموفق بود.", "invalid_credentials");
+      provider = "apple";
+      profile = { id: a.sub, name: String(b.name ?? ""), email: a.email, avatar: null };
+    } else {
+      if (!providers.phone) return err(400, "ورود با شماره‌ی تلفن فعال نیست.", "provider_disabled");
+      const phone = await verifyFirebasePhone(env, String(b.id_token ?? ""));
+      if (!phone) return err(400, "تأیید شماره ناموفق بود؛ دوباره تلاش کنید.", "invalid_credentials");
+      provider = "phone";
+      profile = { id: phone, name: String(b.name ?? ""), email: null, avatar: null };
+    }
+    const userId = await ensureOAuthUser(env, ctx, provider, profile);
+    const u = await env.DB.prepare("SELECT id, email, token_version FROM users WHERE id = ?").bind(userId).first<{ id: string; email: string; token_version: number }>();
+    if (!u) return err(400, "حساب پیدا نشد.");
+    return json(await session(env, u));
   }
 
   if (path === "/auth/oauth/exchange") {
@@ -685,10 +709,13 @@ export default {
 
       if (path === "/auth/oauth/providers" && req.method === "GET") return json(oauthProviders(env));
       {
-        const m = path.match(/^\/auth\/oauth\/(facebook|x)\/(start|callback)$/);
-        if (m && req.method === "GET") {
-          const provider = m[1] as "facebook" | "x";
-          return m[2] === "start" ? await oauthStart(env, provider, url) : await oauthCallback(env, provider, url, (pv, p) => ensureOAuthUser(env, ctx, pv, p));
+        const m = path.match(/^\/auth\/oauth\/(facebook|x|apple)\/(start|callback)$/);
+        if (m && (req.method === "GET" || (req.method === "POST" && m[2] === "callback"))) {
+          const provider = m[1] as "facebook" | "x" | "apple";
+          if (m[2] === "start") return await oauthStart(env, provider, url);
+          // اپل نتیجه را با form_post (POST) می‌فرستد
+          const params = req.method === "POST" ? new URLSearchParams(await req.text()) : url.searchParams;
+          return await oauthCallback(env, provider, params, (pv, p) => ensureOAuthUser(env, ctx, pv, p));
         }
       }
       if (path.startsWith("/auth/") && req.method === "POST") return await handleAuth(env, ctx, req, path);
@@ -743,7 +770,7 @@ export default {
 
 
 /** حساب کاربر ورودی از شبکه‌ی اجتماعی: پیوند موجود ← حساب با همان ایمیل ← حساب تازه */
-async function ensureOAuthUser(env: Env, ctx: Ctx, provider: "facebook" | "x", p: Profile): Promise<string> {
+async function ensureOAuthUser(env: Env, ctx: Ctx, provider: "facebook" | "x" | "apple" | "phone", p: Profile): Promise<string> {
   const linked = await env.DB.prepare("SELECT user_id FROM oauth_accounts WHERE provider = ? AND provider_user_id = ?").bind(provider, p.id).first<{ user_id: string }>();
   if (linked) return linked.user_id;
   const email = (p.email ?? "").trim().toLowerCase();
@@ -756,7 +783,7 @@ async function ensureOAuthUser(env: Env, ctx: Ctx, provider: "facebook" | "x", p
   }
   const id = crypto.randomUUID();
   // بدون ایمیل (ایکس): نشانی داخلی و یکتا — کاربر بعداً می‌تواند ایمیل واقعی‌اش را در پروفایل بگذارد
-  const userEmail = email || `${provider}-${p.id}@users.hazaranama.com`;
+  const userEmail = email || `${provider}-${p.id.replace(/[^0-9A-Za-z.]/g, "")}@users.hazaranama.com`;
   const name = p.name.trim() || "کاربر هزاره‌نامه";
   const role = email && email === (env.ADMIN_EMAIL ?? "").toLowerCase() ? "admin" : "user";
   const unusable = `oauth$${crypto.randomUUID()}`; // با هیچ رمزی تطبیق نمی‌کند
@@ -768,7 +795,7 @@ async function ensureOAuthUser(env: Env, ctx: Ctx, provider: "facebook" | "x", p
   if (email && emailConfigured(env)) ctx.waitUntil(sendEmail(env, { to: email, ...welcomeEmail(name) }).then(() => undefined));
   const admins = (await adminIds(env)).filter((a) => a !== id);
   if (admins.length) {
-    const via = provider === "facebook" ? "فیسبوک" : "ایکس";
+    const via = { facebook: "فیسبوک", x: "ایکس", apple: "اپل", phone: "شماره‌ی تلفن" }[provider];
     await insertNotifications(env, ctx, admins.map((a) => ({ user_id: a, type: "admin_new_user", title: `کاربر تازه پیوست: ${name}`, body: `از راه ${via}`, ref_id: id, ref_type: "user" })));
   }
   return id;
