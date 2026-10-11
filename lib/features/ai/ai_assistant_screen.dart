@@ -178,6 +178,9 @@ class _WelcomePane extends StatelessWidget {
         const SizedBox(height: 6),
         Text('هرچه درباره‌ی تاریخ، فرهنگ، زبان یا مردم هزاره می‌خواهی بدانی، از من بپرس.',
             textAlign: TextAlign.center, style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.6)),
+        const SizedBox(height: 8),
+        Text('پاسخ‌ها با هوش مصنوعی ساخته می‌شوند و ممکن است نادرست باشند؛ برای مطالب مهم به منابع بخش‌ها مراجعه کنید.',
+            textAlign: TextAlign.center, style: TextStyle(color: theme.textFaint.withValues(alpha: 0.8), fontSize: 10.5, height: 1.6)),
         const SizedBox(height: 22),
         for (var i = 0; i < starters.length; i++)
           Padding(
