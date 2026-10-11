@@ -97,15 +97,10 @@ class ArticleScreen extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: SizedBox(
-                    height: 200,
+                    height: 260,
                     width: double.infinity,
                     child: Stack(fit: StackFit.expand, children: [
-                      Image.network(
-                        imageUrl!,
-                        fit: BoxFit.cover,
-                        alignment: const Alignment(0, -0.45),
-                        errorBuilder: (_, __, ___) => Container(color: theme.bgCard),
-                      ),
+                      HzFullImage(url: imageUrl!, error: Container(color: theme.bgCard)),
                       if (videoUrl != null && videoUrl!.isNotEmpty)
                         Center(
                           child: Material(

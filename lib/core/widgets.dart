@@ -828,20 +828,8 @@ class ContentMediaCover extends StatelessWidget {
           // و اگر خطا در بارگذاری رخ دهد، به‌جای آیکون شکسته، همین می‌ماند.
           fallback,
           if (hasImage)
-            Image.network(
-              imageUrl,
-              fit: BoxFit.cover,
-              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                if (wasSynchronouslyLoaded) return child;
-                return AnimatedOpacity(
-                  opacity: frame == null ? 0 : 1,
-                  duration: const Duration(milliseconds: 450),
-                  curve: Curves.easeOut,
-                  child: child,
-                );
-              },
-              errorBuilder: (_, __, ___) => const SizedBox.shrink(),
-            ),
+            // تصویرهای کوچک (آیکون‌مانند) پر می‌شوند؛ بقیه کامل و بی‌برش نمایش داده می‌شوند
+            height < 60 ? Image.network(imageUrl, fit: BoxFit.cover, errorBuilder: (_, __, ___) => const SizedBox.shrink()) : HzFullImage(url: imageUrl),
           if (hasImage)
             const DecoratedBox(
               decoration: BoxDecoration(
@@ -892,4 +880,32 @@ void showHzToast(BuildContext context, String message) {
       duration: const Duration(milliseconds: 1800),
     ),
   );
+}
+
+
+/// تصویر کامل و بی‌برش: همان تصویر، نرم و تار، فضای خالی پشت را پر می‌کند
+/// و خود تصویر با نسبت اصلی‌اش روی آن می‌نشیند — زیبا برای عکس‌های عمودی و افقی.
+class HzFullImage extends StatelessWidget {
+  final String url;
+  final Widget? error;
+  const HzFullImage({super.key, required this.url, this.error});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(fit: StackFit.expand, children: [
+      // نسخه‌ی بسیار کوچک و بزرگ‌شده = پس‌زمینه‌ی نرم و ارزان (بدون فیلتر تاری)
+      Image.network(url, fit: BoxFit.cover, cacheWidth: 24, filterQuality: FilterQuality.medium, gaplessPlayback: true,
+          errorBuilder: (_, __, ___) => const SizedBox.shrink()),
+      const ColoredBox(color: Color(0x59000000)),
+      Image.network(
+        url,
+        fit: BoxFit.contain,
+        filterQuality: FilterQuality.medium,
+        frameBuilder: (context, child, frame, sync) => sync
+            ? child
+            : AnimatedOpacity(opacity: frame == null ? 0 : 1, duration: const Duration(milliseconds: 400), curve: Curves.easeOut, child: child),
+        errorBuilder: (_, __, ___) => error ?? const SizedBox.shrink(),
+      ),
+    ]);
+  }
 }

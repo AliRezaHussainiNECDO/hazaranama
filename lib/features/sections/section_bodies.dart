@@ -207,9 +207,9 @@ class IncidentsBody extends StatelessWidget {
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 ContentMediaCover(
                   item: it,
-                  height: 56,
+                  height: (it.imageUrl ?? '').isNotEmpty ? 170 : 56,
                   radius: 0,
-                  fallback: SectionMediaPlaceholder(accent: theme.yellow, icon: Icons.local_fire_department, height: 56),
+                  fallback: SectionMediaPlaceholder(accent: theme.yellow, icon: Icons.local_fire_department, height: (it.imageUrl ?? '').isNotEmpty ? 170 : 56),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 12, 15, 14),
