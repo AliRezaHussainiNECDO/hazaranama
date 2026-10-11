@@ -36,7 +36,6 @@ class BackendService {
   String oauthStartUrl(String provider, String redirect) => _db.auth.oauthStartUrl(provider, redirect);
   Future<AuthResponse> exchangeOAuthCode(String code) => _db.auth.exchangeOAuthCode(code);
   Future<AuthResponse> appleNativeSignIn(String token, String name) => _db.auth.appleNativeSignIn(token, name);
-  Future<AuthResponse> phoneSignIn(String idToken, String name) => _db.auth.phoneSignIn(idToken, name);
   Future<AuthResponse> setAccountEmail(String email) => _db.auth.setAccountEmail(email);
 
   /// حذف کامل و برگشت‌ناپذیر حساب کاربری — از طریق Edge Function امن

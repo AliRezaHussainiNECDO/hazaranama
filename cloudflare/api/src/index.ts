@@ -14,7 +14,7 @@ import { insertNotifications, adminIds } from "./hooks";
 import { pushConfigured } from "./push";
 import { emailConfigured, sendEmail, recoveryEmail, welcomeEmail, passwordChangedEmail } from "./email";
 import { handleAi } from "./ai";
-import { oauthProviders, oauthStart, oauthCallback, oauthExchange, verifyAppleIdentity, verifyFirebasePhone, type Profile } from "./oauth";
+import { oauthProviders, oauthStart, oauthCallback, oauthExchange, verifyAppleIdentity, type Profile } from "./oauth";
 import schemaSql from "../schema.sql";
 import seedContent from "../seed/content.json";
 import { fetchNews, mirrorCommons, prewarmMirror } from "./content_extra";
@@ -132,25 +132,12 @@ async function handleAuth(env: Env, ctx: Ctx, req: Request, path: string): Promi
     return json(await session(env, { ...u, email }));
   }
 
-  // ورود بومی با اپل (iOS) و ورود با شماره‌ی تلفن (پس از تأیید پیامک در Firebase)
-  if (path === "/auth/apple/native" || path === "/auth/phone") {
+  // ورود بومی با اپل (iOS): identityToken با کلیدهای عمومی اپل بررسی می‌شود
+  if (path === "/auth/apple/native") {
     const b = await readJson(req);
-    const providers = oauthProviders(env);
-    let provider: "apple" | "phone";
-    let profile: Profile;
-    if (path === "/auth/apple/native") {
-      const a = await verifyAppleIdentity(env, String(b.identity_token ?? ""));
-      if (!a) return err(400, "تأیید اپل ناموفق بود.", "invalid_credentials");
-      provider = "apple";
-      profile = { id: a.sub, name: String(b.name ?? ""), email: a.email, avatar: null };
-    } else {
-      if (!providers.phone) return err(400, "ورود با شماره‌ی تلفن فعال نیست.", "provider_disabled");
-      const phone = await verifyFirebasePhone(env, String(b.id_token ?? ""));
-      if (!phone) return err(400, "تأیید شماره ناموفق بود؛ دوباره تلاش کنید.", "invalid_credentials");
-      provider = "phone";
-      profile = { id: phone, name: String(b.name ?? ""), email: null, avatar: null };
-    }
-    const userId = await ensureOAuthUser(env, ctx, provider, profile);
+    const a = await verifyAppleIdentity(env, String(b.identity_token ?? ""));
+    if (!a) return err(400, "تأیید اپل ناموفق بود.", "invalid_credentials");
+    const userId = await ensureOAuthUser(env, ctx, "apple", { id: a.sub, name: String(b.name ?? ""), email: a.email, avatar: null });
     const u = await env.DB.prepare("SELECT id, email, token_version FROM users WHERE id = ?").bind(userId).first<{ id: string; email: string; token_version: number }>();
     if (!u) return err(400, "حساب پیدا نشد.");
     return json(await session(env, u));

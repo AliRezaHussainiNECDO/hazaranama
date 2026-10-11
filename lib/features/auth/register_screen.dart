@@ -155,9 +155,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       const SizedBox(height: 18),
       HzPrimaryButton(theme: theme, label: 'مرحله‌ی بعد', icon: Icons.arrow_back, onPressed: _goStep2),
       SocialAuthButtons(theme: theme, onResult: (e) => setState(() => _error = e)),
-      if (context.watch<AppState>().appleAvailable || (context.watch<AppState>().oauthProviders?['facebook'] ?? false) || context.watch<AppState>().phoneAvailable) ...[
+      if (context.watch<AppState>().appleAvailable || (context.watch<AppState>().oauthProviders?['facebook'] ?? false)) ...[
         const SizedBox(height: 8),
-        Text('با ادامه از راه اپل، فیسبوک یا شماره‌ی تلفن، شرایط و قوانین هزاره‌نامه را می‌پذیرید.', textAlign: TextAlign.center, style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+        Text('با ادامه از راه اپل یا فیسبوک، شرایط و قوانین هزاره‌نامه را می‌پذیرید.', textAlign: TextAlign.center, style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
       ],
       const SizedBox(height: 20),
       Center(

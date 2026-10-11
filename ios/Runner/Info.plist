@@ -78,8 +78,6 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<!-- Firebase Phone Auth (بازگشت از reCAPTCHA) -->
-				<string>app-1-496612741858-ios-36cba9cbb51b5a5dadc4bb</string>
 				<!-- بازگشت ورود فیسبوک -->
 				<string>hazaranama</string>
 			</array>

@@ -2,8 +2,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemNavigator;
-import 'package:firebase_auth/firebase_auth.dart' as fb;
-import 'package:firebase_core/firebase_core.dart' show Firebase;
 import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -239,10 +237,7 @@ class AppState extends ChangeNotifier {
 
   bool get socialLoginSupported => true;
   bool get isIOS => !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
-  /// ورود با شماره فقط در اپ موبایل (Firebase روی وب پیکربندی نشده است)
-  bool get phoneLoginSupported => !kIsWeb && (defaultTargetPlatform == TargetPlatform.android || defaultTargetPlatform == TargetPlatform.iOS);
   bool get appleAvailable => isIOS || (oauthProviders?['apple'] ?? false);
-  bool get phoneAvailable => phoneLoginSupported && (oauthProviders?['phone'] ?? false);
 
   /// ورود با اپل: در iOS بومی، در اندروید و وب از راه صفحه‌ی اپل
   Future<String?> signInWithApple() async {
@@ -257,72 +252,6 @@ class AppState extends ChangeNotifier {
       return null;
     } on SignInWithAppleAuthorizationException catch (e) {
       return e.code == AuthorizationErrorCode.canceled ? null : 'ورود با اپل انجام نشد.';
-    } on AuthException catch (e) {
-      return _translateAuthError(e.message);
-    } catch (_) {
-      return 'خطایی رخ داد؛ اتصال اینترنت را بررسی کنید و دوباره تلاش کنید.';
-    }
-  }
-
-  // ---------------- ورود با شماره‌ی تلفن (کد پیامکی Firebase) ----------------
-  String? _phoneVerificationId;
-  int? _phoneResendToken;
-
-  /// کد تأیید را به شماره (با پیش‌شماره‌ی کشور، مثلاً ‎+93…‎) می‌فرستد. خروجی: خطا یا null.
-  /// اگر اندروید کد را خودکار بخواند، ورود همان‌جا کامل می‌شود و [onAutoSignedIn] صدا زده می‌شود.
-  Future<String?> sendPhoneCode(String phone, {required String name, VoidCallback? onAutoSignedIn}) async {
-    try {
-      if (Firebase.apps.isEmpty) await Firebase.initializeApp();
-      final done = Completer<String?>();
-      await fb.FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: phone,
-        forceResendingToken: _phoneResendToken,
-        timeout: const Duration(seconds: 60),
-        verificationCompleted: (cred) async {
-          final e = await _finishPhone(cred, name);
-          if (e == null) onAutoSignedIn?.call();
-          if (!done.isCompleted) done.complete(e);
-        },
-        verificationFailed: (e) {
-          if (done.isCompleted) return;
-          done.complete(switch (e.code) {
-            'invalid-phone-number' => 'شماره‌ی تلفن معتبر نیست؛ با پیش‌شماره‌ی کشور بنویسید (مثلاً ‎+93…‎).',
-            'too-many-requests' => 'درخواست‌ها زیاد شد؛ کمی بعد دوباره تلاش کنید.',
-            'quota-exceeded' => 'سقف پیامک امروز پر شده است؛ بعداً تلاش کنید یا با ایمیل ثبت‌نام کنید.',
-            _ => 'فرستادن کد انجام نشد؛ دوباره تلاش کنید.',
-          });
-        },
-        codeSent: (id, token) {
-          _phoneVerificationId = id;
-          _phoneResendToken = token;
-          if (!done.isCompleted) done.complete(null);
-        },
-        codeAutoRetrievalTimeout: (id) => _phoneVerificationId = id,
-      );
-      return await done.future;
-    } catch (_) {
-      return 'فرستادن کد انجام نشد؛ اتصال اینترنت را بررسی کنید.';
-    }
-  }
-
-  /// کد ۶ رقمی پیامک را بررسی و وارد حساب می‌کند. خروجی: خطا یا null.
-  Future<String?> verifyPhoneCode(String code, {required String name}) async {
-    final id = _phoneVerificationId;
-    if (id == null) return 'اول کد را درخواست کنید.';
-    return _finishPhone(fb.PhoneAuthProvider.credential(verificationId: id, smsCode: code.trim()), name);
-  }
-
-  Future<String?> _finishPhone(fb.PhoneAuthCredential cred, String name) async {
-    try {
-      final r = await fb.FirebaseAuth.instance.signInWithCredential(cred);
-      final token = await r.user?.getIdToken();
-      if (token == null) return 'تأیید شماره انجام نشد.';
-      await _service.phoneSignIn(token, name);
-      await fb.FirebaseAuth.instance.signOut(); // نشست اصلی هزاره‌نامه است، نه Firebase
-      await _loadSessionUser();
-      return null;
-    } on fb.FirebaseAuthException catch (e) {
-      return e.code == 'invalid-verification-code' ? 'کد نادرست است.' : (e.code == 'session-expired' ? 'کد منقضی شد؛ دوباره بفرستید.' : 'تأیید شماره انجام نشد.');
     } on AuthException catch (e) {
       return _translateAuthError(e.message);
     } catch (_) {

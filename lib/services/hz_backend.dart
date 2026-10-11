@@ -379,10 +379,6 @@ class HzAuth {
   Future<AuthResponse> appleNativeSignIn(String identityToken, String name) =>
       _authCall('/auth/apple/native', {'identity_token': identityToken, 'name': name}, AuthChangeEvent.signedIn);
 
-  /// ورود با شماره‌ی تلفن: ID token فایربیس (پس از تأیید کد پیامکی) به نشست هزاره‌نامه تبدیل می‌شود.
-  Future<AuthResponse> phoneSignIn(String firebaseIdToken, String name) =>
-      _authCall('/auth/phone', {'id_token': firebaseIdToken, 'name': name}, AuthChangeEvent.signedIn);
-
   /// کدام روش‌های ورود اجتماعی روی سرور فعال‌اند
   Future<Map<String, bool>> oauthProviders() async {
     try {

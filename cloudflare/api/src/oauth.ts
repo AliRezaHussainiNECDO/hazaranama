@@ -19,7 +19,6 @@ export function oauthProviders(env: Env) {
     facebook: set(env.FACEBOOK_APP_ID) && set(env.FACEBOOK_APP_SECRET),
     x: set(env.X_CLIENT_ID) && set(env.X_CLIENT_SECRET),
     apple: set(env.APPLE_TEAM_ID) && set(env.APPLE_KEY_ID) && set(env.APPLE_PRIVATE_KEY) && set(env.APPLE_SERVICES_ID),
-    phone: set(env.PHONE_LOGIN),
   };
 }
 
@@ -50,13 +49,13 @@ export async function oauthStart(env: Env, provider: Provider, url: URL): Promis
   await env.DB.prepare("INSERT INTO oauth_states (state, provider, redirect, verifier, created_at) VALUES (?, ?, ?, ?, ?)").bind(state, provider, redirect, verifier, Date.now()).run();
   let target: string;
   if (provider === "facebook") {
-    const q = new URLSearchParams({ client_id: env.FACEBOOK_APP_ID!, redirect_uri: cb("facebook"), state, scope: "email,public_profile", response_type: "code" });
+    const q = new URLSearchParams({ client_id: env.FACEBOOK_APP_ID!.trim(), redirect_uri: cb("facebook"), state, scope: "email,public_profile", response_type: "code" });
     target = `https://www.facebook.com/v19.0/dialog/oauth?${q}`;
   } else if (provider === "apple") {
-    const q = new URLSearchParams({ response_type: "code", response_mode: "form_post", client_id: env.APPLE_SERVICES_ID!, redirect_uri: cb("apple"), scope: "name email", state });
+    const q = new URLSearchParams({ response_type: "code", response_mode: "form_post", client_id: env.APPLE_SERVICES_ID!.trim(), redirect_uri: cb("apple"), scope: "name email", state });
     target = `https://appleid.apple.com/auth/authorize?${q}`;
   } else {
-    const q = new URLSearchParams({ response_type: "code", client_id: env.X_CLIENT_ID!, redirect_uri: cb("x"), scope: "users.read tweet.read", state, code_challenge: await pkce(verifier!), code_challenge_method: "S256" });
+    const q = new URLSearchParams({ response_type: "code", client_id: env.X_CLIENT_ID!.trim(), redirect_uri: cb("x"), scope: "users.read tweet.read", state, code_challenge: await pkce(verifier!), code_challenge_method: "S256" });
     target = `https://x.com/i/oauth2/authorize?${q}`;
   }
   return Response.redirect(target, 302);
@@ -64,7 +63,7 @@ export async function oauthStart(env: Env, provider: Provider, url: URL): Promis
 
 async function fetchProfile(env: Env, provider: Provider, code: string, verifier: string | null, appleName?: string): Promise<Profile> {
   if (provider === "facebook") {
-    const q = new URLSearchParams({ client_id: env.FACEBOOK_APP_ID!, client_secret: env.FACEBOOK_APP_SECRET!, redirect_uri: cb("facebook"), code });
+    const q = new URLSearchParams({ client_id: env.FACEBOOK_APP_ID!.trim(), client_secret: env.FACEBOOK_APP_SECRET!.trim(), redirect_uri: cb("facebook"), code });
     const t = (await (await fetch(`https://graph.facebook.com/v19.0/oauth/access_token?${q}`)).json()) as { access_token?: string };
     if (!t.access_token) throw new Error("facebook token");
     const me = (await (await fetch(`https://graph.facebook.com/v19.0/me?fields=id,name,email,picture.type(large)&access_token=${encodeURIComponent(t.access_token)}`)).json()) as {
@@ -75,18 +74,18 @@ async function fetchProfile(env: Env, provider: Provider, code: string, verifier
     return { id: me.id, name: me.name ?? "", email: me.email ?? null, avatar: pic && !pic.is_silhouette ? pic.url ?? null : null };
   }
   if (provider === "apple") {
-    const body = new URLSearchParams({ grant_type: "authorization_code", code, redirect_uri: cb("apple"), client_id: env.APPLE_SERVICES_ID!, client_secret: await appleClientSecret(env) });
+    const body = new URLSearchParams({ grant_type: "authorization_code", code, redirect_uri: cb("apple"), client_id: env.APPLE_SERVICES_ID!.trim(), client_secret: await appleClientSecret(env) });
     const t = (await (await fetch("https://appleid.apple.com/auth/token", { method: "POST", headers: { "content-type": "application/x-www-form-urlencoded" }, body })).json()) as { id_token?: string };
     if (!t.id_token) throw new Error("apple token");
     // id_token مستقیم از سرور اپل (روی TLS) آمده است
     const c = JSON.parse(new TextDecoder().decode(b64urlBytes(t.id_token.split(".")[1]))) as { sub: string; email?: string };
     return { id: c.sub, name: appleName ?? "", email: c.email ?? null, avatar: null };
   }
-  const body = new URLSearchParams({ grant_type: "authorization_code", code, redirect_uri: cb("x"), code_verifier: verifier ?? "", client_id: env.X_CLIENT_ID! });
+  const body = new URLSearchParams({ grant_type: "authorization_code", code, redirect_uri: cb("x"), code_verifier: verifier ?? "", client_id: env.X_CLIENT_ID!.trim() });
   const t = (await (
     await fetch("https://api.x.com/2/oauth2/token", {
       method: "POST",
-      headers: { "content-type": "application/x-www-form-urlencoded", authorization: `Basic ${btoa(`${env.X_CLIENT_ID}:${env.X_CLIENT_SECRET}`)}` },
+      headers: { "content-type": "application/x-www-form-urlencoded", authorization: `Basic ${btoa(`${env.X_CLIENT_ID?.trim()}:${env.X_CLIENT_SECRET?.trim()}`)}` },
       body,
     })
   ).json()) as { access_token?: string };
@@ -152,8 +151,8 @@ async function appleClientSecret(env: Env): Promise<string> {
   const key = await crypto.subtle.importKey("pkcs8", b64urlBytes(pem.replace(/\+/g, "-").replace(/\//g, "_")), { name: "ECDSA", namedCurve: "P-256" }, false, ["sign"]);
   const now = Math.floor(Date.now() / 1000);
   const enc = new TextEncoder();
-  const head = b64urlStr(enc.encode(JSON.stringify({ alg: "ES256", kid: env.APPLE_KEY_ID })));
-  const body = b64urlStr(enc.encode(JSON.stringify({ iss: env.APPLE_TEAM_ID, iat: now, exp: now + 600, aud: "https://appleid.apple.com", sub: env.APPLE_SERVICES_ID })));
+  const head = b64urlStr(enc.encode(JSON.stringify({ alg: "ES256", kid: env.APPLE_KEY_ID?.trim() })));
+  const body = b64urlStr(enc.encode(JSON.stringify({ iss: env.APPLE_TEAM_ID?.trim(), iat: now, exp: now + 600, aud: "https://appleid.apple.com", sub: env.APPLE_SERVICES_ID?.trim() })));
   const sig = new Uint8Array(await crypto.subtle.sign({ name: "ECDSA", hash: "SHA-256" }, key, enc.encode(`${head}.${body}`)));
   return `${head}.${body}.${b64urlStr(sig)}`;
 }
@@ -190,16 +189,7 @@ async function verifyRs256Inner(token: string, jwksUrl: string): Promise<Record<
 export async function verifyAppleIdentity(env: Env, identityToken: string): Promise<{ sub: string; email: string | null } | null> {
   const c = await verifyRs256(identityToken, "https://appleid.apple.com/auth/keys");
   if (!c || c.iss !== "https://appleid.apple.com") return null;
-  const allowed = [env.APPLE_BUNDLE_ID || "com.hazaranama.hazaranama", env.APPLE_SERVICES_ID].filter(Boolean);
+  const allowed = [env.APPLE_BUNDLE_ID || "com.hazaranama.hazaranama", env.APPLE_SERVICES_ID?.trim()].filter(Boolean);
   if (!allowed.includes(String(c.aud))) return null;
   return { sub: String(c.sub), email: typeof c.email === "string" ? c.email : null };
-}
-
-/** ورود با شماره‌ی تلفن: ID token فایربیس (پس از تأیید پیامک) را بررسی می‌کند و شماره را برمی‌گرداند */
-export async function verifyFirebasePhone(env: Env, idToken: string): Promise<string | null> {
-  const project = env.FIREBASE_PROJECT_ID || "hazaranama";
-  const c = await verifyRs256(idToken, "https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com");
-  if (!c || c.iss !== `https://securetoken.google.com/${project}` || c.aud !== project) return null;
-  const phone = typeof c.phone_number === "string" ? c.phone_number : null;
-  return phone && /^\+\d{7,15}$/.test(phone) ? phone : null;
 }
