@@ -12,8 +12,10 @@ const API = "https://hazaranama-api.alireza-necdo.workers.dev";
 // فقط به این نشانی‌ها برمی‌گردیم (جلوگیری از سوءاستفاده‌ی redirect)
 const ALLOWED_REDIRECTS = [/^https:\/\/(www\.)?hazaranama\.com\//, /^https:\/\/([a-z0-9-]+\.)?hazaranama\.pages\.dev\//, /^hazaranama:\/\/oauth$/, /^http:\/\/localhost(:\d+)?\//];
 
+// مقدار موقت «pending» یعنی هنوز تنظیم نشده
+const set = (v?: string) => Boolean(v && v.trim() && v.trim().toLowerCase() !== "pending");
 export function oauthProviders(env: Env) {
-  return { facebook: Boolean(env.FACEBOOK_APP_ID && env.FACEBOOK_APP_SECRET), x: Boolean(env.X_CLIENT_ID && env.X_CLIENT_SECRET) };
+  return { facebook: set(env.FACEBOOK_APP_ID) && set(env.FACEBOOK_APP_SECRET), x: set(env.X_CLIENT_ID) && set(env.X_CLIENT_SECRET) };
 }
 
 const rand = (n = 32) => {
