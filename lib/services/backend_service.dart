@@ -722,6 +722,9 @@ class BackendService {
       avatarUrl: r['avatar_url'] as String?,
       coverUrl: r['cover_url'] as String?,
       videoCount: videoCount,
+      category: (r['category'] as String?) ?? '',
+      imageCredit: (r['image_credit'] as String?) ?? '',
+      imagePage: (r['image_page'] as String?) ?? '',
     );
   }
 

@@ -20,7 +20,7 @@ import seedContent from "../seed/content.json";
 import { fetchNews, mirrorCommons, prewarmMirror } from "./content_extra";
 import legacySeedKeys from "../seed/legacy_seed_keys.json";
 
-const SCHEMA_VERSION = 4;
+const SCHEMA_VERSION = 5;
 
 const CORS: Record<string, string> = {
   "Access-Control-Allow-Origin": "*",
@@ -45,7 +45,14 @@ async function ensureSchema(env: Env) {
     .split(/;\s*(?:\n|$)/)
     .map((s) => s.replace(/^\s*--.*$/gm, "").trim())
     .filter((s) => s && !/^PRAGMA/i.test(s));
-  for (const s of statements) await env.DB.prepare(s).run();
+  for (const s of statements) {
+    try {
+      await env.DB.prepare(s).run();
+    } catch (e) {
+      // ALTER TABLE … ADD COLUMN روی پایگاهی که ستون را دارد — بی‌خطر
+      if (!/duplicate column/i.test(String(e))) throw e;
+    }
+  }
   await env.DB.prepare("INSERT OR REPLACE INTO _meta (key, value) VALUES ('schema_version', ?)").bind(String(SCHEMA_VERSION)).run();
 }
 
@@ -495,10 +502,21 @@ async function seed(env: Env, replaceSections: string[]) {
     );
   }
   // هنرمندان و ویدیوهای اولیه (لینک کانال‌های رسمی یوتیوب) — فقط اگر نباشند افزوده می‌شوند
-  const music = (seedContent as { music?: { artist: Record<string, string>; videos: Record<string, string>[] }[] }).music ?? [];
+  const music = ((seedContent as unknown as { music?: { artist: Record<string, string>; videos: Record<string, string>[] }[] }).music ?? []);
   music.forEach((m, ai) => {
     const a = m.artist;
-    stmts.push(env.DB.prepare("INSERT OR IGNORE INTO artists (id, name, bio, avatar_url, cover_url, sort_order) VALUES (?, ?, ?, ?, ?, ?)").bind(a.id, a.name, a.bio ?? "", a.avatar_url ?? null, a.cover_url ?? null, ai));
+    if (a.match_name) {
+      // هنرمندی که از قبل (با ویدیوهایش) در پایگاه هست: فقط اطلاعاتش کامل می‌شود
+      stmts.push(
+        env.DB.prepare("UPDATE artists SET name = ?, bio = CASE WHEN COALESCE(bio,'') = '' THEN ? ELSE bio END, category = ?, avatar_url = COALESCE(?, avatar_url), image_credit = ?, image_page = ?, sort_order = ? WHERE name = ? OR id = ?")
+          .bind(a.name, a.bio ?? "", a.category ?? null, a.avatar_url ?? null, a.image_credit ?? null, a.image_page ?? null, ai, a.match_name, a.id),
+      );
+    }
+    stmts.push(env.DB.prepare("INSERT OR IGNORE INTO artists (id, name, bio, avatar_url, cover_url, sort_order, category, image_credit, image_page) SELECT ?, ?, ?, ?, ?, ?, ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM artists WHERE name = ? OR name = ?)")
+      .bind(a.id, a.name, a.bio ?? "", a.avatar_url ?? null, a.cover_url ?? null, ai, a.category ?? null, a.image_credit ?? null, a.image_page ?? null, a.name, a.match_name ?? a.name));
+    // بازنشانی گروه/ترتیب ردیف‌های seed (اگر مدیر عکس گذاشته باشد، عکس او می‌ماند)
+    stmts.push(env.DB.prepare("UPDATE artists SET category = ?, sort_order = ?, image_credit = COALESCE(image_credit, ?), image_page = COALESCE(image_page, ?), avatar_url = COALESCE(avatar_url, ?) WHERE id = ?")
+      .bind(a.category ?? null, ai, a.image_credit ?? null, a.image_page ?? null, a.avatar_url ?? null, a.id));
     m.videos.forEach((v, vi) => {
       stmts.push(env.DB.prepare("INSERT OR IGNORE INTO artist_videos (id, artist_id, title, description, video_url, thumbnail_url, sort_order) VALUES (?, ?, ?, ?, ?, ?, ?)").bind(v.id, a.id, v.title, v.description ?? "", v.video_url, v.thumbnail_url ?? null, vi));
     });

@@ -62,13 +62,47 @@ class _ArtistsGalleryBodyState extends State<ArtistsGalleryBody> {
       );
     }
 
+    // گروه‌بندی به ترتیب ثابت؛ هنرمندان بی‌گروه در «دیگر هنرمندان»
+    const order = [
+      'اساتید و پیشکسوتان موسیقی اصیل و سنتی',
+      'خوانندگان برجسته‌ی پاپ و تلفیقی',
+      'هنرمندان و نوازندگان دمبوره و محلی',
+      'نسل جوان و فعالان معاصر',
+      'استودیوها و کانال‌های رسمی',
+    ];
+    const icons = [Icons.workspace_premium_rounded, Icons.mic_external_on_rounded, Icons.music_note_rounded, Icons.auto_awesome_rounded, Icons.smart_display_rounded];
+    final groups = <String, List<Artist>>{};
+    for (final a in artists) {
+      groups.putIfAbsent(a.category.isEmpty ? 'دیگر هنرمندان' : a.category, () => []).add(a);
+    }
+    final keys = groups.keys.toList()..sort((x, y) => (order.contains(x) ? order.indexOf(x) : 99).compareTo(order.contains(y) ? order.indexOf(y) : 99));
+
     return RefreshIndicator(
       onRefresh: _refresh,
-      child: GridView.builder(
+      child: ListView(
         padding: const EdgeInsets.fromLTRB(18, 14, 18, 24),
-        itemCount: artists.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 13, crossAxisSpacing: 13, childAspectRatio: 0.78),
-        itemBuilder: (context, i) => _ArtistCard(theme: theme, artist: artists[i]).staggered(i),
+        children: [
+          for (final k in keys) ...[
+            Padding(
+              padding: const EdgeInsets.only(bottom: 11, top: 4),
+              child: Row(children: [
+                StatIconBox(icon: order.contains(k) ? icons[order.indexOf(k)] : Icons.people_alt_rounded, color: theme.aiViolet, size: 28),
+                const SizedBox(width: 9),
+                Expanded(child: Text(k, style: TextStyle(color: theme.textPrimary, fontSize: 13.5, fontWeight: FontWeight.w800))),
+                Text('${groups[k]!.length}', style: TextStyle(color: theme.textFaint, fontSize: 12, fontWeight: FontWeight.w700)),
+              ]),
+            ),
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              itemCount: groups[k]!.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 13, crossAxisSpacing: 13, childAspectRatio: 0.72),
+              itemBuilder: (context, i) => _ArtistCard(theme: theme, artist: groups[k]![i]).staggered(i),
+            ),
+            const SizedBox(height: 22),
+          ],
+        ],
       ),
     );
   }
@@ -82,51 +116,61 @@ class _ArtistCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hasAvatar = artist.avatarUrl != null && artist.avatarUrl!.isNotEmpty;
+    final soon = artist.videoCount == 0;
+    final tagline = artist.bio.split('\n').first;
     return HzGlassCard(
       theme: theme,
       radius: 22,
       padding: EdgeInsets.zero,
       onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => ArtistScreen(artistId: artist.id))),
-      child: Column(children: [
-        const SizedBox(height: 18),
-        Container(
-          width: 74, height: 74,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [theme.aiViolet, theme.blue]),
-            boxShadow: [BoxShadow(color: theme.blue.withValues(alpha: 0.3), blurRadius: 16, offset: const Offset(0, 6))],
-          ),
-          padding: const EdgeInsets.all(2.5),
-          child: ClipOval(
-            child: hasAvatar
-                ? Image.network(artist.avatarUrl!, fit: BoxFit.cover, errorBuilder: (_, __, ___) => _initial(theme, artist.name))
-                : _initial(theme, artist.name),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Expanded(
+          child: ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(22)),
+            child: Stack(fit: StackFit.expand, children: [
+              hasAvatar ? HzFullImage(url: artist.avatarUrl!, error: _initial(theme, artist.name)) : _initial(theme, artist.name),
+              // نشان «به‌زودی» یا شمار ویدیوها
+              PositionedDirectional(
+                top: 8,
+                start: 8,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: soon ? const Color(0xE6F59E0B) : theme.blue.withValues(alpha: 0.9),
+                    borderRadius: BorderRadius.circular(999),
+                    boxShadow: const [BoxShadow(color: Color(0x40000000), blurRadius: 6)],
+                  ),
+                  child: Row(mainAxisSize: MainAxisSize.min, children: [
+                    Icon(soon ? Icons.schedule_rounded : Icons.play_circle_fill_rounded, size: 12, color: Colors.white),
+                    const SizedBox(width: 4),
+                    Text(soon ? 'به‌زودی' : '${artist.videoCount} ویدیو', style: const TextStyle(color: Colors.white, fontSize: 10.5, fontWeight: FontWeight.w800)),
+                  ]),
+                ),
+              ),
+            ]),
           ),
         ),
-        const SizedBox(height: 12),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Text(artist.name, textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800)),
-        ),
-        const SizedBox(height: 6),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-          decoration: BoxDecoration(color: theme.blue.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(999)),
-          child: Row(mainAxisSize: MainAxisSize.min, children: [
-            Icon(Icons.play_circle_fill_rounded, size: 12, color: theme.blue),
-            const SizedBox(width: 4),
-            Text('${artist.videoCount} ویدیو', style: TextStyle(color: theme.blue, fontSize: 11, fontWeight: FontWeight.w700)),
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 12),
+          child: Column(children: [
+            Text(artist.name, textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800)),
+            if (tagline.isNotEmpty) ...[
+              const SizedBox(height: 4),
+              Text(tagline, textAlign: TextAlign.center, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 10.5, height: 1.6)),
+            ],
           ]),
         ),
-        const Spacer(),
       ]),
     );
   }
 
-  Widget _initial(AppColors theme, String name) => ColoredBox(
-        color: theme.bgCardAlt,
-        child: Center(
-          child: Text(name.isNotEmpty ? name[0] : '؟', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 24)),
-        ),
+  Widget _initial(AppColors theme, String name) => DecoratedBox(
+        decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topRight, end: Alignment.bottomLeft, colors: [theme.aiViolet.withValues(alpha: 0.75), theme.blueDeep])),
+        child: Stack(children: [
+          PositionedDirectional(end: -14, bottom: -14, child: Icon(Icons.music_note_rounded, size: 96, color: Colors.white.withValues(alpha: 0.08))),
+          Center(
+            child: Text(name.replaceFirst('استاد ', '').characters.first, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 40)),
+          ),
+        ]),
       );
 }

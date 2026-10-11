@@ -1,0 +1,238 @@
+[
+ {
+  "artist": {
+   "id": "seed-artist-sarwar-sarkhosh",
+   "name": "استاد سرور سرخوش",
+   "category": "اساتید و پیشکسوتان موسیقی اصیل و سنتی",
+   "bio": "از پیشگامان و اسطوره‌های هنر دمبوره و موسیقی حماسی و فولکلور هزاره."
+  },
+  "videos": []
+ },
+ {
+  "artist": {
+   "id": "seed-artist-safdar-tawakoli",
+   "name": "استاد صفدر توکلی",
+   "category": "اساتید و پیشکسوتان موسیقی اصیل و سنتی",
+   "bio": "استاد برجسته‌ی موسیقی محلی، نوازنده‌ی سرشناس دمبوره و خواننده‌ی ترانه‌های فولکلوریک.",
+   "image": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Safdar_Tawakoli.jpg",
+    "credit": "عکس: Robyncaromi · CC BY-SA 4.0 · Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:Safdar_Tawakoli.jpg"
+   }
+  },
+  "videos": []
+ },
+ {
+  "artist": {
+   "id": "seed-artist-safdar-malakhel",
+   "name": "استاد صفدر ملاخیل",
+   "category": "اساتید و پیشکسوتان موسیقی اصیل و سنتی",
+   "bio": "از خوانندگان و نوازندگان کهن‌کار سبک اصیل و سنتی."
+  },
+  "videos": []
+ },
+ {
+  "artist": {
+   "id": "seed-artist-ali-daryab-bandpay",
+   "name": "علی‌دریاب بندپی",
+   "category": "اساتید و پیشکسوتان موسیقی اصیل و سنتی",
+   "bio": "از استادان و خوانندگان مطرح سبک‌های محلی و شش‌تار."
+  },
+  "videos": []
+ },
+ {
+  "artist": {
+   "id": "seed-artist-dawood-sarkhosh",
+   "name": "داوود سرخوش",
+   "category": "خوانندگان برجسته‌ی پاپ و تلفیقی",
+   "bio": "از ماندگارترین و محبوب‌ترین خوانندگان هزاره؛ خالق آلبوم‌های شأن‌داری چون «سرزمین من»، «پریجو»، «سپیده» و «مریم».",
+   "image": {
+    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b5/Dawood_Sarkhush.jpg/960px-Dawood_Sarkhush.jpg",
+    "credit": "عکس: S2k2h · CC BY-SA 4.0 · Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:Dawood_Sarkhush.jpg"
+   },
+   "match_name": "Dawood Sarkhosh"
+  },
+  "videos": []
+ },
+ {
+  "artist": {
+   "id": "seed-artist-taher-khawari",
+   "name": "طاهر خاوری",
+   "category": "خوانندگان برجسته‌ی پاپ و تلفیقی",
+   "bio": "خواننده‌ی سبک پاپ و تلفیقی با اجراهای ماندگار در دهه‌ی اخیر."
+  },
+  "videos": []
+ },
+ {
+  "artist": {
+   "id": "seed-artist-elaha-soroor",
+   "name": "الهه سرور",
+   "category": "خوانندگان برجسته‌ی پاپ و تلفیقی",
+   "bio": "خواننده و آهنگساز مطرح در سطح بین‌المللی با سبک تلفیقی (فیوژن) و فولکلور مدرن.",
+   "image": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/8/86/Elaha_Soroor_-_Oct_7%2C_2019.jpg",
+    "credit": "عکس: BBC Persian · CC BY 3.0 · Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:Elaha_Soroor_-_Oct_7,_2019.jpg"
+   }
+  },
+  "videos": []
+ },
+ {
+  "artist": {
+   "id": "seed-artist-abbas-neshat",
+   "name": "عباس نشاط",
+   "category": "خوانندگان برجسته‌ی پاپ و تلفیقی",
+   "bio": "خواننده‌ی محبوب سبک پاپ و از شناخته‌شده‌ترین چهره‌های برنامه‌های استعدادیابی."
+  },
+  "videos": []
+ },
+ {
+  "artist": {
+   "id": "seed-artist-sayed-anwar-azad",
+   "name": "سید انور آزاد",
+   "category": "هنرمندان و نوازندگان دمبوره و محلی",
+   "bio": "از استادان و محبوب‌ترین خوانندگان سبک دمبوره‌ی اصیل هزارگی.",
+   "image": {
+    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ac/S_Anwar_Azad.jpg/960px-S_Anwar_Azad.jpg",
+    "credit": "عکس: Khaksha Durob · CC BY-SA 4.0 · Wikimedia Commons",
+    "page": "https://commons.wikimedia.org/wiki/File:S_Anwar_Azad.jpg"
+   }
+  },
+  "videos": []
+ },
+ {
+  "artist": {
+   "id": "seed-artist-aman-yousufi",
+   "name": "امان یوسفی",
+   "category": "هنرمندان و نوازندگان دمبوره و محلی",
+   "bio": "از نوازندگان و خوانندگان پرطرفدار دمبوره و ترانه‌های محلی."
+  },
+  "videos": []
+ },
+ {
+  "artist": {
+   "id": "seed-artist-ali-madad-malestani",
+   "name": "علی‌مدد مالستانی",
+   "category": "هنرمندان و نوازندگان دمبوره و محلی",
+   "bio": "خواننده و نوازنده‌ی مطرح سبک مالستانی."
+  },
+  "videos": []
+ },
+ {
+  "artist": {
+   "id": "seed-artist-amanullah-noori",
+   "name": "امان‌الله نوری",
+   "category": "هنرمندان و نوازندگان دمبوره و محلی",
+   "bio": "خواننده و نوازنده‌ی سرشناس نغمات و ترانه‌های هزارگی."
+  },
+  "videos": []
+ },
+ {
+  "artist": {
+   "id": "seed-artist-hamid-kabuli",
+   "name": "حمید کابلی",
+   "category": "هنرمندان و نوازندگان دمبوره و محلی",
+   "bio": "از هنرمندان فعال در بازخوانی و تولید ترانه‌های محلی و ویدیوموزیک‌های هزارگی."
+  },
+  "videos": []
+ },
+ {
+  "artist": {
+   "id": "seed-artist-ziba-noori",
+   "name": "زیبا نوری",
+   "category": "نسل جوان و فعالان معاصر",
+   "bio": "از خوانندگان زن مطرح و پرکار در سال‌های اخیر."
+  },
+  "videos": []
+ },
+ {
+  "artist": {
+   "id": "seed-artist-zahra-hazara",
+   "name": "زهرا هزاره",
+   "category": "نسل جوان و فعالان معاصر",
+   "bio": "خواننده‌ی سبک محلی و مدرن هزارگی."
+  },
+  "videos": []
+ },
+ {
+  "artist": {
+   "id": "seed-artist-nahid-nayab",
+   "name": "ناهید نایاب",
+   "category": "نسل جوان و فعالان معاصر",
+   "bio": "خواننده‌ی سبک پاپ و محلی."
+  },
+  "videos": []
+ },
+ {
+  "artist": {
+   "id": "seed-artist-aref-jafari",
+   "name": "عارف جعفری",
+   "category": "نسل جوان و فعالان معاصر",
+   "bio": "خواننده، آهنگساز و ترانه‌سرا با سبک آکادمیک و تلفیقی."
+  },
+  "videos": []
+ },
+ {
+  "artist": {
+   "id": "seed-artist-musa-shahin",
+   "name": "موسی شاهین",
+   "category": "نسل جوان و فعالان معاصر",
+   "bio": "خواننده‌ی ترانه‌های حماسی و محلی."
+  },
+  "videos": []
+ },
+ {
+  "artist": {
+   "id": "seed-artist-bamnawa",
+   "name": "بام نوا (Bam Nawa)",
+   "bio": "بام نوا از کانال‌های فعال در ثبت و نشر موسیقی محلی و اصیل هزارگی است: دمبوره، غزل و ترانه‌های فولکلور. ویدیوها از کانال رسمی بام نوا در یوتیوب پخش می‌شوند و همه‌ی حقوق آن‌ها از آنِ بام نوا و هنرمندان است.\n\nکانال رسمی: https://www.youtube.com/@Bam.nawa.92",
+   "cover_url": "https://i.ytimg.com/vi/WCsln2EaGiw/hqdefault.jpg",
+   "category": "استودیوها و کانال‌های رسمی"
+  },
+  "videos": [
+   {
+    "id": "seed-bamnawa-vquhGU0TnKg",
+    "title": "شیرینی",
+    "description": "آهنگ عاشقانه‌ی هزارگی — از کانال رسمی بام نوا",
+    "video_url": "https://www.youtube.com/watch?v=vquhGU0TnKg",
+    "thumbnail_url": "https://i.ytimg.com/vi/vquhGU0TnKg/hqdefault.jpg"
+   },
+   {
+    "id": "seed-bamnawa-PCeCoU-2UMw",
+    "title": "بلیبور",
+    "description": "آهنگ عاشقانه‌ی هزارگی — موسیقی محلی — از کانال رسمی بام نوا",
+    "video_url": "https://www.youtube.com/watch?v=PCeCoU-2UMw",
+    "thumbnail_url": "https://i.ytimg.com/vi/PCeCoU-2UMw/hqdefault.jpg"
+   },
+   {
+    "id": "seed-bamnawa-WCsln2EaGiw",
+    "title": "قبله‌ی عاشق",
+    "description": "آهنگ تازه‌ی عاشقانه‌ی هزارگی — از کانال رسمی بام نوا",
+    "video_url": "https://www.youtube.com/watch?v=WCsln2EaGiw",
+    "thumbnail_url": "https://i.ytimg.com/vi/WCsln2EaGiw/hqdefault.jpg"
+   },
+   {
+    "id": "seed-bamnawa-BjgJxhifpOw",
+    "title": "کجا خالی کنم دله",
+    "description": "ترانه‌ی هزارگی — از کانال رسمی بام نوا",
+    "video_url": "https://www.youtube.com/watch?v=BjgJxhifpOw",
+    "thumbnail_url": "https://i.ytimg.com/vi/BjgJxhifpOw/hqdefault.jpg"
+   },
+   {
+    "id": "seed-bamnawa-fhCgqtvG6ws",
+    "title": "چند واژه برای استاد سرخوش",
+    "description": "ادای احترام به استاد سرور سرخوش — از کانال رسمی بام نوا",
+    "video_url": "https://www.youtube.com/watch?v=fhCgqtvG6ws",
+    "thumbnail_url": "https://i.ytimg.com/vi/fhCgqtvG6ws/hqdefault.jpg"
+   },
+   {
+    "id": "seed-bamnawa-fanO7Jquzss",
+    "title": "دخترک جاغوری",
+    "description": "ترانه‌ی محلی هزارگی — از کانال رسمی بام نوا",
+    "video_url": "https://www.youtube.com/watch?v=fanO7Jquzss",
+    "thumbnail_url": "https://i.ytimg.com/vi/fanO7Jquzss/hqdefault.jpg"
+   }
+  ]
+ }
+]

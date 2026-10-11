@@ -437,6 +437,9 @@ class Artist {
   String? avatarUrl;
   String? coverUrl;
   int videoCount; // فقط برای نمایش در کارت گالری؛ از سرور شمرده می‌شود
+  String category; // گروه گالری (مثلاً «اساتید و پیشکسوتان…»)
+  String imageCredit; // نام عکاس و مجوز (عکس‌های Wikimedia Commons)
+  String imagePage;
 
   Artist({
     required this.id,
@@ -445,6 +448,9 @@ class Artist {
     this.avatarUrl,
     this.coverUrl,
     this.videoCount = 0,
+    this.category = '',
+    this.imageCredit = '',
+    this.imagePage = '',
   });
 }
 

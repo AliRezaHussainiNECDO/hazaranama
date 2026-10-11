@@ -31,7 +31,18 @@ for path in sorted(glob.glob(os.path.join(here, 'sections', '*.json'))):
             if img.get("page"):
                 it["fields"]["img_page"] = img["page"]
         items.append(it)
-version = hashlib.sha256(json.dumps(items, ensure_ascii=False, sort_keys=True).encode()).hexdigest()[:16]
-json.dump({"version": version, "items": items, "mirror": mirror},
+# هنرمندان موسیقی (seed/music.json): عکس‌ها مثل بقیه در R2 آینه می‌شوند
+music = json.load(open(os.path.join(here, 'music.json'), encoding='utf-8')) if os.path.exists(os.path.join(here, 'music.json')) else []
+for m in music:
+    img = m["artist"].pop("image", None)
+    if img and img.get("src"):
+        ext = os.path.splitext(img["src"].split("?")[0])[1].lower() or ".jpg"
+        key = "commons/" + hashlib.sha1(img["src"].encode()).hexdigest()[:20] + (ext if ext in (".jpg", ".jpeg", ".png", ".webp") else ".jpg")
+        mirror[key] = img["src"]
+        m["artist"]["avatar_url"] = f"{PUBLIC}/media/{key}"
+        m["artist"]["image_credit"] = img.get("credit", "")
+        m["artist"]["image_page"] = img.get("page", "")
+version = hashlib.sha256(json.dumps([items, music], ensure_ascii=False, sort_keys=True).encode()).hexdigest()[:16]
+json.dump({"version": version, "items": items, "mirror": mirror, "music": music},
           open(os.path.join(here, 'content.json'), 'w', encoding='utf-8'), ensure_ascii=False)
 print(len(items), "items,", len(mirror), "images, version", version)

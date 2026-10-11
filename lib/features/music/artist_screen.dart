@@ -92,7 +92,7 @@ class _ArtistScreenState extends State<ArtistScreen> {
                         else if ((_videos ?? []).isEmpty)
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 24),
-                            child: Center(child: Text('هنوز ویدیویی از این هنرمند اضافه نشده', textAlign: TextAlign.center, style: TextStyle(color: theme.textFaint, fontSize: 12))),
+                            child: Center(child: Text('ویدیوهای این هنرمند به‌زودی در هزاره‌نامه منتشر می‌شود 🎶', textAlign: TextAlign.center, style: TextStyle(color: theme.textFaint, fontSize: 12))),
                           )
                         else
                           Padding(
@@ -127,12 +127,14 @@ class _ArtistHeader extends StatelessWidget {
     return Column(children: [
       Stack(clipBehavior: Clip.none, children: [
         Container(
-          height: 130,
+          height: hasCover || hasAvatar ? 210 : 130,
           width: double.infinity,
           decoration: BoxDecoration(
             gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [theme.blueDeep, theme.aiViolet, theme.yellow]),
             image: hasCover ? DecorationImage(image: NetworkImage(artist.coverUrl!), fit: BoxFit.cover, opacity: 0.55) : null,
           ),
+          // بدون کاور: خود عکس هنرمند، کامل و بی‌برش، پس‌زمینه‌ی سربرگ می‌شود
+          child: !hasCover && hasAvatar ? HzFullImage(url: artist.avatarUrl!) : null,
         ),
         Positioned(
           bottom: -36, left: 0, right: 0,
@@ -157,6 +159,21 @@ class _ArtistHeader extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 26),
           child: Text(artist.bio, textAlign: TextAlign.center, style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.9)),
+        ),
+      ],
+      if (artist.category.isNotEmpty) ...[
+        const SizedBox(height: 10),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+          decoration: BoxDecoration(color: theme.aiViolet.withValues(alpha: 0.14), borderRadius: BorderRadius.circular(999)),
+          child: Text(artist.category, style: TextStyle(color: theme.aiViolet, fontSize: 11, fontWeight: FontWeight.w700)),
+        ),
+      ],
+      if (artist.imageCredit.isNotEmpty) ...[
+        const SizedBox(height: 8),
+        GestureDetector(
+          onTap: artist.imagePage.isEmpty ? null : () => openContentUrl(context, artist.imagePage),
+          child: Text(artist.imageCredit, style: TextStyle(color: theme.textFaint, fontSize: 10)),
         ),
       ],
     ]);

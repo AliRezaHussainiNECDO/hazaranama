@@ -369,3 +369,8 @@ CREATE TABLE IF NOT EXISTS oauth_states (
   user_id    TEXT,
   created_at INTEGER NOT NULL
 );
+
+-- گروه‌بندی هنرمندان و نام عکاس/مجوز عکس
+ALTER TABLE artists ADD COLUMN category TEXT;
+ALTER TABLE artists ADD COLUMN image_credit TEXT;
+ALTER TABLE artists ADD COLUMN image_page TEXT
