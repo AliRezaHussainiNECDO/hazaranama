@@ -55,12 +55,12 @@ class _DonationHomeCardState extends State<DonationHomeCard> {
             const SizedBox(width: 12),
             Expanded(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                const Text('به بازسازی هزارستان کمک کنید', style: TextStyle(color: Colors.white, fontSize: 12.5, fontWeight: FontWeight.w800)),
+                const Text('از هزاره‌نامه حمایت کنید', style: TextStyle(color: Colors.white, fontSize: 12.5, fontWeight: FontWeight.w800)),
                 const SizedBox(height: 2),
                 Text(
                   settings.totalRaised > 0
-                      ? 'تاکنون ${settings.totalRaised.toStringAsFixed(0)} ${settings.currency} با کمک شما جمع شده'
-                      : 'خانواده، شفاخانه، مکتب، پل و سرک — با شفافیت کامل',
+                      ? 'تاکنون ${settings.totalRaised.toStringAsFixed(0)} ${settings.currency} با حمایت شما جمع شده'
+                      : 'محتوا، سرور، آموزش و آرشیو — با شفافیت کامل',
                   maxLines: 1, overflow: TextOverflow.ellipsis,
                   style: const TextStyle(color: Colors.white70, fontSize: 11.5),
                 ),
@@ -71,7 +71,7 @@ class _DonationHomeCardState extends State<DonationHomeCard> {
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(999)),
               child: Row(mainAxisSize: MainAxisSize.min, children: [
-                Text('کمک کنید', style: TextStyle(color: theme.blueDeep, fontSize: 12, fontWeight: FontWeight.w800)),
+                Text('حمایت کنید', style: TextStyle(color: theme.blueDeep, fontSize: 12, fontWeight: FontWeight.w800)),
                 const SizedBox(width: 4),
                 Icon(Icons.arrow_back, size: 12, color: theme.blueDeep),
               ]),

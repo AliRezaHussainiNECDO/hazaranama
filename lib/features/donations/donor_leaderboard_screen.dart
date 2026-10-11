@@ -58,7 +58,7 @@ class _DonorLeaderboardScreenState extends State<DonorLeaderboardScreen> {
                 backgroundColor: theme.bgElevated.withValues(alpha: 0.5),
                 elevation: 0,
                 leading: IconButton(icon: Icon(Icons.arrow_forward, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
-                title: Text('فهرست کمک‌کنندگان', style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w800)),
+                title: Text('فهرست حامیان', style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w800)),
               ),
             ),
           ),
@@ -85,7 +85,7 @@ class _DonorLeaderboardScreenState extends State<DonorLeaderboardScreen> {
                             SizedBox(width: 10),
                             Expanded(
                               child: Text(
-                                'با هر کمک، مقام و حلقه‌ی دور عکس پروفایلت زیباتر می‌شود — این فهرست از کمک‌های تأییدشده‌ی همه ساخته شده و به همه نشان داده می‌شود.',
+                                'با هر حمایت، مقام و حلقه‌ی دور عکس پروفایلت زیباتر می‌شود — این فهرست از حمایت‌های تأییدشده‌ی همه ساخته شده و به همه نشان داده می‌شود.',
                                 style: TextStyle(color: Colors.white, fontSize: 12.5, height: 1.9, fontWeight: FontWeight.w600),
                               ),
                             ),
@@ -95,7 +95,7 @@ class _DonorLeaderboardScreenState extends State<DonorLeaderboardScreen> {
                         if (entries.isEmpty)
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 40),
-                            child: Center(child: Text('هنوز هیچ کمکی تأیید نشده — اولین نفر باش!', style: TextStyle(color: theme.textFaint, fontSize: 12))),
+                            child: Center(child: Text('هنوز هیچ حمایتی تأیید نشده — اولین نفر باش!', style: TextStyle(color: theme.textFaint, fontSize: 12))),
                           )
                         else ...[
                           Row(children: [
@@ -172,7 +172,7 @@ class _DonorRow extends StatelessWidget {
               ],
               Expanded(
                 child: Text(
-                  entry.lastDonationAt != null ? 'آخرین کمک: ${afghanDateLabel(entry.lastDonationAt!)}' : '',
+                  entry.lastDonationAt != null ? 'آخرین حمایت: ${afghanDateLabel(entry.lastDonationAt!)}' : '',
                   style: TextStyle(color: theme.textFaint, fontSize: 11),
                   maxLines: 1, overflow: TextOverflow.ellipsis,
                 ),
@@ -183,7 +183,7 @@ class _DonorRow extends StatelessWidget {
         const SizedBox(width: 8),
         Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
           Text('~${entry.totalUsd.toStringAsFixed(0)}\$', style: TextStyle(color: theme.success, fontSize: 13, fontWeight: FontWeight.w800)),
-          Text('${toFaDigits('${entry.donationCount}')} کمک', style: TextStyle(color: theme.textFaint, fontSize: 11)),
+          Text('${toFaDigits('${entry.donationCount}')} حمایت', style: TextStyle(color: theme.textFaint, fontSize: 11)),
         ]),
       ]),
     );

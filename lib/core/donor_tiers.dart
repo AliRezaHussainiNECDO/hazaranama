@@ -1,9 +1,15 @@
 import 'dart:math' as math;
+import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform, TargetPlatform;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../models/models.dart';
 import 'app_colors.dart';
 import 'widgets.dart';
+
+/// مقام‌ها، حلقه‌ها و استیکرهای اختصاصیِ حامیان فقط روی وب و اندروید فعال‌اند.
+/// در اپ آیفون (راهنمای اپ‌استور 3.1.1) حمایت مالی هیچ امتیاز دیجیتالی
+/// در اپ باز نمی‌کند؛ پس همه‌ی این نشان‌ها آن‌جا پنهان می‌شوند.
+bool get donorPerksEnabled => kIsWeb || defaultTargetPlatform != TargetPlatform.iOS;
 
 /// آستانه‌ی مقام لازم برای باز شدن استیکرهای اختصاصی (از «اسطوره» به بالا).
 const int kVipStickerTierIndex = 7;
@@ -140,6 +146,7 @@ DonorTier? donorTierForUser(UserProfile? user, double usd) => donorTierByRole(us
 /// UserProfile — برای جاهایی که فقط آی‌دی کاربر را داریم (فید، کامنت‌ها،
 /// مقاله، پیام‌ها) و نقش را از کش سبک [AppState] می‌گیریم.
 DonorTier? donorTierByRole(UserRole? role, double usd) {
+  if (!donorPerksEnabled) return null;
   if (role == UserRole.admin) return kDonorTiers.last;
   return donorTierForUsd(usd);
 }
@@ -388,6 +395,7 @@ class DonorTierCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (!donorPerksEnabled) return const SizedBox.shrink();
     // مدیر همیشه بالاترین مقام را دارد؛ بقیه‌ی کاربران دقیقاً همان منطق قبلی.
     final tier = isAdmin ? kDonorTiers.last : donorTierForUsd(totalUsd);
     final next = isAdmin ? null : nextDonorTier(totalUsd);
@@ -401,7 +409,7 @@ class DonorTierCard extends StatelessWidget {
           Icon(Icons.volunteer_activism_rounded, size: 16, color: theme.success),
           const SizedBox(width: 7),
           Expanded(
-            child: Text(tier != null ? 'مقام: ${tier.title}' : 'هنوز کمک‌کننده نیستی',
+            child: Text(tier != null ? 'مقام: ${tier.title}' : 'هنوز حامی نیستی',
                 style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800)),
           ),
           if (tier != null) DonorTierChip(tier: tier),
@@ -411,8 +419,8 @@ class DonorTierCard extends StatelessWidget {
           isAdmin
               ? 'به‌عنوان مدیر هزاره‌نامه، بالاترین مقام را داری.'
               : totalUsd > 0
-                  ? 'مجموع کمک‌های تأییدشده‌ی شما تقریباً ${totalUsd.toStringAsFixed(0)} دلار است.'
-                  : 'با اولین کمک مالی، حلقه‌ی دور عکس پروفایلت رنگ می‌گیرد و از «همراه» ارتقا می‌یابی.',
+                  ? 'مجموع حمایت‌های تأییدشده‌ی شما تقریباً ${totalUsd.toStringAsFixed(0)} دلار است.'
+                  : 'با اولین حمایت، حلقه‌ی دور عکس پروفایلت رنگ می‌گیرد و از «همراه» ارتقا می‌یابی.',
           style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.8),
         ),
         if (next != null) ...[
@@ -453,7 +461,7 @@ class DonorTierCard extends StatelessWidget {
           child: ElevatedButton.icon(
             onPressed: onDonateTap,
             icon: const Icon(Icons.favorite, size: 14),
-            label: Text(totalUsd <= 0 && !isAdmin ? 'اولین کمک را بفرست' : 'افزایش مقام — کمک کن', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w800)),
+            label: Text(totalUsd <= 0 && !isAdmin ? 'اولین حمایت را بفرست' : 'افزایش مقام — حمایت کن', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w800)),
             style: ElevatedButton.styleFrom(backgroundColor: theme.success, foregroundColor: Colors.white, elevation: 0, padding: const EdgeInsets.symmetric(vertical: 12), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
           ),
         ),
@@ -516,6 +524,7 @@ void showVipStickerPicker({
                     }))
                 .toList(),
           ),
+          if (donorPerksEnabled) ...[
           const SizedBox(height: 14),
           Row(mainAxisSize: MainAxisSize.min, children: [
             Icon(Icons.workspace_premium_rounded, size: 14, color: theme.yellow),
@@ -534,12 +543,13 @@ void showVipStickerPicker({
                         if (unlocked) {
                           onPick(e);
                         } else {
-                          showHzToast(context, 'این استیکر مخصوص مقام «اسطوره» به بالاست — با کمک مالی بازش کن!');
+                          showHzToast(context, 'این استیکر مخصوص مقام «اسطوره» به بالاست — با حمایت از هزاره‌نامه بازش کن!');
                         }
                       },
                     ))
                 .toList(),
           ),
+          ],
         ]),
       ),
     ),

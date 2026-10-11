@@ -805,7 +805,7 @@ class _SettingsStatsTabState extends State<_SettingsStatsTab> {
         _label(theme, 'تعداد خانواده‌های کمک‌شده'),
         _field(theme, _familiesCtrl, hint: '۰', keyboardType: TextInputType.number),
         const SizedBox(height: 12),
-        _label(theme, 'تعداد پروژه‌های تکمیل‌شده (شفاخانه/مکتب/پل/سرک)'),
+        _label(theme, 'تعداد بخش‌ها/پروژه‌های تکمیل‌شده با حمایت‌ها'),
         _field(theme, _projectsCtrl, hint: '۰', keyboardType: TextInputType.number),
         const SizedBox(height: 18),
         ElevatedButton.icon(

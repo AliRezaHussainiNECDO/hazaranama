@@ -136,7 +136,7 @@ String userActivityTypeLabel(UserActivityType t) {
     case UserActivityType.articleComment:
       return 'نظر روی یک مقاله‌ی برگزیده';
     case UserActivityType.donationTransfer:
-      return 'اعلام کمک مالی';
+      return 'اعلام حمایت مالی';
     case UserActivityType.contactMessage:
       return 'پیام به پشتیبانی';
     case UserActivityType.postReaction:
@@ -677,7 +677,7 @@ class ArticleComment {
 }
 
 // ============================================================
-// کمک‌های مالی — خانواده‌های بی‌بضاعت، شفاخانه، مکتب، پل و سرک برای هزارستان
+// حمایت مالی از پروژه‌ی هزاره‌نامه (نه خیریه) — محتوا، زیرساخت، آموزش و آرشیو
 // ============================================================
 
 /// دسته‌بندی مصرف کمک مالی — هم برای دسته‌بندی حواله‌های ارسالی و هم برای
@@ -717,15 +717,15 @@ String donationCategoryToDbValue(DonationCategory c) {
 String donationCategoryLabel(DonationCategory c) {
   switch (c) {
     case DonationCategory.family:
-      return 'خانواده‌های بی‌بضاعت';
+      return 'محتوا و پژوهش';
     case DonationCategory.hospital:
-      return 'ساخت شفاخانه';
+      return 'سرور و زیرساخت';
     case DonationCategory.school:
-      return 'ساخت مکتب';
+      return 'آموزش و زبان هزارگی';
     case DonationCategory.roadsBridges:
-      return 'پل، پلچک و سرک';
+      return 'آرشیو موسیقی و روایت‌ها';
     case DonationCategory.general:
-      return 'عمومی هزارستان';
+      return 'توسعه‌ی عمومی هزاره‌نامه';
   }
 }
 

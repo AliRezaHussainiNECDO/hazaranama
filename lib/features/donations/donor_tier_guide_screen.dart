@@ -55,7 +55,7 @@ class DonorTierGuideScreen extends StatelessWidget {
                     SizedBox(width: 10),
                     Expanded(
                       child: Text(
-                        'با هر کمک مالی تأییدشده، مقام و قاب دور عکس پروفایلت یک پله بالاتر می‌رود — تا مرحله‌ی ۱۰: پادشاه (خاقان). مقام‌ها دائمی‌اند و هرگز افت نمی‌کنند.',
+                        'با هر حمایت مالی تأییدشده، مقام و قاب دور عکس پروفایلت یک پله بالاتر می‌رود — تا مرحله‌ی ۱۰: پادشاه (خاقان). مقام‌ها دائمی‌اند و هرگز افت نمی‌کنند.',
                         style: TextStyle(color: Colors.white, fontSize: 12.5, height: 1.9, fontWeight: FontWeight.w600),
                       ),
                     ),
@@ -101,7 +101,7 @@ class _TierGuideCard extends StatelessWidget {
   final DonorTier tier;
   const _TierGuideCard({required this.theme, required this.tier});
 
-  String get _thresholdLabel => tier.minUsd <= 0 ? 'از همان لحظه‌ی ثبت‌نام' : 'از ${tier.minUsd.toStringAsFixed(0)}\$ کمک تأییدشده به بالا';
+  String get _thresholdLabel => tier.minUsd <= 0 ? 'از همان لحظه‌ی ثبت‌نام' : 'از ${tier.minUsd.toStringAsFixed(0)}\$ حمایت تأییدشده به بالا';
 
   String get _effectLabel => switch (tier.index) {
         1 => 'یک حلقه‌ی نازک و ساده‌ی خاکستری/سفید دور عکس پروفایل.',

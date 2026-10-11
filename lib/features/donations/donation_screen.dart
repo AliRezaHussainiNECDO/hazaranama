@@ -34,13 +34,13 @@ const List<String> kDonationCurrencies = ['USD', 'EUR', 'CHF', 'GBP', 'AFN'];
 IconData donationCategoryIcon(DonationCategory c) {
   switch (c) {
     case DonationCategory.family:
-      return Icons.family_restroom;
+      return Icons.menu_book_rounded;
     case DonationCategory.hospital:
-      return Icons.local_hospital_outlined;
+      return Icons.dns_rounded;
     case DonationCategory.school:
       return Icons.school_outlined;
     case DonationCategory.roadsBridges:
-      return Icons.alt_route;
+      return Icons.library_music_rounded;
     case DonationCategory.general:
       return Icons.volunteer_activism;
   }
@@ -110,7 +110,7 @@ class _DonationScreenState extends State<DonationScreen> {
                 backgroundColor: theme.bgElevated.withValues(alpha: 0.5),
                 elevation: 0,
                 leading: IconButton(icon: Icon(Icons.arrow_forward, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
-                title: Text('کمک‌های مالی', style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w800)),
+                title: Text('حمایت از هزاره‌نامه', style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w800)),
               ),
             ),
           ),
@@ -132,10 +132,14 @@ class _DonationScreenState extends State<DonationScreen> {
                           isAdmin: app.currentUser?.role == UserRole.admin,
                           onDonateTap: _scrollToWays,
                         ),
-                        const SizedBox(height: 10),
-                        _LeaderboardButton(theme: theme),
-                        const SizedBox(height: 8),
-                        _TierGuideButton(theme: theme),
+                        if (donorPerksEnabled) ...[
+                          const SizedBox(height: 10),
+                          _LeaderboardButton(theme: theme),
+                          const SizedBox(height: 8),
+                          _TierGuideButton(theme: theme),
+                        ],
+                        const SizedBox(height: 18),
+                        _LegalNote(theme: theme),
                         const SizedBox(height: 18),
                         _ImpactCategoriesRow(theme: theme),
                         const SizedBox(height: 22),
@@ -144,7 +148,7 @@ class _DonationScreenState extends State<DonationScreen> {
                           child: Row(children: [
                             Icon(Icons.volunteer_activism_outlined, size: 15, color: theme.success),
                             const SizedBox(width: 7),
-                            Text('راه‌های کمک', style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800)),
+                            Text('راه‌های حمایت', style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800)),
                           ]),
                         ),
                         const SizedBox(height: 12),
@@ -173,12 +177,12 @@ class _DonationScreenState extends State<DonationScreen> {
                         Row(children: [
                           Icon(Icons.fact_check_outlined, size: 15, color: theme.aiViolet),
                           const SizedBox(width: 7),
-                          Expanded(child: Text('گزارش‌های شفافیت مصرف کمک‌ها', style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800))),
+                          Expanded(child: Text('گزارش‌های شفافیت مصرف حمایت‌ها', style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800))),
                         ]),
                         const SizedBox(height: 4),
                         Padding(
                           padding: const EdgeInsets.only(right: 22),
-                          child: Text('این گزارش‌ها با کمک هوش مصنوعی نوشته می‌شوند تا مصرف واقعی کمک‌های شما همیشه شفاف بماند.',
+                          child: Text('این گزارش‌ها با کمک هوش مصنوعی نوشته می‌شوند تا مصرف واقعی حمایت‌های شما همیشه شفاف بماند.',
                               style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.7)),
                         ),
                         const SizedBox(height: 12),
@@ -238,15 +242,15 @@ class _HeroCard extends StatelessWidget {
               child: const Row(mainAxisSize: MainAxisSize.min, children: [
                 Icon(Icons.volunteer_activism, size: 13, color: Colors.white),
                 SizedBox(width: 5),
-                Text('کمک‌های مالی', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w800)),
+                Text('حمایت از پروژه', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w800)),
               ]),
             ),
             const SizedBox(height: 12),
-            const Text('دست هزاره‌نامه‌ای‌های سراسر جهان را به هزارستان برسانید',
+            const Text('هزاره‌نامه را با هم زنده نگه داریم',
                 style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w800, height: 1.4)),
             const SizedBox(height: 6),
             const Text(
-              'همین کمک کوچک شما می‌تواند برای یک خانواده‌ی بی‌بضاعت نان شب باشد، یا خشتی در ساخت یک شفاخانه، مکتب، پل یا سرک برای هزارستان. هر مبلغی، هرچند کوچک، با شفافیت کامل به مقصد می‌رسد.',
+              'هزاره‌نامه رایگان و بدون تبلیغ است. حمایت داوطلبانه‌ی شما هزینه‌ی سرور، پژوهش و نوشتن محتوای تازه، آموزش زبان هزارگی و آرشیو موسیقی و روایت‌های مردم هزاره را می‌پردازد؛ مصرف هر مبلغ با شفافیت کامل گزارش می‌شود.',
               style: TextStyle(color: Colors.white, fontSize: 12.5, height: 1.9),
             ),
             if (settings.totalRaised > 0 || settings.familiesHelped > 0) ...[
@@ -254,7 +258,7 @@ class _HeroCard extends StatelessWidget {
               Row(children: [
                 if (settings.totalRaised > 0) Expanded(child: _stat('${settings.totalRaised.toStringAsFixed(0)} ${settings.currency}', 'جمع‌آوری‌شده')),
                 if (settings.totalRaised > 0 && settings.familiesHelped > 0) const SizedBox(width: 8),
-                if (settings.familiesHelped > 0) Expanded(child: _stat(toFaDigits('${settings.familiesHelped}'), 'خانواده کمک‌شده')),
+                if (settings.familiesHelped > 0) Expanded(child: _stat(toFaDigits('${settings.familiesHelped}'), 'حامی')),
               ]),
             ],
           ]),
@@ -295,8 +299,8 @@ class _LeaderboardButton extends StatelessWidget {
           const SizedBox(width: 10),
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text('فهرست کمک‌کنندگان', style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w800)),
-              Text('رتبه و مقام همه‌ی کمک‌کنندگان را ببین', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
+              Text('فهرست حامیان', style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w800)),
+              Text('سپاس از همه‌ی حامیان هزاره‌نامه', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
             ]),
           ),
           Icon(Icons.arrow_back_ios_new, size: 13, color: theme.textFaint),
@@ -390,7 +394,7 @@ class _ExternalDonationCard extends StatelessWidget {
           const SizedBox(width: 10),
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text('کمک مالی از طریق وب‌سایت', style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800)),
+              Text('حمایت از طریق وب‌سایت', style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800)),
               const SizedBox(height: 2),
               Text('PayPal و حواله‌ی بانکی — روی صفحه‌ی وب هزاره‌نامه', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
             ]),
@@ -407,7 +411,7 @@ class _ExternalDonationCard extends StatelessWidget {
           child: ElevatedButton.icon(
             onPressed: () => openContentUrl(context, kDonationWebUrl),
             icon: const Icon(Icons.open_in_new, size: 15),
-            label: const Text('باز کردن صفحه‌ی کمک‌های مالی', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800)),
+            label: const Text('باز کردن صفحه‌ی حمایت', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800)),
             style: ElevatedButton.styleFrom(
               backgroundColor: theme.success, foregroundColor: Colors.white, elevation: 0,
               padding: const EdgeInsets.symmetric(vertical: 13),
@@ -421,7 +425,7 @@ class _ExternalDonationCard extends StatelessWidget {
           child: OutlinedButton.icon(
             onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const DonationTransferFormScreen())),
             icon: const Icon(Icons.edit_note, size: 16),
-            label: const Text('قبلاً کمک فرستاده‌اید؟ ثبتش کنید', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w800)),
+            label: const Text('قبلاً حمایت کرده‌اید؟ ثبتش کنید', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w800)),
             style: OutlinedButton.styleFrom(
               foregroundColor: theme.success, side: BorderSide(color: theme.success.withValues(alpha: 0.5)),
               padding: const EdgeInsets.symmetric(vertical: 12),
@@ -429,8 +433,8 @@ class _ExternalDonationCard extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 6),
-        Text('ثبت اعلام کمک، آن را به مقام و حلقه‌ی دور عکس پروفایلت وصل می‌کند.', style: TextStyle(color: theme.textFaint, fontSize: 11, height: 1.7)),
+        if (donorPerksEnabled) const SizedBox(height: 6),
+        if (donorPerksEnabled) Text('ثبت اعلام حمایت، آن را به مقام و حلقه‌ی دور عکس پروفایلت وصل می‌کند.', style: TextStyle(color: theme.textFaint, fontSize: 11, height: 1.7)),
       ]),
     );
   }
@@ -501,7 +505,7 @@ class _PaypalCard extends StatelessWidget {
           child: OutlinedButton.icon(
             onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const DonationTransferFormScreen(method: DonationMethod.paypal))),
             icon: const Icon(Icons.edit_note, size: 16),
-            label: const Text('بعد از ارسال، اعلام کمکم را ثبت کن', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w800)),
+            label: const Text('بعد از ارسال، حمایتم را ثبت کن', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w800)),
             style: OutlinedButton.styleFrom(
               foregroundColor: theme.blue, side: BorderSide(color: theme.blue.withValues(alpha: 0.5)),
               padding: const EdgeInsets.symmetric(vertical: 12),
@@ -509,8 +513,8 @@ class _PaypalCard extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 6),
-        Text('ثبت اعلام کمک، آن را به مقام و حلقه‌ی دور عکس پروفایلت وصل می‌کند.', style: TextStyle(color: theme.textFaint, fontSize: 11, height: 1.7)),
+        if (donorPerksEnabled) const SizedBox(height: 6),
+        if (donorPerksEnabled) Text('ثبت اعلام حمایت، آن را به مقام و حلقه‌ی دور عکس پروفایلت وصل می‌کند.', style: TextStyle(color: theme.textFaint, fontSize: 11, height: 1.7)),
       ]),
     );
   }
@@ -794,7 +798,7 @@ class _DonationTransferFormScreenState extends State<DonationTransferFormScreen>
       );
       if (mounted) {
         Navigator.of(context).pop();
-        showHzToast(context, 'متشکریم! اعلام کمک شما ثبت شد و به‌زودی تأیید می‌شود.');
+        showHzToast(context, 'متشکریم! اعلام حمایت شما ثبت شد و به‌زودی تأیید می‌شود.');
       }
     } catch (_) {
       if (mounted) showHzToast(context, 'ثبت جزئیات ناموفق بود؛ دوباره تلاش کنید.');
@@ -822,7 +826,7 @@ class _DonationTransferFormScreenState extends State<DonationTransferFormScreen>
                 backgroundColor: theme.bgElevated.withValues(alpha: 0.5),
                 elevation: 0,
                 leading: IconButton(icon: Icon(Icons.arrow_forward, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
-                title: Text(isPaypal ? 'ثبت اعلام کمک پی‌پال' : 'ثبت جزئیات حواله', style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w800)),
+                title: Text(isPaypal ? 'ثبت اعلام حمایت پی‌پال' : 'ثبت جزئیات حواله', style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w800)),
               ),
             ),
           ),
@@ -843,7 +847,7 @@ class _DonationTransferFormScreenState extends State<DonationTransferFormScreen>
                     Expanded(
                       child: Text(
                         isPaypal
-                            ? 'این فرم فقط جزئیات کمکی را ثبت می‌کند که خودتان از طریق PayPal به ایمیل «$kPaypalEmail» ارسال کرده‌اید یا در حال ارسال آن هستید — تا مدیر دریافت واقعی را تأیید کند و مقام شما فعال شود.'
+                            ? 'این فرم فقط جزئیات حمایتی را ثبت می‌کند که خودتان از طریق PayPal به ایمیل «$kPaypalEmail» ارسال کرده‌اید یا در حال ارسال آن هستید — تا مدیر دریافت واقعی را تأیید کند و مقام شما فعال شود.'
                             : 'این فرم فقط جزئیات حواله‌ای را ثبت می‌کند که خودتان از طریق صرافی/بانک برای «$kTransferRecipientName» در $kTransferRecipientCity، $kTransferRecipientCountry ارسال کرده‌اید یا در حال ارسال آن هستید.',
                         style: TextStyle(color: theme.textPrimary, fontSize: 12.5, height: 1.8, fontWeight: FontWeight.w600),
                       ),
@@ -884,7 +888,7 @@ class _DonationTransferFormScreenState extends State<DonationTransferFormScreen>
                   ),
                 ]),
                 const SizedBox(height: 12),
-                _label(theme, 'این کمک برای کدام بخش باشد؟ (اختیاری)'),
+                _label(theme, 'این حمایت برای کدام بخش باشد؟ (اختیاری)'),
                 HzSelectField(
                   value: donationCategoryLabel(_category),
                   icon: Icons.category_outlined,
@@ -901,7 +905,7 @@ class _DonationTransferFormScreenState extends State<DonationTransferFormScreen>
                 _field(theme, _refCtrl, hint: isPaypal ? 'مثلاً: Transaction ID پی‌پال' : 'مثلاً: کد MTCN یا شماره فیش صرافی'),
                 const SizedBox(height: 12),
                 _label(theme, 'یادداشت (اختیاری)'),
-                _field(theme, _noteCtrl, hint: 'هر نکته‌ی دیگری که برای تأیید کمک لازم است…', maxLines: 3),
+                _field(theme, _noteCtrl, hint: 'هر نکته‌ی دیگری که برای تأیید حمایت لازم است…', maxLines: 3),
                 const SizedBox(height: 22),
                 ElevatedButton(
                   onPressed: _submitting ? null : () => _submit(app),
@@ -912,7 +916,7 @@ class _DonationTransferFormScreenState extends State<DonationTransferFormScreen>
                   ),
                   child: _submitting
                       ? SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: theme.bg))
-                      : Text(isPaypal ? 'ثبت اعلام کمک پی‌پال' : 'ثبت جزئیات حواله', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800)),
+                      : Text(isPaypal ? 'ثبت اعلام حمایت پی‌پال' : 'ثبت جزئیات حواله', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800)),
                 ),
               ],
             ),
@@ -942,6 +946,38 @@ class _DonationTransferFormScreenState extends State<DonationTransferFormScreen>
         enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide(color: theme.glassBorder)),
         focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide(color: theme.yellow)),
       ),
+    );
+  }
+}
+
+/// یادداشت حقوقی — همان متن صفحه‌ی وب: هزاره‌نامه خیریه‌ی ثبت‌شده نیست و
+/// حمایت مالی داوطلبانه، غیرقابل کسر از مالیات و بدون دریافت کالا/خدمت است.
+class _LegalNote extends StatelessWidget {
+  final AppColors theme;
+  const _LegalNote({required this.theme});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+      decoration: BoxDecoration(
+        color: theme.bgCard.withValues(alpha: 0.5),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: theme.glassBorder),
+      ),
+      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Icon(Icons.gavel_rounded, size: 16, color: theme.textFaint),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            'هزاره‌نامه یک پروژه‌ی فرهنگی و آموزشیِ مستقل است، نه سازمان خیریه‌ی ثبت‌شده. '
+            'حمایت مالی کاملاً داوطلبانه است، کمک خیریه یا قابل کسر از مالیات به شمار نمی‌رود، '
+            'و در برابر آن کالا یا خدمتی دریافت نمی‌کنید. همه‌ی مبالغ فقط صرف توسعه و نگه‌داری '
+            'هزاره‌نامه (محتوا، سرور، آموزش و آرشیو) می‌شود و گزارش مصرف آن به‌صورت عمومی منتشر می‌گردد.',
+            style: TextStyle(color: theme.textFaint, fontSize: 11, height: 1.8),
+          ),
+        ),
+      ]),
     );
   }
 }
