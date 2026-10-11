@@ -14,12 +14,13 @@ import { insertNotifications, adminIds } from "./hooks";
 import { pushConfigured } from "./push";
 import { emailConfigured, sendEmail, recoveryEmail, welcomeEmail, passwordChangedEmail } from "./email";
 import { handleAi } from "./ai";
+import { oauthProviders, oauthStart, oauthCallback, oauthExchange, type Profile } from "./oauth";
 import schemaSql from "../schema.sql";
 import seedContent from "../seed/content.json";
 import { fetchNews, mirrorCommons, prewarmMirror } from "./content_extra";
 import legacySeedKeys from "../seed/legacy_seed_keys.json";
 
-const SCHEMA_VERSION = 3;
+const SCHEMA_VERSION = 4;
 
 const CORS: Record<string, string> = {
   "Access-Control-Allow-Origin": "*",
@@ -110,6 +111,15 @@ async function handleAuth(env: Env, ctx: Ctx, req: Request, path: string): Promi
       await insertNotifications(env, ctx, admins.map((a) => ({ user_id: a, type: "admin_new_user", title: `کاربر تازه پیوست: ${name}`, body: email, ref_id: id, ref_type: "user" })));
     }
     return json(await session(env, { id, email, token_version: 0 }));
+  }
+
+  if (path === "/auth/oauth/exchange") {
+    const b = await readJson(req);
+    const userId = await oauthExchange(env, String(b.code ?? ""));
+    if (!userId) return err(400, "ورود منقضی شد؛ دوباره تلاش کنید.", "oauth_expired");
+    const u = await env.DB.prepare("SELECT id, email, token_version FROM users WHERE id = ?").bind(userId).first<{ id: string; email: string; token_version: number }>();
+    if (!u) return err(400, "حساب پیدا نشد.", "oauth_expired");
+    return json(await session(env, u));
   }
 
   if (path === "/auth/login") {
@@ -673,6 +683,14 @@ export default {
       });
       await schemaReady;
 
+      if (path === "/auth/oauth/providers" && req.method === "GET") return json(oauthProviders(env));
+      {
+        const m = path.match(/^\/auth\/oauth\/(facebook|x)\/(start|callback)$/);
+        if (m && req.method === "GET") {
+          const provider = m[1] as "facebook" | "x";
+          return m[2] === "start" ? await oauthStart(env, provider, url) : await oauthCallback(env, provider, url, (pv, p) => ensureOAuthUser(env, ctx, pv, p));
+        }
+      }
       if (path.startsWith("/auth/") && req.method === "POST") return await handleAuth(env, ctx, req, path);
 
       if (path === "/db" && req.method === "POST") {
@@ -722,3 +740,36 @@ export default {
     }
   },
 };
+
+
+/** حساب کاربر ورودی از شبکه‌ی اجتماعی: پیوند موجود ← حساب با همان ایمیل ← حساب تازه */
+async function ensureOAuthUser(env: Env, ctx: Ctx, provider: "facebook" | "x", p: Profile): Promise<string> {
+  const linked = await env.DB.prepare("SELECT user_id FROM oauth_accounts WHERE provider = ? AND provider_user_id = ?").bind(provider, p.id).first<{ user_id: string }>();
+  if (linked) return linked.user_id;
+  const email = (p.email ?? "").trim().toLowerCase();
+  if (email) {
+    const existing = await env.DB.prepare("SELECT id FROM users WHERE email = ?").bind(email).first<{ id: string }>();
+    if (existing) {
+      await env.DB.prepare("INSERT OR IGNORE INTO oauth_accounts (provider, provider_user_id, user_id) VALUES (?, ?, ?)").bind(provider, p.id, existing.id).run();
+      return existing.id;
+    }
+  }
+  const id = crypto.randomUUID();
+  // بدون ایمیل (ایکس): نشانی داخلی و یکتا — کاربر بعداً می‌تواند ایمیل واقعی‌اش را در پروفایل بگذارد
+  const userEmail = email || `${provider}-${p.id}@users.hazaranama.com`;
+  const name = p.name.trim() || "کاربر هزاره‌نامه";
+  const role = email && email === (env.ADMIN_EMAIL ?? "").toLowerCase() ? "admin" : "user";
+  const unusable = `oauth$${crypto.randomUUID()}`; // با هیچ رمزی تطبیق نمی‌کند
+  await env.DB.batch([
+    env.DB.prepare("INSERT INTO users (id, email, password_hash) VALUES (?, ?, ?)").bind(id, userEmail, unusable),
+    env.DB.prepare("INSERT INTO profiles (id, name, email, role, status, avatar_url) VALUES (?, ?, ?, ?, 'active', ?)").bind(id, name, userEmail, role, p.avatar),
+    env.DB.prepare("INSERT INTO oauth_accounts (provider, provider_user_id, user_id) VALUES (?, ?, ?)").bind(provider, p.id, id),
+  ]);
+  if (email && emailConfigured(env)) ctx.waitUntil(sendEmail(env, { to: email, ...welcomeEmail(name) }).then(() => undefined));
+  const admins = (await adminIds(env)).filter((a) => a !== id);
+  if (admins.length) {
+    const via = provider === "facebook" ? "فیسبوک" : "ایکس";
+    await insertNotifications(env, ctx, admins.map((a) => ({ user_id: a, type: "admin_new_user", title: `کاربر تازه پیوست: ${name}`, body: `از راه ${via}`, ref_id: id, ref_type: "user" })));
+  }
+  return id;
+}

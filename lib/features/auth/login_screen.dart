@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show TextInput;
 import 'package:provider/provider.dart';
 import '../../core/animated_backdrop.dart';
 import '../../core/app_logo.dart';
 import '../../core/widgets.dart';
 import '../../state/app_state.dart';
+import 'social_buttons.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,6 +19,14 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _showPass = false;
   bool _loading = false;
   String? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    final app = context.read<AppState>();
+    _email.text = app.rememberedEmail;
+    _error = app.oauthError;
+  }
 
   Future<void> _submit(AppState app) async {
     setState(() => _error = null);
@@ -32,7 +42,12 @@ class _LoginScreenState extends State<LoginScreen> {
     final error = await app.signIn(email: _email.text.trim(), password: _password.text);
     if (!mounted) return;
     setState(() => _loading = false);
-    if (error != null) setState(() => _error = error);
+    if (error != null) {
+      setState(() => _error = error);
+    } else {
+      // از سیستم (Google/iCloud) می‌خواهد رمز را امن ذخیره کند تا دفعه‌ی بعد خودکار پر شود
+      TextInput.finishAutofillContext(shouldSave: app.rememberMe);
+    }
   }
 
   @override
@@ -71,23 +86,52 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 5),
                       Text('برای ادامه، وارد حساب کاربری خود شوید', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                       const SizedBox(height: 22),
-                      HzTextField(controller: _email, icon: Icons.mail_outline, hint: 'ایمیل', theme: theme, keyboardType: TextInputType.emailAddress),
-                      const SizedBox(height: 12),
-                      HzTextField(
-                        controller: _password, icon: Icons.lock_outline, hint: 'رمز عبور', theme: theme, obscureText: !_showPass,
-                        suffix: IconButton(
-                          icon: Icon(_showPass ? Icons.visibility_off : Icons.visibility, size: 18, color: theme.textFaint),
-                          onPressed: () => setState(() => _showPass = !_showPass),
-                        ),
+                      AutofillGroup(
+                        child: Column(children: [
+                          HzTextField(controller: _email, icon: Icons.mail_outline, hint: 'ایمیل', theme: theme, keyboardType: TextInputType.emailAddress, autofillHints: const [AutofillHints.email, AutofillHints.username]),
+                          const SizedBox(height: 12),
+                          HzTextField(
+                            controller: _password, icon: Icons.lock_outline, hint: 'رمز عبور', theme: theme, obscureText: !_showPass,
+                            autofillHints: const [AutofillHints.password],
+                            onSubmitted: (_) => _submit(app),
+                            suffix: IconButton(
+                              icon: Icon(_showPass ? Icons.visibility_off : Icons.visibility, size: 18, color: theme.textFaint),
+                              onPressed: () => setState(() => _showPass = !_showPass),
+                            ),
+                          ),
+                        ]),
                       ),
-                      const SizedBox(height: 14),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: TextButton(
+                      const SizedBox(height: 10),
+                      Row(children: [
+                        // «مرا به خاطر بسپار»: ورود روی این دستگاه می‌ماند، ایمیل یادش می‌ماند و رمز در مدیر رمز سیستم ذخیره می‌شود
+                        InkWell(
+                          borderRadius: BorderRadius.circular(10),
+                          onTap: () => app.setRememberMe(!app.rememberMe),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 2),
+                            child: Row(mainAxisSize: MainAxisSize.min, children: [
+                              AnimatedContainer(
+                                duration: const Duration(milliseconds: 180),
+                                width: 20,
+                                height: 20,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  gradient: app.rememberMe ? LinearGradient(colors: [theme.blue, theme.aiViolet]) : null,
+                                  border: Border.all(color: app.rememberMe ? Colors.transparent : theme.textFaint, width: 1.4),
+                                ),
+                                child: app.rememberMe ? const Icon(Icons.check_rounded, size: 15, color: Colors.white) : null,
+                              ),
+                              const SizedBox(width: 8),
+                              Text('مرا به خاطر بسپار', style: TextStyle(color: theme.textSecondary, fontSize: 12.5, fontWeight: FontWeight.w600)),
+                            ]),
+                          ),
+                        ),
+                        const Spacer(),
+                        TextButton(
                           onPressed: () => app.goTo(AuthStage.forgot),
-                          child: Text('رمز عبور را فراموش کرده‌اید؟', style: TextStyle(color: theme.blue, fontSize: 12.5, fontWeight: FontWeight.w700)),
+                          child: Text('فراموشی رمز؟', style: TextStyle(color: theme.blue, fontSize: 12.5, fontWeight: FontWeight.w700)),
                         ),
-                      ),
+                      ]),
                       if (_error != null) ...[
                         const SizedBox(height: 10),
                         Container(
@@ -99,6 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                       const SizedBox(height: 18),
                       HzPrimaryButton(theme: theme, label: _loading ? 'در حال ورود…' : 'ورود', loading: _loading, onPressed: () => _submit(app)),
+                      SocialAuthButtons(theme: theme, onResult: (e) => setState(() => _error = e)),
                       const SizedBox(height: 20),
                       Center(
                         child: Wrap(alignment: WrapAlignment.center, children: [

@@ -328,12 +328,15 @@ class HzAuth {
     }
   }
 
+  /// «مرا به خاطر بسپار»: اگر خاموش باشد، نشست فقط تا بسته شدن اپ می‌ماند و روی دستگاه ذخیره نمی‌شود.
+  bool persistSession = true;
+
   Future<void> _setSession(Session? s, AuthChangeEvent event) async {
     _session = s;
     signedIn.value = s != null;
     try {
       final prefs = await SharedPreferences.getInstance();
-      if (s == null) {
+      if (s == null || !persistSession) {
         await prefs.remove(_key);
       } else {
         await prefs.setString(_key, jsonEncode(s.toJson()));
@@ -365,6 +368,22 @@ class HzAuth {
       _authCall('/auth/login', {'email': email, 'password': password}, AuthChangeEvent.signedIn);
 
   Future<void> signOut() => _setSession(null, AuthChangeEvent.signedOut);
+
+  /// کد ورود یک‌بارمصرفی که پس از ورود با فیسبوک/ایکس برگشته را به نشست تبدیل می‌کند.
+  Future<AuthResponse> exchangeOAuthCode(String code) => _authCall('/auth/oauth/exchange', {'code': code}, AuthChangeEvent.signedIn);
+
+  /// کدام روش‌های ورود اجتماعی روی سرور فعال‌اند
+  Future<Map<String, bool>> oauthProviders() async {
+    try {
+      final res = await http.get(Uri.parse('${_b.baseUrl}/auth/oauth/providers')).timeout(const Duration(seconds: 12));
+      final j = jsonDecode(res.body);
+      if (j is Map) return {for (final e in j.entries) e.key.toString(): e.value == true};
+    } catch (_) {}
+    return const {};
+  }
+
+  String oauthStartUrl(String provider, String redirect) =>
+      '${_b.baseUrl}/auth/oauth/$provider/start?redirect=${Uri.encodeComponent(redirect)}';
 
   Future<AuthResponse> updateUser(UserAttributes attrs) async {
     if (_session == null) throw const AuthException('Auth session missing');

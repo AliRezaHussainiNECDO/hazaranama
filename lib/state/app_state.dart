@@ -1,5 +1,10 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show SystemNavigator;
+import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:image_picker/image_picker.dart' show XFile;
 import 'package:http/http.dart' show ClientException;
 import '../services/hz_backend.dart' show AuthChangeEvent, AuthException, AuthState, PostgrestException;
@@ -90,6 +95,23 @@ class AppState extends ChangeNotifier {
   }
 
   Future<void> _bootstrap() async {
+    await _loadRememberPrefs();
+    // بازگشت از ورود با فیسبوک/ایکس در نسخه‌ی وب: ‎?hz_oauth=<کد>‎ در نشانی صفحه
+    if (kIsWeb) {
+      final q = Uri.base.queryParameters;
+      final code = q['hz_oauth'];
+      final oauthErr = q['hz_oauth_error'];
+      if (code != null || oauthErr != null) {
+        SystemNavigator.routeInformationUpdated(uri: Uri.parse('/'), replace: true);
+        if (code != null) {
+          final e = await _completeOAuth(code);
+          if (e == null) return;
+          oauthError = e;
+        } else {
+          oauthError = oauthErr == 'cancelled' ? null : 'ورود با شبکه‌ی اجتماعی انجام نشد؛ دوباره تلاش کنید.';
+        }
+      }
+    }
     if (_service.authUser != null) {
       await _loadSessionUser();
     } else {
@@ -173,7 +195,86 @@ class AppState extends ChangeNotifier {
   // ================= AUTH =================
 
   /// ورود با ایمیل/رمز. در صورت خطا پیام فارسی برمی‌گرداند، در صورت موفقیت null.
+  // ---------------- «مرا به خاطر بسپار» ----------------
+  static const _rememberKey = 'hz_remember_me';
+  static const _rememberEmailKey = 'hz_remember_email';
+  bool rememberMe = true;
+  String rememberedEmail = '';
+
+  Future<void> _loadRememberPrefs() async {
+    try {
+      final p = await SharedPreferences.getInstance();
+      rememberMe = p.getBool(_rememberKey) ?? true;
+      rememberedEmail = p.getString(_rememberEmailKey) ?? '';
+    } catch (_) {}
+    _service.persistSession = rememberMe;
+  }
+
+  Future<void> setRememberMe(bool v) async {
+    rememberMe = v;
+    _service.persistSession = v;
+    notifyListeners();
+    try {
+      final p = await SharedPreferences.getInstance();
+      await p.setBool(_rememberKey, v);
+      if (!v) await p.remove(_rememberEmailKey);
+    } catch (_) {}
+  }
+
+  Future<void> _saveRememberedEmail(String email) async {
+    if (!rememberMe) return;
+    rememberedEmail = email;
+    try {
+      (await SharedPreferences.getInstance()).setString(_rememberEmailKey, email);
+    } catch (_) {}
+  }
+
+  // ---------------- ورود با فیسبوک و ایکس ----------------
+  Map<String, bool>? oauthProviders;
+  String? oauthError;
+
+  /// روی iOS دکمه‌های اجتماعی نشان داده نمی‌شوند (رهنمود ۴.۸ اپ‌استور «ورود با اپل» را هم می‌خواهد).
+  bool get socialLoginSupported => kIsWeb || defaultTargetPlatform == TargetPlatform.android;
+
+  Future<void> loadOAuthProviders() async {
+    if (oauthProviders != null || !socialLoginSupported) return;
+    oauthProviders = await _service.oauthProviders();
+    notifyListeners();
+  }
+
+  Future<String?> _completeOAuth(String code) async {
+    try {
+      await _service.exchangeOAuthCode(code);
+      await _loadSessionUser();
+      return null;
+    } on AuthException catch (_) {
+      return 'زمان ورود گذشت؛ لطفاً دوباره تلاش کنید.';
+    } catch (_) {
+      return 'خطایی رخ داد؛ اتصال اینترنت را بررسی کنید و دوباره تلاش کنید.';
+    }
+  }
+
+  /// ورود یا ساخت حساب با «facebook» یا «x». خروجی: پیام خطا یا null.
+  Future<String?> signInWithProvider(String provider) async {
+    oauthError = null;
+    if (kIsWeb) {
+      final back = '${Uri.base.origin}/';
+      await launchUrl(Uri.parse(_service.oauthStartUrl(provider, back)), webOnlyWindowName: '_self');
+      return null; // صفحه به سایت شبکه می‌رود و با ‎?hz_oauth=‎ برمی‌گردد
+    }
+    try {
+      final result = await FlutterWebAuth2.authenticate(url: _service.oauthStartUrl(provider, 'hazaranama://oauth'), callbackUrlScheme: 'hazaranama');
+      final q = Uri.parse(result).queryParameters;
+      final code = q['hz_oauth'];
+      if (code == null) return q['hz_oauth_error'] == 'cancelled' ? null : 'ورود با شبکه‌ی اجتماعی انجام نشد؛ دوباره تلاش کنید.';
+      return await _completeOAuth(code);
+    } catch (_) {
+      return null; // کاربر پنجره را بست
+    }
+  }
+
   Future<String?> signIn({required String email, required String password}) async {
+    unawaited(_saveRememberedEmail(email));
     try {
       await _service.signIn(email: email, password: password);
       await _loadSessionUser();

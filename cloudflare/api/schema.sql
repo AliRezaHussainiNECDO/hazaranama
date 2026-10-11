@@ -351,3 +351,21 @@ CREATE TABLE IF NOT EXISTS recovery_attempts (
   n          INTEGER NOT NULL DEFAULT 0,
   updated_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
 );
+
+-- ورود با شبکه‌های اجتماعی (فیسبوک، ایکس)
+CREATE TABLE IF NOT EXISTS oauth_accounts (
+  provider         TEXT NOT NULL,
+  provider_user_id TEXT NOT NULL,
+  user_id          TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  created_at       TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+  PRIMARY KEY (provider, provider_user_id)
+);
+CREATE TABLE IF NOT EXISTS oauth_states (
+  state      TEXT PRIMARY KEY,
+  provider   TEXT NOT NULL,
+  redirect   TEXT NOT NULL,
+  verifier   TEXT,
+  login_code TEXT,
+  user_id    TEXT,
+  created_at INTEGER NOT NULL
+);

@@ -30,6 +30,12 @@ class BackendService {
 
   Future<void> signOut() => _db.auth.signOut();
 
+  // ---- ورود اجتماعی و «مرا به خاطر بسپار» ----
+  set persistSession(bool v) => _db.auth.persistSession = v;
+  Future<Map<String, bool>> oauthProviders() => _db.auth.oauthProviders();
+  String oauthStartUrl(String provider, String redirect) => _db.auth.oauthStartUrl(provider, redirect);
+  Future<AuthResponse> exchangeOAuthCode(String code) => _db.auth.exchangeOAuthCode(code);
+
   /// حذف کامل و برگشت‌ناپذیر حساب کاربری — از طریق Edge Function امن
   /// «delete-account» (که با نشست خودِ کاربر صدا زده می‌شود و فقط اجازه
   /// دارد حساب همان کاربر را حذف کند). تمام محتوای متعلق به کاربر

@@ -7,6 +7,7 @@ import '../../core/app_colors.dart';
 import '../../core/app_constants.dart';
 import '../../core/widgets.dart';
 import '../../state/app_state.dart';
+import 'social_buttons.dart';
 import 'terms_sheet.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -153,6 +154,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ],
       const SizedBox(height: 18),
       HzPrimaryButton(theme: theme, label: 'مرحله‌ی بعد', icon: Icons.arrow_back, onPressed: _goStep2),
+      SocialAuthButtons(theme: theme, onResult: (e) => setState(() => _error = e)),
+      if (context.watch<AppState>().socialLoginSupported && (context.watch<AppState>().oauthProviders?.containsValue(true) ?? false)) ...[
+        const SizedBox(height: 8),
+        Text('با ادامه از راه فیسبوک یا ایکس، شرایط و قوانین هزاره‌نامه را می‌پذیرید.', textAlign: TextAlign.center, style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+      ],
       const SizedBox(height: 20),
       Center(
         child: Wrap(alignment: WrapAlignment.center, children: [

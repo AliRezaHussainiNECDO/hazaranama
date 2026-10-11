@@ -295,6 +295,8 @@ class HzTextField extends StatelessWidget {
   final Widget? suffix;
   final List<String>? suggestions;
   final TextInputType? keyboardType;
+  final Iterable<String>? autofillHints;
+  final ValueChanged<String>? onSubmitted;
 
   const HzTextField({
     super.key,
@@ -306,6 +308,8 @@ class HzTextField extends StatelessWidget {
     this.suffix,
     this.suggestions,
     this.keyboardType,
+    this.autofillHints,
+    this.onSubmitted,
   });
 
   @override
@@ -314,6 +318,8 @@ class HzTextField extends StatelessWidget {
       controller: controller,
       obscureText: obscureText,
       keyboardType: keyboardType,
+      autofillHints: autofillHints,
+      onSubmitted: onSubmitted,
       style: TextStyle(fontFamily: 'Vazirmatn', color: theme.textPrimary, fontSize: 13),
       decoration: InputDecoration(
         hintText: hint,
