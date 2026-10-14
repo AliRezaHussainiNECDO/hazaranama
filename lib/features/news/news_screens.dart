@@ -131,7 +131,7 @@ class _LeadCard extends StatelessWidget {
                     const Icon(Icons.public_rounded, size: 13, color: Colors.white70),
                     const SizedBox(width: 4),
                     Flexible(child: Text(_s(item, 'source'), maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.white70, fontSize: 11.5, fontWeight: FontWeight.w700))),
-                    const Text('  ·  ', style: TextStyle(color: Colors.white54, fontSize: 11)),
+                    const Text('  •  ', style: TextStyle(color: Colors.white54, fontSize: 11)),
                   ],
                   Text(newsAgo(item), style: const TextStyle(color: Colors.white70, fontSize: 11.5)),
                 ]),
@@ -189,7 +189,7 @@ class _NewsRow extends StatelessWidget {
                 Row(children: [
                   if (_s(item, 'source').isNotEmpty)
                     Flexible(child: Text(_s(item, 'source'), maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.blue, fontSize: 10.5, fontWeight: FontWeight.w800))),
-                  Text('  ·  ${newsAgo(item)}', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
+                  Text('  •  ${newsAgo(item)}', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
                 ]),
               ]),
             ),

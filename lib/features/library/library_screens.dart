@@ -74,7 +74,7 @@ class _BooksBodyState extends State<BooksBody> {
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   const Text('کتابخانه‌ی هزاره‌نامه', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w900)),
                   const SizedBox(height: 3),
-                  Text('${toFaDigits(all.length)} اثر · ${toFaDigits(downloadable)} قابل دانلود داخل اپ', style: const TextStyle(color: Colors.white70, fontSize: 11.5)),
+                  Text('${toFaDigits(all.length)} اثر • ${toFaDigits(downloadable)} قابل دانلود داخل اپ', style: const TextStyle(color: Colors.white70, fontSize: 11.5)),
                 ]),
               ),
             ]),
