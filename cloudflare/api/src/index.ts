@@ -801,18 +801,28 @@ export default {
         const row = await env.DB.prepare("SELECT fields FROM content_items WHERE id = ? AND section_id = 'library'").bind(id).first<{ fields: string }>();
         if (!row) return err(404, "کتاب پیدا نشد.");
         const f = JSON.parse(row.fields || "{}") as Record<string, string>;
-        if ((f.file_url ?? "").startsWith("http")) return json({ data: { url: f.file_url, name: f.file_name || `${id}.pdf`, size: Number(f.file_size) || null } });
+        if ((f.file_url ?? "").startsWith("http")) {
+          const one = { url: f.file_url, name: f.file_name || `${id}.pdf`, size: Number(f.file_size) || null };
+          return json({ data: { ...one, files: [one] } });
+        }
         const aid = (f.archive_id ?? "").trim();
         if (!aid || f.downloadable !== "1") return err(404, "این کتاب نسخه‌ی قابل دانلود ندارد.");
         const meta = await fetch(`https://archive.org/metadata/${encodeURIComponent(aid)}`, { headers: { "User-Agent": "HazaranamaBot/1.0 (https://hazaranama.com)" } });
         if (!meta.ok) return err(502, "منبع کتاب در دسترس نیست؛ کمی بعد دوباره امتحان کنید.");
-        const m = (await meta.json()) as { files?: { name: string; size?: string; format?: string; private?: string }[]; metadata?: { "access-restricted-item"?: string } };
+        const m = (await meta.json()) as { files?: { name: string; size?: string; private?: string }[]; metadata?: { "access-restricted-item"?: string } };
         if (String(m.metadata?.["access-restricted-item"]) === "true") return err(404, "این کتاب فقط امانتی است و دانلود آزاد ندارد.");
-        const pdfs = (m.files ?? []).filter((x) => /\.pdf$/i.test(x.name) && x.private !== "true");
-        pdfs.sort((a, b) => Number(a.size ?? 0) - Number(b.size ?? 0)); // کوچک‌ترین PDF — مناسب موبایل
-        const pick = pdfs[0];
-        if (!pick) return err(404, "فایل PDF این کتاب پیدا نشد.");
-        return json({ data: { url: `https://archive.org/download/${encodeURIComponent(aid)}/${pick.name.split("/").map(encodeURIComponent).join("/")}`, name: pick.name.split("/").pop(), size: Number(pick.size) || null } });
+        // همه‌ی جلدها (PDF های اصلی؛ نسخه‌های متنی خودکارِ _text حذف می‌شوند)
+        let pdfs = (m.files ?? []).filter((x) => /\.pdf$/i.test(x.name) && x.private !== "true");
+        const main = pdfs.filter((x) => !/_text\.pdf$/i.test(x.name));
+        if (main.length) pdfs = main;
+        pdfs.sort((a, b) => a.name.localeCompare(b.name, "fa", { numeric: true }));
+        if (!pdfs.length) return err(404, "فایل PDF این کتاب پیدا نشد.");
+        const files = pdfs.map((x) => ({
+          url: `https://archive.org/download/${encodeURIComponent(aid)}/${x.name.split("/").map(encodeURIComponent).join("/")}`,
+          name: (x.name.split("/").pop() ?? x.name).replace(/\.pdf$/i, ""),
+          size: Number(x.size) || null,
+        }));
+        return json({ data: { ...files[0], files } });
       }
       if (path === "/news/item" && req.method === "GET") {
         const it = await enrichNewsItem(env, url.searchParams.get("id") ?? "");

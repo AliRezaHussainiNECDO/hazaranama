@@ -1248,11 +1248,15 @@ class BackendService {
 
   // ================= کتابخانه و خبرنامه =================
 
-  /// نشانی دانلود مستقیم یک کتاب (فایل مدیر یا PDF آزاد Internet Archive)
-  Future<({String url, String name, int? size})> bookDownloadInfo(String itemId) async {
+  /// فایل‌های قابل دانلود یک کتاب (هر جلد یک فایل) — از فایل مدیر یا PDF آزاد Internet Archive
+  Future<List<BookFile>> bookFiles(String itemId) async {
     final j = await _db.getJson('/books/download?id=${Uri.encodeComponent(itemId)}');
     final d = Map<String, dynamic>.from((j as Map)['data'] as Map);
-    return (url: d['url'] as String, name: (d['name'] as String?) ?? '$itemId.pdf', size: (d['size'] as num?)?.toInt());
+    final list = (d['files'] as List?) ?? [d];
+    return [
+      for (final f in list)
+        BookFile(url: (f as Map)['url'] as String, name: (f['name'] as String?) ?? itemId, size: (f['size'] as num?)?.toInt()),
+    ];
   }
 
   /// یک خبر کامل (با عکس، خلاصه و برگردان فارسی — اگر هنوز آماده نبود، همین حالا آماده می‌شود)

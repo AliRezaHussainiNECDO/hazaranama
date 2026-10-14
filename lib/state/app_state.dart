@@ -192,7 +192,7 @@ class AppState extends ChangeNotifier {
     } catch (_) {}
   }
 
-  Future<({String url, String name, int? size})> bookDownloadInfo(String itemId) => _service.bookDownloadInfo(itemId);
+  Future<List<BookFile>> bookFiles(String itemId) => _service.bookFiles(itemId);
   Future<ContentItem?> fetchNewsItem(String id) => _service.fetchNewsItem(id);
   Future<String> uploadContentFile(XFile file, {required String contentType}) => _service.uploadContentFile(file, contentType: contentType);
 

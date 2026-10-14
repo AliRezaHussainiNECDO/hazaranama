@@ -898,3 +898,12 @@ class NotificationTarget {
   final String? refId;
   const NotificationTarget({required this.type, this.refType, this.refId});
 }
+
+
+/// یک فایل قابل دانلود کتاب (یک جلد)
+class BookFile {
+  final String url;
+  final String name;
+  final int? size;
+  const BookFile({required this.url, required this.name, this.size});
+}

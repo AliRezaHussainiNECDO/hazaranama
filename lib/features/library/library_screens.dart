@@ -223,8 +223,10 @@ class BookScreen extends StatefulWidget {
 }
 
 class _BookScreenState extends State<BookScreen> {
-  double? _progress; // null: بیکار، ۰ تا ۱: در حال دانلود
-  String? _localPath; // فایل دانلودشده روی دستگاه
+  List<BookFile>? _files; // جلدهای قابل دانلود (از سرور)
+  final Map<String, String> _local = {}; // نام جلد ← مسیر فایل روی دستگاه
+  String? _busy; // نام جلدی که در حال دانلود است
+  double _progress = 0;
   String? _error;
 
   ContentItem get it => widget.item;
@@ -232,43 +234,124 @@ class _BookScreenState extends State<BookScreen> {
   @override
   void initState() {
     super.initState();
-    _checkLocal();
+    _scanLocal();
   }
 
-  Future<File?> _targetFile() async {
+  String _safe(String name) => name.replaceAll(RegExp(r'[^\w\u0600-\u06FF-]+'), '_');
+
+  Future<Directory?> _dir() async {
     if (kIsWeb) return null;
-    final dir = await getApplicationDocumentsDirectory();
-    final books = Directory('${dir.path}/books');
-    if (!await books.exists()) await books.create(recursive: true);
-    return File('${books.path}/${it.id}.pdf');
+    final base = await getApplicationDocumentsDirectory();
+    final d = Directory('${base.path}/books');
+    if (!await d.exists()) await d.create(recursive: true);
+    return d;
   }
 
-  Future<void> _checkLocal() async {
-    final f = await _targetFile();
-    if (f != null && await f.exists() && await f.length() > 0) {
-      if (mounted) setState(() => _localPath = f.path);
+  /// جلدهایی که پیش‌تر دانلود شده‌اند
+  Future<void> _scanLocal() async {
+    final d = await _dir();
+    if (d == null) return;
+    final prefix = '${it.id}__';
+    final found = <String, String>{};
+    await for (final e in d.list()) {
+      final n = e.uri.pathSegments.last;
+      if (e is File && n.startsWith(prefix) && n.endsWith('.pdf') && await e.length() > 0) {
+        found[Uri.decodeComponent(n.substring(prefix.length, n.length - 4))] = e.path;
+      }
     }
+    if (mounted) setState(() => _local..clear()..addAll(found));
   }
 
-  Future<void> _download() async {
+  Future<void> _onDownloadPressed() async {
     final app = context.read<AppState>();
+    setState(() => _error = null);
+    try {
+      _files ??= await app.bookFiles(it.id);
+    } catch (e) {
+      if (mounted) setState(() => _error = e.toString());
+      return;
+    }
+    final files = _files!;
+    if (!mounted || files.isEmpty) return;
+    if (files.length == 1) return _download(files.first);
+    _pickVolume(files);
+  }
+
+  void _pickVolume(List<BookFile> files) {
+    final theme = context.read<AppState>().colors;
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => Directionality(
+        textDirection: TextDirection.rtl,
+        child: Container(
+          constraints: BoxConstraints(maxHeight: MediaQuery.of(ctx).size.height * 0.7),
+          margin: const EdgeInsets.all(12),
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
+          decoration: BoxDecoration(color: theme.bgElevated, borderRadius: BorderRadius.circular(24), border: Border.all(color: theme.glassBorder)),
+          child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text('کدام جلد را دانلود کنیم؟', style: TextStyle(color: theme.textPrimary, fontSize: 15, fontWeight: FontWeight.w900)),
+            const SizedBox(height: 4),
+            Text('${toFaDigits(files.length)} فایل در دسترس است', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
+            const SizedBox(height: 10),
+            Flexible(
+              child: ListView.separated(
+                shrinkWrap: true,
+                itemCount: files.length,
+                separatorBuilder: (_, __) => const SizedBox(height: 8),
+                itemBuilder: (_, i) {
+                  final f = files[i];
+                  final have = _local.containsKey(_safe(f.name));
+                  return Material(
+                    color: theme.bgCard.withValues(alpha: 0.7),
+                    borderRadius: BorderRadius.circular(14),
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                      leading: Icon(have ? Icons.check_circle_rounded : Icons.picture_as_pdf_rounded, color: have ? theme.success : theme.danger),
+                      title: Text(f.name, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w700)),
+                      subtitle: f.size != null ? Text(_mb(f.size!), style: TextStyle(color: theme.textFaint, fontSize: 11)) : null,
+                      trailing: Icon(have ? Icons.menu_book_rounded : Icons.download_rounded, color: theme.blue),
+                      onTap: () {
+                        Navigator.of(ctx).pop();
+                        if (have) {
+                          OpenFilex.open(_local[_safe(f.name)]!);
+                        } else {
+                          _download(f);
+                        }
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
+          ]),
+        ),
+      ),
+    );
+  }
+
+  String _mb(int bytes) => '${toFaDigits((bytes / 1048576).toStringAsFixed(1))} مگابایت';
+
+  Future<void> _download(BookFile f) async {
+    final app = context.read<AppState>();
+    if (kIsWeb) {
+      await launchUrl(Uri.parse(f.url), mode: LaunchMode.platformDefault);
+      app.trackActivity('book', it.id);
+      return;
+    }
     setState(() {
+      _busy = f.name;
       _progress = 0;
       _error = null;
     });
+    final client = http.Client();
     try {
-      final info = await app.bookDownloadInfo(it.id);
-      if (kIsWeb) {
-        await launchUrl(Uri.parse(info.url), mode: LaunchMode.platformDefault);
-        app.trackActivity('book', it.id);
-        if (mounted) setState(() => _progress = null);
-        return;
-      }
-      final file = (await _targetFile())!;
-      final req = http.Request('GET', Uri.parse(info.url));
-      final res = await http.Client().send(req);
+      final d = (await _dir())!;
+      final file = File('${d.path}/${it.id}__${Uri.encodeComponent(_safe(f.name))}.pdf');
+      final res = await client.send(http.Request('GET', Uri.parse(f.url)));
       if (res.statusCode != 200) throw 'سرور فایل پاسخ نداد (${res.statusCode}).';
-      final total = res.contentLength ?? info.size ?? 0;
+      final total = res.contentLength ?? f.size ?? 0;
       final sink = file.openWrite();
       var got = 0;
       await for (final chunk in res.stream) {
@@ -280,27 +363,31 @@ class _BookScreenState extends State<BookScreen> {
       app.trackActivity('book', it.id);
       if (!mounted) return;
       setState(() {
-        _progress = null;
-        _localPath = file.path;
+        _busy = null;
+        _local[_safe(f.name)] = file.path;
       });
+      await _scanLocal();
+      if (!mounted) return;
       showHzToast(context, 'کتاب دانلود شد و روی دستگاه شما ذخیره است 📚');
       await OpenFilex.open(file.path);
     } catch (e) {
       if (!mounted) return;
       setState(() {
-        _progress = null;
+        _busy = null;
         _error = e is String ? e : 'دانلود ناموفق بود؛ اینترنت را بررسی کنید و دوباره امتحان کنید.';
       });
+    } finally {
+      client.close();
     }
   }
 
-  Future<void> _deleteLocal() async {
-    final p = _localPath;
+  Future<void> _deleteLocal(String name) async {
+    final p = _local[name];
     if (p == null) return;
     try {
       await File(p).delete();
     } catch (_) {}
-    if (mounted) setState(() => _localPath = null);
+    if (mounted) setState(() => _local.remove(name));
   }
 
   @override
@@ -358,25 +445,46 @@ class _BookScreenState extends State<BookScreen> {
                 const SizedBox(height: 18),
                 // ---------- دکمه‌های اصلی ----------
                 if (dl) ...[
-                  if (_progress != null)
+                  if (_busy != null)
                     Column(children: [
+                      Text(_busy!, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 12, fontWeight: FontWeight.w700)),
+                      const SizedBox(height: 8),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(999),
                         child: LinearProgressIndicator(value: _progress == 0 ? null : _progress, minHeight: 9, backgroundColor: theme.bgCardAlt, color: theme.success),
                       ),
                       const SizedBox(height: 6),
-                      Text(_progress == 0 ? 'در حال آماده‌سازی…' : 'در حال دانلود… ${toFaDigits(((_progress ?? 0) * 100).round())}٪', style: TextStyle(color: theme.textFaint, fontSize: 12)),
-                    ])
-                  else if (_localPath != null)
-                    Row(children: [
-                      Expanded(
-                        child: _BigButton(theme: theme, icon: Icons.menu_book_rounded, label: 'باز کردن کتاب', color: theme.success, onTap: () => OpenFilex.open(_localPath!)),
-                      ),
-                      const SizedBox(width: 8),
-                      IconButton.filledTonal(onPressed: _deleteLocal, tooltip: 'حذف از دستگاه', icon: Icon(Icons.delete_outline_rounded, color: theme.danger)),
+                      Text(_progress == 0 ? 'در حال آماده‌سازی…' : 'در حال دانلود… ${toFaDigits((_progress * 100).round())}٪', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                     ])
                   else
-                    _BigButton(theme: theme, icon: Icons.download_rounded, label: kIsWeb ? 'دانلود کتاب (PDF)' : 'دانلود داخل اپ (PDF)', color: theme.success, onTap: _download),
+                    _BigButton(
+                      theme: theme,
+                      icon: Icons.download_rounded,
+                      label: _local.isEmpty ? (kIsWeb ? 'دانلود کتاب (PDF)' : 'دانلود داخل اپ (PDF)') : 'دانلود جلدهای دیگر',
+                      color: theme.success,
+                      outlined: _local.isNotEmpty,
+                      onTap: _onDownloadPressed,
+                    ),
+                  if (_local.isNotEmpty) ...[
+                    const SizedBox(height: 10),
+                    for (final e in _local.entries)
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 8),
+                        padding: const EdgeInsets.fromLTRB(12, 6, 6, 6),
+                        decoration: BoxDecoration(color: theme.success.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(14), border: Border.all(color: theme.success.withValues(alpha: 0.35))),
+                        child: Row(children: [
+                          Icon(Icons.check_circle_rounded, size: 18, color: theme.success),
+                          const SizedBox(width: 8),
+                          Expanded(child: Text(e.key.replaceAll('_', ' '), maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700))),
+                          TextButton.icon(
+                            onPressed: () => OpenFilex.open(e.value),
+                            icon: Icon(Icons.menu_book_rounded, size: 16, color: theme.success),
+                            label: Text('باز کردن', style: TextStyle(color: theme.success, fontSize: 12, fontWeight: FontWeight.w800)),
+                          ),
+                          IconButton(onPressed: () => _deleteLocal(e.key), tooltip: 'حذف از دستگاه', icon: Icon(Icons.delete_outline_rounded, size: 19, color: theme.danger)),
+                        ]),
+                      ),
+                  ],
                   if (_error != null) ...[
                     const SizedBox(height: 8),
                     Text(_error!, textAlign: TextAlign.center, style: TextStyle(color: theme.danger, fontSize: 12)),
