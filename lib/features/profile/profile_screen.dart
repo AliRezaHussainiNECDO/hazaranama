@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../core/donor_tiers.dart';
 import '../../core/app_logo.dart';
-import '../../models/models.dart';
 import '../../state/app_state.dart';
 import '../rank/rank_screen.dart';
 import '../community/post_widgets.dart';
 import '../home/profile_header.dart';
-import '../donations/donation_screen.dart';
 import 'account_settings_screen.dart';
 import 'contact_us_screen.dart';
 
@@ -19,7 +16,6 @@ class ProfileScreen extends StatelessWidget {
     final app = context.watch<AppState>();
     final theme = app.colors;
     final myPosts = app.myPosts;
-    final isAdmin = app.currentUser?.role == UserRole.admin;
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(18, 16, 18, 24),
