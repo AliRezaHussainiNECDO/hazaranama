@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../../core/app_colors.dart';
 import '../../state/app_state.dart';
 
-/// دکمه‌های «ادامه با فیسبوک / ایکس» — فقط روش‌هایی که روی سرور فعال‌اند نشان داده می‌شوند.
+/// دکمه‌ی «ادامه با اپل» — فقط وقتی ورود با اپل در دسترس است نشان داده می‌شود.
 class SocialAuthButtons extends StatefulWidget {
   final AppColors theme;
   final void Function(String? error) onResult;
@@ -22,21 +22,11 @@ class _SocialAuthButtonsState extends State<SocialAuthButtons> {
     WidgetsBinding.instance.addPostFrameCallback((_) => context.read<AppState>().loadOAuthProviders());
   }
 
-  Future<void> _go(AppState app, String provider) async {
-    setState(() => _busy = provider);
-    final e = await app.signInWithProvider(provider);
-    if (!mounted) return;
-    setState(() => _busy = null);
-    widget.onResult(e);
-  }
-
   @override
   Widget build(BuildContext context) {
     final app = context.watch<AppState>();
-    final p = app.oauthProviders ?? const {};
-    final fb = p['facebook'] == true;
     final apple = app.appleAvailable;
-    if (!fb && !apple) return const SizedBox.shrink();
+    if (!apple) return const SizedBox.shrink();
     final t = widget.theme;
     final buttons = <Widget>[
       if (apple)
@@ -47,14 +37,6 @@ class _SocialAuthButtonsState extends State<SocialAuthButtons> {
           mark: const Icon(Icons.apple, color: Colors.white, size: 24),
           busy: _busy == 'apple',
           onTap: _busy == null ? () => _run('apple', app.signInWithApple) : null,
-        ),
-      if (fb)
-        _SocialButton(
-          label: 'ادامه با فیسبوک',
-          color: const Color(0xFF1877F2),
-          mark: const _Mark(text: 'f', bg: Colors.white, fg: Color(0xFF1877F2), fontSize: 19),
-          busy: _busy == 'facebook',
-          onTap: _busy == null ? () => _go(app, 'facebook') : null,
         ),
     ];
 
@@ -77,22 +59,6 @@ class _SocialAuthButtonsState extends State<SocialAuthButtons> {
     setState(() => _busy = null);
     widget.onResult(e);
   }
-}
-
-class _Mark extends StatelessWidget {
-  final String text;
-  final Color bg;
-  final Color fg;
-  final double fontSize;
-  const _Mark({required this.text, required this.bg, required this.fg, required this.fontSize});
-  @override
-  Widget build(BuildContext context) => Container(
-        width: 24,
-        height: 24,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(color: bg, shape: BoxShape.circle),
-        child: Text(text, style: TextStyle(color: fg, fontSize: fontSize, fontWeight: FontWeight.w900, height: 1.15, fontFamily: 'Roboto')),
-      );
 }
 
 class _SocialButton extends StatelessWidget {
