@@ -175,10 +175,15 @@ async function toPersian(env: Env, title: string, summary: string): Promise<{ ti
     const prompt = `Translate this news headline and summary into fluent Persian (Dari, as used in Afghanistan). Keep names accurate. Return ONLY JSON: {"title":"...","summary":"..."}\n\nHeadline: ${title}\nSummary: ${summary || "(none)"}`;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const out: any = await env.AI.run("@cf/google/gemma-3-12b-it" as any, { messages: [{ role: "user", content: prompt }], max_tokens: 700, temperature: 0.2 });
-    const text = String(out?.response ?? "");
-    const m = text.match(/\{[\s\S]*\}/);
-    if (!m) return null;
-    const j = JSON.parse(m[0]) as { title?: string; summary?: string };
+    // مدل گاهی JSON را مستقیم به‌صورت شیء برمی‌گرداند، گاهی به‌صورت متن
+    let j: { title?: string; summary?: string };
+    if (out?.response && typeof out.response === "object") {
+      j = out.response as { title?: string; summary?: string };
+    } else {
+      const m = String(out?.response ?? "").match(/\{[\s\S]*\}/);
+      if (!m) return null;
+      j = JSON.parse(m[0]) as { title?: string; summary?: string };
+    }
     if (!j.title || !PERSIAN.test(j.title)) return null;
     return { title: j.title.trim().slice(0, 300), summary: (j.summary ?? "").trim().slice(0, 1500) };
   } catch (e) {
@@ -210,26 +215,39 @@ async function enrichOne(env: Env, row: NewsRow): Promise<Record<string, unknown
       console.error("news enrich", url, String(e));
     }
   }
-  const title = String(f.title ?? "");
-  if (!PERSIAN.test(title) && !f.title_fa) {
-    const fa = await toPersian(env, title, String(f.snippet ?? ""));
-    if (fa) {
-      f.title_fa = fa.title;
-      if (fa.summary) f.snippet_fa = fa.summary;
-    }
-  }
+  await translateFields(env, f);
   f.enriched = "1";
   await env.DB.prepare("UPDATE content_items SET fields = ?, image_url = ?, updated_at = ? WHERE id = ?")
     .bind(JSON.stringify(f), image || null, new Date().toISOString(), row.id).run();
   return { id: row.id, fields: f, image_url: image || null };
 }
 
-/** در هر اجرای cron چند خبر تازه را غنی می‌کند */
+async function translateFields(env: Env, f: Record<string, unknown>) {
+  const title = String(f.title ?? "");
+  if (PERSIAN.test(title) || f.title_fa || f.fa_tried) return;
+  const fa = await toPersian(env, title, String(f.snippet ?? ""));
+  f.fa_tried = "1";
+  if (fa) {
+    f.title_fa = fa.title;
+    if (fa.summary) f.snippet_fa = fa.summary;
+  }
+}
+
+/** در هر اجرای cron چند خبر تازه را غنی می‌کند و خبرهای غیرفارسی جامانده را برمی‌گرداند */
 export async function enrichNews(env: Env, budget = 6) {
   const rows = await env.DB.prepare(
     "SELECT id, fields, image_url FROM content_items WHERE section_id = 'news' AND json_extract(fields, '$.enriched') IS NULL ORDER BY json_extract(fields, '$.published') DESC LIMIT ?",
   ).bind(budget).all<NewsRow>();
   for (const r of rows.results ?? []) await enrichOne(env, r);
+  // خبرهای غنی‌شده‌ای که برگردان فارسی ندارند (مثلاً پیش از رفع خطای برگردان)
+  const pending = await env.DB.prepare(
+    "SELECT id, fields FROM content_items WHERE section_id = 'news' AND json_extract(fields, '$.enriched') IS NOT NULL AND json_extract(fields, '$.title_fa') IS NULL AND json_extract(fields, '$.fa_tried') IS NULL LIMIT 3",
+  ).all<{ id: string; fields: string }>();
+  for (const r of pending.results ?? []) {
+    const f = JSON.parse(r.fields || "{}") as Record<string, unknown>;
+    await translateFields(env, f);
+    await env.DB.prepare("UPDATE content_items SET fields = ? WHERE id = ?").bind(JSON.stringify(f), r.id).run();
+  }
 }
 
 /** غنی‌سازی فوری یک خبر وقتی کاربر آن را باز می‌کند و هنوز آماده نیست */
