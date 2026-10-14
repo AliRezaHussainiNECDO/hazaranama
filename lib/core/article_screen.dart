@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:provider/provider.dart';
 import '../models/models.dart';
+import '../state/app_state.dart';
 import 'app_colors.dart';
 import 'widgets.dart';
 
@@ -43,8 +45,16 @@ class ArticleScreen extends StatelessWidget {
     String? videoUrl,
     ContentItem? item,
   }) {
+    var tracked = false;
     return MaterialPageRoute(
-      builder: (_) => ArticleScreen(
+      builder: (ctx) {
+        // امتیاز فعالیت: خواندن هر روایت/مقاله/شخصیت فقط یک بار امتیاز دارد
+        if (!tracked && item != null) {
+          tracked = true;
+          final app = ctx.read<AppState>();
+          Future.microtask(() => app.trackActivity('read', item.id));
+        }
+        return ArticleScreen(
         theme: theme,
         badge: badge,
         title: title,
@@ -55,7 +65,8 @@ class ArticleScreen extends StatelessWidget {
         imageCredit: item?.imageCredit ?? '',
         imagePage: item?.imagePage ?? '',
         links: item?.links ?? const [],
-      ),
+      );
+      },
     );
   }
 

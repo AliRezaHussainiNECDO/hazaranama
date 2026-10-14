@@ -81,6 +81,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   void _onFirstPlay() {
     final app = context.read<AppState>();
     app.incrementVideoViews(widget.video.id);
+    app.trackActivity('video', widget.video.id);
     setState(() => _views += 1);
   }
 
@@ -113,7 +114,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     ctrl.clear();
     setState(() => _replyingTo = null);
     await app.addVideoComment(widget.video.id, text, parentId: parentId);
-    if (donorTierForUser(app.currentUser, app.myDonationTotalUsd)?.index == kDonorTiers.last.index) {
+    if (app.myRankTier.index == kDonorTiers.last.index) {
       HapticFeedback.heavyImpact();
       if (mounted) showHzToast(context, '👑 کامنت شاهانه‌ات ارسال شد!');
     }
@@ -222,7 +223,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     const SizedBox(height: 10),
                     _CommentComposer(
                       theme: theme, controller: _commentCtrl, onSend: () => _submitComment(),
-                      myTier: donorTierForUser(app.currentUser, app.myDonationTotalUsd),
+                      myTier: app.myRankTier,
                     ),
                     const SizedBox(height: 16),
                     if (_loadingComments)
@@ -375,7 +376,7 @@ class _CommentTile extends StatelessWidget {
                 const SizedBox(height: 8),
                 _CommentComposer(
                   theme: theme, controller: replyController!, onSend: onSendReply ?? () {},
-                  myTier: donorTierForUser(app.currentUser, app.myDonationTotalUsd),
+                  myTier: app.myRankTier,
                 ),
               ],
             ],

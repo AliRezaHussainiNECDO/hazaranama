@@ -744,6 +744,9 @@ export default {
         return await serveMedia(env, req, decodeURIComponent(path.slice("/media/".length)));
       }
       if (path === "/") return json({ ok: true, service: "hazaranama-api" });
+      // عکس خبرها از سایت ناشر — با سرآیند CORS تا نسخه‌ی وب هم بتواند نشانش دهد.
+      // فقط عکس‌هایی که واقعاً به یک خبر ذخیره‌شده تعلق دارند (پروکسی باز نیست).
+      if (path === "/img-proxy" && req.method === "GET") return await imageProxy(env, ctx, req, url);
 
       schemaReady ??= ensureSchema(env).then(() => ensureContent(env)).catch((e) => {
         schemaReady = null;
@@ -889,4 +892,24 @@ async function ensureOAuthUser(env: Env, ctx: Ctx, provider: "facebook" | "x" | 
     await insertNotifications(env, ctx, admins.map((a) => ({ user_id: a, type: "admin_new_user", title: `کاربر تازه پیوست: ${name}`, body: `از راه ${via}`, ref_id: id, ref_type: "user" })));
   }
   return id;
+}
+
+
+async function imageProxy(env: Env, ctx: Ctx, req: Request, url: URL): Promise<Response> {
+  const target = url.searchParams.get("u") ?? "";
+  if (!/^https?:\/\//.test(target)) return new Response("bad", { status: 400, headers: CORS });
+  const cache = caches.default;
+  const hit = await cache.match(req);
+  if (hit) return hit;
+  const known = await env.DB.prepare("SELECT 1 AS ok FROM content_items WHERE image_url = ? LIMIT 1").bind(target).first<{ ok: number }>();
+  if (!known) return new Response("forbidden", { status: 403, headers: CORS });
+  const r = await fetch(target, { headers: { "User-Agent": "Mozilla/5.0 (compatible; HazaranamaBot/1.0; +https://hazaranama.com)", Accept: "image/*" }, redirect: "follow" });
+  const type = r.headers.get("content-type") ?? "";
+  if (!r.ok || !type.startsWith("image/")) return new Response("not an image", { status: 502, headers: CORS });
+  const h = new Headers(CORS);
+  h.set("content-type", type);
+  h.set("cache-control", "public, max-age=604800");
+  const res = new Response(r.body, { status: 200, headers: h });
+  ctx.waitUntil(cache.put(req, res.clone()));
+  return res;
 }

@@ -12,7 +12,6 @@ import '../../core/widgets.dart';
 import '../../models/models.dart';
 import '../../state/app_state.dart';
 import 'donor_leaderboard_screen.dart';
-import 'donor_tier_guide_screen.dart';
 
 const String kPaypalEmail = 'alireza.necdo@gmail.com';
 const String kTransferRecipientName = 'Ali Reza Hussaini';
@@ -63,11 +62,6 @@ class _DonationScreenState extends State<DonationScreen> {
   void initState() {
     super.initState();
     _load();
-  }
-
-  void _scrollToWays() {
-    final ctx = _waysKey.currentContext;
-    if (ctx != null) Scrollable.ensureVisible(ctx, duration: const Duration(milliseconds: 500), curve: Curves.easeOutCubic);
   }
 
   Future<void> _load() async {
@@ -126,17 +120,9 @@ class _DonationScreenState extends State<DonationScreen> {
                       padding: const EdgeInsets.fromLTRB(18, 16, 18, 28),
                       children: [
                         _HeroCard(theme: theme, settings: settings),
-                        const SizedBox(height: 14),
-                        DonorTierCard(
-                          theme: theme, totalUsd: app.myDonationTotalUsd,
-                          isAdmin: app.currentUser?.role == UserRole.admin,
-                          onDonateTap: _scrollToWays,
-                        ),
                         if (donorPerksEnabled) ...[
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 14),
                           _LeaderboardButton(theme: theme),
-                          const SizedBox(height: 8),
-                          _TierGuideButton(theme: theme),
                         ],
                         const SizedBox(height: 18),
                         _LegalNote(theme: theme),
@@ -277,7 +263,7 @@ class _HeroCard extends StatelessWidget {
       );
 }
 
-/// دکمه‌ای به فهرست عمومی کمک‌کنندگان — برای دیدن رتبه و مقام همه.
+/// دکمه‌ای به فهرست حامیان — فقط برای قدردانی (مقام‌ها از فعالیت می‌آیند، نه از حمایت مالی).
 class _LeaderboardButton extends StatelessWidget {
   final AppColors theme;
   const _LeaderboardButton({required this.theme});
@@ -301,40 +287,6 @@ class _LeaderboardButton extends StatelessWidget {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text('فهرست حامیان', style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w800)),
               Text('سپاس از همه‌ی حامیان هزاره‌نامه', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
-            ]),
-          ),
-          Icon(Icons.arrow_back_ios_new, size: 13, color: theme.textFaint),
-        ]),
-      ),
-    );
-  }
-}
-
-/// دکمه‌ای به راهنمای کامل ۱۰ مرحله‌ی مقام — تا کاربران بدانند با هر مبلغ
-/// کمک، چه قاب و ویژگی‌ای باز می‌شود.
-class _TierGuideButton extends StatelessWidget {
-  final AppColors theme;
-  const _TierGuideButton({required this.theme});
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(16),
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const DonorTierGuideScreen())),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [theme.aiViolet.withValues(alpha: 0.16), theme.aiViolet.withValues(alpha: 0.06)]),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: theme.aiViolet.withValues(alpha: 0.35)),
-        ),
-        child: Row(children: [
-          Icon(Icons.workspace_premium_rounded, size: 20, color: theme.aiViolet),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text('راهنمای مقام‌ها', style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w800)),
-              Text('۱۰ مرحله، از همراه تا پادشاه — با هر مبلغ چه می‌گیری؟', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
             ]),
           ),
           Icon(Icons.arrow_back_ios_new, size: 13, color: theme.textFaint),
@@ -433,8 +385,6 @@ class _ExternalDonationCard extends StatelessWidget {
             ),
           ),
         ),
-        if (donorPerksEnabled) const SizedBox(height: 6),
-        if (donorPerksEnabled) Text('ثبت اعلام حمایت، آن را به مقام و حلقه‌ی دور عکس پروفایلت وصل می‌کند.', style: TextStyle(color: theme.textFaint, fontSize: 11, height: 1.7)),
       ]),
     );
   }
@@ -513,8 +463,6 @@ class _PaypalCard extends StatelessWidget {
             ),
           ),
         ),
-        if (donorPerksEnabled) const SizedBox(height: 6),
-        if (donorPerksEnabled) Text('ثبت اعلام حمایت، آن را به مقام و حلقه‌ی دور عکس پروفایلت وصل می‌کند.', style: TextStyle(color: theme.textFaint, fontSize: 11, height: 1.7)),
       ]),
     );
   }
@@ -847,7 +795,7 @@ class _DonationTransferFormScreenState extends State<DonationTransferFormScreen>
                     Expanded(
                       child: Text(
                         isPaypal
-                            ? 'این فرم فقط جزئیات حمایتی را ثبت می‌کند که خودتان از طریق PayPal به ایمیل «$kPaypalEmail» ارسال کرده‌اید یا در حال ارسال آن هستید — تا مدیر دریافت واقعی را تأیید کند و مقام شما فعال شود.'
+                            ? 'این فرم فقط جزئیات حمایتی را ثبت می‌کند که خودتان از طریق PayPal به ایمیل «$kPaypalEmail» ارسال کرده‌اید یا در حال ارسال آن هستید — تا مدیر دریافت واقعی را تأیید کند.'
                             : 'این فرم فقط جزئیات حواله‌ای را ثبت می‌کند که خودتان از طریق صرافی/بانک برای «$kTransferRecipientName» در $kTransferRecipientCity، $kTransferRecipientCountry ارسال کرده‌اید یا در حال ارسال آن هستید.',
                         style: TextStyle(color: theme.textPrimary, fontSize: 12.5, height: 1.8, fontWeight: FontWeight.w600),
                       ),

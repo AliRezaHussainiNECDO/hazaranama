@@ -1,3 +1,5 @@
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -205,6 +207,36 @@ class _ContentManagerPageState extends State<ContentManagerPage> {
                     ),
                   ),
                   const SizedBox(height: 12),
+                ],
+                if (section.id == 'library') ...[
+                  OutlinedButton.icon(
+                    onPressed: uploading
+                        ? null
+                        : () async {
+                            final res = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: const ['pdf', 'epub'], withData: kIsWeb);
+                            final f = res?.files.single;
+                            if (f == null) return;
+                            final isEpub = (f.extension ?? '').toLowerCase() == 'epub';
+                            final mime = isEpub ? 'application/epub+zip' : 'application/pdf';
+                            final x = kIsWeb ? XFile.fromData(f.bytes!, name: f.name, mimeType: mime) : XFile(f.path!, name: f.name, mimeType: mime);
+                            setSheetState(() => uploading = true);
+                            try {
+                              final url = await app.uploadContentFile(x, contentType: mime);
+                              controllers['file_url']!.text = url;
+                              if (context.mounted) showHzToast(context, 'فایل کتاب آپلود شد ✓');
+                            } catch (_) {
+                              if (context.mounted) showHzToast(context, 'آپلود فایل ناموفق بود؛ دوباره تلاش کنید.');
+                            } finally {
+                              setSheetState(() => uploading = false);
+                            }
+                          },
+                    icon: Icon(Icons.upload_file_rounded, size: 16, color: theme.success),
+                    label: Text(uploading ? 'در حال آپلود…' : 'آپلود فایل کتاب (PDF یا EPUB)', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
+                    style: OutlinedButton.styleFrom(foregroundColor: theme.success, side: BorderSide(color: theme.success.withValues(alpha: 0.5)), padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+                  ),
+                  const SizedBox(height: 6),
+                  Text('فقط آثاری را آپلود کنید که آزاد (مالکیت عمومی) هستند یا اجازه‌ی نویسنده/ناشر را دارید.', style: TextStyle(color: theme.textFaint, fontSize: 11, height: 1.7)),
+                  const SizedBox(height: 14),
                 ],
                 Text('عکس (اختیاری)', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                 const SizedBox(height: 8),

@@ -11,6 +11,10 @@
    "read_url_label": "امانت دیجیتال در Internet Archive",
    "buy_url": "https://search.worldcat.org/search?q=The%20Hazaras%20of%20Afghanistan%20Mousavi",
    "buy_url_label": "یافتن در کتابخانه‌ها (WorldCat)"
+  },
+  "image": {
+   "src": "https://archive.org/services/img/hazarasofafghani0000mous",
+   "credit": "جلد: Internet Archive"
   }
  },
  {
@@ -25,6 +29,10 @@
    "read_url_label": "نسخه‌ی دیجیتال (مجموعه‌ی ACKU)",
    "buy_url": "https://search.worldcat.org/search?q=The%20Hazaras%20Hassan%20Poladi",
    "buy_url_label": "یافتن در کتابخانه‌ها (WorldCat)"
+  },
+  "image": {
+   "src": "https://archive.org/services/img/thehazaraspoladiazuackuds3546h3p651989w",
+   "credit": "جلد: Internet Archive"
   }
  },
  {
@@ -41,6 +49,10 @@
    "buy_url_label": "یافتن در کتابخانه‌ها (WorldCat)",
    "archive_id": "20260323_20260323_0845",
    "downloadable": "1"
+  },
+  "image": {
+   "src": "https://archive.org/services/img/20260323_20260323_0845",
+   "credit": "جلد: Internet Archive"
   }
  },
  {
@@ -55,6 +67,10 @@
    "read_url_label": "امانت دیجیتال در Internet Archive",
    "buy_url": "https://search.worldcat.org/search?q=Kabul%20under%20siege%20Fayz%20Muhammad%20McChesney",
    "buy_url_label": "یافتن در کتابخانه‌ها (WorldCat)"
+  },
+  "image": {
+   "src": "https://archive.org/services/img/kabulundersiegef0000kati",
+   "credit": "جلد: Internet Archive"
   }
  },
  {
@@ -69,6 +85,10 @@
    "read_url_label": "امانت دیجیتال در Internet Archive",
    "buy_url": "https://search.worldcat.org/search?q=Afghanistan%20a%20cultural%20and%20political%20history%20Barfield",
    "buy_url_label": "یافتن در کتابخانه‌ها (WorldCat)"
+  },
+  "image": {
+   "src": "https://archive.org/services/img/afghanistancultu0000barf",
+   "credit": "جلد: Internet Archive"
   }
  },
  {
@@ -241,6 +261,10 @@
    "read_url_label": "امانت دیجیتال در Internet Archive",
    "buy_url": "https://khaledhosseini.com/books/the-kite-runner/",
    "buy_url_label": "صفحه‌ی کتاب در سایت نویسنده"
+  },
+  "image": {
+   "src": "https://archive.org/services/img/kiterunnerriverh00khal_0",
+   "credit": "جلد: Internet Archive"
   }
  }
 ]

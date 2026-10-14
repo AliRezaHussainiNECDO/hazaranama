@@ -102,7 +102,7 @@ class _FeaturedArticleScreenState extends State<FeaturedArticleScreen> {
     ctrl.clear();
     setState(() => _replyingTo = null);
     await app.addArticleComment(widget.article.id, text, parentId: parentId);
-    if (donorTierForUser(app.currentUser, app.myDonationTotalUsd)?.index == kDonorTiers.last.index) {
+    if (app.myRankTier.index == kDonorTiers.last.index) {
       HapticFeedback.heavyImpact();
       if (mounted) showHzToast(context, '👑 کامنت شاهانه‌ات ارسال شد!');
     }
@@ -245,7 +245,7 @@ class _FeaturedArticleScreenState extends State<FeaturedArticleScreen> {
                 const SizedBox(height: 10),
                 _ArticleCommentComposer(
                   theme: theme, controller: _commentCtrl, onSend: () => _submitComment(),
-                  myTier: donorTierForUser(app.currentUser, app.myDonationTotalUsd),
+                  myTier: app.myRankTier,
                 ),
                 const SizedBox(height: 16),
                 if (_loadingComments)
@@ -396,7 +396,7 @@ class _ArticleCommentTile extends StatelessWidget {
                 const SizedBox(height: 8),
                 _ArticleCommentComposer(
                   theme: theme, controller: replyController!, onSend: onSendReply ?? () {},
-                  myTier: donorTierForUser(app.currentUser, app.myDonationTotalUsd),
+                  myTier: app.myRankTier,
                 ),
               ],
             ],

@@ -7,6 +7,7 @@ import 'hz_backend.dart';
 import '../core/afghan_calendar.dart';
 import '../core/backend_config.dart';
 import '../models/models.dart';
+import '../models/rank.dart';
 
 /// تمام تماس‌های واقعی با بک‌اند هزاره‌نامه (Cloudflare Worker + D1 + R2) اینجا
 /// جمع شده — دیتابیس، حساب کاربری و فایل‌ها. AppState فقط این متدها را صدا
@@ -1217,6 +1218,57 @@ class BackendService {
         lastDonationAt: row['last_donation_at'] != null ? DateTime.parse(row['last_donation_at'] as String) : null,
       );
     }).toList();
+  }
+
+  // ================= امتیاز فعالیت (XP) و مقام =================
+
+  /// جدول امتیاز همه‌ی کاربران — مرتب از بیشترین امتیاز
+  Future<List<RankEntry>> fetchRankLeaderboard({int limit = 500}) async {
+    final j = await _db.getJson('/xp/leaderboard?limit=$limit');
+    final list = (j is Map ? j['data'] : null) as List? ?? const [];
+    return list.map((e) => RankEntry.fromJson(Map<String, dynamic>.from(e as Map))).toList();
+  }
+
+  /// امتیاز و جایگاه یک کاربر (پیش‌فرض: خودِ کاربر)
+  Future<RankEntry?> fetchRank({String? userId}) async {
+    final j = await _db.getJson('/xp/me${userId != null ? '?user_id=${Uri.encodeComponent(userId)}' : ''}');
+    final d = j is Map ? j['data'] : null;
+    return d is Map ? RankEntry.fromJson(Map<String, dynamic>.from(d)) : null;
+  }
+
+  /// ثبت یک فعالیت (خواندن، تماشا، کتاب، خبر) — true یعنی امتیاز تازه گرفت
+  Future<bool> trackActivity(String kind, String ref) async {
+    final d = await _db.rpc('track', params: {'kind': kind, 'ref': ref});
+    return d is Map && d['added'] == true;
+  }
+
+  /// فقط مدیر — جایزه یا کسر امتیاز
+  Future<void> adminAwardXp(String userId, int delta, String reason) =>
+      _db.post('/admin/xp-bonus', {'user_id': userId, 'delta': delta, 'reason': reason});
+
+  // ================= کتابخانه و خبرنامه =================
+
+  /// نشانی دانلود مستقیم یک کتاب (فایل مدیر یا PDF آزاد Internet Archive)
+  Future<({String url, String name, int? size})> bookDownloadInfo(String itemId) async {
+    final j = await _db.getJson('/books/download?id=${Uri.encodeComponent(itemId)}');
+    final d = Map<String, dynamic>.from((j as Map)['data'] as Map);
+    return (url: d['url'] as String, name: (d['name'] as String?) ?? '$itemId.pdf', size: (d['size'] as num?)?.toInt());
+  }
+
+  /// یک خبر کامل (با عکس، خلاصه و برگردان فارسی — اگر هنوز آماده نبود، همین حالا آماده می‌شود)
+  Future<ContentItem?> fetchNewsItem(String id) async {
+    final j = await _db.getJson('/news/item?id=${Uri.encodeComponent(id)}');
+    final d = j is Map ? j['data'] : null;
+    if (d is! Map) return null;
+    return ContentItem(id: d['id'] as String, fields: Map<String, dynamic>.from((d['fields'] as Map?) ?? const {}), imageUrl: d['image_url'] as String?);
+  }
+
+  /// فقط مدیر — آپلود فایل کتاب (PDF/EPUB) در فضای محتوا
+  Future<String> uploadContentFile(XFile file, {required String contentType}) async {
+    final name = file.name.replaceAll(RegExp(r'[^A-Za-z0-9._-]'), '_');
+    final path = 'books/${DateTime.now().millisecondsSinceEpoch}_$name';
+    await _uploadPicked('content-media', path, file, fallbackType: contentType);
+    return _db.storage.from('content-media').getPublicUrl(path);
   }
 
   /// تأیید یا رد یک حواله؛ هنگام تأیید می‌توان مبلغ واقعاً دریافت‌شده را هم ثبت کرد.

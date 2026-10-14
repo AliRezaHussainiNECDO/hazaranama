@@ -6,9 +6,9 @@ import '../models/models.dart';
 import 'app_colors.dart';
 import 'widgets.dart';
 
-/// مقام‌ها، حلقه‌ها و استیکرهای اختصاصیِ حامیان فقط روی وب و اندروید فعال‌اند.
-/// در اپ آیفون (راهنمای اپ‌استور 3.1.1) حمایت مالی هیچ امتیاز دیجیتالی
-/// در اپ باز نمی‌کند؛ پس همه‌ی این نشان‌ها آن‌جا پنهان می‌شوند.
+/// بخش‌های مربوط به حمایت مالی (فهرست حامیان و فرم‌ها) فقط روی وب و
+/// اندروید نشان داده می‌شوند (راهنمای اپ‌استور 3.1.1). مقام‌ها اما از
+/// فعالیت به دست می‌آیند و روی همه‌ی سکوها یکسان‌اند.
 bool get donorPerksEnabled => kIsWeb || defaultTargetPlatform != TargetPlatform.iOS;
 
 /// آستانه‌ی مقام لازم برای باز شدن استیکرهای اختصاصی (از «اسطوره» به بالا).
@@ -22,13 +22,13 @@ const List<String> kVipStickers = ['👑', '💎', '🔥', '⚡', '🐉', '🏆'
 /// (نقره‌ای، طلاییِ نگین‌دار، یا تاج شاهیِ کامل).
 enum DonorCrownStyle { none, silver, gold, imperial }
 
-/// ده مرحله‌ی مقام — دقیقاً مطابق طراحی درخواستی: هرچه کاربر بیشتر کمک مالی
-/// تأییدشده داشته باشد، هم نامش و هم قاب دور عکس پروفایلش ارتقا می‌یابد.
-/// آستانه‌ها به دلار آمریکا (تقریبی، بر پایه‌ی [usdRateFor]) سنجیده می‌شوند.
-/// این مقام‌ها دائمی‌اند — با کاهش فعالیت افت نمی‌کنند.
+/// ده مرحله‌ی مقام — از «امتیاز فعالیت» (XP) در همه‌ی بخش‌های اپ به دست می‌آید:
+/// آمدن روزانه، خواندن، تماشا، کتاب، خبر، پست، کامنت، واکنش، مسابقه‌ی مقاله…
+/// (جدول امتیازها در cloudflare/api/src/xp.ts و lib/models/rank.dart).
+/// هرچه کاربر فعال‌تر باشد، نام مقام و قاب دور عکس پروفایلش ارتقا می‌یابد.
 class DonorTier {
   final int index;
-  final double minUsd;
+  final int minXp;
   final String title;
   final List<Color> colors; // برای SweepGradient حلقه — اولین و آخرین باید یکی باشند
   final bool glow;
@@ -39,7 +39,7 @@ class DonorTier {
   final Color? tickColor; // تیک تأیید اختصاصیِ رنگی کنار نام — فقط مقام‌های VIP
   const DonorTier({
     required this.index,
-    required this.minUsd,
+    required this.minXp,
     required this.title,
     required this.colors,
     this.glow = false,
@@ -53,50 +53,50 @@ class DonorTier {
 
 const List<DonorTier> kDonorTiers = [
   DonorTier(
-    index: 1, minUsd: 0, title: 'همراه',
+    index: 1, minXp: 0, title: 'تازه‌وارد',
     colors: [Color(0xFFB9BEC7), Color(0xFFEFEFF2), Color(0xFFB9BEC7)],
   ),
   DonorTier(
-    index: 2, minUsd: 5, title: 'یاور',
+    index: 2, minXp: 60, title: 'همراه',
     colors: [Color(0xFF4FA8FF), Color(0xFFBFE0FF), Color(0xFF4FA8FF)],
   ),
   DonorTier(
-    index: 3, minUsd: 15, title: 'نیکوکار',
+    index: 3, minXp: 180, title: 'کوشا',
     colors: [Color(0xFF2FBE86), Color(0xFF8FF0C8), Color(0xFF2FBE86)],
     glow: true, tickColor: Color(0xFF2FBE86),
   ),
   DonorTier(
-    index: 4, minUsd: 35, title: 'سخاوتمند',
+    index: 4, minXp: 400, title: 'پژوهشگر',
     colors: [Color(0xFF8E6BFF), Color(0xFFB79CFF), Color(0xFF8E6BFF)],
     glow: true,
   ),
   DonorTier(
-    index: 5, minUsd: 70, title: 'ستاره',
+    index: 5, minXp: 800, title: 'ستاره',
     colors: [Color(0xFFFFC94D), Color(0xFFFFE096), Color(0xFFFFC94D)],
     glow: true, starBadge: true,
   ),
   DonorTier(
-    index: 6, minUsd: 120, title: 'استاد',
+    index: 6, minXp: 1500, title: 'استاد',
     colors: [Color(0xFFFF6A3D), Color(0xFFFFC94D), Color(0xFFFF3D3D), Color(0xFFFF6A3D)],
     glow: true, fireAnim: true,
   ),
   DonorTier(
-    index: 7, minUsd: 200, title: 'اسطوره',
+    index: 7, minXp: 3000, title: 'اسطوره',
     colors: [Color(0xFF6BC8FF), Color(0xFFFFFFFF), Color(0xFF8E6BFF), Color(0xFF6BC8FF)],
     glow: true, sparkle: true,
   ),
   DonorTier(
-    index: 8, minUsd: 350, title: 'قهرمان',
+    index: 8, minXp: 5500, title: 'قهرمان',
     colors: [Color(0xFFD7DEE8), Color(0xFFFFFFFF), Color(0xFFAEB8C6), Color(0xFFD7DEE8)],
     glow: true, sparkle: true, crownStyle: DonorCrownStyle.silver, tickColor: Color(0xFF8E6BFF),
   ),
   DonorTier(
-    index: 9, minUsd: 600, title: 'فرمانروا',
+    index: 9, minXp: 9000, title: 'فرمانروا',
     colors: [Color(0xFFFFC94D), Color(0xFFFF6FA8), Color(0xFF8E6BFF), Color(0xFFFFC94D)],
     glow: true, sparkle: true, fireAnim: true, crownStyle: DonorCrownStyle.gold, tickColor: Color(0xFFB07CFF),
   ),
   DonorTier(
-    index: 10, minUsd: 1000, title: 'پادشاه (خاقان)',
+    index: 10, minXp: 15000, title: 'خاقان',
     colors: [Color(0xFFFF6FA8), Color(0xFFFFC94D), Color(0xFF6BFFB3), Color(0xFF6BC8FF), Color(0xFF8E6BFF), Color(0xFFFF6FA8)],
     glow: true, sparkle: true, fireAnim: true, crownStyle: DonorCrownStyle.imperial, tickColor: Color(0xFFFFC94D),
   ),
@@ -121,13 +121,12 @@ double usdRateFor(String currency) {
   }
 }
 
-/// مقام فعلی بر اساس جمع دلاریِ کمک‌های تأییدشده — چون مرحله‌ی اول
-/// («همراه») آستانه‌ی صفر دارد، این تابع همیشه یک مقام واقعی برمی‌گرداند
-/// (حتی برای کاربری که هنوز هیچ کمکی نکرده)، نه حالت خالی.
-DonorTier? donorTierForUsd(double usd) {
-  DonorTier? found;
+/// مقام فعلی بر اساس امتیاز فعالیت — چون مرحله‌ی اول («تازه‌وارد») آستانه‌ی
+/// صفر دارد، همیشه یک مقام واقعی برمی‌گرداند.
+DonorTier rankTierForXp(int xp) {
+  var found = kDonorTiers.first;
   for (final t in kDonorTiers) {
-    if (usd >= t.minUsd) {
+    if (xp >= t.minXp) {
       found = t;
     } else {
       break;
@@ -136,39 +135,26 @@ DonorTier? donorTierForUsd(double usd) {
   return found;
 }
 
-/// مقام مؤثر برای نمایش حلقه‌ی دور عکس پروفایل — مدیر همیشه بالاترین مقام
-/// (پادشاه/خاقان) را دارد، صرف‌نظر از این‌که واقعاً کمکی کرده یا نه؛ برای
-/// بقیه‌ی کاربران دقیقاً همان منطق قبلی (بر پایه‌ی مجموع کمک‌های تأییدشده)
-/// بدون تغییر باقی می‌ماند.
-DonorTier? donorTierForUser(UserProfile? user, double usd) => donorTierByRole(user?.role, usd);
+/// مقام مؤثر برای نمایش حلقه‌ی دور عکس — مدیر همیشه بالاترین مقام (خاقان)
+/// را دارد؛ بقیه بر پایه‌ی امتیاز فعالیت.
+DonorTier rankTierByRole(UserRole? role, int xp) => role == UserRole.admin ? kDonorTiers.last : rankTierForXp(xp);
 
-/// همان [donorTierForUser] اما وقتی فقط نقش کاربر در دست است، نه کل
-/// UserProfile — برای جاهایی که فقط آی‌دی کاربر را داریم (فید، کامنت‌ها،
-/// مقاله، پیام‌ها) و نقش را از کش سبک [AppState] می‌گیریم.
-DonorTier? donorTierByRole(UserRole? role, double usd) {
-  if (!donorPerksEnabled) return null;
-  if (role == UserRole.admin) return kDonorTiers.last;
-  return donorTierForUsd(usd);
-}
-
-/// مقام بعدی که باید به آن رسید (برای نوار پیشرفت)؛ null یعنی کاربر در
-/// بالاترین مقام (پادشاه/خاقان) است.
-DonorTier? nextDonorTier(double usd) {
+/// مقام بعدی (برای نوار پیشرفت)؛ null یعنی کاربر در بالاترین مقام است.
+DonorTier? nextRankTier(int xp) {
   for (final t in kDonorTiers) {
-    if (usd < t.minUsd) return t;
+    if (xp < t.minXp) return t;
   }
   return null;
 }
 
 /// پیشرفت (۰ تا ۱) از مقام فعلی تا مقام بعدی.
-double progressToNextDonorTier(double usd) {
-  final next = nextDonorTier(usd);
+double progressToNextRank(int xp) {
+  final next = nextRankTier(xp);
   if (next == null) return 1.0;
-  final current = donorTierForUsd(usd);
-  final base = current?.minUsd ?? 0.0;
-  final span = next.minUsd - base;
+  final base = rankTierForXp(xp).minXp;
+  final span = next.minXp - base;
   if (span <= 0) return 1.0;
-  return ((usd - base) / span).clamp(0.0, 1.0);
+  return ((xp - base) / span).clamp(0.0, 1.0);
 }
 
 const List<Color> kDefaultRingColors = [Color(0xFF2159C4), Colors.white, Color(0xFFFFC94D), Color(0xFF2159C4)];
@@ -176,7 +162,7 @@ const List<Color> kDefaultRingColors = [Color(0xFF2159C4), Colors.white, Color(0
 /// حلقه‌ی پویای دور عکس پروفایل — با هر مقام تازه رنگ‌های بیشتر، درخشش،
 /// جرقه‌های شناور، شعله‌های متحرک، آیکون ستاره یا تاج (نقره‌ای/طلایی/شاهی)
 /// می‌گیرد — دقیقاً مثل نشان‌های در حال ارتقای تیک‌تاک/اینستاگرام، تا
-/// کاربران برای کمک مالی بیشتر تشویق شوند.
+/// کاربران برای فعالیت بیشتر در هزاره‌نامه تشویق شوند.
 class DonorRing extends StatefulWidget {
   final AppColors theme;
   final DonorTier? tier;
@@ -354,7 +340,7 @@ class DonorVipTick extends StatelessWidget {
   }
 }
 
-/// نشانِ کوچکِ مقامِ کمک‌کننده — کنار نام، مشابه نشانِ نقش مدیر/ویراستار.
+/// نشانِ کوچکِ مقامِ کاربر — کنار نام، مشابه نشانِ نقش مدیر/ویراستار.
 class DonorTierChip extends StatelessWidget {
   final DonorTier tier;
   const DonorTierChip({super.key, required this.tier});
@@ -379,94 +365,6 @@ class DonorTierChip extends StatelessWidget {
     // مقام‌های تاج‌دار (قهرمان به بالا) یک درخشش ملایم و پیوسته می‌گیرند تا
     // نشان ویژه‌شان در فید/کامنت/پروفایل بلافاصله به چشم بیاید.
     return tier.crownStyle != DonorCrownStyle.none ? chip.royalShimmer() : chip;
-  }
-}
-
-/// کارت مقام کمک‌کننده — مقام فعلی، مجموع تقریبی کمک‌ها، نوار پیشرفت تا
-/// مقام بعدی، و دکمه‌ای برای رفتن به صفحه‌ی کمک‌های مالی (مسیر با
-/// [onDonateTap] به caller سپرده می‌شود تا این فایل به صفحات دیگر وابسته
-/// نباشد) — در صفحه‌ی پروفایل من و صفحه‌ی کمک‌های مالی یکسان استفاده می‌شود.
-class DonorTierCard extends StatelessWidget {
-  final AppColors theme;
-  final double totalUsd;
-  final VoidCallback onDonateTap;
-  final bool isAdmin;
-  const DonorTierCard({super.key, required this.theme, required this.totalUsd, required this.onDonateTap, this.isAdmin = false});
-
-  @override
-  Widget build(BuildContext context) {
-    if (!donorPerksEnabled) return const SizedBox.shrink();
-    // مدیر همیشه بالاترین مقام را دارد؛ بقیه‌ی کاربران دقیقاً همان منطق قبلی.
-    final tier = isAdmin ? kDonorTiers.last : donorTierForUsd(totalUsd);
-    final next = isAdmin ? null : nextDonorTier(totalUsd);
-    final progress = isAdmin ? 1.0 : progressToNextDonorTier(totalUsd);
-
-    return HzGlassCard(
-      theme: theme,
-      radius: 18,
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(children: [
-          Icon(Icons.volunteer_activism_rounded, size: 16, color: theme.success),
-          const SizedBox(width: 7),
-          Expanded(
-            child: Text(tier != null ? 'مقام: ${tier.title}' : 'هنوز حامی نیستی',
-                style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800)),
-          ),
-          if (tier != null) DonorTierChip(tier: tier),
-        ]),
-        const SizedBox(height: 8),
-        Text(
-          isAdmin
-              ? 'به‌عنوان مدیر هزاره‌نامه، بالاترین مقام را داری.'
-              : totalUsd > 0
-                  ? 'مجموع حمایت‌های تأییدشده‌ی شما تقریباً ${totalUsd.toStringAsFixed(0)} دلار است.'
-                  : 'با اولین حمایت، حلقه‌ی دور عکس پروفایلت رنگ می‌گیرد و از «همراه» ارتقا می‌یابی.',
-          style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.8),
-        ),
-        if (next != null) ...[
-          const SizedBox(height: 12),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(999),
-            child: SizedBox(
-              height: 7,
-              child: Stack(children: [
-                Container(color: theme.bgCardAlt),
-                LayoutBuilder(
-                  builder: (context, constraints) => TweenAnimationBuilder<double>(
-                    tween: Tween(begin: 0, end: progress),
-                    duration: const Duration(milliseconds: 900),
-                    curve: Curves.easeOutCubic,
-                    builder: (context, value, _) => Align(
-                      alignment: AlignmentDirectional.centerStart,
-                      child: Container(
-                        width: constraints.maxWidth * value,
-                        height: 7,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(colors: [tier?.colors.first ?? theme.success, next.colors.first]),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ]),
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text('${(next.minUsd - totalUsd).clamp(0, next.minUsd).toStringAsFixed(0)} دلار دیگر تا مقام «${next.title}»',
-              style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
-        ],
-        const SizedBox(height: 12),
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton.icon(
-            onPressed: onDonateTap,
-            icon: const Icon(Icons.favorite, size: 14),
-            label: Text(totalUsd <= 0 && !isAdmin ? 'اولین حمایت را بفرست' : 'افزایش مقام — حمایت کن', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w800)),
-            style: ElevatedButton.styleFrom(backgroundColor: theme.success, foregroundColor: Colors.white, elevation: 0, padding: const EdgeInsets.symmetric(vertical: 12), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-          ),
-        ),
-      ]),
-    );
   }
 }
 
@@ -497,7 +395,7 @@ List<T> pinTopTierComments<T>(List<T> comments, DonorTier? Function(T) tierOf) {
 
 /// شیت انتخاب استیکر — واکنش‌های همیشگی + بخش استیکرهای اختصاصیِ VIP که از
 /// مقام «اسطوره» به بالا باز می‌شود؛ برای کاربرانی که هنوز نرسیده‌اند، با
-/// آیکون قفل نمایش داده می‌شود (برای تشویق به کمک مالی بیشتر).
+/// آیکون قفل نمایش داده می‌شود (برای تشویق به فعالیت بیشتر).
 void showVipStickerPicker({
   required BuildContext context,
   required AppColors theme,
@@ -524,7 +422,6 @@ void showVipStickerPicker({
                     }))
                 .toList(),
           ),
-          if (donorPerksEnabled) ...[
           const SizedBox(height: 14),
           Row(mainAxisSize: MainAxisSize.min, children: [
             Icon(Icons.workspace_premium_rounded, size: 14, color: theme.yellow),
@@ -543,13 +440,12 @@ void showVipStickerPicker({
                         if (unlocked) {
                           onPick(e);
                         } else {
-                          showHzToast(context, 'این استیکر مخصوص مقام «اسطوره» به بالاست — با حمایت از هزاره‌نامه بازش کن!');
+                          showHzToast(context, 'این استیکر مخصوص مقام «اسطوره» به بالاست — با فعالیت بیشتر در هزاره‌نامه بازش کن!');
                         }
                       },
                     ))
                 .toList(),
           ),
-          ],
         ]),
       ),
     ),

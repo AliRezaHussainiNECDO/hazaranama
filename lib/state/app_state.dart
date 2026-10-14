@@ -13,6 +13,7 @@ import '../core/app_colors.dart';
 import '../core/donor_tiers.dart';
 import '../core/section_style.dart' show kHazaragiGlossaryCount;
 import '../models/models.dart';
+import '../models/rank.dart';
 import '../services/push_service.dart';
 import '../services/backend_service.dart';
 
@@ -50,7 +51,13 @@ class AppState extends ChangeNotifier {
   List<DonationTransfer> allDonationTransfers = []; // همه‌ی حواله‌ها — فقط مدیر
   List<DonationReport> donationReports = []; // گزارش‌های شفافیت — عمومی
   DonationSettings donationSettings = DonationSettings(); // آمار کلی کمپین
-  List<DonorRankEntry> donorLeaderboard = []; // فهرست عمومی کمک‌کنندگان
+  List<DonorRankEntry> donorLeaderboard = []; // فهرست عمومی حامیان مالی (فقط برای قدردانی، نه مقام)
+  // ================= امتیاز فعالیت (XP) و مقام =================
+  List<RankEntry> rankLeaderboard = []; // جدول امتیاز همه‌ی کاربران
+  final Map<String, int> _xpById = {}; // امتیاز هر کاربر — پایه‌ی حلقه‌ی مقام در فید/کامنت/مقاله
+  RankEntry? myRank; // امتیاز، جایگاه و ریز فعالیت‌های خودِ کاربر
+  DonorTier? pendingLevelUp; // مقام تازه‌ای که هنوز جشنش به کاربر نشان داده نشده
+  final Set<String> _trackedThisSession = {}; // جلوگیری از درخواست تکراری برای یک مورد
   final Map<String, UserRole> _roleById = {}; // کش سبک نقش همه‌ی کاربران — برای حلقه‌ی مقام در فید/کامنت/مقاله/پیام
   List<UserActivityEntry> recentActivity = []; // آخرین فعالیت‌های همه‌ی کاربران — صفحه‌ی نخست پنل مدیریت
   List<BlockedUser> blockedUsers = []; // کاربرانی که خودِ کاربر مسدود کرده — پست/کامنتشان را نمی‌بیند
@@ -80,6 +87,114 @@ class AppState extends ChangeNotifier {
       .fold(0.0, (s, t) => s + (t.confirmedAmount ?? t.amount) * usdRateFor(t.currency));
 
   AppColors get colors => isDark ? AppColors.dark : AppColors.light;
+
+  /// امتیاز فعالیت یک کاربر (از جدول بارگذاری‌شده)
+  int xpForUser(String userId) {
+    if (currentUser?.id == userId && myRank != null) return myRank!.xp;
+    return _xpById[userId] ?? 0;
+  }
+
+  int get myXp => myRank?.xp ?? (currentUser == null ? 0 : _xpById[currentUser!.id] ?? 0);
+
+  /// مقام خودِ کاربر — از امتیاز فعالیت (مدیر همیشه بالاترین)
+  DonorTier get myRankTier => rankTierByRole(currentUser?.role, myXp);
+
+  /// مقام هر کاربر دلخواه
+  DonorTier rankTierForUser(UserProfile? user) => user == null ? kDonorTiers.first : rankTierByRole(user.role, xpForUser(user.id));
+
+  /// امتیاز و جدول مقام‌ها را از سرور تازه می‌کند و اگر کاربر به مقام
+  /// بالاتری رسیده باشد، [pendingLevelUp] را برای نمایش جشن پر می‌کند.
+  Future<void> refreshRanks() async {
+    if (currentUser == null) return;
+    try {
+      final list = await _service.fetchRankLeaderboard();
+      rankLeaderboard = list;
+      _xpById
+        ..clear()
+        ..addEntries(list.map((e) => MapEntry(e.userId, e.xp)));
+      RankEntry? me;
+      for (final e in list) {
+        if (e.userId == currentUser!.id) me = e;
+      }
+      myRank = me ?? await _service.fetchRank();
+      await _checkLevelUp();
+      notifyListeners();
+    } catch (_) {
+      // بی‌اهمیت — حلقه‌ها تا بارگذاری بعدی با امتیاز قبلی می‌مانند
+    }
+  }
+
+  Future<void> _checkLevelUp() async {
+    final user = currentUser;
+    if (user == null || user.role == UserRole.admin) return;
+    final tier = rankTierForXp(myXp);
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'hz_rank_seen_${user.id}';
+    final seen = prefs.getInt(key);
+    if (seen == null) {
+      await prefs.setInt(key, tier.index); // بار اول: بدون جشن، فقط به خاطر سپردن
+      return;
+    }
+    if (tier.index > seen) {
+      pendingLevelUp = tier;
+      await prefs.setInt(key, tier.index);
+    }
+  }
+
+  Timer? _rankRefreshTimer;
+
+  /// بعد از هر پست/کامنت/واکنش، با کمی تأخیر امتیاز را از سرور تازه می‌کند
+  void _scheduleRankRefresh() {
+    _rankRefreshTimer?.cancel();
+    _rankRefreshTimer = Timer(const Duration(seconds: 4), () => refreshRanks());
+  }
+
+  void clearLevelUp() {
+    pendingLevelUp = null;
+    notifyListeners();
+  }
+
+  /// ثبت یک فعالیت برای امتیاز: kind یکی از read / video / book / news.
+  /// هر مورد فقط یک بار امتیاز دارد؛ خطا بی‌صدا نادیده گرفته می‌شود.
+  Future<void> trackActivity(String kind, String ref) async {
+    if (currentUser == null || ref.isEmpty) return;
+    final key = '$kind:$ref';
+    if (!_trackedThisSession.add(key)) return;
+    try {
+      final added = await _service.trackActivity(kind, ref);
+      if (!added) return;
+      final pts = kXpWays.firstWhere((w) => w.key == kind, orElse: () => kXpWays.first).points;
+      final me = myRank;
+      if (me != null) {
+        myRank = RankEntry(
+          userId: me.userId, name: me.name, avatarPath: me.avatarPath, role: me.role,
+          xp: me.xp + pts, position: me.position, stats: {...me.stats, kind: me.stat(kind) + 1},
+        );
+        _xpById[me.userId] = myRank!.xp;
+      }
+      await _checkLevelUp();
+      notifyListeners();
+    } catch (_) {}
+  }
+
+  /// فقط مدیر — جایزه یا کسر امتیاز برای یک کاربر
+  Future<void> awardXp(String userId, int delta, String reason) async {
+    await _service.adminAwardXp(userId, delta, reason);
+    await refreshRanks();
+  }
+
+  /// بارگذاری دوباره‌ی محتوای یک بخش (مثلاً کشیدن صفحه‌ی خبرنامه برای خبرهای تازه)
+  Future<void> reloadSection(String sectionId) async {
+    try {
+      final all = await _service.fetchAllContent();
+      content[sectionId] = all[sectionId] ?? [];
+      notifyListeners();
+    } catch (_) {}
+  }
+
+  Future<({String url, String name, int? size})> bookDownloadInfo(String itemId) => _service.bookDownloadInfo(itemId);
+  Future<ContentItem?> fetchNewsItem(String id) => _service.fetchNewsItem(id);
+  Future<String> uploadContentFile(XFile file, {required String contentType}) => _service.uploadContentFile(file, contentType: contentType);
 
   AppState() {
     _service.authChanges.listen((AuthState data) {
@@ -151,6 +266,7 @@ class AppState extends ChangeNotifier {
       // تا حلقه‌ی مقام درست دور عکس پروفایل بقیه‌ی کاربران هم در فید، کامنت‌ها،
       // مقاله و پیام‌ها نمایش داده شود؛ خطای احتمالی نباید جلوی ورود را بگیرد.
       unawaited(_loadRoleAndDonorCaches());
+      unawaited(refreshRanks());
       unawaited(loadBlockedUsers());
     } catch (e) {
       if (_isTransientError(e)) {
@@ -439,6 +555,11 @@ class AppState extends ChangeNotifier {
     myDonationTransfers = [];
     allDonationTransfers = [];
     donorLeaderboard = [];
+    rankLeaderboard = [];
+    _xpById.clear();
+    myRank = null;
+    pendingLevelUp = null;
+    _trackedThisSession.clear();
     _roleById.clear();
     notifications = [];
     blockedUsers = [];
@@ -724,9 +845,9 @@ class AppState extends ChangeNotifier {
     return _roleById[userId];
   }
 
-  /// مقام مؤثر یک کاربر دلخواه برای حلقه‌ی دور عکس پروفایل — همان منطق
-  /// [donorTierForUser] اما فقط با آی‌دی کاربر (فید، کامنت‌ها، مقاله، پیام‌ها).
-  DonorTier? donorTierForUserId(String userId) => donorTierByRole(roleForUserId(userId), donorTotalForUser(userId));
+  /// مقام مؤثر یک کاربر دلخواه برای حلقه‌ی دور عکس پروفایل — از امتیاز
+  /// فعالیت (فید، کامنت‌ها، مقاله، پیام‌ها).
+  DonorTier? donorTierForUserId(String userId) => rankTierByRole(roleForUserId(userId), xpForUser(userId));
 
   // ---------------- حافظه‌ی جمعی ----------------
 
@@ -755,6 +876,7 @@ class AppState extends ChangeNotifier {
     String? videoUrl,
     String? videoThumbnailUrl,
   }) async {
+    _scheduleRankRefresh();
     if (currentUser == null) return;
     if (text.trim().isEmpty && imageUrls.isEmpty && (videoUrl == null || videoUrl.isEmpty)) return;
     final post = await _service.publishPost(
@@ -769,6 +891,7 @@ class AppState extends ChangeNotifier {
   }
 
   Future<void> toggleReaction(String postId, String emoji) async {
+    _scheduleRankRefresh();
     if (currentUser == null) return;
     final post = posts.firstWhere((p) => p.id == postId);
     final already = post.myReactions[emoji] ?? false;
@@ -791,6 +914,7 @@ class AppState extends ChangeNotifier {
   Future<List<PostComment>> fetchPostComments(String postId) => _service.fetchPostComments(postId, currentUser?.id);
 
   Future<void> addPostComment(String postId, String text, {String? parentId}) async {
+    _scheduleRankRefresh();
     if (currentUser == null || text.trim().isEmpty) return;
     await _service.addPostComment(postId, currentUser!.id, text.trim(), parentId: parentId);
     final post = posts.where((p) => p.id == postId).cast<Post?>().firstWhere((_) => true, orElse: () => null);
@@ -810,6 +934,7 @@ class AppState extends ChangeNotifier {
   }
 
   Future<void> togglePostCommentLike(String commentId, bool currentlyLiked) async {
+    _scheduleRankRefresh();
     if (currentUser == null) return;
     await _service.togglePostCommentLike(commentId, currentUser!.id, currentlyLiked);
   }
@@ -902,6 +1027,7 @@ class AppState extends ChangeNotifier {
   Future<List<VideoComment>> fetchVideoComments(String videoId) => _service.fetchVideoComments(videoId);
 
   Future<void> addVideoComment(String videoId, String text, {String? parentId}) async {
+    _scheduleRankRefresh();
     if (currentUser == null || text.trim().isEmpty) return;
     await _service.addVideoComment(videoId, currentUser!.id, text.trim(), parentId: parentId);
   }
@@ -912,6 +1038,7 @@ class AppState extends ChangeNotifier {
       _service.fetchVideoReactions(videoId, currentUser?.id);
 
   Future<void> toggleVideoReaction(String videoId, String emoji, bool currentlyMine) async {
+    _scheduleRankRefresh();
     if (currentUser == null) return;
     if (currentlyMine) {
       await _service.removeVideoReaction(videoId, currentUser!.id, emoji);
@@ -945,6 +1072,7 @@ class AppState extends ChangeNotifier {
   }
 
   Future<void> submitArticle({required String title, required String body}) async {
+    _scheduleRankRefresh();
     if (currentUser == null) return;
     final article = await _service.submitArticle(currentUser!.id, title: title, body: body);
     myArticles.insert(0, article);
@@ -1018,6 +1146,7 @@ class AppState extends ChangeNotifier {
   Future<List<ArticleComment>> fetchArticleComments(String articleId) => _service.fetchArticleComments(articleId);
 
   Future<void> addArticleComment(String articleId, String text, {String? parentId}) async {
+    _scheduleRankRefresh();
     if (currentUser == null || text.trim().isEmpty) return;
     await _service.addArticleComment(articleId, currentUser!.id, text.trim(), parentId: parentId);
   }
@@ -1028,6 +1157,7 @@ class AppState extends ChangeNotifier {
       _service.fetchArticleReactions(articleId, currentUser?.id);
 
   Future<void> toggleArticleReaction(String articleId, String emoji, bool currentlyMine) async {
+    _scheduleRankRefresh();
     if (currentUser == null) return;
     if (currentlyMine) {
       await _service.removeArticleReaction(articleId, currentUser!.id, emoji);

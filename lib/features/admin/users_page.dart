@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../core/app_colors.dart';
+import '../../core/afghan_calendar.dart' show toFaDigits;
 import '../../core/donor_tiers.dart';
 import '../../core/widgets.dart';
 import '../../core/app_logo.dart';
@@ -66,7 +67,7 @@ class _UsersPageState extends State<UsersPage> {
 
     final active = users.where((u) => u.status == UserStatus.active).length;
     final blocked = users.where((u) => u.status == UserStatus.blocked).length;
-    final donors = users.where((u) => app.donorTotalForUser(u.id) > 0).length;
+    final activeRanked = users.where((u) => app.xpForUser(u.id) >= kDonorTiers[1].minXp).length;
 
     final byCountry = _groupCount(users, (u) => u.country);
     final byOrigin = _groupCount(users, (u) => u.originProvince);
@@ -79,8 +80,8 @@ class _UsersPageState extends State<UsersPage> {
     if (_statusFilter == 'active') filtered = filtered.where((u) => u.status == UserStatus.active).toList();
     if (_statusFilter == 'blocked') filtered = filtered.where((u) => u.status == UserStatus.blocked).toList();
     if (_roleFilter != 'all') filtered = filtered.where((u) => roleToDbValue(u.role) == _roleFilter).toList();
-    // پرشورترین کمک‌کنندگان بالای فهرست بیایند — انگیزه‌ی بصری بیشتر برای مدیر
-    filtered.sort((a, b) => app.donorTotalForUser(b.id).compareTo(app.donorTotalForUser(a.id)));
+    // فعال‌ترین کاربران (بیشترین امتیاز فعالیت) بالای فهرست
+    filtered.sort((a, b) => app.xpForUser(b.id).compareTo(app.xpForUser(a.id)));
 
     return RefreshIndicator(
       onRefresh: _refresh,
@@ -97,7 +98,7 @@ class _UsersPageState extends State<UsersPage> {
               _statCard(theme, 'کل کاربران', users.length, Icons.groups, theme.blue),
               _statCard(theme, 'فعال', active, Icons.verified_user, theme.success),
               _statCard(theme, 'مسدود', blocked, Icons.block, theme.danger),
-              _statCard(theme, 'کمک‌کننده', donors, Icons.volunteer_activism_rounded, theme.yellow),
+              _statCard(theme, 'فعال با مقام', activeRanked, Icons.military_tech_rounded, theme.yellow),
             ],
           ),
           const SizedBox(height: 16),
@@ -121,7 +122,7 @@ class _UsersPageState extends State<UsersPage> {
             Padding(padding: const EdgeInsets.symmetric(vertical: 20), child: Center(child: Text('کاربری با این مشخصات پیدا نشد.', style: TextStyle(color: theme.textFaint, fontSize: 12))))
           else
             for (final (i, u) in filtered.indexed) ...[
-              _UserRow(theme: theme, user: u, donorTotalUsd: app.donorTotalForUser(u.id),
+              _UserRow(theme: theme, user: u, xp: app.xpForUser(u.id),
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => UserDetailPage(userId: u.id)))).staggered(i, step: const Duration(milliseconds: 30)),
               const SizedBox(height: 8),
             ],
@@ -192,18 +193,18 @@ class _FilterDropdown extends StatelessWidget {
   }
 }
 
-/// یک ردیف کاربر در فهرست — آواتار با حلقه‌ی مقام کمک‌کننده، نام، نشان
+/// یک ردیف کاربر در فهرست — آواتار با حلقه‌ی مقام فعالیت، نام، نشان
 /// نقش، وضعیت، و خلاصه‌ی زادگاه.
 class _UserRow extends StatelessWidget {
   final AppColors theme;
   final UserProfile user;
-  final double donorTotalUsd;
+  final int xp;
   final VoidCallback onTap;
-  const _UserRow({required this.theme, required this.user, required this.donorTotalUsd, required this.onTap});
+  const _UserRow({required this.theme, required this.user, required this.xp, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    final tier = donorTierForUser(user, donorTotalUsd);
+    final tier = rankTierByRole(user.role, xp);
     final statusColor = user.status == UserStatus.active ? theme.success : theme.danger;
 
     return InkWell(
@@ -230,10 +231,12 @@ class _UserRow extends StatelessWidget {
               ]),
               const SizedBox(height: 3),
               Text('${user.country} · ${user.originProvince}', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
-              if (tier != null) ...[
-                const SizedBox(height: 4),
+              const SizedBox(height: 4),
+              Row(children: [
                 DonorTierChip(tier: tier),
-              ],
+                const SizedBox(width: 6),
+                Text('${toFaDigits(xp)} امتیاز', style: TextStyle(color: theme.textFaint, fontSize: 10.5, fontWeight: FontWeight.w700)),
+              ]),
             ]),
           ),
           const SizedBox(width: 6),

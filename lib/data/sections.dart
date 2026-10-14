@@ -128,8 +128,9 @@ const List<ContentSection> kSections = [
       ContentFieldSpec('title', 'عنوان خبر'),
       ContentFieldSpec('date', 'تاریخ'),
       ContentFieldSpec('source', 'منبع خبر (نام رسانه)'),
-      ContentFieldSpec('snippet', 'خلاصه', multiline: true),
-      ContentFieldSpec('url', 'لینک خبر (اختیاری)'),
+      ContentFieldSpec('snippet', 'خلاصه (روی کارت خبر دیده می‌شود)', multiline: true),
+      ContentFieldSpec('body', 'متن کامل خبر (اختیاری — در صفحه‌ی جزئیات)', multiline: true),
+      ContentFieldSpec('url', 'لینک خبر در منبع (اختیاری)'),
     ],
   ),
   ContentSection(
@@ -147,6 +148,7 @@ const List<ContentSection> kSections = [
       ContentFieldSpec('lang', 'زبان'),
       ContentFieldSpec('read_url', 'لینک خواندن آنلاین (اختیاری)'),
       ContentFieldSpec('buy_url', 'لینک خرید یا صفحه‌ی ناشر (اختیاری)'),
+      ContentFieldSpec('file_url', 'فایل PDF برای دانلود داخل اپ (فقط آثار آزاد یا با اجازه‌ی نویسنده)'),
     ],
   ),
   ContentSection(

@@ -12,6 +12,7 @@ import '../ai/ai_recommend_widget.dart';
 import 'story_carousel.dart';
 import 'donation_home_card.dart';
 import 'section_card.dart';
+import '../rank/rank_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final VoidCallback onOpenExplore;
@@ -33,6 +34,8 @@ class HomeScreen extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(18, 14, 18, 110),
       children: [
         _Greeting(theme: theme, app: app, onTap: onOpenProfile).animate().fadeIn(duration: 380.ms).slideY(begin: -0.06, end: 0),
+        const SizedBox(height: 14),
+        RankCard(theme: theme).animate(delay: 80.ms).fadeIn(duration: 380.ms).slideY(begin: 0.06, end: 0),
         const SizedBox(height: 16),
         StoryCarousel(theme: theme),
         const SizedBox(height: 22),
@@ -146,7 +149,7 @@ class _Greeting extends StatelessWidget {
   Widget build(BuildContext context) {
     final name = app.displayName.trim();
     final first = name.isEmpty ? 'همسفر' : name.split(' ').first;
-    final tier = donorTierForUser(app.currentUser, app.myDonationTotalUsd);
+    final tier = app.myRankTier;
 
     return Pressable(
       onTap: onTap,

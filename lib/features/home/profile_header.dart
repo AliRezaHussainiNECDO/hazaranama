@@ -62,7 +62,7 @@ class _ProfileHeaderState extends State<ProfileHeader> with TickerProviderStateM
     final myPostsCount = app.myPosts.length;
     final myReactions = app.myReactionsReceived;
     final myComments = app.myPosts.fold<int>(0, (s, p) => s + p.commentsCount);
-    final donorTier = donorTierForUser(user, app.myDonationTotalUsd);
+    final donorTier = app.rankTierForUser(user);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 14),
@@ -118,10 +118,8 @@ class _ProfileHeaderState extends State<ProfileHeader> with TickerProviderStateM
                     const SizedBox(width: 7),
                     _RoleBadge(theme: theme, role: user.role),
                   ],
-                  if (donorTier != null) ...[
-                    const SizedBox(width: 7),
-                    DonorTierChip(tier: donorTier),
-                  ],
+                  const SizedBox(width: 7),
+                  DonorTierChip(tier: donorTier),
                 ]),
               if (user?.email != null) ...[
                 const SizedBox(height: 3),

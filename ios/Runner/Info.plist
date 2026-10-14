@@ -84,6 +84,10 @@
 		</dict>
 	</array>
 	<!-- رمزنگاری فقط HTTPS استاندارد — پرسش «Export Compliance» در App Store Connect حذف می‌شود -->
+	<key>UIFileSharingEnabled</key>
+	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<!-- پوش نوتیفیکیشن (FCM/APNs) در پس‌زمینه -->

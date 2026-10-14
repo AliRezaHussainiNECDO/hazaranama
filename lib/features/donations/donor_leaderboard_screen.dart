@@ -10,7 +10,7 @@ import '../../core/widgets.dart';
 import '../../models/models.dart';
 import '../../state/app_state.dart';
 
-/// فهرست عمومی کمک‌کنندگان — رتبه‌بندی‌شده بر پایه‌ی مجموع دلاریِ تقریبیِ
+/// فهرست قدردانی از حامیان — مرتب‌شده بر پایه‌ی مجموع دلاریِ تقریبیِ
 /// کمک‌های تأییدشده‌ی هرکس؛ برای تشویق و قدردانی از همه‌ی کمک‌کنندگان.
 class DonorLeaderboardScreen extends StatefulWidget {
   const DonorLeaderboardScreen({super.key});
@@ -85,7 +85,7 @@ class _DonorLeaderboardScreenState extends State<DonorLeaderboardScreen> {
                             SizedBox(width: 10),
                             Expanded(
                               child: Text(
-                                'با هر حمایت، مقام و حلقه‌ی دور عکس پروفایلت زیباتر می‌شود — این فهرست از حمایت‌های تأییدشده‌ی همه ساخته شده و به همه نشان داده می‌شود.',
+                                'سپاس از همه‌ی کسانی که هزاره‌نامه را زنده نگه می‌دارند. حلقه‌ی دور عکس هر کس نشان مقام فعالیت اوست، نه مبلغ حمایت.',
                                 style: TextStyle(color: Colors.white, fontSize: 12.5, height: 1.9, fontWeight: FontWeight.w600),
                               ),
                             ),
@@ -138,7 +138,7 @@ class _DonorRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tier = donorTierForUsd(entry.totalUsd);
+    final tier = context.read<AppState>().donorTierForUserId(entry.userId);
     final medal = _medal;
     return Container(
       padding: const EdgeInsets.all(12),
@@ -228,7 +228,7 @@ class _PodiumSpot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tier = donorTierForUsd(entry.totalUsd);
+    final tier = context.read<AppState>().donorTierForUserId(entry.userId);
     final avatarSize = rank == 1 ? 56.0 : 46.0;
     final ringSize = rank == 1 ? 66.0 : 56.0;
     return Column(mainAxisSize: MainAxisSize.min, children: [

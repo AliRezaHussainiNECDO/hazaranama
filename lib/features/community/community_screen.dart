@@ -154,7 +154,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
         Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           DonorRing(
             theme: theme, size: 44, childSize: 38,
-            tier: donorTierForUser(app.currentUser, app.myDonationTotalUsd),
+            tier: app.myRankTier,
             child: HzBadge(theme: theme, size: 38, filled: true, avatarPath: app.avatarPath,
               child: const Icon(Icons.person, color: Colors.white, size: 16)),
           ),

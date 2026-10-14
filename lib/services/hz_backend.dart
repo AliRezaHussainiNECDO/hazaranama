@@ -53,6 +53,12 @@ class HzBackend {
     return _decode(res);
   }
 
+  /// درخواست GET (با نشست کاربر)؛ کل پاسخ JSON برگردانده می‌شود.
+  Future<dynamic> getJson(String path) async {
+    final res = await _http.get(Uri.parse('$baseUrl$path'), headers: _headers(json: false)).timeout(const Duration(seconds: 30));
+    return _decode(res);
+  }
+
   dynamic _decode(http.Response res) {
     dynamic data;
     try {

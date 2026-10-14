@@ -10,6 +10,7 @@ import '../../models/models.dart';
 import '../../state/app_state.dart';
 import '../donations/donation_screen.dart' show donationCategoryIcon;
 import '../profile/account_settings_screen.dart';
+import 'user_detail_page.dart';
 
 class OverviewPage extends StatefulWidget {
   final void Function(String page)? onOpenPage;
@@ -120,6 +121,10 @@ class _OverviewPageState extends State<OverviewPage> {
         const SizedBox(height: 10),
         _DonationsStrip(theme: theme, donations: latestDonations, loading: _loadingExtras),
         const SizedBox(height: 18),
+        _SectionHeader(icon: Icons.military_tech_rounded, color: theme.yellow, title: 'فعال‌ترین کاربران (امتیاز فعالیت)', theme: theme),
+        const SizedBox(height: 10),
+        _TopActiveStrip(theme: theme, app: app),
+        const SizedBox(height: 18),
         _SectionHeader(icon: Icons.article, color: theme.blue, title: 'آخرین مقالات ارسالی', theme: theme),
         const SizedBox(height: 10),
         _ArticlesStrip(theme: theme, articles: latestArticles, loading: _loadingExtras),
@@ -183,7 +188,7 @@ class _Stat {
 }
 
 /// کارت پروفایل مدیر — بالای صفحه‌ی نخست پنل مدیریت. عکس واقعی مدیر با
-/// همان حلقه‌ی مقام کمک‌کننده‌ی سراسر اپ (همیشه بالاترین مقام برای مدیر)،
+/// همان حلقه‌ی مقام فعالیت سراسر اپ (همیشه بالاترین مقام برای مدیر)،
 /// نام، نشان نقش، ایمیل، تاریخ عضویت و زادگاه — دقیقاً با همان زبان بصری
 /// (کارت شیشه‌ای، تراشه‌های گرد رنگی) که بقیه‌ی بخش‌های اپ استفاده می‌کنند.
 class _AdminProfileCard extends StatelessWidget {
@@ -195,7 +200,7 @@ class _AdminProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = app.currentUser;
-    final tier = donorTierForUser(user, app.myDonationTotalUsd);
+    final tier = app.rankTierForUser(user);
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -232,7 +237,7 @@ class _AdminProfileCard extends StatelessWidget {
         const SizedBox(height: 12),
         Wrap(spacing: 6, runSpacing: 6, children: [
           _InfoChip(theme: theme, icon: Icons.shield_rounded, label: roleLabel(user?.role ?? UserRole.admin), color: theme.yellow),
-          if (tier != null) DonorTierChip(tier: tier),
+          DonorTierChip(tier: tier),
           if ((user?.email ?? '').isNotEmpty) _InfoChip(theme: theme, icon: Icons.mail_outline_rounded, label: user!.email, color: theme.blue),
           if ((user?.joined ?? '').isNotEmpty) _InfoChip(theme: theme, icon: Icons.event_outlined, label: 'عضویت ${user!.joined}', color: theme.textSecondary),
           if ((user?.country ?? 'نامشخص') != 'نامشخص') _InfoChip(theme: theme, icon: Icons.public_rounded, label: user!.country, color: theme.success),
@@ -529,5 +534,60 @@ class _PendingTasks extends StatelessWidget {
         ],
       ),
     ]);
+  }
+}
+
+
+/// نوار افقی فعال‌ترین کاربران — بر پایه‌ی امتیاز فعالیت در همه‌ی بخش‌ها
+class _TopActiveStrip extends StatelessWidget {
+  final AppColors theme;
+  final AppState app;
+  const _TopActiveStrip({required this.theme, required this.app});
+
+  @override
+  Widget build(BuildContext context) {
+    final list = app.rankLeaderboard.where((e) => e.role != 'admin' && e.xp > 0).take(12).toList();
+    if (list.isEmpty) {
+      return Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(16), border: Border.all(color: theme.glassBorder)),
+        child: Text('هنوز امتیاز فعالیتی ثبت نشده است.', style: TextStyle(color: theme.textFaint, fontSize: 12.5)),
+      );
+    }
+    return SizedBox(
+      height: 128,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: list.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 10),
+        itemBuilder: (context, i) {
+          final e = list[i];
+          final tier = rankTierForXp(e.xp);
+          return InkWell(
+            borderRadius: BorderRadius.circular(16),
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => UserDetailPage(userId: e.userId))),
+            child: Container(
+              width: 104,
+              padding: const EdgeInsets.all(9),
+              decoration: BoxDecoration(
+                color: theme.bgCard.withValues(alpha: 0.6),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: tier.colors.first.withValues(alpha: 0.4)),
+              ),
+              child: Column(children: [
+                DonorRing(
+                  theme: theme, tier: tier, size: 50, childSize: 40,
+                  child: HzBadge(theme: theme, size: 40, filled: true, avatarPath: e.avatarPath, child: Text(e.name.isNotEmpty ? e.name.characters.first : '؟', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800))),
+                ),
+                const SizedBox(height: 6),
+                Text(e.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 11.5, fontWeight: FontWeight.w800)),
+                Text(tier.title, style: TextStyle(color: tier.colors.first, fontSize: 10.5, fontWeight: FontWeight.w700)),
+                Text('${e.xp} امتیاز', style: TextStyle(color: theme.textFaint, fontSize: 10)),
+              ]),
+            ),
+          );
+        },
+      ),
+    );
   }
 }

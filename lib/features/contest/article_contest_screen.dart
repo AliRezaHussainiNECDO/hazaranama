@@ -378,7 +378,7 @@ class _ArticleSubmitScreenState extends State<ArticleSubmitScreen> {
                   child: Row(children: [
                     DonorRing(
                       theme: theme, size: 48, childSize: 42,
-                      tier: donorTierForUser(user, app.myDonationTotalUsd),
+                      tier: app.rankTierForUser(user),
                       child: HzBadge(theme: theme, size: 42, filled: true, avatarPath: user?.avatarPath,
                           child: Text((user?.name.isNotEmpty ?? false) ? user!.name[0] : '؟', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800))),
                     ),

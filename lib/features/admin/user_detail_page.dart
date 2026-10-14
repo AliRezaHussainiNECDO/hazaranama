@@ -9,6 +9,7 @@ import '../../core/app_logo.dart';
 import '../../core/donor_tiers.dart';
 import '../../core/widgets.dart';
 import '../../models/models.dart';
+import '../../models/rank.dart';
 import '../../state/app_state.dart';
 
 /// پرونده‌ی کامل یک کاربر — هدر با حلقه‌ی مقام کمک‌کننده، اطلاعات کامل
@@ -138,8 +139,9 @@ class _UserDetailPageState extends State<UserDetailPage> {
       return Directionality(textDirection: TextDirection.rtl, child: Scaffold(backgroundColor: theme.bg, body: const SizedBox()));
     }
 
-    final donorTotal = app.donorTotalForUser(user.id);
-    final tier = donorTierForUser(user, donorTotal);
+    final xp = app.xpForUser(user.id);
+    final tier = rankTierByRole(user.role, xp);
+    final rank = app.rankLeaderboard.where((e) => e.userId == user.id).cast<RankEntry?>().firstWhere((_) => true, orElse: () => null);
     final isSelf = user.id == app.currentUser?.id;
 
     final counts = <UserActivityType, int>{};
@@ -194,12 +196,12 @@ class _UserDetailPageState extends State<UserDetailPage> {
                       Wrap(alignment: WrapAlignment.center, spacing: 6, runSpacing: 6, children: [
                         _pill(user.role == UserRole.admin ? theme.yellow : user.role == UserRole.editor ? theme.blue : theme.textFaint, roleLabel(user.role)),
                         _pill(user.status == UserStatus.active ? theme.success : theme.danger, user.status == UserStatus.active ? 'فعال' : 'مسدود'),
-                        if (tier != null) DonorTierChip(tier: tier),
+                        DonorTierChip(tier: tier),
                       ]),
                     ]),
                   ).animate().fadeIn(duration: 350.ms).scale(begin: const Offset(0.92, 0.92)),
                   const SizedBox(height: 20),
-                  _DonorSummaryCard(theme: theme, totalUsd: donorTotal, isAdmin: user.role == UserRole.admin),
+                  _RankSummaryCard(theme: theme, user: user, xp: xp, rank: rank),
                   const SizedBox(height: 16),
                   Text('آمار فعالیت', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800)),
                   const SizedBox(height: 10),
@@ -363,41 +365,114 @@ class _UserDetailPageState extends State<UserDetailPage> {
   }
 }
 
-/// کارت خلاصه‌ی مقام کمک‌کننده — بدون دکمه‌ی «کمک کن» (این پرونده‌ی کاربرِ
-/// دیگری است، نه پروفایل خودِ مدیر).
-class _DonorSummaryCard extends StatelessWidget {
+/// کارت مقام فعالیت کاربر در پرونده‌ی مدیر — امتیاز، جایگاه، ریز فعالیت‌ها
+/// و دکمه‌ی «جایزه‌ی امتیاز» برای قدردانی از کاربران پرکار.
+class _RankSummaryCard extends StatelessWidget {
   final AppColors theme;
-  final double totalUsd;
-  final bool isAdmin;
-  const _DonorSummaryCard({required this.theme, required this.totalUsd, this.isAdmin = false});
+  final UserProfile user;
+  final int xp;
+  final RankEntry? rank;
+  const _RankSummaryCard({required this.theme, required this.user, required this.xp, required this.rank});
 
   @override
   Widget build(BuildContext context) {
-    // مدیر همیشه بالاترین مقام را دارد؛ بقیه‌ی کاربران دقیقاً همان منطق قبلی.
-    final tier = isAdmin ? kDonorTiers.last : donorTierForUsd(totalUsd);
-    final next = isAdmin ? null : nextDonorTier(totalUsd);
-    final progress = isAdmin ? 1.0 : progressToNextDonorTier(totalUsd);
+    final isAdmin = user.role == UserRole.admin;
+    final tier = rankTierByRole(user.role, xp);
+    final next = isAdmin ? null : nextRankTier(xp);
+    final progress = isAdmin ? 1.0 : progressToNextRank(xp);
+    final r = rank;
     return HzGlassCard(
       theme: theme,
       radius: 18,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
-          Icon(Icons.volunteer_activism_rounded, size: 16, color: theme.success),
+          Icon(Icons.military_tech_rounded, size: 18, color: tier.colors.first),
           const SizedBox(width: 7),
-          Expanded(child: Text(tier != null ? 'مقام: ${tier.title}' : 'هنوز کمکی تأیید نشده', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800))),
-          Text('~${totalUsd.toStringAsFixed(0)}\$', style: TextStyle(color: theme.success, fontSize: 13, fontWeight: FontWeight.w800)),
+          Expanded(child: Text('مقام: ${tier.title}', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800))),
+          Text('${toFaDigits(xp)} امتیاز', style: TextStyle(color: tier.colors.first, fontSize: 13, fontWeight: FontWeight.w900)),
         ]),
+        if (r != null && r.position > 0) ...[
+          const SizedBox(height: 4),
+          Text('جایگاه ${toFaDigits(r.position)} در جدول فعال‌ترین کاربران', style: TextStyle(color: theme.textFaint, fontSize: 11)),
+        ],
         if (next != null) ...[
           const SizedBox(height: 10),
           ClipRRect(
             borderRadius: BorderRadius.circular(999),
-            child: LinearProgressIndicator(value: progress, minHeight: 6, backgroundColor: theme.bgCardAlt, color: theme.success),
+            child: LinearProgressIndicator(value: progress, minHeight: 6, backgroundColor: theme.bgCardAlt, color: tier.colors.first),
           ),
           const SizedBox(height: 5),
-          Text('${(next.minUsd - totalUsd).clamp(0, next.minUsd).toStringAsFixed(0)} دلار دیگر تا مقام «${next.title}»', style: TextStyle(color: theme.textFaint, fontSize: 11)),
+          Text('${toFaDigits(next.minXp - xp)} امتیاز دیگر تا مقام «${next.title}»', style: TextStyle(color: theme.textFaint, fontSize: 11)),
+        ],
+        if (r != null) ...[
+          const SizedBox(height: 10),
+          Wrap(spacing: 6, runSpacing: 6, children: [
+            for (final w in kXpWays)
+              if (r.stat(w.key) > 0)
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  decoration: BoxDecoration(color: w.color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(999)),
+                  child: Row(mainAxisSize: MainAxisSize.min, children: [
+                    Icon(w.icon, size: 12, color: w.color),
+                    const SizedBox(width: 4),
+                    Text('${w.title}: ${toFaDigits(r.stat(w.key))}', style: TextStyle(color: theme.textSecondary, fontSize: 10.5, fontWeight: FontWeight.w700)),
+                  ]),
+                ),
+            if (r.stat('bonus') != 0)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(color: theme.yellow.withValues(alpha: 0.14), borderRadius: BorderRadius.circular(999)),
+                child: Text('جایزه‌ی مدیر: ${toFaDigits(r.stat('bonus'))}', style: TextStyle(color: theme.yellow, fontSize: 10.5, fontWeight: FontWeight.w800)),
+              ),
+          ]),
+        ],
+        if (!isAdmin) ...[
+          const SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: () => _award(context),
+              icon: Icon(Icons.card_giftcard_rounded, size: 16, color: theme.yellow),
+              label: Text('جایزه‌ی امتیاز', style: TextStyle(color: theme.yellow, fontSize: 12.5, fontWeight: FontWeight.w800)),
+              style: OutlinedButton.styleFrom(side: BorderSide(color: theme.yellow.withValues(alpha: 0.5)), padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+            ),
+          ),
         ],
       ]),
     );
+  }
+
+  Future<void> _award(BuildContext context) async {
+    final amount = TextEditingController(text: '50');
+    final reason = TextEditingController();
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => Directionality(
+        textDirection: TextDirection.rtl,
+        child: AlertDialog(
+          backgroundColor: theme.bgElevated,
+          title: Text('جایزه‌ی امتیاز به ${user.name}', style: TextStyle(color: theme.textPrimary, fontSize: 15, fontWeight: FontWeight.w800)),
+          content: Column(mainAxisSize: MainAxisSize.min, children: [
+            HzTextField(controller: amount, icon: Icons.add_circle_outline, hint: 'مقدار امتیاز (برای کسر، منفی بنویسید)', theme: theme, keyboardType: const TextInputType.numberWithOptions(signed: true)),
+            const SizedBox(height: 10),
+            HzTextField(controller: reason, icon: Icons.notes_rounded, hint: 'دلیل (در اعلان کاربر دیده می‌شود)', theme: theme),
+          ]),
+          actions: [
+            TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text('انصراف', style: TextStyle(color: theme.textFaint))),
+            ElevatedButton(onPressed: () => Navigator.of(ctx).pop(true), child: const Text('ثبت')),
+          ],
+        ),
+      ),
+    );
+    if (ok != true || !context.mounted) return;
+    final delta = int.tryParse(amount.text.trim().replaceAllMapped(RegExp('[۰-۹]'), (m) => '${'۰۱۲۳۴۵۶۷۸۹'.indexOf(m[0]!)}')) ?? 0;
+    if (delta == 0) return;
+    try {
+      await context.read<AppState>().awardXp(user.id, delta, reason.text.trim());
+      if (context.mounted) showHzToast(context, delta > 0 ? '${toFaDigits(delta)} امتیاز به ${user.name} داده شد.' : 'امتیاز کسر شد.');
+    } catch (e) {
+      if (context.mounted) showHzToast(context, 'ثبت امتیاز ناموفق بود: $e');
+    }
   }
 }
 

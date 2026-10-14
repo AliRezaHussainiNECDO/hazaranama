@@ -323,7 +323,7 @@ class _MoreReactionsButton extends StatelessWidget {
     showVipStickerPicker(
       context: context,
       theme: theme,
-      myTier: donorTierForUser(app.currentUser, app.myDonationTotalUsd),
+      myTier: app.myRankTier,
       baseChoices: AppConstants.emojiChoices,
       onPick: (e) => app.toggleReaction(post.id, e),
     );
@@ -468,7 +468,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
     ctrl.clear();
     setState(() => _replyingTo = null);
     await app.addPostComment(widget.postId, text, parentId: parentId);
-    if (donorTierForUser(app.currentUser, app.myDonationTotalUsd)?.index == kDonorTiers.last.index) {
+    if (app.myRankTier.index == kDonorTiers.last.index) {
       HapticFeedback.heavyImpact();
       if (mounted) showHzToast(context, '👑 کامنت شاهانه‌ات ارسال شد!');
     }
@@ -591,7 +591,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 14),
                 child: _CommentComposer(
                   theme: theme, controller: _commentCtrl, onSend: () => _submit(),
-                  myTier: donorTierForUser(app.currentUser, app.myDonationTotalUsd),
+                  myTier: app.myRankTier,
                 ),
               ),
             ]),
@@ -749,7 +749,7 @@ class _CommentTile extends StatelessWidget {
               const SizedBox(height: 8),
               _CommentComposer(
                 theme: theme, controller: replyController!, onSend: onSendReply ?? () {},
-                myTier: donorTierForUser(app.currentUser, app.myDonationTotalUsd),
+                myTier: app.myRankTier,
               ),
             ],
           ]),

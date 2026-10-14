@@ -7,6 +7,7 @@ import '../explore/explore_screen.dart';
 import '../community/community_screen.dart';
 import '../search/search_screen.dart';
 import '../profile/profile_screen.dart';
+import '../rank/rank_screen.dart';
 
 /// پوسته‌ی اپلیکیشن کاربران — معادل UserApp در دموی وب.
 /// یک BottomNavigationBar واقعی به‌جای نوار پایین شبیه‌سازی‌شده‌ی وب.
@@ -40,7 +41,7 @@ class UserShellState extends State<UserShell> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       extendBody: true,
-      body: SafeArea(bottom: false, child: IndexedStack(index: _tab, children: pages)),
+      body: LevelUpListener(child: SafeArea(bottom: false, child: IndexedStack(index: _tab, children: pages))),
       bottomNavigationBar: SafeArea(
         child: HzGlassNavBar(
           theme: theme,

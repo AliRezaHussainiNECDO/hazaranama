@@ -12,6 +12,8 @@ import '../home/section_card.dart';
 import '../contest/featured_articles_body.dart';
 import '../music/artists_gallery_body.dart';
 import 'section_bodies.dart';
+import '../library/library_screens.dart';
+import '../news/news_screens.dart';
 import 'dictionary_body.dart';
 
 class SectionDetailScreen extends StatelessWidget {
