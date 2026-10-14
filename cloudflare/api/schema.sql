@@ -374,3 +374,17 @@ CREATE TABLE IF NOT EXISTS oauth_states (
 ALTER TABLE artists ADD COLUMN category TEXT;
 ALTER TABLE artists ADD COLUMN image_credit TEXT;
 ALTER TABLE artists ADD COLUMN image_page TEXT
+;
+
+-- امتیاز فعالیت (XP): رویدادهای یکتای هر کاربر (آمدن روزانه، خواندن، تماشا، دانلود کتاب، خبر)
+CREATE TABLE IF NOT EXISTS user_events (
+  user_id    TEXT NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
+  kind       TEXT NOT NULL,
+  ref        TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+  PRIMARY KEY (user_id, kind, ref)
+);
+CREATE INDEX IF NOT EXISTS idx_user_events_day ON user_events (user_id, created_at);
+
+-- امتیاز جایزه‌ی مدیر (مثبت یا منفی)
+ALTER TABLE profiles ADD COLUMN xp_bonus INTEGER NOT NULL DEFAULT 0

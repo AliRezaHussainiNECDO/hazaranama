@@ -63,6 +63,7 @@ const POLICIES: Record<string, Policy> = {
       if (!isAdmin(u)) {
         delete v.role;
         delete v.status;
+        delete v.xp_bonus;
       }
       return v;
     },

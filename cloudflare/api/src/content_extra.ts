@@ -42,7 +42,7 @@ export async function prewarmMirror(env: Env, budget: number) {
 }
 
 // ---------------- خبرنامه‌ی خودکار ----------------
-// فقط عنوان، نام رسانه، تاریخ و لینک به خبر اصلی ذخیره می‌شود (نه متن خبر).
+// عنوان، نام رسانه، تاریخ و لینک؛ سپس عکس و خلاصه‌ی اشتراک‌گذاری ناشر (نه متن کامل خبر).
 const FEEDS: { name: string; url: string; kind: "rss" | "gdelt" }[] = [
   { name: "KabulNow", url: "https://kabulnow.com/feed/", kind: "rss" },
   { name: "Amu TV", url: "https://amu.tv/feed/", kind: "rss" },
@@ -78,7 +78,7 @@ export async function fetchNews(env: Env, force = false): Promise<{ added: numbe
     const last = await env.DB.prepare("SELECT value FROM _meta WHERE key = 'news_fetched_at_v4'").first<{ value: string }>();
     if (last && Date.now() - Date.parse(last.value) < 60 * 60_000) return { added: 0, skipped: "recent" };
   }
-  await env.DB.prepare("INSERT OR REPLACE INTO _meta (key, value) VALUES ('news_fetched_at_v3', ?)").bind(new Date().toISOString()).run();
+  await env.DB.prepare("INSERT OR REPLACE INTO _meta (key, value) VALUES ('news_fetched_at_v4', ?)").bind(new Date().toISOString()).run();
 
   const seenRow = await env.DB.prepare("SELECT value FROM _meta WHERE key = 'news_seen'").first<{ value: string }>();
   const seen: string[] = seenRow ? JSON.parse(seenRow.value) : [];
@@ -151,4 +151,92 @@ export async function fetchNews(env: Env, force = false): Promise<{ added: numbe
   await env.DB.batch(stmts);
   console.log("news added", batch.length, "candidates", fresh.length);
   return { added: batch.length };
+}
+
+// ---------------- غنی‌سازی خبرها: عکس و خلاصه‌ی ناشر + برگردان فارسی ----------------
+// از صفحه‌ی خبر فقط برچسب‌های اشتراک‌گذاری (og:image و og:description) خوانده می‌شود —
+// همان عکس و خلاصه‌ای که خودِ ناشر برای نمایش در شبکه‌ها می‌گذارد؛ متن کامل خبر
+// کپی نمی‌شود و کاربر آن را داخل اپ، در صفحه‌ی خودِ منبع می‌خواند.
+function metaTag(html: string, names: string[]): string {
+  for (const n of names) {
+    const re1 = new RegExp(`<meta[^>]+(?:property|name)=["']${n}["'][^>]*content=["']([^"']+)["']`, "i");
+    const re2 = new RegExp(`<meta[^>]+content=["']([^"']+)["'][^>]*(?:property|name)=["']${n}["']`, "i");
+    const m = html.match(re1) ?? html.match(re2);
+    if (m?.[1]) return decode(m[1]).replace(/&#(\d+);/g, (_, d) => String.fromCharCode(Number(d)));
+  }
+  return "";
+}
+
+const PERSIAN = /[؀-ۿ]/;
+
+async function toPersian(env: Env, title: string, summary: string): Promise<{ title: string; summary: string } | null> {
+  if (!env.AI) return null;
+  try {
+    const prompt = `Translate this news headline and summary into fluent Persian (Dari, as used in Afghanistan). Keep names accurate. Return ONLY JSON: {"title":"...","summary":"..."}\n\nHeadline: ${title}\nSummary: ${summary || "(none)"}`;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const out: any = await env.AI.run("@cf/google/gemma-3-12b-it" as any, { messages: [{ role: "user", content: prompt }], max_tokens: 700, temperature: 0.2 });
+    const text = String(out?.response ?? "");
+    const m = text.match(/\{[\s\S]*\}/);
+    if (!m) return null;
+    const j = JSON.parse(m[0]) as { title?: string; summary?: string };
+    if (!j.title || !PERSIAN.test(j.title)) return null;
+    return { title: j.title.trim().slice(0, 300), summary: (j.summary ?? "").trim().slice(0, 1500) };
+  } catch (e) {
+    console.error("news fa", String(e));
+    return null;
+  }
+}
+
+type NewsRow = { id: string; fields: string; image_url: string | null };
+
+async function enrichOne(env: Env, row: NewsRow): Promise<Record<string, unknown>> {
+  const f = JSON.parse(row.fields || "{}") as Record<string, unknown>;
+  let image = row.image_url ?? "";
+  const url = String(f.url ?? "");
+  if (url.startsWith("http")) {
+    try {
+      const ctl = new AbortController();
+      const t = setTimeout(() => ctl.abort(), 7000);
+      const r = await fetch(url, { headers: { "User-Agent": "Mozilla/5.0 (compatible; " + UA + ")", Accept: "text/html" }, signal: ctl.signal, redirect: "follow" });
+      clearTimeout(t);
+      if (r.ok && (r.headers.get("content-type") ?? "").includes("html")) {
+        const html = (await r.text()).slice(0, 400_000);
+        const img = metaTag(html, ["og:image", "og:image:url", "twitter:image", "twitter:image:src"]);
+        if (!image && img.startsWith("http")) image = img;
+        const desc = metaTag(html, ["og:description", "twitter:description", "description"]);
+        if (desc && !f.snippet) f.snippet = desc.replace(/\s+/g, " ").trim().slice(0, 1200);
+      }
+    } catch (e) {
+      console.error("news enrich", url, String(e));
+    }
+  }
+  const title = String(f.title ?? "");
+  if (!PERSIAN.test(title) && !f.title_fa) {
+    const fa = await toPersian(env, title, String(f.snippet ?? ""));
+    if (fa) {
+      f.title_fa = fa.title;
+      if (fa.summary) f.snippet_fa = fa.summary;
+    }
+  }
+  f.enriched = "1";
+  await env.DB.prepare("UPDATE content_items SET fields = ?, image_url = ?, updated_at = ? WHERE id = ?")
+    .bind(JSON.stringify(f), image || null, new Date().toISOString(), row.id).run();
+  return { id: row.id, fields: f, image_url: image || null };
+}
+
+/** در هر اجرای cron چند خبر تازه را غنی می‌کند */
+export async function enrichNews(env: Env, budget = 6) {
+  const rows = await env.DB.prepare(
+    "SELECT id, fields, image_url FROM content_items WHERE section_id = 'news' AND json_extract(fields, '$.enriched') IS NULL ORDER BY json_extract(fields, '$.published') DESC LIMIT ?",
+  ).bind(budget).all<NewsRow>();
+  for (const r of rows.results ?? []) await enrichOne(env, r);
+}
+
+/** غنی‌سازی فوری یک خبر وقتی کاربر آن را باز می‌کند و هنوز آماده نیست */
+export async function enrichNewsItem(env: Env, id: string): Promise<Record<string, unknown> | null> {
+  const row = await env.DB.prepare("SELECT id, fields, image_url FROM content_items WHERE id = ? AND section_id = 'news'").bind(id).first<NewsRow>();
+  if (!row) return null;
+  const f = JSON.parse(row.fields || "{}") as Record<string, unknown>;
+  if (f.enriched) return { id: row.id, fields: f, image_url: row.image_url };
+  return enrichOne(env, row);
 }

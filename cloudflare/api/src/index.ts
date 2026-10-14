@@ -17,10 +17,11 @@ import { handleAi } from "./ai";
 import { oauthProviders, oauthStart, oauthCallback, oauthExchange, verifyAppleIdentity, type Profile } from "./oauth";
 import schemaSql from "../schema.sql";
 import seedContent from "../seed/content.json";
-import { fetchNews, mirrorCommons, prewarmMirror } from "./content_extra";
+import { fetchNews, mirrorCommons, prewarmMirror, enrichNews, enrichNewsItem } from "./content_extra";
 import legacySeedKeys from "../seed/legacy_seed_keys.json";
+import { allXp, trackEvent, invalidateXp, XP_RULES } from "./xp";
 
-const SCHEMA_VERSION = 5;
+const SCHEMA_VERSION = 6;
 
 const CORS: Record<string, string> = {
   "Access-Control-Allow-Origin": "*",
@@ -659,6 +660,24 @@ async function handleAdmin(env: Env, ctx: Ctx, req: Request, path: string, url: 
     return json(await seed(env, replace));
   }
 
+  // جایزه یا کسر امتیاز از سوی مدیر — با اعلان برای کاربر
+  if (path === "/admin/xp-bonus" && req.method === "POST") {
+    const u = await currentUser(env, req);
+    if (!u || u.role !== "admin") return err(403, "فقط مدیر.");
+    const b = await readJson(req);
+    const target = String(b.user_id ?? "");
+    const delta = Math.trunc(Number(b.delta) || 0);
+    if (!target || !delta || Math.abs(delta) > 100000) return err(400, "کاربر و مقدار امتیاز معتبر لازم است.");
+    const reason = String(b.reason ?? "").trim().slice(0, 200);
+    const r = await env.DB.prepare("UPDATE profiles SET xp_bonus = COALESCE(xp_bonus, 0) + ? WHERE id = ?").bind(delta, target).run();
+    if (!(r.meta?.changes ?? 0)) return err(404, "کاربر پیدا نشد.");
+    invalidateXp();
+    if (delta > 0) {
+      await insertNotifications(env, ctx, [{ user_id: target, type: "xp_bonus", title: `🎁 ${delta} امتیاز جایزه گرفتید!`, body: reason || "از سوی مدیریت هزاره‌نامه، برای فعالیت ارزشمندتان.", ref_id: target, ref_type: "user" }]);
+    }
+    return json({ ok: true });
+  }
+
   if (path === "/admin/stats") {
     const out: Record<string, number> = {};
     for (const t of IMPORT_ORDER.filter((t) => t !== "auth_users").concat(["users"])) {
@@ -707,6 +726,7 @@ async function scheduled(env: Env) {
   if (!worked) await migrateMedia(env, PUBLIC_ORIGIN, 20);
   await prewarmMirror(env, 6).catch((e) => console.error("prewarm", e));
   await fetchNews(env).catch((e) => console.error("news", e));
+  await enrichNews(env, 6).catch((e) => console.error("news enrich", e));
 }
 
 // ---------------- ورودی اصلی ----------------
@@ -762,7 +782,53 @@ export default {
         if (!user) return err(401, "ابتدا وارد شوید.");
         const day = new Date().toISOString().slice(0, 10);
         await env.DB.prepare("INSERT INTO daily_visits (day, count) VALUES (?, 1) ON CONFLICT(day) DO UPDATE SET count = count + 1").bind(day).run();
+        await trackEvent(env, user.id, "visit", day);
         return json({ data: null });
+      }
+      // امتیاز فعالیت: ثبت خواندن/تماشا/دانلود/خبر و جدول مقام‌ها
+      if (path === "/rpc/track" && req.method === "POST") {
+        const user = await currentUser(env, req);
+        if (!user) return err(401, "ابتدا وارد شوید.");
+        const b = await readJson(req);
+        return json({ data: await trackEvent(env, user.id, b.kind, b.ref) });
+      }
+      // نشانی دانلود مستقیم کتاب: فایل آپلودشده‌ی مدیر، یا PDF آزاد یک اثر در Internet Archive
+      if (path === "/books/download" && req.method === "GET") {
+        const id = url.searchParams.get("id") ?? "";
+        const row = await env.DB.prepare("SELECT fields FROM content_items WHERE id = ? AND section_id = 'library'").bind(id).first<{ fields: string }>();
+        if (!row) return err(404, "کتاب پیدا نشد.");
+        const f = JSON.parse(row.fields || "{}") as Record<string, string>;
+        if ((f.file_url ?? "").startsWith("http")) return json({ data: { url: f.file_url, name: f.file_name || `${id}.pdf`, size: Number(f.file_size) || null } });
+        const aid = (f.archive_id ?? "").trim();
+        if (!aid || f.downloadable !== "1") return err(404, "این کتاب نسخه‌ی قابل دانلود ندارد.");
+        const meta = await fetch(`https://archive.org/metadata/${encodeURIComponent(aid)}`, { headers: { "User-Agent": "HazaranamaBot/1.0 (https://hazaranama.com)" } });
+        if (!meta.ok) return err(502, "منبع کتاب در دسترس نیست؛ کمی بعد دوباره امتحان کنید.");
+        const m = (await meta.json()) as { files?: { name: string; size?: string; format?: string; private?: string }[]; metadata?: { "access-restricted-item"?: string } };
+        if (String(m.metadata?.["access-restricted-item"]) === "true") return err(404, "این کتاب فقط امانتی است و دانلود آزاد ندارد.");
+        const pdfs = (m.files ?? []).filter((x) => /\.pdf$/i.test(x.name) && x.private !== "true");
+        pdfs.sort((a, b) => Number(a.size ?? 0) - Number(b.size ?? 0)); // کوچک‌ترین PDF — مناسب موبایل
+        const pick = pdfs[0];
+        if (!pick) return err(404, "فایل PDF این کتاب پیدا نشد.");
+        return json({ data: { url: `https://archive.org/download/${encodeURIComponent(aid)}/${pick.name.split("/").map(encodeURIComponent).join("/")}`, name: pick.name.split("/").pop(), size: Number(pick.size) || null } });
+      }
+      if (path === "/news/item" && req.method === "GET") {
+        const it = await enrichNewsItem(env, url.searchParams.get("id") ?? "");
+        return it ? json({ data: it }) : err(404, "خبر پیدا نشد.");
+      }
+      if (path === "/xp/leaderboard" && req.method === "GET") {
+        const user = await currentUser(env, req);
+        if (!user) return err(401, "ابتدا وارد شوید.");
+        const limit = Math.min(500, Math.max(1, Number(url.searchParams.get("limit") ?? 200) || 200));
+        const list = await allXp(env);
+        return json({ data: list.slice(0, limit).map((e, i) => ({ ...e, position: i + 1 })), rules: XP_RULES, total_users: list.length });
+      }
+      if (path === "/xp/me" && req.method === "GET") {
+        const user = await currentUser(env, req);
+        if (!user) return err(401, "ابتدا وارد شوید.");
+        const id = url.searchParams.get("user_id") || user.id;
+        const list = await allXp(env);
+        const i = list.findIndex((e) => e.user_id === id);
+        return json({ data: i < 0 ? null : { ...list[i], position: i + 1 }, rules: XP_RULES, total_users: list.length });
       }
       if (path === "/rpc/increment_video_views") {
         const b = await readJson(req);
