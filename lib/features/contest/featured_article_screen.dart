@@ -9,6 +9,7 @@ import '../../core/donor_tiers.dart';
 import '../../core/widgets.dart';
 import '../../models/models.dart';
 import '../../state/app_state.dart';
+import '../community/post_widgets.dart' show showReportDialog;
 
 /// صفحه‌ی یک مقاله‌ی برگزیده — متن کامل + نشان رتبه/جایزه، واکنش ایموجی،
 /// و کامنت‌ها با قابلیت ریپلای (دقیقاً هم‌خانواده‌ی صفحه‌ی پخش ویدیو).
@@ -386,6 +387,23 @@ class _ArticleCommentTile extends StatelessWidget {
             ]),
             const SizedBox(height: 3),
             Text(comment.text, style: TextStyle(color: theme.textSecondary, fontSize: 12, height: 1.7)),
+            if (app.currentUser != null && comment.authorId != app.currentUser?.id)
+              Align(
+                alignment: AlignmentDirectional.centerEnd,
+                child: InkWell(
+                  onTap: () => showReportDialog(context,
+                      targetType: 'comment', targetId: comment.id,
+                      targetOwnerId: comment.authorId, targetPreview: comment.text),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: Row(mainAxisSize: MainAxisSize.min, children: [
+                      Icon(Icons.flag_outlined, size: 13, color: theme.textFaint),
+                      const SizedBox(width: 3),
+                      Text('گزارش', style: TextStyle(color: theme.textFaint, fontSize: 11)),
+                    ]),
+                  ),
+                ),
+              ),
             if (!isReply) ...[
               const SizedBox(height: 4),
               InkWell(

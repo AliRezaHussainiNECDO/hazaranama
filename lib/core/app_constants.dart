@@ -2,7 +2,6 @@
 class AppConstants {
   static const adminEmail = 'alireza.necdo@gmail.com';
 
-  static const demoUserEmail = 'bibigol@example.com';
 
   static const countrySuggestions = [
     'افغانستان', 'پاکستان', 'ایران', 'استرالیا', 'آلمان',

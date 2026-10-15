@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../core/donor_tiers.dart' show donorPerksEnabled;
+import '../rank/rank_screen.dart';
 import '../../core/widgets.dart';
 import '../../models/models.dart';
 import '../../state/app_state.dart';
@@ -50,7 +52,15 @@ Future<void> openNotificationTarget(BuildContext context, AppState app, Notifica
       return;
     case 'donation_transfer':
     case 'donor_tier':
-      nav.push(MaterialPageRoute(builder: (_) => const DonationScreen()));
+      // حمایت مالی فقط در نسخه‌ی وب است (قوانین گوگل‌پلی و اپ‌استور)
+      if (donorPerksEnabled) {
+        nav.push(MaterialPageRoute(builder: (_) => const DonationScreen()));
+      } else {
+        showHzToast(context, 'جزئیات حمایت در نسخه‌ی وب هزاره‌نامه (hazaranama.com) در دسترس است.');
+      }
+      return;
+    case 'xp_bonus':
+      nav.push(RankScreen.route());
       return;
     case 'contact_message':
       nav.push(MaterialPageRoute(builder: (_) => const ContactUsScreen()));

@@ -2,6 +2,7 @@
 // انجام می‌داد (select با embed، eq/lt/gte/…، order، limit، insert/update/delete/upsert)
 // به‌علاوه‌ی «قوانین دسترسی» هر جدول که جای RLS پستگرس را می‌گیرد.
 import type { Env, Ctx } from "./types";
+import { moderationError } from "./moderation";
 import { runAfterHooks, loadRowsForHooks } from "./hooks";
 
 export class HttpError extends Error {
@@ -47,7 +48,7 @@ function insertOwnActive(col: string) {
     if (!active(u)) return "حساب شما مسدود است.";
     if (row[col] == null) row[col] = u.id;
     if (row[col] !== u.id) return "اجازه‌ی این کار را ندارید.";
-    return true;
+    return moderationError(row.text, row.title, row.body) ?? true;
   };
 }
 const insertAdmin = (u: User | null) => (isAdmin(u) ? true : "فقط مدیر می‌تواند این کار را انجام دهد.");
@@ -64,6 +65,8 @@ const POLICIES: Record<string, Policy> = {
         delete v.role;
         delete v.status;
         delete v.xp_bonus;
+        const bad = moderationError(v.name, v.bio);
+        if (bad) throw new HttpError(400, bad);
       }
       return v;
     },

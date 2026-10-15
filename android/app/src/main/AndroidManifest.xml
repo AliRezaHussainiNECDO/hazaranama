@@ -40,7 +40,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-        <!-- بازگشت از ورود با فیسبوک/ایکس (flutter_web_auth_2) -->
+        <!-- بازگشت از ورود OAuth (flutter_web_auth_2) -->
         <activity
             android:name="com.linusu.flutter_web_auth_2.CallbackActivity"
             android:exported="true">

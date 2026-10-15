@@ -79,7 +79,7 @@ class HomeScreen extends StatelessWidget {
         ),
         const SizedBox(height: 18),
         AiRecommendSection(onOpenSection: onOpenSection),
-        DonationHomeCard(theme: theme),
+        if (donorPerksEnabled) DonationHomeCard(theme: theme),
         const SizedBox(height: 26),
         Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
           Expanded(

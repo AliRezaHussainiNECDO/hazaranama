@@ -1,15 +1,16 @@
 import 'dart:math' as math;
-import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform, TargetPlatform;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../models/models.dart';
 import 'app_colors.dart';
 import 'widgets.dart';
 
-/// بخش‌های مربوط به حمایت مالی (فهرست حامیان و فرم‌ها) فقط روی وب و
-/// اندروید نشان داده می‌شوند (راهنمای اپ‌استور 3.1.1). مقام‌ها اما از
-/// فعالیت به دست می‌آیند و روی همه‌ی سکوها یکسان‌اند.
-bool get donorPerksEnabled => kIsWeb || defaultTargetPlatform != TargetPlatform.iOS;
+/// حمایت مالی فقط در نسخه‌ی وب (hazaranama.com) نشان داده می‌شود: هزاره‌نامه
+/// سازمان معاف از مالیات نیست، و گوگل‌پلی (سیاست پرداخت‌ها) و اپ‌استور
+/// (بندهای 3.1.1 و 3.2.2) دریافت یا حتی لینک‌دادن به کمک مالی را در اپ برای
+/// چنین پروژه‌هایی نمی‌پذیرند. مقام‌ها اما از فعالیت می‌آیند و همه‌جا یکسان‌اند.
+bool get donorPerksEnabled => kIsWeb;
 
 /// آستانه‌ی مقام لازم برای باز شدن استیکرهای اختصاصی (از «اسطوره» به بالا).
 const int kVipStickerTierIndex = 7;
