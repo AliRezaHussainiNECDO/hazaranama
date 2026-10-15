@@ -1,0 +1,28 @@
+name: Android build check
+
+# بررسی اینکه نسخه‌ی اندروید (debug) ساخته می‌شود — روی هر تغییر android/ یا pubspec
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [ main, 'review/**' ]
+    paths:
+      - 'android/**'
+      - 'pubspec.yaml'
+      - '.github/workflows/android-check.yml'
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter build apk --debug
