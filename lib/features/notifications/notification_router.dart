@@ -56,7 +56,7 @@ Future<void> openNotificationTarget(BuildContext context, AppState app, Notifica
       if (donorPerksEnabled) {
         nav.push(MaterialPageRoute(builder: (_) => const DonationScreen()));
       } else {
-        showHzToast(context, 'جزئیات حمایت در نسخه‌ی وب هزاره‌نامه (hazaranama.com) در دسترس است.');
+        showHzToast(context, 'این بخش در نسخه‌ی موبایل در دسترس نیست.');
       }
       return;
     case 'xp_bonus':
