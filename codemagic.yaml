@@ -1,0 +1,65 @@
+# Codemagic — ساخت امضاشده‌ی iOS و ارسال به App Store Connect (TestFlight)
+# امضا خودکار است: از کلید «Codemagic CI Admin» (Apple Developer Portal integration) استفاده می‌شود.
+workflows:
+  ios-release:
+    name: iOS → App Store Connect
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: Codemagic CI Admin
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.hazaranama.hazaranama
+    scripts:
+      - name: Flutter packages
+        script: flutter pub get
+      - name: CocoaPods
+        script: |
+          cd ios
+          flutter precache --ios
+          pod install --repo-update || pod install
+      - name: Use signing profiles
+        script: xcode-project use-profiles
+      - name: Build IPA
+        script: |
+          flutter build ipa --release \
+            --build-name=$(grep '^version:' pubspec.yaml | sed 's/version: //; s/+.*//') \
+            --build-number=$((100 + BUILD_NUMBER)) \
+            --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+
+  # اندروید — وقتی حساب تازه‌ی Google Play آماده شد:
+  # keystore را با نام «hazaranama_upload» در Codemagic → Code signing identities بارگذاری کنید.
+  android-release:
+    name: Android → AAB
+    max_build_duration: 60
+    instance_type: linux_x2
+    environment:
+      flutter: stable
+      android_signing:
+        - hazaranama_upload
+    scripts:
+      - name: Flutter packages
+        script: flutter pub get
+      - name: key.properties
+        script: |
+          cat > android/key.properties <<EOF
+          storePassword=$CM_KEYSTORE_PASSWORD
+          keyPassword=$CM_KEY_PASSWORD
+          keyAlias=$CM_KEY_ALIAS
+          storeFile=$CM_KEYSTORE_PATH
+          EOF
+      - name: Build AAB
+        script: flutter build appbundle --release --build-number=$((100 + BUILD_NUMBER))
+    artifacts:
+      - build/app/outputs/bundle/release/*.aab
