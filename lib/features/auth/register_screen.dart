@@ -235,9 +235,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(color: theme.success.withValues(alpha: 0.08), borderRadius: BorderRadius.circular(14), border: Border.all(color: theme.success.withValues(alpha: 0.3))),
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Icon(Icons.verified_rounded, size: 16, color: theme.success),
+          Icon(Icons.mark_email_read_rounded, size: 16, color: theme.success),
           const SizedBox(width: 9),
-          Expanded(child: Text('حساب شما بلافاصله فعال می‌شود؛ نیازی به تأیید مدیر نیست.', style: TextStyle(color: theme.textSecondary, fontSize: 12, height: 1.8))),
+          Expanded(child: Text('پس از ثبت‌نام، یک کد ۶ رقمی به ایمیل شما فرستاده می‌شود. با وارد کردن آن، ایمیل‌تان تأیید و حساب‌تان کامل فعال می‌شود (پوشه‌ی Spam را هم نگاه کنید).', style: TextStyle(color: theme.textSecondary, fontSize: 12, height: 1.8))),
         ]),
       ),
     ];
