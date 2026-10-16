@@ -12,7 +12,7 @@ import { hashPassword, verifyPassword, signJwt, verifyJwt, sha256Hex } from "./a
 import { runQuery, HttpError, type User, type QueryReq, encodeValue, columnsOf } from "./db";
 import { insertNotifications, adminIds } from "./hooks";
 import { pushConfigured } from "./push";
-import { emailConfigured, sendEmail, recoveryEmail, welcomeEmail, passwordChangedEmail } from "./email";
+import { emailConfigured, sendEmail, recoveryEmail, welcomeEmail, passwordChangedEmail, verifyEmail } from "./email";
 import { handleAi } from "./ai";
 import { oauthProviders, oauthStart, oauthCallback, oauthExchange, verifyAppleIdentity, type Profile } from "./oauth";
 import schemaSql from "../schema.sql";
@@ -21,7 +21,7 @@ import { fetchNews, mirrorCommons, prewarmMirror, enrichNews, enrichNewsItem } f
 import legacySeedKeys from "../seed/legacy_seed_keys.json";
 import { allXp, trackEvent, invalidateXp, XP_RULES } from "./xp";
 
-const SCHEMA_VERSION = 6;
+const SCHEMA_VERSION = 7;
 
 const CORS: Record<string, string> = {
   "Access-Control-Allow-Origin": "*",
@@ -73,12 +73,12 @@ async function currentUser(env: Env, req: Request): Promise<User | null> {
   const claims = await verifyJwt(m[1], env.JWT_SECRET);
   if (!claims) throw new HttpError(401, "نشست شما منقضی شده؛ دوباره وارد شوید.", "session_expired");
   const row = await env.DB.prepare(
-    "SELECT u.id, u.email, u.token_version, p.role, p.status FROM users u JOIN profiles p ON p.id = u.id WHERE u.id = ?",
+    "SELECT u.id, u.email, u.token_version, u.email_verified, p.role, p.status FROM users u JOIN profiles p ON p.id = u.id WHERE u.id = ?",
   )
     .bind(claims.sub)
-    .first<{ id: string; email: string; token_version: number; role: User["role"]; status: User["status"] }>();
+    .first<{ id: string; email: string; token_version: number; email_verified: number | null; role: User["role"]; status: User["status"] }>();
   if (!row || row.token_version !== claims.tv) throw new HttpError(401, "نشست شما منقضی شده؛ دوباره وارد شوید.", "session_expired");
-  return { id: row.id, email: row.email, role: row.role, status: row.status };
+  return { id: row.id, email: row.email, role: row.role, status: row.status, email_verified: row.email_verified !== 0 };
 }
 
 async function session(env: Env, user: { id: string; email: string; token_version: number }) {
@@ -87,6 +87,18 @@ async function session(env: Env, user: { id: string; email: string; token_versio
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+/** کد ۶ رقمی تأیید ایمیل می‌سازد، هش آن را ذخیره و ایمیل را می‌فرستد. */
+async function issueVerifyCode(env: Env, userId: string, email: string, name: string): Promise<boolean> {
+  const code = String(crypto.getRandomValues(new Uint32Array(1))[0] % 1_000_000).padStart(6, "0");
+  const minutes = 30;
+  const now = new Date();
+  const today = now.toISOString().slice(0, 10);
+  await env.DB.prepare(
+    "UPDATE users SET verify_code_hash = ?, verify_expires = ?, verify_sent_at = ?, verify_attempts = 0, verify_sends = CASE WHEN verify_day = ? THEN COALESCE(verify_sends, 0) + 1 ELSE 1 END, verify_day = ? WHERE id = ?",
+  ).bind(await sha256Hex(`verify:${userId}:${code}`), new Date(now.getTime() + minutes * 60_000).toISOString(), now.toISOString(), today, today, userId).run();
+  return sendEmail(env, { to: email, ...verifyEmail(name, code, minutes) });
+}
 
 async function readJson(req: Request): Promise<Record<string, unknown>> {
   try {
@@ -110,10 +122,10 @@ async function handleAuth(env: Env, ctx: Ctx, req: Request, path: string): Promi
     const id = crypto.randomUUID();
     const role = email === (env.ADMIN_EMAIL ?? "").toLowerCase() ? "admin" : "user";
     await env.DB.batch([
-      env.DB.prepare("INSERT INTO users (id, email, password_hash) VALUES (?, ?, ?)").bind(id, email, await hashPassword(password)),
+      env.DB.prepare("INSERT INTO users (id, email, password_hash, email_verified) VALUES (?, ?, ?, ?)").bind(id, email, await hashPassword(password), emailConfigured(env) && role !== "admin" ? 0 : 1),
       env.DB.prepare("INSERT INTO profiles (id, name, email, role, status) VALUES (?, ?, ?, ?, 'active')").bind(id, name, email, role),
     ]);
-    if (emailConfigured(env)) ctx.waitUntil(sendEmail(env, { to: email, ...welcomeEmail(name) }).then(() => undefined));
+    if (emailConfigured(env) && role !== "admin") ctx.waitUntil(issueVerifyCode(env, id, email, name).then(() => undefined));
     const admins = (await adminIds(env)).filter((a) => a !== id);
     if (admins.length) {
       await insertNotifications(env, ctx, admins.map((a) => ({ user_id: a, type: "admin_new_user", title: `کاربر تازه پیوست: ${name}`, body: email, ref_id: id, ref_type: "user" })));
@@ -134,9 +146,13 @@ async function handleAuth(env: Env, ctx: Ctx, req: Request, path: string): Promi
     const taken = await env.DB.prepare("SELECT 1 FROM users WHERE email = ? AND id != ?").bind(email, u.id).first();
     if (taken) return err(409, "این ایمیل به حساب دیگری تعلق دارد.", "email_exists");
     await env.DB.batch([
-      env.DB.prepare("UPDATE users SET email = ? WHERE id = ?").bind(email, u.id),
+      env.DB.prepare("UPDATE users SET email = ?, email_verified = ? WHERE id = ?").bind(email, emailConfigured(env) ? 0 : 1, u.id),
       env.DB.prepare("UPDATE profiles SET email = ? WHERE id = ?").bind(email, u.id),
     ]);
+    if (emailConfigured(env)) {
+      const p = await env.DB.prepare("SELECT name FROM profiles WHERE id = ?").bind(u.id).first<{ name: string }>();
+      ctx.waitUntil(issueVerifyCode(env, u.id, email, p?.name ?? "").then(() => undefined));
+    }
     return json(await session(env, { ...u, email }));
   }
 
@@ -274,10 +290,61 @@ async function handleAuth(env: Env, ctx: Ctx, req: Request, path: string): Promi
       return err(400, "Token has expired or is invalid", "otp_invalid");
     }
     await env.DB.batch([
-      env.DB.prepare("UPDATE users SET recovery_code_hash = NULL, recovery_expires = NULL, recovery_requested_at = NULL WHERE id = ?").bind(u.id),
+      env.DB.prepare("UPDATE users SET recovery_code_hash = NULL, recovery_expires = NULL, recovery_requested_at = NULL, email_verified = 1 WHERE id = ?").bind(u.id),
       env.DB.prepare("DELETE FROM recovery_attempts WHERE user_id = ?").bind(u.id),
     ]);
     return json(await session(env, u));
+  }
+
+  // وضعیت تأیید ایمیل حساب جاری
+  if (path === "/auth/me") {
+    const user = await currentUser(env, req);
+    if (!user) return err(401, "ابتدا وارد شوید.");
+    return json({ id: user.id, email: user.email, email_verified: user.email_verified });
+  }
+
+  // فرستادن دوباره‌ی کد تأیید ایمیل (هر دقیقه یک بار، روزی حداکثر ۸ بار)
+  if (path === "/auth/send-verification") {
+    const user = await currentUser(env, req);
+    if (!user) return err(401, "ابتدا وارد شوید.");
+    if (user.email_verified) return json({ ok: true, verified: true });
+    if (!emailConfigured(env)) return err(503, "فرستادن ایمیل فعلاً ممکن نیست.");
+    const r = await env.DB.prepare("SELECT verify_sent_at, verify_sends, verify_day FROM users WHERE id = ?").bind(user.id)
+      .first<{ verify_sent_at: string | null; verify_sends: number | null; verify_day: string | null }>();
+    const last = r?.verify_sent_at ? Date.parse(r.verify_sent_at) : 0;
+    if (Date.now() - last < 60_000) return err(429, "کمی صبر کنید؛ هر دقیقه فقط یک کد فرستاده می‌شود.", "rate_limited");
+    const today = new Date().toISOString().slice(0, 10);
+    if (r?.verify_day === today && (r?.verify_sends ?? 0) >= 8) return err(429, "امروز کد زیادی درخواست شده؛ فردا دوباره تلاش کنید.", "rate_limited");
+    const p = await env.DB.prepare("SELECT name FROM profiles WHERE id = ?").bind(user.id).first<{ name: string }>();
+    await issueVerifyCode(env, user.id, user.email, p?.name ?? "");
+    return json({ ok: true });
+  }
+
+  // بررسی کد ۶ رقمی تأیید ایمیل (۵ تلاش نادرست = باطل شدن کد)
+  if (path === "/auth/verify-email") {
+    const user = await currentUser(env, req);
+    if (!user) return err(401, "ابتدا وارد شوید.");
+    if (user.email_verified) return json({ ok: true });
+    const b = await readJson(req);
+    const code = String(b.code ?? "").replace(/\D/g, "");
+    const r = await env.DB.prepare("SELECT verify_code_hash, verify_expires, verify_attempts FROM users WHERE id = ?").bind(user.id)
+      .first<{ verify_code_hash: string | null; verify_expires: string | null; verify_attempts: number | null }>();
+    if (!r?.verify_code_hash || !r.verify_expires || Date.parse(r.verify_expires) < Date.now()) {
+      return err(400, "کد منقضی شده است؛ کد تازه بگیرید.", "otp_expired");
+    }
+    if ((await sha256Hex(`verify:${user.id}:${code}`)) !== r.verify_code_hash) {
+      const n = (r.verify_attempts ?? 0) + 1;
+      if (n >= 5) {
+        await env.DB.prepare("UPDATE users SET verify_code_hash = NULL, verify_expires = NULL, verify_attempts = 0 WHERE id = ?").bind(user.id).run();
+        return err(400, "کد چند بار نادرست وارد شد؛ کد تازه بگیرید.", "otp_expired");
+      }
+      await env.DB.prepare("UPDATE users SET verify_attempts = ? WHERE id = ?").bind(n, user.id).run();
+      return err(400, "کد نادرست است.", "otp_invalid");
+    }
+    await env.DB.prepare("UPDATE users SET email_verified = 1, verify_code_hash = NULL, verify_expires = NULL, verify_attempts = 0 WHERE id = ?").bind(user.id).run();
+    const p = await env.DB.prepare("SELECT name FROM profiles WHERE id = ?").bind(user.id).first<{ name: string }>();
+    ctx.waitUntil(sendEmail(env, { to: user.email, ...welcomeEmail(p?.name ?? "") }).then(() => undefined));
+    return json({ ok: true });
   }
 
   if (path === "/auth/delete-account") {
@@ -658,6 +725,17 @@ async function handleAdmin(env: Env, ctx: Ctx, req: Request, path: string, url: 
     const b = req.method === "POST" ? await readJson(req).catch(() => ({})) : {};
     const replace = Array.isArray((b as Record<string, unknown>).replace_sections) ? ((b as Record<string, unknown>).replace_sections as string[]) : [];
     return json(await seed(env, replace));
+  }
+
+  // تأیید دستی ایمیل یک کاربر از سوی مدیر (مثلاً حساب آزمایشی بررسی‌کننده‌ی اپ‌استور)
+  if (path === "/admin/verify-email" && req.method === "POST") {
+    const u = await currentUser(env, req);
+    if (!u || u.role !== "admin") return err(403, "فقط مدیر.");
+    const b = await readJson(req);
+    const target = String(b.user_id ?? "");
+    const r = await env.DB.prepare("UPDATE users SET email_verified = 1, verify_code_hash = NULL, verify_expires = NULL WHERE id = ?").bind(target).run();
+    if (!(r.meta?.changes ?? 0)) return err(404, "کاربر پیدا نشد.");
+    return json({ ok: true });
   }
 
   // جایزه یا کسر امتیاز از سوی مدیر — با اعلان برای کاربر

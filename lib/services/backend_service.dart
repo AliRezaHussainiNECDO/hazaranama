@@ -1243,6 +1243,18 @@ class BackendService {
   }
 
   /// فقط مدیر — جایزه یا کسر امتیاز
+  // ================= تأیید ایمیل =================
+
+  /// false فقط وقتی حساب ایمیلی هنوز تأیید نشده است
+  Future<bool> fetchEmailVerified() async {
+    final j = await _db.post('/auth/me', const {});
+    return !(j is Map && j['email_verified'] == false);
+  }
+
+  Future<void> sendEmailVerification() => _db.post('/auth/send-verification', const {});
+  Future<void> verifyEmailCode(String code) => _db.post('/auth/verify-email', {'code': code});
+  Future<void> adminVerifyEmail(String userId) => _db.post('/admin/verify-email', {'user_id': userId});
+
   Future<void> adminAwardXp(String userId, int delta, String reason) =>
       _db.post('/admin/xp-bonus', {'user_id': userId, 'delta': delta, 'reason': reason});
 

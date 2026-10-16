@@ -13,6 +13,7 @@ import 'story_carousel.dart';
 import 'donation_home_card.dart';
 import 'section_card.dart';
 import '../rank/rank_screen.dart';
+import '../auth/verify_email_sheet.dart';
 
 class HomeScreen extends StatelessWidget {
   final VoidCallback onOpenExplore;
@@ -35,6 +36,7 @@ class HomeScreen extends StatelessWidget {
       children: [
         _Greeting(theme: theme, app: app, onTap: onOpenProfile).animate().fadeIn(duration: 380.ms).slideY(begin: -0.06, end: 0),
         const SizedBox(height: 14),
+        const VerifyEmailBanner(),
         RankCard(theme: theme).animate(delay: 80.ms).fadeIn(duration: 380.ms).slideY(begin: 0.06, end: 0),
         const SizedBox(height: 16),
         StoryCarousel(theme: theme),

@@ -16,6 +16,9 @@ import '../core/backend_config.dart';
 /// `functions.invoke`، `rpc`) تا کدِ سرویس‌ها تقریباً بدون تغییر بماند؛ ولی همه‌چیز
 /// به Worker خودِ هزاره‌نامه (D1 + R2 + Workers AI) می‌رود، نه Supabase.
 class HzBackend {
+  /// وقتی سرور می‌گوید «اول ایمیل را تأیید کنید» صدا زده می‌شود (AppState تنظیمش می‌کند)
+  static void Function()? onEmailUnverified;
+
   HzBackend._(this.baseUrl);
 
   static HzBackend? _instance;
@@ -75,6 +78,7 @@ class HzBackend {
     } else if (data is Map && data['error'] != null) {
       message = data['error'].toString();
     }
+    if (code == 'email_unverified') onEmailUnverified?.call();
     throw HzHttpException(res.statusCode, message, code, data);
   }
 

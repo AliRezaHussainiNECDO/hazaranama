@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:image_picker/image_picker.dart' show XFile;
 import 'package:http/http.dart' show ClientException;
-import '../services/hz_backend.dart' show AuthChangeEvent, AuthException, AuthState, PostgrestException;
+import '../services/hz_backend.dart' show AuthChangeEvent, AuthException, AuthState, PostgrestException, HzBackend, HzHttpException;
 import '../core/app_colors.dart';
 import '../core/donor_tiers.dart';
 import '../core/section_style.dart' show kHazaragiGlossaryCount;
@@ -197,6 +197,11 @@ class AppState extends ChangeNotifier {
   Future<String> uploadContentFile(XFile file, {required String contentType}) => _service.uploadContentFile(file, contentType: contentType);
 
   AppState() {
+    HzBackend.onEmailUnverified = () {
+      emailUnverified = true;
+      verifyPromptRequested = true;
+      notifyListeners();
+    };
     _service.authChanges.listen((AuthState data) {
       // وقتی کاربر روی پیوند «بازیابی رمز عبور» ایمیل‌شده کلیک می‌کند و اپ از
       // طریق کد بازیابی وارد می‌شود، سرور یک نشست موقتِ بازیابی می‌سازد و
@@ -267,6 +272,7 @@ class AppState extends ChangeNotifier {
       // مقاله و پیام‌ها نمایش داده شود؛ خطای احتمالی نباید جلوی ورود را بگیرد.
       unawaited(_loadRoleAndDonorCaches());
       unawaited(refreshRanks());
+      unawaited(refreshEmailVerified());
       unawaited(loadBlockedUsers());
     } catch (e) {
       if (_isTransientError(e)) {
@@ -427,6 +433,63 @@ class AppState extends ChangeNotifier {
 
   /// ثبت‌نام دومرحله‌ای؛ حساب بلافاصله فعال می‌شود (به‌شرطی که «تأیید ایمیل»
   /// در تنظیمات Supabase Auth غیرفعال باشد — در راهنمای SETUP توضیح داده شده).
+  // ================= تأیید ایمیل =================
+  /// حساب ایمیلی که هنوز ایمیلش تأیید نشده: می‌تواند بخواند، ولی نوشتن ممنوع است
+  bool emailUnverified = false;
+  /// درخواست باز شدن برگه‌ی تأیید (پس از ثبت‌نام یا وقتی سرور نوشتن را رد کرد)
+  bool verifyPromptRequested = false;
+
+  void clearVerifyPrompt() => verifyPromptRequested = false;
+
+  Future<void> refreshEmailVerified() async {
+    try {
+      final v = await _service.fetchEmailVerified();
+      if (emailUnverified != !v) {
+        emailUnverified = !v;
+        notifyListeners();
+      }
+    } catch (_) {}
+  }
+
+  /// فرستادن (دوباره‌ی) کد؛ خروجی: پیام خطا یا null
+  Future<String?> sendEmailVerification() async {
+    try {
+      await _service.sendEmailVerification();
+      return null;
+    } on HzHttpException catch (e) {
+      return e.message;
+    } catch (_) {
+      return 'ارسال کد ممکن نشد؛ اتصال اینترنت را بررسی کنید.';
+    }
+  }
+
+  /// بررسی کد ۶ رقمی؛ خروجی: پیام خطا یا null
+  Future<String?> verifyEmailCode(String code) async {
+    try {
+      await _service.verifyEmailCode(code.trim());
+      emailUnverified = false;
+      verifyPromptRequested = false;
+      notifyListeners();
+      return null;
+    } on HzHttpException catch (e) {
+      return e.message;
+    } catch (_) {
+      return 'بررسی کد ممکن نشد؛ اتصال اینترنت را بررسی کنید.';
+    }
+  }
+
+  /// مدیر: تأیید دستی ایمیل یک کاربر
+  Future<String?> adminVerifyEmail(String userId) async {
+    try {
+      await _service.adminVerifyEmail(userId);
+      return null;
+    } on HzHttpException catch (e) {
+      return e.message;
+    } catch (_) {
+      return 'انجام نشد؛ دوباره تلاش کنید.';
+    }
+  }
+
   Future<String?> signUp({
     required String email, required String password, required String name,
     String country = 'نامشخص', String originProvince = 'نامشخص', String district = 'نامشخص',
@@ -444,6 +507,11 @@ class AppState extends ChangeNotifier {
           'terms_accepted_at': DateTime.now().toIso8601String(),
         });
         await _loadSessionUser();
+        await refreshEmailVerified();
+        if (emailUnverified) {
+          verifyPromptRequested = true;
+          notifyListeners();
+        }
         return null;
       }
       return 'حساب ساخته شد؛ لطفاً با همین ایمیل و رمز وارد شوید.';

@@ -16,6 +16,8 @@ export interface User {
   email: string;
   role: "admin" | "editor" | "user";
   status: "active" | "blocked";
+  /** حساب‌هایی که با ایمیل ثبت‌نام کرده‌اند تا تأیید ایمیل نمی‌توانند بنویسند */
+  email_verified?: boolean;
 }
 
 type Cond = { sql: string; params: unknown[] } | null; // null = بدون محدودیت
@@ -46,6 +48,7 @@ function insertOwnActive(col: string) {
   return (u: User | null, row: Record<string, unknown>) => {
     if (!u) return "ابتدا وارد شوید.";
     if (!active(u)) return "حساب شما مسدود است.";
+    if (u.email_verified === false && !isAdmin(u)) throw new HttpError(403, "برای نوشتن و مشارکت، اول ایمیل‌تان را تأیید کنید.", "email_unverified");
     if (row[col] == null) row[col] = u.id;
     if (row[col] !== u.id) return "اجازه‌ی این کار را ندارید.";
     return moderationError(row.text, row.title, row.body) ?? true;

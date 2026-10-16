@@ -87,3 +87,19 @@ export function passwordChangedEmail(name: string) {
     text: `سلام ${name}، رمز حساب هزاره‌نامه‌ی شما تغییر کرد. اگر شما نبودید، فوراً رمز را بازیابی کنید.`,
   };
 }
+
+export function verifyEmail(name: string, code: string, minutes: number) {
+  const spaced = code.split("").join(" ");
+  return {
+    subject: `کد تأیید ایمیل هزاره‌نامه: ${code}`,
+    html: layout(
+      "تأیید ایمیل",
+      `<p style="margin:0 0 12px;">سلام ${esc(name)}،</p>
+<p style="margin:0 0 18px;">برای فعال شدن حساب‌تان در هزاره‌نامه، این کد را در اپ وارد کنید:</p>
+<div style="text-align:center;margin:0 0 18px;"><span dir="ltr" style="display:inline-block;background:#0d1226;border:1px solid #5b93ff;border-radius:14px;padding:14px 22px;font-size:30px;letter-spacing:6px;font-weight:bold;color:#ffffff;font-family:Consolas,Menlo,monospace;">${spaced}</span></div>
+<p style="margin:0 0 8px;color:#a9b3d6;font-size:13px;">این کد تا ${minutes} دقیقه معتبر است.</p>
+<p style="margin:0;color:#a9b3d6;font-size:13px;">اگر شما در هزاره‌نامه ثبت‌نام نکرده‌اید، این ایمیل را نادیده بگیرید.</p>`,
+    ),
+    text: `سلام ${name}،\nکد تأیید ایمیل هزاره‌نامه: ${code}\nاین کد تا ${minutes} دقیقه معتبر است.`,
+  };
+}

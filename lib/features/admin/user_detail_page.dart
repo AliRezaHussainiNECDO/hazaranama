@@ -289,6 +289,25 @@ class _UserDetailPageState extends State<UserDetailPage> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: double.infinity,
+                      child: OutlinedButton.icon(
+                        onPressed: _busy
+                            ? null
+                            : () async {
+                                final e = await app.adminVerifyEmail(user.id);
+                                if (context.mounted) showHzToast(context, e ?? 'ایمیل «${user.name}» تأیید شد.');
+                              },
+                        icon: Icon(Icons.mark_email_read_rounded, size: 16, color: theme.success),
+                        label: Text('تأیید دستی ایمیل', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12, color: theme.success)),
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(color: theme.success.withValues(alpha: 0.6)),
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        ),
+                      ),
+                    ),
                   ],
                   const SizedBox(height: 22),
                   Row(children: [

@@ -16,6 +16,7 @@ import '../notifications/notification_style.dart';
 import '../../core/nav.dart';
 import '../notifications/notifications_screen.dart';
 import 'user_shell.dart';
+import '../auth/verify_email_sheet.dart';
 
 /// پوسته‌ی اصلی برنامه پس از ورود — معادل MainApp در دموی وب.
 /// بر اساس نقش کاربر، یا پنل مدیریت یا اپلیکیشن کاربران را نشان می‌دهد.
@@ -36,6 +37,15 @@ class MainShell extends StatelessWidget {
           final ctx = rootNavigatorKey.currentContext;
           if (ctx != null) openNotificationTarget(ctx, app, t);
         });
+      });
+    }
+
+    // ایمیل تأیید نشده: برگه‌ی تأیید (پس از ثبت‌نام یا وقتی سرور نوشتن را رد کرد)
+    if (app.verifyPromptRequested) {
+      app.clearVerifyPrompt();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final ctx = rootNavigatorKey.currentContext;
+        if (ctx != null) showVerifyEmailSheet(ctx);
       });
     }
 
