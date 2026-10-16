@@ -28,7 +28,7 @@ class ProfileScreen extends StatelessWidget {
           Expanded(
             child: OutlinedButton.icon(
               onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AccountSettingsScreen())),
-              icon: Icon(Icons.settings_outlined, size: 16, color: theme.textSecondary),
+              icon: Icon(Icons.settings_rounded, size: 16, color: theme.textSecondary),
               label: Text('تنظیمات حساب', style: TextStyle(color: theme.textSecondary, fontSize: 12.5, fontWeight: FontWeight.w700)),
               style: OutlinedButton.styleFrom(side: BorderSide(color: theme.border), padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
             ),
@@ -37,7 +37,7 @@ class ProfileScreen extends StatelessWidget {
           Expanded(
             child: ElevatedButton.icon(
               onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ContactUsScreen())),
-              icon: const Icon(Icons.support_agent, size: 16),
+              icon: const Icon(Icons.support_agent_rounded, size: 16),
               label: const Text('تماس با ما', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
               style: ElevatedButton.styleFrom(backgroundColor: theme.blue, foregroundColor: Colors.white, elevation: 0, padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
             ),
@@ -60,7 +60,7 @@ class ProfileScreen extends StatelessWidget {
           ],
         const SizedBox(height: 18),
         OutlinedButton.icon(
-          onPressed: () => _confirmLogout(context, app),
+          onPressed: () => confirmLogout(context),
           icon: Icon(Icons.logout_rounded, size: 18, color: theme.danger),
           label: Text('خروج از حساب', style: TextStyle(color: theme.danger, fontSize: 13, fontWeight: FontWeight.w800)),
           style: OutlinedButton.styleFrom(
@@ -73,28 +73,31 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _confirmLogout(BuildContext context, AppState app) async {
-    final theme = app.colors;
-    final ok = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => Directionality(
-        textDirection: TextDirection.rtl,
-        child: AlertDialog(
-          backgroundColor: theme.bgElevated,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
-          title: Text('خروج از حساب؟', style: TextStyle(color: theme.textPrimary, fontSize: 17, fontWeight: FontWeight.w900)),
-          content: Text('برای استفاده‌ی دوباره باید با ایمیل و رمز عبور وارد شوید.', style: TextStyle(color: theme.textSecondary, fontSize: 13, height: 1.6)),
-          actions: [
-            TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text('انصراف', style: TextStyle(color: theme.textSecondary, fontWeight: FontWeight.w700))),
-            FilledButton(
-              style: FilledButton.styleFrom(backgroundColor: theme.danger, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-              onPressed: () => Navigator.of(ctx).pop(true),
-              child: const Text('خروج', style: TextStyle(fontWeight: FontWeight.w800)),
-            ),
-          ],
-        ),
+}
+
+/// تأیید و خروج از حساب — در پروفایل کاربر و پنل مدیر
+Future<void> confirmLogout(BuildContext context) async {
+  final app = context.read<AppState>();
+  final theme = app.colors;
+  final ok = await showDialog<bool>(
+    context: context,
+    builder: (ctx) => Directionality(
+      textDirection: TextDirection.rtl,
+      child: AlertDialog(
+        backgroundColor: theme.bgElevated,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
+        title: Text('خروج از حساب؟', style: TextStyle(color: theme.textPrimary, fontSize: 17, fontWeight: FontWeight.w900)),
+        content: Text('برای استفاده‌ی دوباره باید با ایمیل و رمز عبور وارد شوید.', style: TextStyle(color: theme.textSecondary, fontSize: 13, height: 1.6)),
+        actions: [
+          TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text('انصراف', style: TextStyle(color: theme.textSecondary, fontWeight: FontWeight.w700))),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: theme.danger, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: const Text('خروج', style: TextStyle(fontWeight: FontWeight.w800)),
+          ),
+        ],
       ),
-    );
-    if (ok == true) await app.logout();
-  }
+    ),
+  );
+  if (ok == true) await app.logout();
 }

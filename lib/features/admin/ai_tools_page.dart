@@ -17,9 +17,9 @@ class AiToolsPage extends StatefulWidget {
 }
 
 const _kActions = [
-  {'id': 'draft', 'label': 'پیش‌نویس محتوا', 'icon': Icons.edit_note},
-  {'id': 'summarize', 'label': 'خلاصه‌سازی', 'icon': Icons.short_text},
-  {'id': 'translate', 'label': 'ترجمه', 'icon': Icons.translate},
+  {'id': 'draft', 'label': 'پیش‌نویس محتوا', 'icon': Icons.edit_note_rounded},
+  {'id': 'summarize', 'label': 'خلاصه‌سازی', 'icon': Icons.short_text_rounded},
+  {'id': 'translate', 'label': 'ترجمه', 'icon': Icons.translate_rounded},
 ];
 
 const _kLanguages = ['فارسی', 'انگلیسی', 'هزارگی'];
@@ -91,7 +91,7 @@ class _AiToolsPageState extends State<AiToolsPage> {
               Container(
                 width: 40, height: 40,
                 decoration: BoxDecoration(shape: BoxShape.circle, gradient: theme.aiGradient),
-                child: const Icon(Icons.auto_awesome, color: Colors.white, size: 18),
+                child: const Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 18),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -109,7 +109,7 @@ class _AiToolsPageState extends State<AiToolsPage> {
           const SizedBox(height: 6),
           HzSelectField(
             value: sectionById(_sectionId).title,
-            icon: Icons.folder_open,
+            icon: Icons.folder_open_rounded,
             hint: 'انتخاب بخش',
             options: sections.map((s) => s.title).toList(),
             theme: theme,
@@ -152,7 +152,7 @@ class _AiToolsPageState extends State<AiToolsPage> {
           if (_action == 'draft') ...[
             Text('موضوع پیش‌نویس', style: TextStyle(color: theme.textFaint, fontSize: 12, fontWeight: FontWeight.w700)),
             const SizedBox(height: 6),
-            HzTextField(controller: _topicCtrl, icon: Icons.lightbulb_outline, hint: 'مثلاً: نقش دمبوره در موسیقی هزارگی', theme: theme),
+            HzTextField(controller: _topicCtrl, icon: Icons.lightbulb_outline_rounded, hint: 'مثلاً: نقش دمبوره در موسیقی هزارگی', theme: theme),
           ] else ...[
             Text('متن مبدأ', style: TextStyle(color: theme.textFaint, fontSize: 12, fontWeight: FontWeight.w700)),
             const SizedBox(height: 6),
@@ -174,7 +174,7 @@ class _AiToolsPageState extends State<AiToolsPage> {
               const SizedBox(height: 6),
               HzSelectField(
                 value: _targetLang,
-                icon: Icons.language,
+                icon: Icons.language_rounded,
                 hint: 'زبان مقصد',
                 options: _kLanguages,
                 theme: theme,
@@ -186,7 +186,7 @@ class _AiToolsPageState extends State<AiToolsPage> {
 
           HzPrimaryButton(
             label: _loading ? 'در حال تولید…' : 'تولید با هوش مصنوعی',
-            icon: Icons.auto_awesome,
+            icon: Icons.auto_awesome_rounded,
             loading: _loading,
             theme: theme,
             onPressed: _generate,
@@ -198,7 +198,7 @@ class _AiToolsPageState extends State<AiToolsPage> {
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(color: theme.danger.withValues(alpha: 0.08), borderRadius: BorderRadius.circular(12), border: Border.all(color: theme.danger.withValues(alpha: 0.3))),
               child: Row(children: [
-                Icon(Icons.error_outline, size: 16, color: theme.danger),
+                Icon(Icons.error_outline_rounded, size: 16, color: theme.danger),
                 const SizedBox(width: 8),
                 Expanded(child: Text(_error!, style: TextStyle(color: theme.danger, fontSize: 12.5))),
               ]),
@@ -212,7 +212,7 @@ class _AiToolsPageState extends State<AiToolsPage> {
               radius: 16,
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Row(children: [
-                  Icon(Icons.check_circle_outline, size: 15, color: theme.success),
+                  Icon(Icons.check_circle_outline_rounded, size: 15, color: theme.success),
                   const SizedBox(width: 6),
                   Text('نتیجه', style: TextStyle(color: theme.success, fontSize: 12.5, fontWeight: FontWeight.w800)),
                   const Spacer(),
@@ -221,7 +221,7 @@ class _AiToolsPageState extends State<AiToolsPage> {
                       Clipboard.setData(ClipboardData(text: _result!));
                       showHzToast(context, 'متن کپی شد');
                     },
-                    child: Icon(Icons.copy_all_outlined, size: 16, color: theme.textFaint),
+                    child: Icon(Icons.copy_all_rounded, size: 16, color: theme.textFaint),
                   ),
                 ]),
                 const SizedBox(height: 8),

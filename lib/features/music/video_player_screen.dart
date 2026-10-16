@@ -141,7 +141,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
               child: AppBar(
                 backgroundColor: theme.bgElevated.withValues(alpha: 0.5),
                 elevation: 0,
-                leading: IconButton(icon: Icon(Icons.arrow_forward, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
+                leading: IconButton(icon: Icon(Icons.arrow_forward_rounded, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
                 title: Text(widget.artistName, style: TextStyle(color: theme.textPrimary, fontSize: 13.5, fontWeight: FontWeight.w800), maxLines: 1, overflow: TextOverflow.ellipsis),
               ),
             ),
@@ -165,7 +165,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     Text(video.title, style: TextStyle(color: theme.textPrimary, fontSize: 15, fontWeight: FontWeight.w800, height: 1.5)),
                     const SizedBox(height: 6),
                     Row(children: [
-                      Icon(Icons.visibility_outlined, size: 13, color: theme.textFaint),
+                      Icon(Icons.visibility_rounded, size: 13, color: theme.textFaint),
                       const SizedBox(width: 4),
                       Text('$_views بازدید', style: TextStyle(color: theme.textFaint, fontSize: 12.5)),
                       const SizedBox(width: 8),
@@ -217,7 +217,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     const FlagStripe(width: 44),
                     const SizedBox(height: 14),
                     Row(children: [
-                      Icon(Icons.mode_comment_outlined, size: 15, color: theme.textSecondary),
+                      Icon(Icons.mode_comment_rounded, size: 15, color: theme.textSecondary),
                       const SizedBox(width: 6),
                       Text('$totalComments نظر', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800)),
                     ]),
@@ -295,7 +295,7 @@ class _CommentComposer extends StatelessWidget {
           baseChoices: AppConstants.emojiChoices,
           onPick: (e) => controller.text = '${controller.text}$e',
         ),
-        child: Padding(padding: const EdgeInsets.all(9), child: Icon(Icons.emoji_emotions_outlined, size: 19, color: theme.textFaint)),
+        child: Padding(padding: const EdgeInsets.all(9), child: Icon(Icons.emoji_emotions_rounded, size: 19, color: theme.textFaint)),
       ),
       const SizedBox(width: 4),
       InkWell(
@@ -303,7 +303,7 @@ class _CommentComposer extends StatelessWidget {
         child: Container(
           width: 38, height: 38,
           decoration: BoxDecoration(shape: BoxShape.circle, color: theme.blue),
-          child: const Icon(Icons.send, size: 15, color: Colors.white),
+          child: const Icon(Icons.send_rounded, size: 15, color: Colors.white),
         ),
       ),
     ]);
@@ -377,7 +377,7 @@ class _CommentTile extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 2),
                     child: Row(mainAxisSize: MainAxisSize.min, children: [
-                      Icon(Icons.flag_outlined, size: 13, color: theme.textFaint),
+                      Icon(Icons.flag_rounded, size: 13, color: theme.textFaint),
                       const SizedBox(width: 3),
                       Text('گزارش', style: TextStyle(color: theme.textFaint, fontSize: 11)),
                     ]),

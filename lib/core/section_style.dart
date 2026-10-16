@@ -30,7 +30,7 @@ const Map<String, SectionStyle> kSectionStyles = {
 };
 
 SectionStyle sectionStyle(String id) =>
-    kSectionStyles[id] ?? const SectionStyle(Color(0xFF5B93FF), Color(0xFF7C5CFF), Icons.circle);
+    kSectionStyles[id] ?? const SectionStyle(Color(0xFF5B93FF), Color(0xFF7C5CFF), Icons.circle_rounded);
 
 /// برچسب شمارش برای کارت بخش (مثلاً «۵۳ رویداد»)
 String sectionCountLabel(ContentSection s, int n) {

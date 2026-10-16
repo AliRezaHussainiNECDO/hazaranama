@@ -404,7 +404,7 @@ class _DictionaryBodyState extends State<DictionaryBody> {
                                   item: it,
                                   height: 120,
                                   radius: 12,
-                                  fallback: SectionMediaPlaceholder(accent: color, icon: Icons.translate, height: 120),
+                                  fallback: SectionMediaPlaceholder(accent: color, icon: Icons.translate_rounded, height: 120),
                                 ),
                               ],
                               if (example.isNotEmpty) ...[

@@ -81,7 +81,7 @@ class ArticleScreen extends StatelessWidget {
           backgroundColor: theme.bg,
           elevation: 0,
           leading: IconButton(
-            icon: Icon(Icons.arrow_forward, color: theme.textPrimary, size: 20),
+            icon: Icon(Icons.arrow_forward_rounded, color: theme.textPrimary, size: 20),
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Row(children: [
@@ -141,7 +141,7 @@ class ArticleScreen extends StatelessWidget {
                     child: InkWell(
                       onTap: imagePage.isEmpty ? null : () => openContentUrl(context, imagePage),
                       child: Row(children: [
-                        Icon(Icons.photo_camera_outlined, size: 13, color: theme.textFaint),
+                        Icon(Icons.photo_camera_rounded, size: 13, color: theme.textFaint),
                         const SizedBox(width: 5),
                         Expanded(child: Text(imageCredit, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 10.5, height: 1.5))),
                       ]),

@@ -102,7 +102,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(18, 16, 18, 8),
       child: Column(children: [
-        HzTextField(controller: _query, icon: Icons.search, hint: 'در تاریخ، فرهنگ، اشعار و بیشتر بگرد…', theme: theme),
+        HzTextField(controller: _query, icon: Icons.search_rounded, hint: 'در تاریخ، فرهنگ، اشعار و بیشتر بگرد…', theme: theme),
         const SizedBox(height: 4),
         Expanded(
           child: q.isEmpty
@@ -128,7 +128,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                     const SizedBox(height: 14),
                     if (results.isEmpty)
-                      _EmptyState(theme: theme, icon: Icons.search_off, label: 'در فهرست اپ چیزی پیدا نشد؛ می‌توانی از دستیار هوشمند بپرسی')
+                      _EmptyState(theme: theme, icon: Icons.search_off_rounded, label: 'در فهرست اپ چیزی پیدا نشد؛ می‌توانی از دستیار هوشمند بپرسی')
                     else
                       for (var i = 0; i < results.length; i++)
                         Padding(
@@ -154,7 +154,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     Text('${results[i].sectionTitle}${results[i].sub.isNotEmpty ? " · ${results[i].sub}" : ""}', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textSecondary, fontSize: 12.5)),
                                   ]),
                                 ),
-                                Icon(Icons.arrow_back, size: 14, color: theme.textFaint),
+                                Icon(Icons.arrow_back_rounded, size: 14, color: theme.textFaint),
                               ]),
                             ),
                           ),
@@ -204,7 +204,7 @@ class _AiSearchPanel extends StatelessWidget {
               decoration: BoxDecoration(shape: BoxShape.circle, gradient: theme.aiGradient),
               child: loading
                   ? const Padding(padding: EdgeInsets.all(8), child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                  : const Icon(Icons.auto_awesome, size: 15, color: Colors.white),
+                  : const Icon(Icons.auto_awesome_rounded, size: 15, color: Colors.white),
             ),
             const SizedBox(width: 10),
             Expanded(
@@ -213,7 +213,7 @@ class _AiSearchPanel extends StatelessWidget {
                 style: TextStyle(color: theme.textPrimary, fontSize: 12, fontWeight: FontWeight.w700),
               ),
             ),
-            if (!loading) Icon(Icons.arrow_back, size: 14, color: theme.aiViolet),
+            if (!loading) Icon(Icons.arrow_back_rounded, size: 14, color: theme.aiViolet),
           ]),
         ),
       );
@@ -225,7 +225,7 @@ class _AiSearchPanel extends StatelessWidget {
         radius: 16,
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         child: Row(children: [
-          Icon(Icons.error_outline, size: 16, color: theme.danger),
+          Icon(Icons.error_outline_rounded, size: 16, color: theme.danger),
           const SizedBox(width: 8),
           Expanded(child: Text(error!, style: TextStyle(color: theme.danger, fontSize: 12.5))),
         ]),
@@ -239,7 +239,7 @@ class _AiSearchPanel extends StatelessWidget {
       padding: const EdgeInsets.all(14),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
-          Icon(Icons.auto_awesome, size: 15, color: theme.aiViolet),
+          Icon(Icons.auto_awesome_rounded, size: 15, color: theme.aiViolet),
           const SizedBox(width: 6),
           Text('پاسخ دستیار هوشمند', style: TextStyle(color: theme.aiViolet, fontSize: 12.5, fontWeight: FontWeight.w800)),
         ]),

@@ -159,7 +159,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               child: Row(children: [
                 HzIconButton(
                   theme: theme,
-                  icon: Icons.arrow_forward,
+                  icon: Icons.arrow_forward_rounded,
                   onPressed: () => _step == 'code' ? setState(() => _step = 'email') : app.goTo(AuthStage.login),
                 ),
               ]),
@@ -180,7 +180,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           radius: 26,
                           padding: const EdgeInsets.fromLTRB(20, 22, 20, 22),
                           child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
-                            HzBadge(theme: theme, size: 54, filled: true, child: const Icon(Icons.lock_outline, color: Colors.white, size: 22)),
+                            HzBadge(theme: theme, size: 54, filled: true, child: const Icon(Icons.lock_outline_rounded, color: Colors.white, size: 22)),
                             const SizedBox(height: 16),
                             Text('بازیابی رمز عبور', style: TextStyle(color: theme.textPrimary, fontSize: 21, fontWeight: FontWeight.w800)),
                             const SizedBox(height: 16),
@@ -202,7 +202,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return [
       Text('ایمیل حساب‌تان را وارد کنید. یک کد $_codeLengthFa رقمی برای ساختن رمز تازه دریافت می‌کنید.', style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.9)),
       const SizedBox(height: 16),
-      HzTextField(controller: _email, icon: Icons.mail_outline, hint: 'ایمیل', theme: theme, keyboardType: TextInputType.emailAddress),
+      HzTextField(controller: _email, icon: Icons.mail_outline_rounded, hint: 'ایمیل', theme: theme, keyboardType: TextInputType.emailAddress),
       if (_error != null) ...[const SizedBox(height: 10), _errorBox(theme)],
       const SizedBox(height: 18),
       HzPrimaryButton(theme: theme, label: _loading ? 'در حال ارسال…' : 'درخواست کد بازیابی', loading: _loading, onPressed: () => _sendResetEmail(app)),
@@ -220,7 +220,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           width: 60,
           height: 60,
           decoration: BoxDecoration(shape: BoxShape.circle, color: theme.success.withValues(alpha: 0.12), border: Border.all(color: theme.success, width: 1.5)),
-          child: Icon(Icons.mark_email_read_outlined, color: theme.success, size: 26),
+          child: Icon(Icons.mark_email_read_rounded, color: theme.success, size: 26),
         ).animate().scale(begin: const Offset(0.6, 0.6), duration: 460.ms, curve: Curves.easeOutBack).fadeIn(),
         const SizedBox(height: 16),
         Text('کد را وارد کنید', style: TextStyle(color: theme.textPrimary, fontSize: 19, fontWeight: FontWeight.w800)),

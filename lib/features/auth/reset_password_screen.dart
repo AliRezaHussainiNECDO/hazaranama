@@ -151,12 +151,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         const SizedBox(height: 20),
         HzTextField(
           controller: _password,
-          icon: Icons.lock_outline,
+          icon: Icons.lock_outline_rounded,
           hint: 'رمز عبور تازه',
           theme: theme,
           obscureText: !_showPass,
           suffix: IconButton(
-            icon: Icon(_showPass ? Icons.visibility_off : Icons.visibility, size: 18, color: theme.textFaint),
+            icon: Icon(_showPass ? Icons.visibility_off_rounded : Icons.visibility_rounded, size: 18, color: theme.textFaint),
             onPressed: () => setState(() => _showPass = !_showPass),
           ),
         ),
@@ -165,12 +165,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         const SizedBox(height: 14),
         HzTextField(
           controller: _confirm,
-          icon: Icons.lock_outline,
+          icon: Icons.lock_outline_rounded,
           hint: 'تکرار رمز عبور تازه',
           theme: theme,
           obscureText: !_showConfirm,
           suffix: IconButton(
-            icon: Icon(_showConfirm ? Icons.visibility_off : Icons.visibility, size: 18, color: theme.textFaint),
+            icon: Icon(_showConfirm ? Icons.visibility_off_rounded : Icons.visibility_rounded, size: 18, color: theme.textFaint),
             onPressed: () => setState(() => _showConfirm = !_showConfirm),
           ),
         ),

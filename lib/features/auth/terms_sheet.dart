@@ -56,7 +56,7 @@ class _TermsSheetContent extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(22, 16, 22, 8),
               child: Row(children: [
-                HzBadge(theme: theme, size: 40, filled: true, child: const Icon(Icons.gavel_outlined, color: Colors.white, size: 17)),
+                HzBadge(theme: theme, size: 40, filled: true, child: const Icon(Icons.gavel_rounded, color: Colors.white, size: 17)),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -80,7 +80,7 @@ class _TermsSheetContent extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 6),
                       child: Row(mainAxisSize: MainAxisSize.min, children: [
-                        Icon(Icons.open_in_new, size: 13, color: theme.blue),
+                        Icon(Icons.open_in_new_rounded, size: 13, color: theme.blue),
                         const SizedBox(width: 6),
                         Text('مشاهده‌ی کامل سیاست حریم خصوصی و حذف حساب', style: TextStyle(color: theme.blue, fontSize: 12.5, fontWeight: FontWeight.w600)),
                       ]),
@@ -94,7 +94,7 @@ class _TermsSheetContent extends StatelessWidget {
               child: HzPrimaryButton(
                 theme: theme,
                 label: 'خواندم و می‌پذیرم',
-                icon: Icons.check_circle_outline,
+                icon: Icons.check_circle_outline_rounded,
                 onPressed: () => Navigator.of(context).pop(true),
               ),
             ),

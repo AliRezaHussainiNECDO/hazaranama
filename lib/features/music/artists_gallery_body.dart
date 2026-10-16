@@ -67,7 +67,7 @@ class _ArtistsGalleryBodyState extends State<ArtistsGalleryBody> {
       return RefreshIndicator(
         onRefresh: _refresh,
         child: ListView(padding: const EdgeInsets.fromLTRB(24, 60, 24, 24), children: [
-          Icon(Icons.music_note_outlined, size: 40, color: theme.textFaint),
+          Icon(Icons.music_note_rounded, size: 40, color: theme.textFaint),
           const SizedBox(height: 12),
           Text('هنوز هیچ هنرمندی افزوده نشده', textAlign: TextAlign.center, style: TextStyle(color: theme.textFaint, fontSize: 12.5)),
         ]),

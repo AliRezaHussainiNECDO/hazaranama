@@ -57,7 +57,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
               filter: ImageFilter.blur(sigmaX: 22, sigmaY: 22),
               child: AppBar(
                 backgroundColor: theme.bgElevated.withValues(alpha: 0.5), elevation: 0,
-                leading: IconButton(icon: Icon(Icons.arrow_forward, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
+                leading: IconButton(icon: Icon(Icons.arrow_forward_rounded, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
                 title: Text('تماس با ما', style: TextStyle(color: theme.textPrimary, fontSize: 15, fontWeight: FontWeight.w800)),
               ),
             ),
@@ -80,7 +80,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                             borderRadius: BorderRadius.circular(18), border: Border.all(color: theme.glassBorder),
                           ),
                           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                            StatIconBox(icon: Icons.support_agent, color: theme.blue, size: 34),
+                            StatIconBox(icon: Icons.support_agent_rounded, color: theme.blue, size: 34),
                             const SizedBox(width: 10),
                             Expanded(
                               child: Text(
@@ -129,7 +129,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       decoration: BoxDecoration(shape: BoxShape.circle, color: theme.blue),
                       child: _sending
                           ? const Padding(padding: EdgeInsets.all(10), child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                          : const Icon(Icons.send, size: 16, color: Colors.white),
+                          : const Icon(Icons.send_rounded, size: 16, color: Colors.white),
                     ),
                   ),
                 ]),
@@ -157,7 +157,7 @@ class _MessageCard extends StatelessWidget {
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Row(children: [
-            Icon(Icons.person, size: 13, color: theme.textFaint),
+            Icon(Icons.person_rounded, size: 13, color: theme.textFaint),
             const SizedBox(width: 5),
             Text('پیام شما', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
           ]),
@@ -180,7 +180,7 @@ class _MessageCard extends StatelessWidget {
             decoration: BoxDecoration(color: theme.blue.withValues(alpha: 0.08), borderRadius: BorderRadius.circular(12), border: Border.all(color: theme.blue.withValues(alpha: 0.25))),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
-                Icon(Icons.support_agent, size: 13, color: theme.blue),
+                Icon(Icons.support_agent_rounded, size: 13, color: theme.blue),
                 const SizedBox(width: 5),
                 Text('پاسخ مدیر', style: TextStyle(color: theme.blue, fontSize: 11.5, fontWeight: FontWeight.w700)),
               ]),

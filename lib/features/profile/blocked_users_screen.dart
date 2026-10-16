@@ -44,7 +44,7 @@ class _BlockedUsersScreenState extends State<BlockedUsersScreen> {
               filter: ImageFilter.blur(sigmaX: 22, sigmaY: 22),
               child: AppBar(
                 backgroundColor: theme.bgElevated.withValues(alpha: 0.5), elevation: 0,
-                leading: IconButton(icon: Icon(Icons.arrow_forward, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
+                leading: IconButton(icon: Icon(Icons.arrow_forward_rounded, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
                 title: Text('کاربران مسدودشده', style: TextStyle(color: theme.textPrimary, fontSize: 15, fontWeight: FontWeight.w800)),
               ),
             ),
@@ -60,7 +60,7 @@ class _BlockedUsersScreenState extends State<BlockedUsersScreen> {
                         child: Padding(
                           padding: const EdgeInsets.all(24),
                           child: Column(mainAxisSize: MainAxisSize.min, children: [
-                            Icon(Icons.block, size: 34, color: theme.textFaint),
+                            Icon(Icons.block_rounded, size: 34, color: theme.textFaint),
                             const SizedBox(height: 12),
                             Text('هنوز هیچ‌کسی را مسدود نکرده‌اید', style: TextStyle(color: theme.textFaint, fontSize: 12.5)),
                             const SizedBox(height: 6),

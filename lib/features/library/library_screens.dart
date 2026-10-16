@@ -85,7 +85,7 @@ class _BooksBodyState extends State<BooksBody> {
         padding: const EdgeInsets.fromLTRB(18, 8, 18, 4),
         sliver: SliverToBoxAdapter(
           child: Wrap(spacing: 8, children: [
-            for (final (k, l, ic) in const [('all', 'همه', Icons.apps_rounded), ('download', 'قابل دانلود', Icons.download_rounded), ('online', 'خواندن آنلاین', Icons.chrome_reader_mode_outlined)])
+            for (final (k, l, ic) in const [('all', 'همه', Icons.apps_rounded), ('download', 'قابل دانلود', Icons.download_rounded), ('online', 'خواندن آنلاین', Icons.chrome_reader_mode_rounded)])
               ChoiceChip(
                 selected: _filter == k,
                 onSelected: (_) => setState(() => _filter = k),
@@ -142,7 +142,7 @@ class _BookTile extends StatelessWidget {
         Text(_s(item, 'author'), maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 11)),
         const SizedBox(height: 5),
         Row(children: [
-          Icon(dl ? Icons.download_for_offline_rounded : (_s(item, 'read_url').isNotEmpty ? Icons.chrome_reader_mode_outlined : Icons.info_outline_rounded),
+          Icon(dl ? Icons.download_for_offline_rounded : (_s(item, 'read_url').isNotEmpty ? Icons.chrome_reader_mode_rounded : Icons.info_outline_rounded),
               size: 14, color: dl ? theme.success : theme.blue),
           const SizedBox(width: 4),
           Expanded(
@@ -408,7 +408,7 @@ class _BookScreenState extends State<BookScreen> {
             pinned: true,
             expandedHeight: 330,
             backgroundColor: theme.bg,
-            leading: IconButton(icon: Icon(Icons.arrow_forward, color: theme.textPrimary), onPressed: () => Navigator.of(context).pop()),
+            leading: IconButton(icon: Icon(Icons.arrow_forward_rounded, color: theme.textPrimary), onPressed: () => Navigator.of(context).pop()),
             flexibleSpace: FlexibleSpaceBar(
               background: Stack(fit: StackFit.expand, children: [
                 DecoratedBox(
@@ -494,7 +494,7 @@ class _BookScreenState extends State<BookScreen> {
                 if (readUrl.startsWith('http')) ...[
                   _BigButton(
                     theme: theme,
-                    icon: Icons.chrome_reader_mode_outlined,
+                    icon: Icons.chrome_reader_mode_rounded,
                     label: _s(it, 'read_url_label').isNotEmpty ? _s(it, 'read_url_label') : 'خواندن آنلاین',
                     color: theme.blue,
                     outlined: dl,

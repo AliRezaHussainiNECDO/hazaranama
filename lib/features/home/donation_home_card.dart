@@ -43,14 +43,14 @@ class _DonationHomeCardState extends State<DonationHomeCard> {
             ),
           ),
         ),
-        Positioned(bottom: -14, left: -6, child: Icon(Icons.favorite, size: 74, color: Colors.white.withValues(alpha: 0.13))),
+        Positioned(bottom: -14, left: -6, child: Icon(Icons.favorite_rounded, size: 74, color: Colors.white.withValues(alpha: 0.13))),
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 14, 14, 14),
           child: Row(children: [
             Container(
               width: 42, height: 42,
               decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(13)),
-              child: const Icon(Icons.volunteer_activism, color: Colors.white, size: 21),
+              child: const Icon(Icons.volunteer_activism_rounded, color: Colors.white, size: 21),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -73,7 +73,7 @@ class _DonationHomeCardState extends State<DonationHomeCard> {
               child: Row(mainAxisSize: MainAxisSize.min, children: [
                 Text('حمایت کنید', style: TextStyle(color: theme.blueDeep, fontSize: 12, fontWeight: FontWeight.w800)),
                 const SizedBox(width: 4),
-                Icon(Icons.arrow_back, size: 12, color: theme.blueDeep),
+                Icon(Icons.arrow_back_rounded, size: 12, color: theme.blueDeep),
               ]),
             ),
           ]),

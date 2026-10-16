@@ -93,7 +93,7 @@ class _OverviewPageState extends State<OverviewPage> {
           decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(18), border: Border.all(color: theme.glassBorder)),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(children: [
-              StatIconBox(icon: Icons.dashboard, color: theme.blue, size: 26),
+              StatIconBox(icon: Icons.dashboard_rounded, color: theme.blue, size: 26),
               const SizedBox(width: 8),
               Text('محتوای بخش‌ها ($totalItems مطلب)', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700)),
             ]),
@@ -117,7 +117,7 @@ class _OverviewPageState extends State<OverviewPage> {
           ]),
         ),
         const SizedBox(height: 16),
-        _SectionHeader(icon: Icons.volunteer_activism, color: theme.success, title: 'آخرین کمک‌های مالی', theme: theme),
+        _SectionHeader(icon: Icons.volunteer_activism_rounded, color: theme.success, title: 'آخرین کمک‌های مالی', theme: theme),
         const SizedBox(height: 10),
         _DonationsStrip(theme: theme, donations: latestDonations, loading: _loadingExtras),
         const SizedBox(height: 18),
@@ -125,7 +125,7 @@ class _OverviewPageState extends State<OverviewPage> {
         const SizedBox(height: 10),
         _TopActiveStrip(theme: theme, app: app),
         const SizedBox(height: 18),
-        _SectionHeader(icon: Icons.article, color: theme.blue, title: 'آخرین مقالات ارسالی', theme: theme),
+        _SectionHeader(icon: Icons.article_rounded, color: theme.blue, title: 'آخرین مقالات ارسالی', theme: theme),
         const SizedBox(height: 10),
         _ArticlesStrip(theme: theme, articles: latestArticles, loading: _loadingExtras),
         const SizedBox(height: 16),
@@ -134,7 +134,7 @@ class _OverviewPageState extends State<OverviewPage> {
           decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(18), border: Border.all(color: theme.glassBorder)),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(children: [
-              StatIconBox(icon: Icons.notifications, color: theme.yellow, size: 26),
+              StatIconBox(icon: Icons.notifications_rounded, color: theme.yellow, size: 26),
               const SizedBox(width: 8),
               Text('آخرین فعالیت‌ها', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700)),
             ]),
@@ -239,7 +239,7 @@ class _AdminProfileCard extends StatelessWidget {
           _InfoChip(theme: theme, icon: Icons.shield_rounded, label: roleLabel(user?.role ?? UserRole.admin), color: theme.yellow),
           DonorTierChip(tier: tier),
           if ((user?.email ?? '').isNotEmpty) _InfoChip(theme: theme, icon: Icons.mail_outline_rounded, label: user!.email, color: theme.blue),
-          if ((user?.joined ?? '').isNotEmpty) _InfoChip(theme: theme, icon: Icons.event_outlined, label: 'عضویت ${user!.joined}', color: theme.textSecondary),
+          if ((user?.joined ?? '').isNotEmpty) _InfoChip(theme: theme, icon: Icons.event_rounded, label: 'عضویت ${user!.joined}', color: theme.textSecondary),
           if ((user?.country ?? 'نامشخص') != 'نامشخص') _InfoChip(theme: theme, icon: Icons.public_rounded, label: user!.country, color: theme.success),
           _InfoChip(theme: theme, icon: Icons.groups_rounded, label: '$activeUsers کاربر فعال زیر نظر', color: theme.blue),
         ]),
@@ -310,7 +310,7 @@ class _DonationsStrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (loading) return _StripSkeleton(theme: theme);
-    if (donations.isEmpty) return _StripEmpty(theme: theme, icon: Icons.volunteer_activism_outlined, text: 'هنوز هیچ کمکی اعلام نشده است.');
+    if (donations.isEmpty) return _StripEmpty(theme: theme, icon: Icons.volunteer_activism_rounded, text: 'هنوز هیچ کمکی اعلام نشده است.');
 
     return SizedBox(
       height: 118,
@@ -373,7 +373,7 @@ class _ArticlesStrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (loading) return _StripSkeleton(theme: theme);
-    if (articles.isEmpty) return _StripEmpty(theme: theme, icon: Icons.article_outlined, text: 'هنوز هیچ مقاله‌ای ارسال نشده است.');
+    if (articles.isEmpty) return _StripEmpty(theme: theme, icon: Icons.article_rounded, text: 'هنوز هیچ مقاله‌ای ارسال نشده است.');
 
     return SizedBox(
       height: 140,

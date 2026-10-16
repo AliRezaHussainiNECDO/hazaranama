@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(14, 10, 14, 0),
               child: Row(children: [
-                HzIconButton(theme: theme, icon: Icons.arrow_forward, onPressed: () => app.goTo(AuthStage.welcome)),
+                HzIconButton(theme: theme, icon: Icons.arrow_forward_rounded, onPressed: () => app.goTo(AuthStage.welcome)),
               ]),
             ),
             Expanded(
@@ -88,14 +88,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 22),
                       AutofillGroup(
                         child: Column(children: [
-                          HzTextField(controller: _email, icon: Icons.mail_outline, hint: 'ایمیل', theme: theme, keyboardType: TextInputType.emailAddress, autofillHints: const [AutofillHints.email, AutofillHints.username]),
+                          HzTextField(controller: _email, icon: Icons.mail_outline_rounded, hint: 'ایمیل', theme: theme, keyboardType: TextInputType.emailAddress, autofillHints: const [AutofillHints.email, AutofillHints.username]),
                           const SizedBox(height: 12),
                           HzTextField(
-                            controller: _password, icon: Icons.lock_outline, hint: 'رمز عبور', theme: theme, obscureText: !_showPass,
+                            controller: _password, icon: Icons.lock_outline_rounded, hint: 'رمز عبور', theme: theme, obscureText: !_showPass,
                             autofillHints: const [AutofillHints.password],
                             onSubmitted: (_) => _submit(app),
                             suffix: IconButton(
-                              icon: Icon(_showPass ? Icons.visibility_off : Icons.visibility, size: 18, color: theme.textFaint),
+                              icon: Icon(_showPass ? Icons.visibility_off_rounded : Icons.visibility_rounded, size: 18, color: theme.textFaint),
                               onPressed: () => setState(() => _showPass = !_showPass),
                             ),
                           ),

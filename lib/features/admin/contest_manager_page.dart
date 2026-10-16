@@ -255,7 +255,7 @@ class _SubmissionsTab extends StatelessWidget {
             ),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
-                Icon(Icons.auto_awesome, size: 16, color: theme.aiViolet),
+                Icon(Icons.auto_awesome_rounded, size: 16, color: theme.aiViolet),
                 const SizedBox(width: 6),
                 Expanded(child: Text('رتبه‌بندی خودکار با هوش مصنوعی', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800))),
               ]),
@@ -273,7 +273,7 @@ class _SubmissionsTab extends StatelessWidget {
                   onPressed: autoRanking ? null : onAutoRank,
                   icon: autoRanking
                       ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                      : const Icon(Icons.emoji_events_outlined, size: 15),
+                      : const Icon(Icons.emoji_events_rounded, size: 15),
                   label: Text(autoRanking ? 'در حال بررسی و رتبه‌بندی…' : 'بررسی، رتبه‌بندی و انتشار برگزیدگان', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                   style: ElevatedButton.styleFrom(backgroundColor: theme.aiViolet, foregroundColor: Colors.white, elevation: 0, padding: const EdgeInsets.symmetric(vertical: 12), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
                 ),
@@ -625,32 +625,32 @@ class _SubmissionCardState extends State<_SubmissionCard> {
           Wrap(spacing: 6, runSpacing: 6, children: [
             OutlinedButton.icon(
               onPressed: _runAiReview,
-              icon: const Icon(Icons.smart_toy_outlined, size: 14),
+              icon: const Icon(Icons.smart_toy_rounded, size: 14),
               label: const Text('بررسی با هوش مصنوعی', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
               style: OutlinedButton.styleFrom(foregroundColor: theme.aiViolet, side: BorderSide(color: theme.aiViolet.withValues(alpha: 0.4)), padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
             ),
             if (s.status != ArticleStatus.published && s.status != ArticleStatus.disqualified)
               OutlinedButton.icon(
                 onPressed: _disqualify,
-                icon: const Icon(Icons.block, size: 14),
+                icon: const Icon(Icons.block_rounded, size: 14),
                 label: const Text('رد صلاحیت', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
                 style: OutlinedButton.styleFrom(foregroundColor: theme.danger, side: BorderSide(color: theme.danger.withValues(alpha: 0.4)), padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
               ),
             if (s.status == ArticleStatus.disqualified)
               OutlinedButton.icon(
                 onPressed: _reactivate,
-                icon: const Icon(Icons.restore, size: 14),
+                icon: const Icon(Icons.restore_rounded, size: 14),
                 label: const Text('بازگردانی', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
                 style: OutlinedButton.styleFrom(foregroundColor: theme.success, side: BorderSide(color: theme.success.withValues(alpha: 0.4)), padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
               ),
             if (s.status != ArticleStatus.published && s.status != ArticleStatus.disqualified)
               ElevatedButton.icon(
                 onPressed: _openPlacementForm,
-                icon: const Icon(Icons.emoji_events_outlined, size: 14),
+                icon: const Icon(Icons.emoji_events_rounded, size: 14),
                 label: const Text('انتخاب به‌عنوان برگزیده', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
                 style: ElevatedButton.styleFrom(backgroundColor: theme.blue, foregroundColor: Colors.white, elevation: 0, padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
               ),
-            IconButton(icon: Icon(Icons.delete_outline, size: 17, color: theme.textFaint), onPressed: _confirmDelete, padding: EdgeInsets.zero, constraints: const BoxConstraints(minWidth: 30, minHeight: 30)),
+            IconButton(icon: Icon(Icons.delete_outline_rounded, size: 17, color: theme.textFaint), onPressed: _confirmDelete, padding: EdgeInsets.zero, constraints: const BoxConstraints(minWidth: 30, minHeight: 30)),
           ]),
       ]),
     );
@@ -901,7 +901,7 @@ class _FeaturedTab extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: ElevatedButton.icon(
               onPressed: () => _openManualForm(context),
-              icon: const Icon(Icons.add, size: 15),
+              icon: const Icon(Icons.add_rounded, size: 15),
               label: const Text('افزودن دستی', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
               style: ElevatedButton.styleFrom(backgroundColor: theme.blue, foregroundColor: Colors.white, elevation: 0, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
             ),
@@ -934,8 +934,8 @@ class _FeaturedTab extends StatelessWidget {
                       Text('${a.authorName} — ${a.monthLabel}', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
                     ]),
                   ),
-                  IconButton(icon: Icon(Icons.edit_outlined, size: 17, color: theme.blue), onPressed: () => _openEditForm(context, a)),
-                  IconButton(icon: Icon(Icons.delete_outline, size: 17, color: theme.danger), onPressed: () => _confirmDelete(context, a)),
+                  IconButton(icon: Icon(Icons.edit_rounded, size: 17, color: theme.blue), onPressed: () => _openEditForm(context, a)),
+                  IconButton(icon: Icon(Icons.delete_outline_rounded, size: 17, color: theme.danger), onPressed: () => _confirmDelete(context, a)),
                 ]),
               ),
               const SizedBox(height: 8),
@@ -1055,7 +1055,7 @@ class _SettingsTabState extends State<_SettingsTab> {
           ),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(children: [
-              Icon(Icons.event_available, size: 16, color: theme.blue),
+              Icon(Icons.event_available_rounded, size: 16, color: theme.blue),
               const SizedBox(width: 6),
               Expanded(child: Text('وضعیت دوره‌ی فعلی', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800))),
             ]),
@@ -1075,7 +1075,7 @@ class _SettingsTabState extends State<_SettingsTab> {
                 onPressed: _startingRound ? null : _startNewRound,
                 icon: _startingRound
                     ? SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: theme.blue))
-                    : const Icon(Icons.play_circle_outline, size: 16),
+                    : const Icon(Icons.play_circle_outline_rounded, size: 16),
                 label: Text(settings.hasActiveRound ? 'شروع دوره‌ی تازه از همین لحظه' : 'شروع اولین دوره از همین لحظه', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                 style: OutlinedButton.styleFrom(foregroundColor: theme.blue, side: BorderSide(color: theme.blue.withValues(alpha: 0.4)), padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
               ),
@@ -1088,7 +1088,7 @@ class _SettingsTabState extends State<_SettingsTab> {
           decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(16), border: Border.all(color: theme.glassBorder)),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(children: [
-              Icon(Icons.edit_document, size: 16, color: theme.blue),
+              Icon(Icons.edit_note_rounded, size: 16, color: theme.blue),
               const SizedBox(width: 6),
               Text('موضوع مشترک این دوره', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800)),
             ]),
@@ -1104,7 +1104,7 @@ class _SettingsTabState extends State<_SettingsTab> {
           decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(16), border: Border.all(color: theme.glassBorder)),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(children: [
-              Icon(Icons.card_giftcard, size: 16, color: theme.yellow),
+              Icon(Icons.card_giftcard_rounded, size: 16, color: theme.yellow),
               const SizedBox(width: 6),
               Text('جوایز سه مقام برتر', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800)),
             ]),
@@ -1126,7 +1126,7 @@ class _SettingsTabState extends State<_SettingsTab> {
           onPressed: _saving ? null : _save,
           icon: _saving
               ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-              : const Icon(Icons.save_outlined, size: 16),
+              : const Icon(Icons.save_rounded, size: 16),
           label: Text(_saving ? 'در حال ذخیره…' : 'ذخیره‌ی تنظیمات', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
           style: ElevatedButton.styleFrom(backgroundColor: theme.blue, foregroundColor: Colors.white, elevation: 0, padding: const EdgeInsets.symmetric(vertical: 13), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
         ),

@@ -105,7 +105,7 @@ class _ProfileHeaderState extends State<ProfileHeader> with TickerProviderStateM
                     child: Container(
                       width: 26, height: 26,
                       decoration: BoxDecoration(color: theme.blue, borderRadius: BorderRadius.circular(9)),
-                      child: const Icon(Icons.check, size: 13, color: Colors.white),
+                      child: const Icon(Icons.check_rounded, size: 13, color: Colors.white),
                     ),
                   ),
                 ])
@@ -113,7 +113,7 @@ class _ProfileHeaderState extends State<ProfileHeader> with TickerProviderStateM
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Text(app.displayName, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: theme.textPrimary)),
                   const SizedBox(width: 5),
-                  InkWell(onTap: () => setState(() => _editingName = true), child: Icon(Icons.edit, size: 15, color: theme.textFaint)),
+                  InkWell(onTap: () => setState(() => _editingName = true), child: Icon(Icons.edit_rounded, size: 15, color: theme.textFaint)),
                   if (user != null && user.role != UserRole.user) ...[
                     const SizedBox(width: 7),
                     _RoleBadge(theme: theme, role: user.role),
@@ -214,7 +214,7 @@ class _ProfileHeaderState extends State<ProfileHeader> with TickerProviderStateM
             child: Container(
               width: 26, height: 26,
               decoration: BoxDecoration(shape: BoxShape.circle, color: theme.yellow, border: Border.all(color: theme.bgCard, width: 2.6)),
-              child: Icon(Icons.photo_camera, size: 12, color: theme.bg),
+              child: Icon(Icons.photo_camera_rounded, size: 12, color: theme.bg),
             ),
           ),
         ),

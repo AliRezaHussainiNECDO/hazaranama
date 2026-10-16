@@ -52,7 +52,7 @@ class _FeaturedArticlesBodyState extends State<FeaturedArticlesBody> {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(24, 60, 24, 24),
           children: [
-            Icon(Icons.emoji_events_outlined, size: 40, color: theme.textFaint),
+            Icon(Icons.emoji_events_rounded, size: 40, color: theme.textFaint),
             const SizedBox(height: 12),
             Text('هنوز برگزیده‌ای منتشر نشده', textAlign: TextAlign.center, style: TextStyle(color: theme.textFaint, fontSize: 12.5)),
             const SizedBox(height: 6),
@@ -131,7 +131,7 @@ class _FeaturedArticleCard extends StatelessWidget {
             DonorVipTick(color: app.donorTierForUserId(article.authorId ?? '')!.tickColor!, size: 12),
             const SizedBox(width: 6),
           ],
-          Icon(Icons.arrow_back, size: 13, color: theme.blue),
+          Icon(Icons.arrow_back_rounded, size: 13, color: theme.blue),
         ]),
       ]),
     );

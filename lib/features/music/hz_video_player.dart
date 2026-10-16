@@ -123,7 +123,7 @@ class _HzVideoPlayerState extends State<HzVideoPlayer> {
           if (!_ready && !_failed) const CircularProgressIndicator(color: Colors.white70, strokeWidth: 2.4),
           if (_failed)
             const Column(mainAxisSize: MainAxisSize.min, children: [
-              Icon(Icons.error_outline, color: Colors.white54, size: 34),
+              Icon(Icons.error_outline_rounded, color: Colors.white54, size: 34),
               SizedBox(height: 6),
               Text('پخش ویدیو ممکن نشد', style: TextStyle(color: Colors.white54, fontSize: 12.5)),
             ]),
@@ -143,7 +143,7 @@ class _HzVideoPlayerState extends State<HzVideoPlayer> {
                 child: Container(
                   width: 58, height: 58,
                   decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.black.withValues(alpha: 0.4), border: Border.all(color: Colors.white38)),
-                  child: Icon(_controller.value.isPlaying ? Icons.pause : Icons.play_arrow_rounded, color: Colors.white, size: 30),
+                  child: Icon(_controller.value.isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded, color: Colors.white, size: 30),
                 ),
               ),
             ),
@@ -173,7 +173,7 @@ class _HzVideoPlayerState extends State<HzVideoPlayer> {
                   const SizedBox(width: 4),
                   Text('${_fmt(_controller.value.position)} / ${_fmt(_controller.value.duration)}', style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600)),
                   const Spacer(),
-                  InkWell(onTap: _openFullscreen, child: const Icon(Icons.fullscreen, color: Colors.white, size: 20)),
+                  InkWell(onTap: _openFullscreen, child: const Icon(Icons.fullscreen_rounded, color: Colors.white, size: 20)),
                   const SizedBox(width: 4),
                 ]),
               ]),
@@ -253,7 +253,7 @@ class _FullscreenVideoPageState extends State<_FullscreenVideoPage> {
             Positioned(
               top: 8, right: 8,
               child: SafeArea(
-                child: IconButton(icon: const Icon(Icons.close, color: Colors.white), onPressed: () => Navigator.of(context).pop()),
+                child: IconButton(icon: const Icon(Icons.close_rounded, color: Colors.white), onPressed: () => Navigator.of(context).pop()),
               ),
             ),
             Center(
@@ -270,7 +270,7 @@ class _FullscreenVideoPageState extends State<_FullscreenVideoPage> {
                 child: Container(
                   width: 64, height: 64,
                   decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.black.withValues(alpha: 0.4), border: Border.all(color: Colors.white38)),
-                  child: Icon(c.value.isPlaying ? Icons.pause : Icons.play_arrow_rounded, color: Colors.white, size: 34),
+                  child: Icon(c.value.isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded, color: Colors.white, size: 34),
                 ),
               ),
             ),

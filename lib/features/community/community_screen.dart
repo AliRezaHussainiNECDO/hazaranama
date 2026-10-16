@@ -156,7 +156,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
             theme: theme, size: 44, childSize: 38,
             tier: app.myRankTier,
             child: HzBadge(theme: theme, size: 38, filled: true, avatarPath: app.avatarPath,
-              child: const Icon(Icons.person, color: Colors.white, size: 16)),
+              child: const Icon(Icons.person_rounded, color: Colors.white, size: 16)),
           ),
           const SizedBox(width: 10),
           Expanded(
@@ -195,7 +195,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                           child: Container(
                             padding: const EdgeInsets.all(2),
                             decoration: BoxDecoration(color: theme.danger, shape: BoxShape.circle),
-                            child: const Icon(Icons.close, size: 12, color: Colors.white),
+                            child: const Icon(Icons.close_rounded, size: 12, color: Colors.white),
                           ),
                         ),
                       ),
@@ -227,7 +227,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
               if (_videoUrl != null)
                 GestureDetector(
                   onTap: () => setState(() => _videoUrl = null),
-                  child: Icon(Icons.close, size: 16, color: theme.danger),
+                  child: Icon(Icons.close_rounded, size: 16, color: theme.danger),
                 ),
             ]),
           ),
@@ -238,12 +238,12 @@ class _CommunityScreenState extends State<CommunityScreen> {
         Row(children: [
           IconButton(
             onPressed: _uploadingImages ? null : () => _pickImages(app),
-            icon: Icon(Icons.add_photo_alternate_outlined, color: theme.success, size: 21),
+            icon: Icon(Icons.add_photo_alternate_rounded, color: theme.success, size: 21),
             tooltip: 'افزودن عکس',
           ),
           IconButton(
             onPressed: _uploadingVideo ? null : () => _pickVideo(app),
-            icon: Icon(Icons.videocam_outlined, color: theme.success, size: 21),
+            icon: Icon(Icons.videocam_rounded, color: theme.success, size: 21),
             tooltip: 'افزودن ویدیو',
           ),
           const Spacer(),
@@ -251,7 +251,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
             onPressed: canPublish ? () => _publish(app) : null,
             icon: _publishing
                 ? const SizedBox(width: 13, height: 13, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                : const Icon(Icons.send, size: 14),
+                : const Icon(Icons.send_rounded, size: 14),
             label: Text(_publishing ? 'در حال انتشار…' : 'انتشار', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
             style: ElevatedButton.styleFrom(
               backgroundColor: theme.blue, foregroundColor: Colors.white,
@@ -277,7 +277,7 @@ class _EmptyFeed extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 20),
       decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(20), border: Border.all(color: theme.glassBorder)),
       child: Column(children: [
-        Icon(Icons.photo_camera_back_outlined, size: 34, color: theme.textFaint),
+        Icon(Icons.photo_camera_back_rounded, size: 34, color: theme.textFaint),
         const SizedBox(height: 10),
         Text('هنوز پستی نیست', style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w700)),
         const SizedBox(height: 4),

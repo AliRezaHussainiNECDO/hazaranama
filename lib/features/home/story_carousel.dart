@@ -86,7 +86,7 @@ class _ContestSlideState extends State<_ContestSlide> {
         ),
         Positioned(
           top: -18, left: -18,
-          child: Icon(Icons.emoji_events, size: 130, color: Colors.white.withValues(alpha: 0.12)),
+          child: Icon(Icons.emoji_events_rounded, size: 130, color: Colors.white.withValues(alpha: 0.12)),
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 18, 20, 18),
@@ -95,7 +95,7 @@ class _ContestSlideState extends State<_ContestSlide> {
               padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 5),
               decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.22), borderRadius: BorderRadius.circular(999)),
               child: const Row(mainAxisSize: MainAxisSize.min, children: [
-                Icon(Icons.emoji_events, size: 13, color: Colors.white),
+                Icon(Icons.emoji_events_rounded, size: 13, color: Colors.white),
                 SizedBox(width: 5),
                 Text('مسابقه‌ی مقالات', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w800)),
               ]),
@@ -125,7 +125,7 @@ class _ContestSlideState extends State<_ContestSlide> {
                 child: Row(mainAxisSize: MainAxisSize.min, children: [
                   Text('شرکت در مسابقه', style: TextStyle(color: theme.blueDeep, fontSize: 12.5, fontWeight: FontWeight.w800)),
                   const SizedBox(width: 5),
-                  Icon(Icons.arrow_back, size: 13, color: theme.blueDeep),
+                  Icon(Icons.arrow_back_rounded, size: 13, color: theme.blueDeep),
                 ]),
               ),
             ]),

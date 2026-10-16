@@ -34,7 +34,7 @@ class ExploreScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: Row(children: [
-              Icon(_groupIcons[group] ?? Icons.circle, size: 18, color: theme.yellow),
+              Icon(_groupIcons[group] ?? Icons.circle_rounded, size: 18, color: theme.yellow),
               const SizedBox(width: 8),
               Text(kGroupLabel[group]!, style: TextStyle(color: theme.textPrimary, fontSize: 16, fontWeight: FontWeight.w900)),
               const SizedBox(width: 10),

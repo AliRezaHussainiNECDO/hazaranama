@@ -70,7 +70,7 @@ class _ContentManagerPageState extends State<ContentManagerPage> {
             ),
           ElevatedButton.icon(
             onPressed: () => _openForm(context, app, section, null),
-            icon: const Icon(Icons.add, size: 16),
+            icon: const Icon(Icons.add_rounded, size: 16),
             label: const Text('افزودن', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800)),
             style: ElevatedButton.styleFrom(backgroundColor: st.b, foregroundColor: Colors.white, elevation: 0, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
           ),
@@ -128,8 +128,8 @@ class _ContentManagerPageState extends State<ContentManagerPage> {
                       Text('${item[secondaryKey] ?? ""}', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 12)),
                   ]),
                 ),
-                IconButton(icon: Icon(Icons.edit_outlined, size: 17, color: theme.blue), onPressed: () => _openForm(context, app, section, item)),
-                IconButton(icon: Icon(Icons.delete_outline, size: 17, color: theme.danger), onPressed: () => _confirmDelete(context, app, section, item)),
+                IconButton(icon: Icon(Icons.edit_rounded, size: 17, color: theme.blue), onPressed: () => _openForm(context, app, section, item)),
+                IconButton(icon: Icon(Icons.delete_outline_rounded, size: 17, color: theme.danger), onPressed: () => _confirmDelete(context, app, section, item)),
               ]),
             );
           },
@@ -246,7 +246,7 @@ class _ContentManagerPageState extends State<ContentManagerPage> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.network(imageUrlController.text.trim(), height: 110, width: double.infinity, fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => Container(height: 110, color: theme.bgCard, alignment: Alignment.center, child: Icon(Icons.broken_image_outlined, color: theme.textFaint)),
+                        errorBuilder: (_, __, ___) => Container(height: 110, color: theme.bgCard, alignment: Alignment.center, child: Icon(Icons.broken_image_rounded, color: theme.textFaint)),
                       ),
                     ),
                   ),
@@ -256,7 +256,7 @@ class _ContentManagerPageState extends State<ContentManagerPage> {
                       onPressed: uploading ? null : pickAndUpload,
                       icon: uploading
                           ? SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: theme.blue))
-                          : Icon(Icons.image_outlined, size: 16, color: theme.blue),
+                          : Icon(Icons.image_rounded, size: 16, color: theme.blue),
                       label: Text(uploading ? 'در حال آپلود…' : 'انتخاب عکس از گالری', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                       style: OutlinedButton.styleFrom(foregroundColor: theme.blue, side: BorderSide(color: theme.border), padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
                     ),
@@ -265,7 +265,7 @@ class _ContentManagerPageState extends State<ContentManagerPage> {
                     const SizedBox(width: 8),
                     IconButton(
                       onPressed: () => setSheetState(() => imageUrlController.text = ''),
-                      icon: Icon(Icons.close, size: 18, color: theme.danger),
+                      icon: Icon(Icons.close_rounded, size: 18, color: theme.danger),
                       tooltip: 'حذف عکس',
                     ),
                   ],

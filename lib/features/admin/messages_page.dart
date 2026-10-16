@@ -40,7 +40,7 @@ class _MessagesPageState extends State<MessagesPage> {
       padding: const EdgeInsets.all(16),
       children: [
         Row(children: [
-          StatIconBox(icon: Icons.mark_email_unread_outlined, color: theme.blue, size: 32),
+          StatIconBox(icon: Icons.mark_email_unread_rounded, color: theme.blue, size: 32),
           const SizedBox(width: 10),
           Expanded(child: Text('${app.allMessages.length} پیام ثبت‌شده · $newCount پیام تازه', style: TextStyle(color: theme.textFaint, fontSize: 12.5))),
         ]),
@@ -119,7 +119,7 @@ class _AdminMessageCardState extends State<_AdminMessageCard> {
                   Text(m.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 11)),
                 ]),
               ),
-              Icon(_expanded ? Icons.expand_less : Icons.expand_more, color: theme.textFaint, size: 18),
+              Icon(_expanded ? Icons.expand_less_rounded : Icons.expand_more_rounded, color: theme.textFaint, size: 18),
             ]),
           ),
         ),
@@ -130,7 +130,7 @@ class _AdminMessageCardState extends State<_AdminMessageCard> {
               const Divider(height: 1),
               const SizedBox(height: 10),
               Row(children: [
-                _infoChip(theme, Icons.map_outlined, m.userOriginProvince),
+                _infoChip(theme, Icons.map_rounded, m.userOriginProvince),
               ]),
               const SizedBox(height: 12),
               if (m.adminReply != null)
@@ -168,7 +168,7 @@ class _AdminMessageCardState extends State<_AdminMessageCard> {
                     decoration: BoxDecoration(shape: BoxShape.circle, color: theme.blue),
                     child: _sending
                         ? const Padding(padding: EdgeInsets.all(10), child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                        : const Icon(Icons.send, size: 16, color: Colors.white),
+                        : const Icon(Icons.send_rounded, size: 16, color: Colors.white),
                   ),
                 ),
               ]),

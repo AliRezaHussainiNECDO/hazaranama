@@ -44,7 +44,7 @@ class SectionDetailScreen extends StatelessWidget {
                   preferredSize: const Size.fromHeight(2),
                   child: Container(height: 2, decoration: BoxDecoration(gradient: sectionStyle(section.id).gradient)),
                 ),
-                leading: IconButton(icon: Icon(Icons.arrow_forward, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
+                leading: IconButton(icon: Icon(Icons.arrow_forward_rounded, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
                 title: Row(children: [
                   Container(
                     width: 38,
@@ -76,7 +76,7 @@ class SectionDetailScreen extends StatelessWidget {
                       },
                     ),
                   IconButton(
-                    icon: Icon(Icons.ios_share, size: 18, color: theme.textSecondary),
+                    icon: Icon(Icons.ios_share_rounded, size: 18, color: theme.textSecondary),
                     tooltip: 'هم‌رسانی',
                     onPressed: () async {
                       await Clipboard.setData(ClipboardData(text: '«${section.title}» در هزاره‌نامه — ${section.description}\nhttps://hazaranama.com'));

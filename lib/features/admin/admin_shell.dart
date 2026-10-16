@@ -18,6 +18,7 @@ import 'music_manager_page.dart';
 import 'contest_manager_page.dart';
 import 'donation_manager_page.dart';
 import 'broadcast_page.dart';
+import '../profile/profile_screen.dart' show confirmLogout;
 
 class _NavItem {
   final String id;
@@ -136,6 +137,11 @@ class _AdminShellState extends State<AdminShell> {
             Expanded(
               child: Text(_titleFor(_page), maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 16, fontWeight: FontWeight.w900)),
             ),
+           IconButton(
+              tooltip: 'خروج از حساب',
+              icon: Icon(Icons.logout_rounded, color: theme.danger),
+              onPressed: () => confirmLogout(context),
+            ),
           ]),
         ),
         Expanded(
@@ -244,6 +250,25 @@ class _AdminShellState extends State<AdminShell> {
                     for (final item in entry.value) _drawerTile(theme, app, item),
                   ],
               ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+            child: SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  confirmLogout(context);
+                },
+                icon: Icon(Icons.logout_rounded, size: 18, color: theme.danger),
+                label: Text('خروج از حساب', style: TextStyle(color: theme.danger, fontSize: 13, fontWeight: FontWeight.w800)),
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(color: theme.danger.withValues(alpha: 0.45)),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                ),
+              ),
             ),
           ),
         ]),

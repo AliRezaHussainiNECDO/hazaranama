@@ -79,7 +79,7 @@ class _PostCardState extends State<PostCard> {
               ]),
             ),
             PopupMenuButton<String>(
-              icon: Icon(Icons.more_horiz, color: theme.textFaint, size: 19),
+              icon: Icon(Icons.more_horiz_rounded, color: theme.textFaint, size: 19),
               color: theme.bgElevated,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
               onSelected: (v) {
@@ -113,7 +113,7 @@ class _PostCardState extends State<PostCard> {
                   scale: _showBigHeart ? 1 : 0,
                   duration: const Duration(milliseconds: 280),
                   curve: Curves.elasticOut,
-                  child: const Icon(Icons.favorite, color: Colors.white, size: 86, shadows: [Shadow(blurRadius: 20, color: Colors.black45)]),
+                  child: const Icon(Icons.favorite_rounded, color: Colors.white, size: 86, shadows: [Shadow(blurRadius: 20, color: Colors.black45)]),
                 ),
               ),
             ]),
@@ -132,7 +132,7 @@ class _PostCardState extends State<PostCard> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
                   child: Row(mainAxisSize: MainAxisSize.min, children: [
-                    Icon(Icons.mode_comment_outlined, size: 16, color: theme.textFaint),
+                    Icon(Icons.mode_comment_rounded, size: 16, color: theme.textFaint),
                     const SizedBox(width: 5),
                     Text('${post.commentsCount}', style: TextStyle(color: theme.textFaint, fontSize: 12.5, fontWeight: FontWeight.w600)),
                   ]),
@@ -251,7 +251,7 @@ Future<void> showReportDialog(
             ListTile(
               contentPadding: EdgeInsets.zero,
               title: Text(reason, style: TextStyle(color: theme.textSecondary, fontSize: 12.5)),
-              trailing: Icon(Icons.chevron_left, size: 16, color: theme.textFaint),
+              trailing: Icon(Icons.chevron_left_rounded, size: 16, color: theme.textFaint),
               onTap: () async {
                 Navigator.of(ctx).pop();
                 final error = await app.reportContent(
@@ -290,7 +290,7 @@ class _LikeButton extends StatelessWidget {
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeOutBack,
           child: Row(mainAxisSize: MainAxisSize.min, children: [
-            Icon(liked ? Icons.favorite : Icons.favorite_border, size: 19, color: liked ? _kLikeColor : theme.textFaint),
+            Icon(liked ? Icons.favorite_rounded : Icons.favorite_border_rounded, size: 19, color: liked ? _kLikeColor : theme.textFaint),
             const SizedBox(width: 5),
             Text('لایک', style: TextStyle(fontSize: 12.5, color: liked ? _kLikeColor : theme.textFaint, fontWeight: FontWeight.w700)),
           ]),
@@ -314,7 +314,7 @@ class _MoreReactionsButton extends StatelessWidget {
       onTap: () => _openPicker(context),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-        child: Icon(Icons.add_reaction_outlined, size: 18, color: theme.textFaint),
+        child: Icon(Icons.add_reaction_rounded, size: 18, color: theme.textFaint),
       ),
     );
   }
@@ -529,7 +529,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
               filter: ImageFilter.blur(sigmaX: 22, sigmaY: 22),
               child: AppBar(
                 backgroundColor: theme.bgElevated.withValues(alpha: 0.5), elevation: 0,
-                leading: IconButton(icon: Icon(Icons.arrow_forward, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
+                leading: IconButton(icon: Icon(Icons.arrow_forward_rounded, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
                 title: Text('پست', style: TextStyle(color: theme.textPrimary, fontSize: 14.5, fontWeight: FontWeight.w800)),
               ),
             ),
@@ -640,7 +640,7 @@ class _CommentComposer extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(9),
-          child: Icon(Icons.emoji_emotions_outlined, size: 19, color: theme.textFaint),
+          child: Icon(Icons.emoji_emotions_rounded, size: 19, color: theme.textFaint),
         ),
       ),
       const SizedBox(width: 4),
@@ -649,7 +649,7 @@ class _CommentComposer extends StatelessWidget {
         child: Container(
           width: 38, height: 38,
           decoration: BoxDecoration(shape: BoxShape.circle, color: theme.blue),
-          child: const Icon(Icons.send, size: 15, color: Colors.white),
+          child: const Icon(Icons.send_rounded, size: 15, color: Colors.white),
         ),
       ),
     ]);
@@ -723,7 +723,7 @@ class _CommentTile extends StatelessWidget {
               InkWell(
                 onTap: onLikeTap,
                 child: Row(mainAxisSize: MainAxisSize.min, children: [
-                  Icon(comment.likedByMe ? Icons.favorite : Icons.favorite_border, size: 13, color: comment.likedByMe ? _kLikeColor : theme.textFaint),
+                  Icon(comment.likedByMe ? Icons.favorite_rounded : Icons.favorite_border_rounded, size: 13, color: comment.likedByMe ? _kLikeColor : theme.textFaint),
                   if (comment.likeCount > 0) ...[
                     const SizedBox(width: 3),
                     Text('${comment.likeCount}', style: TextStyle(fontSize: 11.5, color: comment.likedByMe ? _kLikeColor : theme.textFaint, fontWeight: FontWeight.w600)),
@@ -775,7 +775,7 @@ Widget _postImage(String url, AppColors theme) {
         ? child
         : box(SizedBox(width: 26, height: 26, child: CircularProgressIndicator(strokeWidth: 2.4, color: theme.blue))),
     errorBuilder: (_, __, ___) => box(Column(mainAxisSize: MainAxisSize.min, children: [
-      Icon(Icons.image_not_supported_outlined, size: 34, color: theme.textFaint),
+      Icon(Icons.image_not_supported_rounded, size: 34, color: theme.textFaint),
       const SizedBox(height: 8),
       Text('تصویر در دسترس نیست', style: TextStyle(color: theme.textFaint, fontSize: 12)),
     ])),

@@ -142,7 +142,7 @@ class _FeaturedArticleScreenState extends State<FeaturedArticleScreen> {
               child: AppBar(
                 backgroundColor: theme.bgElevated.withValues(alpha: 0.5),
                 elevation: 0,
-                leading: IconButton(icon: Icon(Icons.arrow_forward, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
+                leading: IconButton(icon: Icon(Icons.arrow_forward_rounded, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
                 title: Text('برگزیدگان مسابقه‌ی مقالات', style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800)),
               ),
             ),
@@ -192,7 +192,7 @@ class _FeaturedArticleScreenState extends State<FeaturedArticleScreen> {
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(color: theme.yellow.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12), border: Border.all(color: theme.yellow.withValues(alpha: 0.3))),
                     child: Row(children: [
-                      Icon(Icons.card_giftcard, size: 16, color: theme.yellow),
+                      Icon(Icons.card_giftcard_rounded, size: 16, color: theme.yellow),
                       const SizedBox(width: 8),
                       Expanded(child: Text(article.prize!, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700))),
                     ]),
@@ -239,7 +239,7 @@ class _FeaturedArticleScreenState extends State<FeaturedArticleScreen> {
                 const FlagStripe(width: 44),
                 const SizedBox(height: 14),
                 Row(children: [
-                  Icon(Icons.mode_comment_outlined, size: 15, color: theme.textSecondary),
+                  Icon(Icons.mode_comment_rounded, size: 15, color: theme.textSecondary),
                   const SizedBox(width: 6),
                   Text('$totalComments نظر', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800)),
                 ]),
@@ -315,7 +315,7 @@ class _ArticleCommentComposer extends StatelessWidget {
           baseChoices: AppConstants.emojiChoices,
           onPick: (e) => controller.text = '${controller.text}$e',
         ),
-        child: Padding(padding: const EdgeInsets.all(9), child: Icon(Icons.emoji_emotions_outlined, size: 19, color: theme.textFaint)),
+        child: Padding(padding: const EdgeInsets.all(9), child: Icon(Icons.emoji_emotions_rounded, size: 19, color: theme.textFaint)),
       ),
       const SizedBox(width: 4),
       InkWell(
@@ -323,7 +323,7 @@ class _ArticleCommentComposer extends StatelessWidget {
         child: Container(
           width: 38, height: 38,
           decoration: BoxDecoration(shape: BoxShape.circle, color: theme.blue),
-          child: const Icon(Icons.send, size: 15, color: Colors.white),
+          child: const Icon(Icons.send_rounded, size: 15, color: Colors.white),
         ),
       ),
     ]);
@@ -397,7 +397,7 @@ class _ArticleCommentTile extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 2),
                     child: Row(mainAxisSize: MainAxisSize.min, children: [
-                      Icon(Icons.flag_outlined, size: 13, color: theme.textFaint),
+                      Icon(Icons.flag_rounded, size: 13, color: theme.textFaint),
                       const SizedBox(width: 3),
                       Text('گزارش', style: TextStyle(color: theme.textFaint, fontSize: 11)),
                     ]),

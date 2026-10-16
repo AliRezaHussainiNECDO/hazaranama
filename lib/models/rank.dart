@@ -58,6 +58,6 @@ const List<XpWay> kXpWays = [
   XpWay('comment', 'کامنت', 'نظر روی پست، ویدیو یا مقاله', Icons.chat_bubble_rounded, Color(0xFF4FD1C5), 4),
   XpWay('reaction', 'واکنش', 'لایک و واکنش به کار دیگران', Icons.favorite_rounded, Color(0xFFFF5C7A), 1),
   XpWay('liked', 'لایک گرفتن', 'هر لایکی که پست شما می‌گیرد', Icons.volunteer_activism_rounded, Color(0xFFFF8A3D), 2),
-  XpWay('article', 'مسابقه‌ی مقاله', 'فرستادن مقاله به مسابقه‌ی ماهانه', Icons.emoji_events_outlined, Color(0xFFFFC94D), 25),
+  XpWay('article', 'مسابقه‌ی مقاله', 'فرستادن مقاله به مسابقه‌ی ماهانه', Icons.emoji_events_rounded, Color(0xFFFFC94D), 25),
   XpWay('featured', 'مقاله‌ی برگزیده', 'رتبه‌ی اول ۳۰۰، دوم ۲۰۰، سوم ۱۰۰', Icons.workspace_premium_rounded, Color(0xFFFFD36B), 100),
 ];

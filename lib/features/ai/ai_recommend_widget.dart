@@ -85,7 +85,7 @@ class _AiRecommendSectionState extends State<AiRecommendSection> {
 
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(children: [
-        Icon(Icons.auto_awesome, size: 14, color: theme.aiViolet),
+        Icon(Icons.auto_awesome_rounded, size: 14, color: theme.aiViolet),
         const SizedBox(width: 6),
         Text('پیشنهاد هوشمند برای تو', style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800)),
       ]),

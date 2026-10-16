@@ -94,7 +94,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Row(children: [
                 HzIconButton(
                   theme: theme,
-                  icon: Icons.arrow_forward,
+                  icon: Icons.arrow_forward_rounded,
                   onPressed: () => _step == 1 ? app.goTo(AuthStage.welcome) : setState(() => _step = 1),
                 ),
               ]),
@@ -127,22 +127,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   List<Widget> _buildStep1(theme) {
     return [
-      HzBadge(theme: theme, size: 54, filled: true, child: const Icon(Icons.person_add_alt, color: Colors.white, size: 22)),
+      HzBadge(theme: theme, size: 54, filled: true, child: const Icon(Icons.person_add_alt_rounded, color: Colors.white, size: 22)),
       const SizedBox(height: 16),
       Text('ساخت حساب تازه', style: TextStyle(color: theme.textPrimary, fontSize: 21, fontWeight: FontWeight.w800)),
       const SizedBox(height: 5),
       Text('گام ۱ از ۲ — اطلاعات حساب کاربری', style: TextStyle(color: theme.textFaint, fontSize: 12)),
       const SizedBox(height: 22),
-      HzTextField(controller: _name, icon: Icons.person_outline, hint: 'نام و تخلص', theme: theme),
+      HzTextField(controller: _name, icon: Icons.person_outline_rounded, hint: 'نام و تخلص', theme: theme),
       const SizedBox(height: 12),
-      HzTextField(controller: _email, icon: Icons.mail_outline, hint: 'ایمیل', theme: theme, keyboardType: TextInputType.emailAddress),
+      HzTextField(controller: _email, icon: Icons.mail_outline_rounded, hint: 'ایمیل', theme: theme, keyboardType: TextInputType.emailAddress),
       const SizedBox(height: 12),
       HzTextField(
-        controller: _password, icon: Icons.lock_outline, hint: 'رمز عبور', theme: theme, obscureText: !_showPass,
-        suffix: IconButton(icon: Icon(_showPass ? Icons.visibility_off : Icons.visibility, size: 18, color: theme.textFaint), onPressed: () => setState(() => _showPass = !_showPass)),
+        controller: _password, icon: Icons.lock_outline_rounded, hint: 'رمز عبور', theme: theme, obscureText: !_showPass,
+        suffix: IconButton(icon: Icon(_showPass ? Icons.visibility_off_rounded : Icons.visibility_rounded, size: 18, color: theme.textFaint), onPressed: () => setState(() => _showPass = !_showPass)),
       ),
       const SizedBox(height: 12),
-      HzTextField(controller: _confirm, icon: Icons.lock_outline, hint: 'تکرار رمز عبور', theme: theme, obscureText: !_showPass),
+      HzTextField(controller: _confirm, icon: Icons.lock_outline_rounded, hint: 'تکرار رمز عبور', theme: theme, obscureText: !_showPass),
       if (_error != null) ...[
         const SizedBox(height: 10),
         Container(
@@ -153,7 +153,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ],
       const SizedBox(height: 18),
-      HzPrimaryButton(theme: theme, label: 'مرحله‌ی بعد', icon: Icons.arrow_back, onPressed: _goStep2),
+      HzPrimaryButton(theme: theme, label: 'مرحله‌ی بعد', icon: Icons.arrow_back_rounded, onPressed: _goStep2),
       SocialAuthButtons(theme: theme, onResult: (e) => setState(() => _error = e)),
       if (context.watch<AppState>().appleAvailable) ...[
         const SizedBox(height: 8),
@@ -174,7 +174,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   List<Widget> _buildStep2(theme, AppState app) {
     return [
-      HzBadge(theme: theme, size: 54, filled: true, child: const Icon(Icons.public, color: Colors.white, size: 22)),
+      HzBadge(theme: theme, size: 54, filled: true, child: const Icon(Icons.public_rounded, color: Colors.white, size: 22)),
       const SizedBox(height: 16),
       Text('ریشه‌های شما', style: TextStyle(color: theme.textPrimary, fontSize: 21, fontWeight: FontWeight.w800)),
       const SizedBox(height: 5),
@@ -183,16 +183,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
         style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.9),
       ),
       const SizedBox(height: 18),
-      HzTextField(controller: _country, icon: Icons.public, hint: 'کشور محل سکونت فعلی', theme: theme, suggestions: AppConstants.countrySuggestions),
+      HzTextField(controller: _country, icon: Icons.public_rounded, hint: 'کشور محل سکونت فعلی', theme: theme, suggestions: AppConstants.countrySuggestions),
       const SizedBox(height: 12),
-      HzTextField(controller: _originProvince, icon: Icons.map_outlined, hint: 'ولایت/منطقه‌ی اصلی نیاکان', theme: theme, suggestions: AppConstants.originSuggestions),
+      HzTextField(controller: _originProvince, icon: Icons.map_rounded, hint: 'ولایت/منطقه‌ی اصلی نیاکان', theme: theme, suggestions: AppConstants.originSuggestions),
       const SizedBox(height: 12),
-      HzTextField(controller: _district, icon: Icons.account_balance_outlined, hint: 'ولسوالی (مثلاً بهسود، یکاولنگ، جاغوری…)', theme: theme),
+      HzTextField(controller: _district, icon: Icons.account_balance_rounded, hint: 'ولسوالی (مثلاً بهسود، یکاولنگ، جاغوری…)', theme: theme),
       const SizedBox(height: 12),
-      HzTextField(controller: _tribe, icon: Icons.groups_outlined, hint: 'طایفه (اختیاری، مثلاً بهسودی، جاغوری…)', theme: theme),
+      HzTextField(controller: _tribe, icon: Icons.groups_rounded, hint: 'طایفه (اختیاری، مثلاً بهسودی، جاغوری…)', theme: theme),
       const SizedBox(height: 12),
       HzSelectField(
-        value: _nativeLanguage, icon: Icons.translate, hint: 'زبان مادری', theme: theme,
+        value: _nativeLanguage, icon: Icons.translate_rounded, hint: 'زبان مادری', theme: theme,
         options: AppConstants.languageOptions, onChanged: (v) => setState(() => _nativeLanguage = v),
       ),
       const SizedBox(height: 12),
@@ -235,7 +235,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(color: theme.success.withValues(alpha: 0.08), borderRadius: BorderRadius.circular(14), border: Border.all(color: theme.success.withValues(alpha: 0.3))),
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Icon(Icons.verified_outlined, size: 16, color: theme.success),
+          Icon(Icons.verified_rounded, size: 16, color: theme.success),
           const SizedBox(width: 9),
           Expanded(child: Text('حساب شما بلافاصله فعال می‌شود؛ نیازی به تأیید مدیر نیست.', style: TextStyle(color: theme.textSecondary, fontSize: 12, height: 1.8))),
         ]),
@@ -274,7 +274,7 @@ class TermsCheckRow extends StatelessWidget {
                 border: Border.all(color: accepted ? theme.blue : theme.textFaint, width: 1.6),
                 borderRadius: BorderRadius.circular(7),
               ),
-              child: accepted ? const Icon(Icons.check, size: 15, color: Colors.white) : null,
+              child: accepted ? const Icon(Icons.check_rounded, size: 15, color: Colors.white) : null,
             ),
           ),
           const SizedBox(width: 10),

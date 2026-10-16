@@ -90,19 +90,19 @@ class MainShell extends StatelessWidget {
                         gradient: theme.aiGradient,
                         boxShadow: [BoxShadow(color: theme.aiViolet.withValues(alpha: 0.4), blurRadius: 12, offset: const Offset(0, 3))],
                       ),
-                      child: const Icon(Icons.auto_awesome, color: Colors.white, size: 15),
+                      child: const Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 15),
                     ),
                     onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AiAssistantScreen())),
                   ),
                   if (isAdmin)
                     IconButton(
                       tooltip: app.adminPreviewAsUser ? 'بازگشت به پنل مدیریت' : 'پیش‌نمایش کاربران',
-                      icon: Icon(app.adminPreviewAsUser ? Icons.dashboard_outlined : Icons.visibility_outlined, color: theme.textSecondary, size: 20),
+                      icon: Icon(app.adminPreviewAsUser ? Icons.dashboard_rounded : Icons.visibility_rounded, color: theme.textSecondary, size: 20),
                       onPressed: () => app.toggleAdminPreview(),
                     ),
                   IconButton(
                     tooltip: app.isDark ? 'حالت روشن' : 'حالت تیره',
-                    icon: Icon(app.isDark ? Icons.light_mode : Icons.dark_mode, color: app.isDark ? theme.yellow : theme.blue, size: 20),
+                    icon: Icon(app.isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded, color: app.isDark ? theme.yellow : theme.blue, size: 20),
                     onPressed: () => app.toggleTheme(),
                   ),
                   const SizedBox(width: 6),

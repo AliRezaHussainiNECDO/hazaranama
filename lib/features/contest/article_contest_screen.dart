@@ -57,7 +57,7 @@ class _ArticleContestScreenState extends State<ArticleContestScreen> {
               child: AppBar(
                 backgroundColor: theme.bgElevated.withValues(alpha: 0.5),
                 elevation: 0,
-                leading: IconButton(icon: Icon(Icons.arrow_forward, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
+                leading: IconButton(icon: Icon(Icons.arrow_forward_rounded, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
                 title: Text('مسابقه‌ی مقالات', style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w800)),
               ),
             ),
@@ -77,7 +77,7 @@ class _ArticleContestScreenState extends State<ArticleContestScreen> {
                         const SizedBox(height: 16),
                         ElevatedButton.icon(
                           onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ArticleSubmitScreen())),
-                          icon: const Icon(Icons.edit_note, size: 18),
+                          icon: const Icon(Icons.edit_note_rounded, size: 18),
                           label: const Text('شرکت در مسابقه — نوشتن مقاله', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w800)),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: theme.blue, foregroundColor: Colors.white, elevation: 0,
@@ -87,7 +87,7 @@ class _ArticleContestScreenState extends State<ArticleContestScreen> {
                         ),
                         const SizedBox(height: 26),
                         Row(children: [
-                          Icon(Icons.article_outlined, size: 15, color: theme.blue),
+                          Icon(Icons.article_rounded, size: 15, color: theme.blue),
                           const SizedBox(width: 7),
                           Text('مقالات من', style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800)),
                         ]),
@@ -124,7 +124,7 @@ class _RulesCard extends StatelessWidget {
       radius: 22,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
-          StatIconBox(icon: Icons.emoji_events, color: theme.yellow, size: 38),
+          StatIconBox(icon: Icons.emoji_events_rounded, color: theme.yellow, size: 38),
           const SizedBox(width: 10),
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -143,7 +143,7 @@ class _RulesCard extends StatelessWidget {
           decoration: BoxDecoration(color: theme.blue.withValues(alpha: 0.09), borderRadius: BorderRadius.circular(12), border: Border.all(color: theme.blue.withValues(alpha: 0.25))),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(children: [
-              Icon(Icons.edit_document, size: 14, color: theme.blue),
+              Icon(Icons.edit_note_rounded, size: 14, color: theme.blue),
               const SizedBox(width: 6),
               Text('موضوع این دوره', style: TextStyle(color: theme.blue, fontSize: 12, fontWeight: FontWeight.w800)),
             ]),
@@ -163,7 +163,7 @@ class _RulesCard extends StatelessWidget {
             border: Border.all(color: (settings.submissionsOpen ? theme.success : theme.yellow).withValues(alpha: 0.28)),
           ),
           child: Row(children: [
-            Icon(Icons.hourglass_bottom, size: 14, color: settings.submissionsOpen ? theme.success : theme.yellow),
+            Icon(Icons.hourglass_bottom_rounded, size: 14, color: settings.submissionsOpen ? theme.success : theme.yellow),
             const SizedBox(width: 8),
             Expanded(
               child: Text(
@@ -186,10 +186,10 @@ class _RulesCard extends StatelessWidget {
         const SizedBox(height: 6),
         const FlagStripe(width: 46),
         const SizedBox(height: 14),
-        _rule(theme, Icons.timer_outlined, 'هر دوره ۳۰ روز است: ۲۸ روز برای ارسال مقاله، و ۲ روز آخر برای اینکه دیگران برگزیدگان را بخوانند و نظر بدهند.'),
-        _rule(theme, Icons.auto_awesome, 'دقیقاً در پایان روز ۲۸، هوش مصنوعی جیمینی همه‌ی مقالات را از نظر اصالت و کیفیت بررسی می‌کند تا نوشته‌ی خودِ شما باشد، نه کپی از هوش مصنوعی یا منابع دیگر.'),
-        _rule(theme, Icons.workspace_premium_outlined, 'سه مقاله‌ی برتر را هوش مصنوعی خودش بر اساس نمره‌ی کیفیت انتخاب می‌کند و در بخش «برگزیدگان مسابقه‌ی مقالات» منتشر می‌کند.'),
-        _rule(theme, Icons.info_outline, 'می‌توانید بیش از یک مقاله ارسال کنید؛ وضعیت و رتبه‌ی هرکدام را همین‌جا می‌بینید.'),
+        _rule(theme, Icons.timer_rounded, 'هر دوره ۳۰ روز است: ۲۸ روز برای ارسال مقاله، و ۲ روز آخر برای اینکه دیگران برگزیدگان را بخوانند و نظر بدهند.'),
+        _rule(theme, Icons.auto_awesome_rounded, 'دقیقاً در پایان روز ۲۸، هوش مصنوعی جیمینی همه‌ی مقالات را از نظر اصالت و کیفیت بررسی می‌کند تا نوشته‌ی خودِ شما باشد، نه کپی از هوش مصنوعی یا منابع دیگر.'),
+        _rule(theme, Icons.workspace_premium_rounded, 'سه مقاله‌ی برتر را هوش مصنوعی خودش بر اساس نمره‌ی کیفیت انتخاب می‌کند و در بخش «برگزیدگان مسابقه‌ی مقالات» منتشر می‌کند.'),
+        _rule(theme, Icons.info_outline_rounded, 'می‌توانید بیش از یک مقاله ارسال کنید؛ وضعیت و رتبه‌ی هرکدام را همین‌جا می‌بینید.'),
       ]),
     );
   }
@@ -251,7 +251,7 @@ class _MyArticleCard extends StatelessWidget {
           ),
           if (isWinner) ...[
             const SizedBox(width: 8),
-            Icon(Icons.emoji_events, size: 18, color: placementColor),
+            Icon(Icons.emoji_events_rounded, size: 18, color: placementColor),
           ],
         ]),
         const SizedBox(height: 6),
@@ -360,7 +360,7 @@ class _ArticleSubmitScreenState extends State<ArticleSubmitScreen> {
               child: AppBar(
                 backgroundColor: theme.bgElevated.withValues(alpha: 0.5),
                 elevation: 0,
-                leading: IconButton(icon: Icon(Icons.arrow_forward, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
+                leading: IconButton(icon: Icon(Icons.arrow_forward_rounded, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
                 title: Text('نوشتن مقاله', style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w800)),
               ),
             ),
@@ -398,7 +398,7 @@ class _ArticleSubmitScreenState extends State<ArticleSubmitScreen> {
                     padding: const EdgeInsets.all(13),
                     decoration: BoxDecoration(color: theme.danger.withValues(alpha: 0.09), borderRadius: BorderRadius.circular(14), border: Border.all(color: theme.danger.withValues(alpha: 0.28))),
                     child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Icon(Icons.lock_clock_outlined, size: 16, color: theme.danger),
+                      Icon(Icons.lock_clock_rounded, size: 16, color: theme.danger),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
@@ -418,7 +418,7 @@ class _ArticleSubmitScreenState extends State<ArticleSubmitScreen> {
                   padding: const EdgeInsets.all(13),
                   decoration: BoxDecoration(color: theme.blue.withValues(alpha: 0.09), borderRadius: BorderRadius.circular(14), border: Border.all(color: theme.blue.withValues(alpha: 0.25))),
                   child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Icon(Icons.push_pin_outlined, size: 15, color: theme.blue),
+                    Icon(Icons.push_pin_rounded, size: 15, color: theme.blue),
                     const SizedBox(width: 8),
                     Expanded(child: Text(app.contestSettings.topic, style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w700, height: 1.7))),
                   ]),
@@ -436,7 +436,7 @@ class _ArticleSubmitScreenState extends State<ArticleSubmitScreen> {
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(12), border: Border.all(color: theme.glassBorder)),
                     child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Icon(_agreed ? Icons.check_box : Icons.check_box_outline_blank, size: 19, color: _agreed ? theme.blue : theme.textFaint),
+                      Icon(_agreed ? Icons.check_box_rounded : Icons.check_box_outline_blank_rounded, size: 19, color: _agreed ? theme.blue : theme.textFaint),
                       const SizedBox(width: 9),
                       Expanded(child: Text('تأیید می‌کنم این نوشته کاملاً کار خودم است و از هوش مصنوعی یا منابع دیگر کپی نشده است.', style: TextStyle(color: theme.textSecondary, fontSize: 12.5, height: 1.8))),
                     ]),

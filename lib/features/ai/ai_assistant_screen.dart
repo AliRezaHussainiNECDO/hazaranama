@@ -90,7 +90,7 @@ class _AiAssistantScreenState extends State<AiAssistantScreen> {
                   Container(
                     width: 32, height: 32,
                     decoration: const BoxDecoration(color: Colors.white24, shape: BoxShape.circle),
-                    child: const Icon(Icons.auto_awesome, color: Colors.white, size: 16),
+                    child: const Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 16),
                   ),
                   const SizedBox(width: 10),
                   const Text('راهنمای هزاره‌نامه', style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w800)),
@@ -136,7 +136,7 @@ class _AiAssistantScreenState extends State<AiAssistantScreen> {
                                         child: Padding(
                                           padding: const EdgeInsets.only(top: 6),
                                           child: Row(mainAxisSize: MainAxisSize.min, children: [
-                                            Icon(Icons.flag_outlined, size: 12, color: theme.textFaint),
+                                            Icon(Icons.flag_rounded, size: 12, color: theme.textFaint),
                                             const SizedBox(width: 3),
                                             Text('گزارش پاسخ', style: TextStyle(color: theme.textFaint, fontSize: 10.5)),
                                           ]),
@@ -171,7 +171,7 @@ class _WelcomePane extends StatelessWidget {
         Center(child: Container(
           width: 68, height: 68,
           decoration: BoxDecoration(shape: BoxShape.circle, gradient: theme.aiGradient, boxShadow: [BoxShadow(color: theme.aiViolet.withValues(alpha: 0.35), blurRadius: 24)]),
-          child: const Icon(Icons.auto_awesome, color: Colors.white, size: 28),
+          child: const Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 28),
         )).animate().scale(begin: const Offset(0.7, 0.7), duration: 420.ms, curve: Curves.easeOutBack).fadeIn(),
         const SizedBox(height: 16),
         Text('سلام همسفر 👋', textAlign: TextAlign.center, style: TextStyle(color: theme.textPrimary, fontSize: 16, fontWeight: FontWeight.w800)),
@@ -193,7 +193,7 @@ class _WelcomePane extends StatelessWidget {
                 radius: 14,
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                 child: Row(children: [
-                  Icon(Icons.bolt, size: 15, color: theme.aiViolet),
+                  Icon(Icons.bolt_rounded, size: 15, color: theme.aiViolet),
                   const SizedBox(width: 8),
                   Expanded(child: Text(starters[i], style: TextStyle(color: theme.textSecondary, fontSize: 12.5, fontWeight: FontWeight.w600))),
                 ]),
@@ -285,7 +285,7 @@ class _Composer extends StatelessWidget {
                 ),
                 child: sending
                     ? const Padding(padding: EdgeInsets.all(11), child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                    : const Icon(Icons.send, color: Colors.white, size: 17),
+                    : const Icon(Icons.send_rounded, color: Colors.white, size: 17),
               ),
             ),
           ]),

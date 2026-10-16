@@ -377,12 +377,12 @@ class _PostAdminCardState extends State<_PostAdminCard> {
             ]),
           ),
           PopupMenuButton<String>(
-            icon: Icon(Icons.more_vert, size: 18, color: theme.textFaint),
+            icon: Icon(Icons.more_vert_rounded, size: 18, color: theme.textFaint),
             onSelected: (v) {
               if (v == 'delete') _deletePost();
             },
             itemBuilder: (_) => [
-              PopupMenuItem(value: 'delete', child: Row(children: [Icon(Icons.delete_outline, size: 16, color: theme.danger), const SizedBox(width: 8), const Text('حذف پست')])),
+              PopupMenuItem(value: 'delete', child: Row(children: [Icon(Icons.delete_outline_rounded, size: 16, color: theme.danger), const SizedBox(width: 8), const Text('حذف پست')])),
             ],
           ),
         ]),
@@ -411,7 +411,7 @@ class _PostAdminCardState extends State<_PostAdminCard> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
               child: Row(mainAxisSize: MainAxisSize.min, children: [
-                Icon(Icons.mode_comment_outlined, size: 14, color: theme.blue),
+                Icon(Icons.mode_comment_rounded, size: 14, color: theme.blue),
                 const SizedBox(width: 4),
                 Text('${p.commentsCount} نظر', style: TextStyle(color: theme.blue, fontSize: 12, fontWeight: FontWeight.w700)),
                 const SizedBox(width: 3),
@@ -453,7 +453,7 @@ class _AdminCommentTile extends StatelessWidget {
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         DonorRing(
           theme: theme, size: 28, childSize: 24, tier: app.donorTierForUserId(comment.authorId),
-          child: HzBadge(theme: theme, size: 24, filled: true, avatarPath: comment.authorAvatar, child: const Icon(Icons.person, color: Colors.white, size: 11)),
+          child: HzBadge(theme: theme, size: 24, filled: true, avatarPath: comment.authorAvatar, child: const Icon(Icons.person_rounded, color: Colors.white, size: 11)),
         ),
         const SizedBox(width: 8),
         Expanded(
@@ -464,7 +464,7 @@ class _AdminCommentTile extends StatelessWidget {
               Text(comment.createdAtLabel, style: TextStyle(color: theme.textFaint, fontSize: 11)),
               if (comment.likeCount > 0) ...[
                 const SizedBox(width: 6),
-                Icon(Icons.favorite, size: 10, color: theme.danger),
+                Icon(Icons.favorite_rounded, size: 10, color: theme.danger),
                 const SizedBox(width: 2),
                 Text('${comment.likeCount}', style: TextStyle(color: theme.textFaint, fontSize: 11)),
               ],
@@ -476,7 +476,7 @@ class _AdminCommentTile extends StatelessWidget {
         IconButton(
           padding: EdgeInsets.zero,
           constraints: const BoxConstraints(minWidth: 28, minHeight: 28),
-          icon: Icon(Icons.close, size: 15, color: theme.danger),
+          icon: Icon(Icons.close_rounded, size: 15, color: theme.danger),
           onPressed: onDelete,
         ),
       ]),
@@ -559,7 +559,7 @@ class _ReportsTab extends StatelessWidget {
               children: [
                 Center(
                   child: Column(children: [
-                    Icon(Icons.flag_outlined, size: 30, color: theme.textFaint),
+                    Icon(Icons.flag_rounded, size: 30, color: theme.textFaint),
                     const SizedBox(height: 10),
                     Text('هیچ گزارشی ثبت نشده است.', style: TextStyle(color: theme.textFaint, fontSize: 12.5)),
                   ]),

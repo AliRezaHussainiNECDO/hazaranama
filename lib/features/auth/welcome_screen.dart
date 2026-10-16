@@ -26,7 +26,7 @@ class WelcomeScreen extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: IconButton(
-                icon: Icon(app.isDark ? Icons.light_mode : Icons.dark_mode, color: app.isDark ? theme.yellow : theme.blue),
+                icon: Icon(app.isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded, color: app.isDark ? theme.yellow : theme.blue),
                 onPressed: () => app.toggleTheme(),
               ),
             ),

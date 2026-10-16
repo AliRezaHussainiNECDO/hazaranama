@@ -69,12 +69,12 @@ class _ArtistsManager extends StatelessWidget {
       Padding(
         padding: const EdgeInsets.fromLTRB(16, 14, 16, 4),
         child: Row(children: [
-          StatIconBox(icon: Icons.mic_external_on, color: theme.blue, size: 36),
+          StatIconBox(icon: Icons.mic_external_on_rounded, color: theme.blue, size: 36),
           const SizedBox(width: 10),
           Expanded(child: Text('${artists.length} هنرمند', style: TextStyle(color: theme.textFaint, fontSize: 12))),
           ElevatedButton.icon(
             onPressed: () => _openArtistForm(context, app, null),
-            icon: const Icon(Icons.add, size: 15),
+            icon: const Icon(Icons.add_rounded, size: 15),
             label: const Text('هنرمند تازه', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
             style: ElevatedButton.styleFrom(backgroundColor: theme.blue, foregroundColor: Colors.white, elevation: 0, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
           ),
@@ -107,8 +107,8 @@ class _ArtistsManager extends StatelessWidget {
                           ]),
                         ),
                       ),
-                      IconButton(icon: Icon(Icons.edit_outlined, size: 17, color: theme.blue), onPressed: () => _openArtistForm(context, app, a)),
-                      IconButton(icon: Icon(Icons.delete_outline, size: 17, color: theme.danger), onPressed: () => _confirmDeleteArtist(context, app, a)),
+                      IconButton(icon: Icon(Icons.edit_rounded, size: 17, color: theme.blue), onPressed: () => _openArtistForm(context, app, a)),
+                      IconButton(icon: Icon(Icons.delete_outline_rounded, size: 17, color: theme.danger), onPressed: () => _confirmDeleteArtist(context, app, a)),
                     ]),
                   );
                 },
@@ -179,7 +179,7 @@ class _ArtistsManager extends StatelessWidget {
                   ),
                 OutlinedButton.icon(
                   onPressed: uploading ? null : pickAvatar,
-                  icon: uploading ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.image_outlined, size: 16),
+                  icon: uploading ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.image_rounded, size: 16),
                   label: Text(uploading ? 'در حال آپلود…' : 'انتخاب آواتار از گالری', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                   style: OutlinedButton.styleFrom(foregroundColor: theme.blue, side: BorderSide(color: theme.border), padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
                 ),
@@ -251,14 +251,14 @@ class _VideosManager extends StatelessWidget {
       Padding(
         padding: const EdgeInsets.fromLTRB(10, 12, 16, 4),
         child: Row(children: [
-          IconButton(icon: Icon(Icons.arrow_forward, color: theme.textPrimary, size: 18), onPressed: onBack),
+          IconButton(icon: Icon(Icons.arrow_forward_rounded, color: theme.textPrimary, size: 18), onPressed: onBack),
           HzBadge(theme: theme, size: 34, filled: true, avatarPath: artist.avatarUrl,
             child: Text(artist.name.isNotEmpty ? artist.name[0] : '؟', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 12))),
           const SizedBox(width: 8),
           Expanded(child: Text('ویدیوهای ${artist.name}', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800), maxLines: 1, overflow: TextOverflow.ellipsis)),
           ElevatedButton.icon(
             onPressed: () => _openVideoForm(context, app, artist.id, null),
-            icon: const Icon(Icons.upload_outlined, size: 14),
+            icon: const Icon(Icons.upload_rounded, size: 14),
             label: const Text('ویدیو تازه', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
             style: ElevatedButton.styleFrom(backgroundColor: theme.blue, foregroundColor: Colors.white, elevation: 0, padding: const EdgeInsets.symmetric(horizontal: 12), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
           ),
@@ -285,7 +285,7 @@ class _VideosManager extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                             child: hasThumb
                                 ? Image.network(v.thumbnailUrl!, width: 54, height: 40, fit: BoxFit.cover)
-                                : Container(width: 54, height: 40, color: theme.bgCardAlt, child: Icon(Icons.music_note, size: 16, color: theme.textFaint)),
+                                : Container(width: 54, height: 40, color: theme.bgCardAlt, child: Icon(Icons.music_note_rounded, size: 16, color: theme.textFaint)),
                           ),
                           const SizedBox(width: 10),
                           Expanded(
@@ -294,8 +294,8 @@ class _VideosManager extends StatelessWidget {
                               Text('${v.viewsCount} بازدید', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
                             ]),
                           ),
-                          IconButton(icon: Icon(Icons.edit_outlined, size: 16, color: theme.blue), onPressed: () => _openVideoForm(context, app, artist.id, v)),
-                          IconButton(icon: Icon(Icons.delete_outline, size: 16, color: theme.danger), onPressed: () => _confirmDeleteVideo(context, app, v)),
+                          IconButton(icon: Icon(Icons.edit_rounded, size: 16, color: theme.blue), onPressed: () => _openVideoForm(context, app, artist.id, v)),
+                          IconButton(icon: Icon(Icons.delete_outline_rounded, size: 16, color: theme.danger), onPressed: () => _confirmDeleteVideo(context, app, v)),
                         ]),
                       );
                     },
@@ -383,14 +383,14 @@ class _VideosManager extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: Row(children: [
-                      Icon(Icons.check_circle, size: 14, color: theme.success),
+                      Icon(Icons.check_circle_rounded, size: 14, color: theme.success),
                       const SizedBox(width: 6),
                       Expanded(child: Text('فایل ویدیو انتخاب شد', style: TextStyle(color: theme.success, fontSize: 12.5))),
                     ]),
                   ),
                 OutlinedButton.icon(
                   onPressed: uploadingVideo ? null : pickVideo,
-                  icon: uploadingVideo ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.video_file_outlined, size: 16),
+                  icon: uploadingVideo ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.video_file_rounded, size: 16),
                   label: Text(uploadingVideo ? 'در حال آپلود ویدیو…' : 'انتخاب فایل ویدیو از گالری', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                   style: OutlinedButton.styleFrom(foregroundColor: theme.blue, side: BorderSide(color: theme.border), padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
                 ),
@@ -409,7 +409,7 @@ class _VideosManager extends StatelessWidget {
                   ),
                 OutlinedButton.icon(
                   onPressed: uploadingThumb ? null : pickThumb,
-                  icon: uploadingThumb ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.image_outlined, size: 16),
+                  icon: uploadingThumb ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.image_rounded, size: 16),
                   label: Text(uploadingThumb ? 'در حال آپلود…' : 'انتخاب تامبنیل از گالری', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                   style: OutlinedButton.styleFrom(foregroundColor: theme.blue, side: BorderSide(color: theme.border), padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
                 ),

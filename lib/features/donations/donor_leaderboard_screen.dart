@@ -57,7 +57,7 @@ class _DonorLeaderboardScreenState extends State<DonorLeaderboardScreen> {
               child: AppBar(
                 backgroundColor: theme.bgElevated.withValues(alpha: 0.5),
                 elevation: 0,
-                leading: IconButton(icon: Icon(Icons.arrow_forward, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
+                leading: IconButton(icon: Icon(Icons.arrow_forward_rounded, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
                 title: Text('فهرست حامیان', style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w800)),
               ),
             ),

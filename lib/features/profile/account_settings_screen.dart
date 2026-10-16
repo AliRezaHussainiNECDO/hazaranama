@@ -129,7 +129,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
               filter: ImageFilter.blur(sigmaX: 22, sigmaY: 22),
               child: AppBar(
                 backgroundColor: theme.bgElevated.withValues(alpha: 0.5), elevation: 0,
-                leading: IconButton(icon: Icon(Icons.arrow_forward, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
+                leading: IconButton(icon: Icon(Icons.arrow_forward_rounded, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
                 title: Text('تنظیمات حساب', style: TextStyle(color: theme.textPrimary, fontSize: 15, fontWeight: FontWeight.w800)),
               ),
             ),
@@ -146,20 +146,20 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                 radius: 22,
                 padding: const EdgeInsets.all(18),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  _sectionHeader(theme, Icons.person_outline, 'ویرایش اطلاعات پروفایل'),
+                  _sectionHeader(theme, Icons.person_outline_rounded, 'ویرایش اطلاعات پروفایل'),
                   const SizedBox(height: 14),
-                  HzTextField(controller: _name, icon: Icons.badge_outlined, hint: 'نام و تخلص', theme: theme),
+                  HzTextField(controller: _name, icon: Icons.badge_rounded, hint: 'نام و تخلص', theme: theme),
                   const SizedBox(height: 12),
-                  HzTextField(controller: _country, icon: Icons.public, hint: 'کشور محل سکونت فعلی', theme: theme, suggestions: AppConstants.countrySuggestions),
+                  HzTextField(controller: _country, icon: Icons.public_rounded, hint: 'کشور محل سکونت فعلی', theme: theme, suggestions: AppConstants.countrySuggestions),
                   const SizedBox(height: 12),
-                  HzTextField(controller: _originProvince, icon: Icons.map_outlined, hint: 'ولایت/منطقه‌ی اصلی نیاکان', theme: theme, suggestions: AppConstants.originSuggestions),
+                  HzTextField(controller: _originProvince, icon: Icons.map_rounded, hint: 'ولایت/منطقه‌ی اصلی نیاکان', theme: theme, suggestions: AppConstants.originSuggestions),
                   const SizedBox(height: 12),
-                  HzTextField(controller: _district, icon: Icons.account_balance_outlined, hint: 'ولسوالی', theme: theme),
+                  HzTextField(controller: _district, icon: Icons.account_balance_rounded, hint: 'ولسوالی', theme: theme),
                   const SizedBox(height: 12),
-                  HzTextField(controller: _tribe, icon: Icons.groups_outlined, hint: 'طایفه (اختیاری)', theme: theme),
+                  HzTextField(controller: _tribe, icon: Icons.groups_rounded, hint: 'طایفه (اختیاری)', theme: theme),
                   const SizedBox(height: 12),
                   HzSelectField(
-                    value: _nativeLanguage, icon: Icons.translate, hint: 'زبان مادری', theme: theme,
+                    value: _nativeLanguage, icon: Icons.translate_rounded, hint: 'زبان مادری', theme: theme,
                     options: AppConstants.languageOptions, onChanged: (v) => setState(() => _nativeLanguage = v),
                   ),
                   const SizedBox(height: 12),
@@ -188,16 +188,16 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                 radius: 22,
                 padding: const EdgeInsets.all(18),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  _sectionHeader(theme, Icons.lock_outline, 'تغییر رمز عبور'),
+                  _sectionHeader(theme, Icons.lock_outline_rounded, 'تغییر رمز عبور'),
                   const SizedBox(height: 14),
-                  HzTextField(controller: _currentPassword, icon: Icons.lock_outline, hint: 'رمز عبور فعلی', theme: theme, obscureText: !_showPass),
+                  HzTextField(controller: _currentPassword, icon: Icons.lock_outline_rounded, hint: 'رمز عبور فعلی', theme: theme, obscureText: !_showPass),
                   const SizedBox(height: 12),
                   HzTextField(
-                    controller: _newPassword, icon: Icons.lock_reset, hint: 'رمز عبور تازه', theme: theme, obscureText: !_showPass,
-                    suffix: IconButton(icon: Icon(_showPass ? Icons.visibility_off : Icons.visibility, size: 18, color: theme.textFaint), onPressed: () => setState(() => _showPass = !_showPass)),
+                    controller: _newPassword, icon: Icons.lock_reset_rounded, hint: 'رمز عبور تازه', theme: theme, obscureText: !_showPass,
+                    suffix: IconButton(icon: Icon(_showPass ? Icons.visibility_off_rounded : Icons.visibility_rounded, size: 18, color: theme.textFaint), onPressed: () => setState(() => _showPass = !_showPass)),
                   ),
                   const SizedBox(height: 12),
-                  HzTextField(controller: _confirmPassword, icon: Icons.lock_reset, hint: 'تکرار رمز عبور تازه', theme: theme, obscureText: !_showPass),
+                  HzTextField(controller: _confirmPassword, icon: Icons.lock_reset_rounded, hint: 'تکرار رمز عبور تازه', theme: theme, obscureText: !_showPass),
                   if (_passwordError != null) ...[
                     const SizedBox(height: 10),
                     _errorBox(theme, _passwordError!),
@@ -232,7 +232,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                       ),
                       icon: _deletingAccount
                           ? SizedBox(width: 15, height: 15, child: CircularProgressIndicator(strokeWidth: 2, color: theme.danger))
-                          : const Icon(Icons.delete_forever_outlined, size: 18),
+                          : const Icon(Icons.delete_forever_rounded, size: 18),
                       label: Text(_deletingAccount ? 'در حال حذف…' : 'حذف همیشگی حساب من', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                     ),
                   ),
@@ -240,7 +240,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                   Center(
                     child: TextButton.icon(
                       onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const BlockedUsersScreen())),
-                      icon: Icon(Icons.block_outlined, size: 15, color: theme.textFaint),
+                      icon: Icon(Icons.block_rounded, size: 15, color: theme.textFaint),
                       label: Text('کاربران مسدودشده', style: TextStyle(color: theme.textFaint, fontSize: 12.5, fontWeight: FontWeight.w600)),
                     ),
                   ),
@@ -248,7 +248,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                   Center(
                     child: TextButton.icon(
                       onPressed: () => openContentUrl(context, 'https://hazaranama.com/privacy/'),
-                      icon: Icon(Icons.privacy_tip_outlined, size: 15, color: theme.textFaint),
+                      icon: Icon(Icons.privacy_tip_rounded, size: 15, color: theme.textFaint),
                       label: Text('سیاست حریم خصوصی و حذف داده', style: TextStyle(color: theme.textFaint, fontSize: 12.5, fontWeight: FontWeight.w600)),
                     ),
                   ),

@@ -387,7 +387,7 @@ class HzSelectField extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
       initialValue: value,
-      icon: const Icon(Icons.keyboard_arrow_down, size: 18),
+      icon: const Icon(Icons.keyboard_arrow_down_rounded, size: 18),
       dropdownColor: theme.bgCard,
       style: TextStyle(fontFamily: 'Vazirmatn', color: theme.textPrimary, fontSize: 13),
       decoration: InputDecoration(
@@ -452,7 +452,7 @@ class HzCheckbox extends StatelessWidget {
             border: Border.all(color: value ? theme.blue : theme.border, width: 1.5),
             borderRadius: BorderRadius.circular(6),
           ),
-          child: value ? const Icon(Icons.check, size: 12, color: Colors.white) : null,
+          child: value ? const Icon(Icons.check_rounded, size: 12, color: Colors.white) : null,
         ),
         const SizedBox(width: 8),
         Text(label, style: TextStyle(fontSize: 12.5, color: theme.textSecondary)),
@@ -705,7 +705,7 @@ class AiFab extends StatelessWidget {
           gradient: theme.aiGradient,
           boxShadow: [BoxShadow(color: theme.aiViolet.withValues(alpha: 0.45), blurRadius: 22, spreadRadius: 1, offset: const Offset(0, 8))],
         ),
-        child: const Icon(Icons.auto_awesome, color: Colors.white, size: 24),
+        child: const Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 24),
       ),
     ).animate(onPlay: (c) => c.repeat(reverse: true)).scaleXY(begin: 1, end: 1.06, duration: 1400.ms, curve: Curves.easeInOut);
   }

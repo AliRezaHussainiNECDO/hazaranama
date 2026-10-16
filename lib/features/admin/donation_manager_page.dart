@@ -133,7 +133,7 @@ class _TransfersTab extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 12),
               decoration: BoxDecoration(color: theme.yellow.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(14), border: Border.all(color: theme.yellow.withValues(alpha: 0.3))),
               child: Row(children: [
-                Icon(Icons.hourglass_bottom, size: 15, color: theme.yellow),
+                Icon(Icons.hourglass_bottom_rounded, size: 15, color: theme.yellow),
                 const SizedBox(width: 8),
                 Expanded(child: Text('$pendingCount حواله در انتظار تأیید شماست.', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700))),
               ]),
@@ -270,11 +270,11 @@ class _TransferCardState extends State<_TransferCard> {
         ]),
         const SizedBox(height: 10),
         Wrap(spacing: 8, runSpacing: 6, children: [
-          _chip(theme, Icons.payments_outlined, '${t.amount.toStringAsFixed(0)} ${t.currency}'),
-          _chip(theme, t.method == DonationMethod.paypal ? Icons.account_balance_wallet_outlined : Icons.account_balance_outlined, donationMethodLabel(t.method)),
-          _chip(theme, Icons.category_outlined, donationCategoryLabel(t.category)),
-          if (t.transferReference != null && t.transferReference!.isNotEmpty) _chip(theme, Icons.confirmation_number_outlined, t.transferReference!),
-          if (t.senderContact != null && t.senderContact!.isNotEmpty) _chip(theme, Icons.contact_phone_outlined, t.senderContact!),
+          _chip(theme, Icons.payments_rounded, '${t.amount.toStringAsFixed(0)} ${t.currency}'),
+          _chip(theme, t.method == DonationMethod.paypal ? Icons.account_balance_wallet_rounded : Icons.account_balance_rounded, donationMethodLabel(t.method)),
+          _chip(theme, Icons.category_rounded, donationCategoryLabel(t.category)),
+          if (t.transferReference != null && t.transferReference!.isNotEmpty) _chip(theme, Icons.confirmation_number_rounded, t.transferReference!),
+          if (t.senderContact != null && t.senderContact!.isNotEmpty) _chip(theme, Icons.contact_phone_rounded, t.senderContact!),
         ]),
         if (t.note != null && t.note!.isNotEmpty) ...[
           const SizedBox(height: 8),
@@ -286,7 +286,7 @@ class _TransferCardState extends State<_TransferCard> {
             Expanded(
               child: OutlinedButton.icon(
                 onPressed: _busy ? null : () => _decide('confirmed'),
-                icon: const Icon(Icons.check_circle_outline, size: 15),
+                icon: const Icon(Icons.check_circle_outline_rounded, size: 15),
                 label: const Text('تأیید دریافت', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                 style: OutlinedButton.styleFrom(foregroundColor: theme.success, side: BorderSide(color: theme.success.withValues(alpha: 0.5)), padding: const EdgeInsets.symmetric(vertical: 10), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
               ),
@@ -295,7 +295,7 @@ class _TransferCardState extends State<_TransferCard> {
             Expanded(
               child: OutlinedButton.icon(
                 onPressed: _busy ? null : () => _decide('rejected'),
-                icon: const Icon(Icons.cancel_outlined, size: 15),
+                icon: const Icon(Icons.cancel_rounded, size: 15),
                 label: const Text('رد کردن', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                 style: OutlinedButton.styleFrom(foregroundColor: theme.danger, side: BorderSide(color: theme.danger.withValues(alpha: 0.4)), padding: const EdgeInsets.symmetric(vertical: 10), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
               ),
@@ -343,7 +343,7 @@ class _ReportsTab extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton.icon(
               onPressed: () => _openReportForm(context, app, ai, null, onRefresh),
-              icon: const Icon(Icons.add_a_photo_outlined, size: 16),
+              icon: const Icon(Icons.add_a_photo_rounded, size: 16),
               label: const Text('گزارش شفافیت تازه', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800)),
               style: ElevatedButton.styleFrom(backgroundColor: theme.success, foregroundColor: Colors.white, elevation: 0, padding: const EdgeInsets.symmetric(vertical: 13), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
             ),
@@ -393,8 +393,8 @@ class _ReportAdminCard extends StatelessWidget {
             Text('${donationCategoryLabel(report.category)} — ${report.publishedAtLabel}', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
           ]),
         ),
-        IconButton(icon: Icon(Icons.edit_outlined, size: 16, color: theme.blue), onPressed: () => _openReportForm(context, app, ai, report, onRefresh)),
-        IconButton(icon: Icon(Icons.delete_outline, size: 16, color: theme.danger), onPressed: () => _confirmDelete(context, app, report, onRefresh)),
+        IconButton(icon: Icon(Icons.edit_rounded, size: 16, color: theme.blue), onPressed: () => _openReportForm(context, app, ai, report, onRefresh)),
+        IconButton(icon: Icon(Icons.delete_outline_rounded, size: 16, color: theme.danger), onPressed: () => _confirmDelete(context, app, report, onRefresh)),
       ]),
     );
   }
@@ -557,7 +557,7 @@ void _openReportForm(BuildContext context, AppState app, AiService ai, DonationR
               _label(theme, 'دسته‌بندی'),
               HzSelectField(
                 value: donationCategoryLabel(category),
-                icon: Icons.category_outlined,
+                icon: Icons.category_rounded,
                 hint: 'دسته‌بندی',
                 options: DonationCategory.values.map(donationCategoryLabel).toList(),
                 theme: theme,
@@ -570,7 +570,7 @@ void _openReportForm(BuildContext context, AppState app, AiService ai, DonationR
                 decoration: BoxDecoration(color: theme.aiViolet.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(14), border: Border.all(color: theme.aiViolet.withValues(alpha: 0.3))),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Row(children: [
-                    Icon(Icons.auto_awesome, size: 15, color: theme.aiViolet),
+                    Icon(Icons.auto_awesome_rounded, size: 15, color: theme.aiViolet),
                     const SizedBox(width: 6),
                     Expanded(child: Text('نکات خام را بنویسید — هوش مصنوعی گزارش نهایی را می‌سازد', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800))),
                   ]),
@@ -581,7 +581,7 @@ void _openReportForm(BuildContext context, AppState app, AiService ai, DonationR
                     width: double.infinity,
                     child: OutlinedButton.icon(
                       onPressed: drafting ? null : draftWithAi,
-                      icon: drafting ? SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: theme.aiViolet)) : const Icon(Icons.auto_awesome, size: 15),
+                      icon: drafting ? SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: theme.aiViolet)) : const Icon(Icons.auto_awesome_rounded, size: 15),
                       label: Text(drafting ? 'در حال نگارش…' : 'نوشتن با هوش مصنوعی', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                       style: OutlinedButton.styleFrom(foregroundColor: theme.aiViolet, side: BorderSide(color: theme.aiViolet.withValues(alpha: 0.5)), padding: const EdgeInsets.symmetric(vertical: 10), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
                     ),
@@ -610,7 +610,7 @@ void _openReportForm(BuildContext context, AppState app, AiService ai, DonationR
                   width: 100,
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     _label(theme, 'واحد پول'),
-                    HzSelectField(value: currency, icon: Icons.attach_money, hint: 'واحد', options: kDonationCurrencies, theme: theme, onChanged: (v) => setSheetState(() => currency = v ?? 'USD')),
+                    HzSelectField(value: currency, icon: Icons.attach_money_rounded, hint: 'واحد', options: kDonationCurrencies, theme: theme, onChanged: (v) => setSheetState(() => currency = v ?? 'USD')),
                   ]),
                 ),
               ]),
@@ -633,7 +633,7 @@ void _openReportForm(BuildContext context, AppState app, AiService ai, DonationR
                           top: -6, left: -6,
                           child: InkWell(
                             onTap: () => setSheetState(() => imageUrls.remove(url)),
-                            child: Container(padding: const EdgeInsets.all(2), decoration: BoxDecoration(color: theme.danger, shape: BoxShape.circle), child: const Icon(Icons.close, size: 12, color: Colors.white)),
+                            child: Container(padding: const EdgeInsets.all(2), decoration: BoxDecoration(color: theme.danger, shape: BoxShape.circle), child: const Icon(Icons.close_rounded, size: 12, color: Colors.white)),
                           ),
                         ),
                       ]),
@@ -641,7 +641,7 @@ void _openReportForm(BuildContext context, AppState app, AiService ai, DonationR
                 ),
               OutlinedButton.icon(
                 onPressed: uploadingImages ? null : pickImages,
-                icon: uploadingImages ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.add_photo_alternate_outlined, size: 16),
+                icon: uploadingImages ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.add_photo_alternate_rounded, size: 16),
                 label: Text(uploadingImages ? 'در حال آپلود…' : 'افزودن عکس از گالری', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                 style: OutlinedButton.styleFrom(foregroundColor: theme.success, side: BorderSide(color: theme.border), padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
               ),
@@ -651,7 +651,7 @@ void _openReportForm(BuildContext context, AppState app, AiService ai, DonationR
                 Padding(padding: const EdgeInsets.only(bottom: 8), child: Text(videoUrl!, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.success, fontSize: 12))),
               OutlinedButton.icon(
                 onPressed: uploadingVideo ? null : pickVideo,
-                icon: uploadingVideo ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.videocam_outlined, size: 16),
+                icon: uploadingVideo ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.videocam_rounded, size: 16),
                 label: Text(uploadingVideo ? 'در حال آپلود…' : 'افزودن ویدیو از گالری', style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700)),
                 style: OutlinedButton.styleFrom(foregroundColor: theme.success, side: BorderSide(color: theme.border), padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
               ),
@@ -774,7 +774,7 @@ class _SettingsStatsTabState extends State<_SettingsStatsTab> {
             border: Border.all(color: theme.success.withValues(alpha: 0.3)),
           ),
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Icon(Icons.info_outline, size: 15, color: theme.success),
+            Icon(Icons.info_outline_rounded, size: 15, color: theme.success),
             const SizedBox(width: 8),
             Expanded(
               child: Text(
@@ -797,7 +797,7 @@ class _SettingsStatsTabState extends State<_SettingsStatsTab> {
             width: 100,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               _label(theme, 'واحد پول'),
-              HzSelectField(value: _currency, icon: Icons.attach_money, hint: 'واحد', options: kDonationCurrencies, theme: theme, onChanged: (v) => setState(() => _currency = v ?? 'USD')),
+              HzSelectField(value: _currency, icon: Icons.attach_money_rounded, hint: 'واحد', options: kDonationCurrencies, theme: theme, onChanged: (v) => setState(() => _currency = v ?? 'USD')),
             ]),
           ),
         ]),
@@ -810,7 +810,7 @@ class _SettingsStatsTabState extends State<_SettingsStatsTab> {
         const SizedBox(height: 18),
         ElevatedButton.icon(
           onPressed: _saving ? null : _save,
-          icon: _saving ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white)) : const Icon(Icons.save_outlined, size: 16),
+          icon: _saving ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white)) : const Icon(Icons.save_rounded, size: 16),
           label: Text(_saving ? 'در حال ذخیره…' : 'ذخیره‌ی آمار', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
           style: ElevatedButton.styleFrom(backgroundColor: theme.success, foregroundColor: Colors.white, elevation: 0, padding: const EdgeInsets.symmetric(vertical: 13), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
         ),

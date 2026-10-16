@@ -37,11 +37,11 @@ IconData donationCategoryIcon(DonationCategory c) {
     case DonationCategory.hospital:
       return Icons.dns_rounded;
     case DonationCategory.school:
-      return Icons.school_outlined;
+      return Icons.school_rounded;
     case DonationCategory.roadsBridges:
       return Icons.library_music_rounded;
     case DonationCategory.general:
-      return Icons.volunteer_activism;
+      return Icons.volunteer_activism_rounded;
   }
 }
 
@@ -103,7 +103,7 @@ class _DonationScreenState extends State<DonationScreen> {
               child: AppBar(
                 backgroundColor: theme.bgElevated.withValues(alpha: 0.5),
                 elevation: 0,
-                leading: IconButton(icon: Icon(Icons.arrow_forward, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
+                leading: IconButton(icon: Icon(Icons.arrow_forward_rounded, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
                 title: Text('حمایت از هزاره‌نامه', style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w800)),
               ),
             ),
@@ -132,7 +132,7 @@ class _DonationScreenState extends State<DonationScreen> {
                         KeyedSubtree(
                           key: _waysKey,
                           child: Row(children: [
-                            Icon(Icons.volunteer_activism_outlined, size: 15, color: theme.success),
+                            Icon(Icons.volunteer_activism_rounded, size: 15, color: theme.success),
                             const SizedBox(width: 7),
                             Text('راه‌های حمایت', style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800)),
                           ]),
@@ -149,7 +149,7 @@ class _DonationScreenState extends State<DonationScreen> {
                         if (myTransfers.isNotEmpty) ...[
                           const SizedBox(height: 22),
                           Row(children: [
-                            Icon(Icons.receipt_long_outlined, size: 15, color: theme.blue),
+                            Icon(Icons.receipt_long_rounded, size: 15, color: theme.blue),
                             const SizedBox(width: 7),
                             Text('حواله‌های من', style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800)),
                           ]),
@@ -161,7 +161,7 @@ class _DonationScreenState extends State<DonationScreen> {
                         ],
                         const SizedBox(height: 22),
                         Row(children: [
-                          Icon(Icons.fact_check_outlined, size: 15, color: theme.aiViolet),
+                          Icon(Icons.fact_check_rounded, size: 15, color: theme.aiViolet),
                           const SizedBox(width: 7),
                           Expanded(child: Text('گزارش‌های شفافیت مصرف حمایت‌ها', style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800))),
                         ]),
@@ -218,7 +218,7 @@ class _HeroCard extends StatelessWidget {
             ),
           ),
         ),
-        Positioned(top: -20, left: -20, child: Icon(Icons.favorite, size: 130, color: Colors.white.withValues(alpha: 0.12))),
+        Positioned(top: -20, left: -20, child: Icon(Icons.favorite_rounded, size: 130, color: Colors.white.withValues(alpha: 0.12))),
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -226,7 +226,7 @@ class _HeroCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 5),
               decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.22), borderRadius: BorderRadius.circular(999)),
               child: const Row(mainAxisSize: MainAxisSize.min, children: [
-                Icon(Icons.volunteer_activism, size: 13, color: Colors.white),
+                Icon(Icons.volunteer_activism_rounded, size: 13, color: Colors.white),
                 SizedBox(width: 5),
                 Text('حمایت از پروژه', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w800)),
               ]),
@@ -289,7 +289,7 @@ class _LeaderboardButton extends StatelessWidget {
               Text('سپاس از همه‌ی حامیان هزاره‌نامه', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
             ]),
           ),
-          Icon(Icons.arrow_back_ios_new, size: 13, color: theme.textFaint),
+          Icon(Icons.arrow_back_ios_new_rounded, size: 13, color: theme.textFaint),
         ]),
       ),
     );
@@ -342,7 +342,7 @@ class _ExternalDonationCard extends StatelessWidget {
       radius: 20,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
-          StatIconBox(icon: Icons.volunteer_activism_outlined, color: theme.success, size: 38),
+          StatIconBox(icon: Icons.volunteer_activism_rounded, color: theme.success, size: 38),
           const SizedBox(width: 10),
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -362,7 +362,7 @@ class _ExternalDonationCard extends StatelessWidget {
           width: double.infinity,
           child: ElevatedButton.icon(
             onPressed: () => openContentUrl(context, kDonationWebUrl),
-            icon: const Icon(Icons.open_in_new, size: 15),
+            icon: const Icon(Icons.open_in_new_rounded, size: 15),
             label: const Text('باز کردن صفحه‌ی حمایت', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800)),
             style: ElevatedButton.styleFrom(
               backgroundColor: theme.success, foregroundColor: Colors.white, elevation: 0,
@@ -376,7 +376,7 @@ class _ExternalDonationCard extends StatelessWidget {
           width: double.infinity,
           child: OutlinedButton.icon(
             onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const DonationTransferFormScreen())),
-            icon: const Icon(Icons.edit_note, size: 16),
+            icon: const Icon(Icons.edit_note_rounded, size: 16),
             label: const Text('قبلاً حمایت کرده‌اید؟ ثبتش کنید', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w800)),
             style: OutlinedButton.styleFrom(
               foregroundColor: theme.success, side: BorderSide(color: theme.success.withValues(alpha: 0.5)),
@@ -406,7 +406,7 @@ class _PaypalCard extends StatelessWidget {
       radius: 20,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
-          StatIconBox(icon: Icons.payments_outlined, color: theme.blue, size: 38),
+          StatIconBox(icon: Icons.payments_rounded, color: theme.blue, size: 38),
           const SizedBox(width: 10),
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -422,7 +422,7 @@ class _PaypalCard extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(color: theme.blue.withValues(alpha: 0.09), borderRadius: BorderRadius.circular(12), border: Border.all(color: theme.blue.withValues(alpha: 0.25))),
           child: Row(children: [
-            Icon(Icons.email_outlined, size: 15, color: theme.blue),
+            Icon(Icons.email_rounded, size: 15, color: theme.blue),
             const SizedBox(width: 8),
             Expanded(child: Text(kPaypalEmail, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700))),
             InkWell(
@@ -440,7 +440,7 @@ class _PaypalCard extends StatelessWidget {
           width: double.infinity,
           child: ElevatedButton.icon(
             onPressed: () => openContentUrl(context, 'https://www.paypal.com'),
-            icon: const Icon(Icons.open_in_new, size: 15),
+            icon: const Icon(Icons.open_in_new_rounded, size: 15),
             label: const Text('باز کردن PayPal', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800)),
             style: ElevatedButton.styleFrom(
               backgroundColor: theme.blue, foregroundColor: Colors.white, elevation: 0,
@@ -454,7 +454,7 @@ class _PaypalCard extends StatelessWidget {
           width: double.infinity,
           child: OutlinedButton.icon(
             onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const DonationTransferFormScreen(method: DonationMethod.paypal))),
-            icon: const Icon(Icons.edit_note, size: 16),
+            icon: const Icon(Icons.edit_note_rounded, size: 16),
             label: const Text('بعد از ارسال، حمایتم را ثبت کن', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w800)),
             style: OutlinedButton.styleFrom(
               foregroundColor: theme.blue, side: BorderSide(color: theme.blue.withValues(alpha: 0.5)),
@@ -484,7 +484,7 @@ class _TransferCard extends StatelessWidget {
       radius: 20,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
-          StatIconBox(icon: Icons.account_balance_outlined, color: theme.yellow, size: 38),
+          StatIconBox(icon: Icons.account_balance_rounded, color: theme.yellow, size: 38),
           const SizedBox(width: 10),
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -500,11 +500,11 @@ class _TransferCard extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(color: theme.yellow.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12), border: Border.all(color: theme.yellow.withValues(alpha: 0.28))),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            _row(Icons.person_outline, 'نام گیرنده', kTransferRecipientName),
+            _row(Icons.person_outline_rounded, 'نام گیرنده', kTransferRecipientName),
             const SizedBox(height: 8),
-            _row(Icons.location_city_outlined, 'شهر', kTransferRecipientCity),
+            _row(Icons.location_city_rounded, 'شهر', kTransferRecipientCity),
             const SizedBox(height: 8),
-            _row(Icons.flag_outlined, 'کشور', kTransferRecipientCountry),
+            _row(Icons.flag_rounded, 'کشور', kTransferRecipientCountry),
           ]),
         ),
         const SizedBox(height: 10),
@@ -515,7 +515,7 @@ class _TransferCard extends StatelessWidget {
           width: double.infinity,
           child: OutlinedButton.icon(
             onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const DonationTransferFormScreen())),
-            icon: const Icon(Icons.edit_note, size: 16),
+            icon: const Icon(Icons.edit_note_rounded, size: 16),
             label: const Text('ثبت جزئیات حواله‌ی من', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800)),
             style: OutlinedButton.styleFrom(
               foregroundColor: theme.yellow, side: BorderSide(color: theme.yellow.withValues(alpha: 0.6)),
@@ -623,7 +623,7 @@ class _ReportCard extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(color: Colors.black.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(999)),
                     child: Row(mainAxisSize: MainAxisSize.min, children: [
-                      const Icon(Icons.photo_library_outlined, size: 11, color: Colors.white),
+                      const Icon(Icons.photo_library_rounded, size: 11, color: Colors.white),
                       const SizedBox(width: 4),
                       Text('${report.imageUrls.length}', style: const TextStyle(color: Colors.white, fontSize: 11.5, fontWeight: FontWeight.w700)),
                     ]),
@@ -654,9 +654,9 @@ class _ReportCard extends StatelessWidget {
             if (report.amountSpent != null || report.location != null || report.beneficiariesCount != null) ...[
               const SizedBox(height: 10),
               Wrap(spacing: 8, runSpacing: 6, children: [
-                if (report.amountSpent != null) _chip(Icons.payments_outlined, '${report.amountSpent!.toStringAsFixed(0)} ${report.currency} مصرف شد'),
-                if (report.location != null && report.location!.isNotEmpty) _chip(Icons.place_outlined, report.location!),
-                if (report.beneficiariesCount != null) _chip(Icons.groups_outlined, '${toFaDigits('${report.beneficiariesCount}')} نفر/خانواده'),
+                if (report.amountSpent != null) _chip(Icons.payments_rounded, '${report.amountSpent!.toStringAsFixed(0)} ${report.currency} مصرف شد'),
+                if (report.location != null && report.location!.isNotEmpty) _chip(Icons.place_rounded, report.location!),
+                if (report.beneficiariesCount != null) _chip(Icons.groups_rounded, '${toFaDigits('${report.beneficiariesCount}')} نفر/خانواده'),
               ]),
             ],
           ]),
@@ -773,7 +773,7 @@ class _DonationTransferFormScreenState extends State<DonationTransferFormScreen>
               child: AppBar(
                 backgroundColor: theme.bgElevated.withValues(alpha: 0.5),
                 elevation: 0,
-                leading: IconButton(icon: Icon(Icons.arrow_forward, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
+                leading: IconButton(icon: Icon(Icons.arrow_forward_rounded, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
                 title: Text(isPaypal ? 'ثبت اعلام حمایت پی‌پال' : 'ثبت جزئیات حواله', style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w800)),
               ),
             ),
@@ -790,7 +790,7 @@ class _DonationTransferFormScreenState extends State<DonationTransferFormScreen>
                   padding: const EdgeInsets.all(13),
                   decoration: BoxDecoration(color: theme.yellow.withValues(alpha: 0.09), borderRadius: BorderRadius.circular(14), border: Border.all(color: theme.yellow.withValues(alpha: 0.28))),
                   child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Icon(Icons.info_outline, size: 15, color: theme.yellow),
+                    Icon(Icons.info_outline_rounded, size: 15, color: theme.yellow),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
@@ -826,7 +826,7 @@ class _DonationTransferFormScreenState extends State<DonationTransferFormScreen>
                       _label(theme, 'واحد پول'),
                       HzSelectField(
                         value: _currency,
-                        icon: Icons.attach_money,
+                        icon: Icons.attach_money_rounded,
                         hint: 'واحد پول',
                         options: kDonationCurrencies,
                         theme: theme,
@@ -839,7 +839,7 @@ class _DonationTransferFormScreenState extends State<DonationTransferFormScreen>
                 _label(theme, 'این حمایت برای کدام بخش باشد؟ (اختیاری)'),
                 HzSelectField(
                   value: donationCategoryLabel(_category),
-                  icon: Icons.category_outlined,
+                  icon: Icons.category_rounded,
                   hint: 'دسته‌بندی',
                   options: DonationCategory.values.map(donationCategoryLabel).toList(),
                   theme: theme,

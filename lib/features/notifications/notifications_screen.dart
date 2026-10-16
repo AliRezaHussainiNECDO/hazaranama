@@ -55,7 +55,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               child: AppBar(
                 backgroundColor: theme.bgElevated.withValues(alpha: 0.5),
                 elevation: 0,
-                leading: IconButton(icon: Icon(Icons.arrow_forward, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
+                leading: IconButton(icon: Icon(Icons.arrow_forward_rounded, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
                 title: Text('اعلان‌ها', style: TextStyle(color: theme.textPrimary, fontSize: 17, fontWeight: FontWeight.w900)),
                 actions: [
                   if (app.unreadNotificationCount > 0)
@@ -82,7 +82,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                               height: MediaQuery.of(context).size.height * 0.6,
                               child: Center(
                                 child: Column(mainAxisSize: MainAxisSize.min, children: [
-                                  Icon(Icons.notifications_off_outlined, size: 40, color: theme.textFaint),
+                                  Icon(Icons.notifications_off_rounded, size: 40, color: theme.textFaint),
                                   const SizedBox(height: 10),
                                   Text('هنوز اعلانی ندارید', style: TextStyle(color: theme.textFaint, fontSize: 12)),
                                 ]),
@@ -132,7 +132,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 60),
           child: Column(children: [
-            Icon(Icons.mark_email_read_outlined, size: 40, color: theme.textFaint),
+            Icon(Icons.mark_email_read_rounded, size: 40, color: theme.textFaint),
             const SizedBox(height: 10),
             Text('همه‌ی اعلان‌ها را خوانده‌اید', style: TextStyle(color: theme.textSecondary, fontSize: 13)),
           ]),

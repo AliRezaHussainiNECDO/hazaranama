@@ -58,7 +58,7 @@ class _ArtistScreenState extends State<ArtistScreen> {
               child: AppBar(
                 backgroundColor: theme.bgElevated.withValues(alpha: 0.5),
                 elevation: 0,
-                leading: IconButton(icon: Icon(Icons.arrow_forward, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
+                leading: IconButton(icon: Icon(Icons.arrow_forward_rounded, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
                 title: Text(artist?.name ?? 'هنرمند', style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w800)),
               ),
             ),
@@ -79,7 +79,7 @@ class _ArtistScreenState extends State<ArtistScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 18),
                           child: Row(children: [
-                            Icon(Icons.video_library_outlined, size: 15, color: theme.blue),
+                            Icon(Icons.video_library_rounded, size: 15, color: theme.blue),
                             const SizedBox(width: 6),
                             Text('ویدیوها', style: TextStyle(color: theme.textPrimary, fontSize: 13, fontWeight: FontWeight.w800)),
                           ]),
@@ -230,7 +230,7 @@ class _VideoCard extends StatelessWidget {
             Text(video.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700, height: 1.4)),
             const SizedBox(height: 4),
             Row(children: [
-              Icon(Icons.visibility_outlined, size: 11, color: theme.textFaint),
+              Icon(Icons.visibility_rounded, size: 11, color: theme.textFaint),
               const SizedBox(width: 3),
               Text('${_formatViews(video.viewsCount)} بازدید', style: TextStyle(color: theme.textFaint, fontSize: 11)),
             ]),
@@ -242,6 +242,6 @@ class _VideoCard extends StatelessWidget {
 
   Widget _placeholder() => DecoratedBox(
         decoration: BoxDecoration(gradient: LinearGradient(colors: [theme.blue.withValues(alpha: 0.3), theme.aiViolet.withValues(alpha: 0.2)])),
-        child: const Center(child: Icon(Icons.music_note, color: Colors.white70, size: 26)),
+        child: const Center(child: Icon(Icons.music_note_rounded, color: Colors.white70, size: 26)),
       );
 }

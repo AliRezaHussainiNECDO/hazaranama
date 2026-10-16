@@ -259,7 +259,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
               icon: Container(
                 padding: const EdgeInsets.all(6),
                 decoration: const BoxDecoration(color: Color(0x66000000), shape: BoxShape.circle),
-                child: const Icon(Icons.arrow_forward, color: Colors.white, size: 18),
+                child: const Icon(Icons.arrow_forward_rounded, color: Colors.white, size: 18),
               ),
               onPressed: () => Navigator.of(context).pop(),
             ),
@@ -341,7 +341,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                     width: double.infinity,
                     child: ElevatedButton.icon(
                       onPressed: () => openInApp(context, url),
-                      icon: const Icon(Icons.article_outlined, size: 18),
+                      icon: const Icon(Icons.article_rounded, size: 18),
                       label: Text(_s(it, 'source').isNotEmpty ? 'خواندن متن کامل در ${_s(it, 'source')}' : 'خواندن متن کامل خبر', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800)),
                       style: ElevatedButton.styleFrom(backgroundColor: theme.blue, foregroundColor: Colors.white, elevation: 0, padding: const EdgeInsets.symmetric(vertical: 14), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14))),
                     ),

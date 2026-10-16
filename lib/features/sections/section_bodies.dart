@@ -7,8 +7,8 @@ import '../../data/mock_data.dart';
 import '../../models/models.dart';
 
 const _chapterIcons = [
-  Icons.groups, Icons.menu_book, Icons.account_balance, Icons.local_fire_department,
-  Icons.map, Icons.shield, Icons.history_edu, Icons.explore, Icons.trending_up, Icons.public,
+  Icons.groups_rounded, Icons.menu_book_rounded, Icons.account_balance_rounded, Icons.local_fire_department_rounded,
+  Icons.map_rounded, Icons.shield_rounded, Icons.history_edu_rounded, Icons.explore_rounded, Icons.trending_up_rounded, Icons.public_rounded,
 ];
 
 String _toFa(int n) {
@@ -35,7 +35,7 @@ class TimelineBody extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           onTap: () => Navigator.of(context).push(ArticleScreen.route(
             theme: theme,
-            badge: HzBadge(theme: theme, size: 34, child: Icon(Icons.history_edu, size: 15, color: theme.blue)),
+            badge: HzBadge(theme: theme, size: 34, child: Icon(Icons.history_edu_rounded, size: 15, color: theme.blue)),
             title: it['era'] as String,
             subtitle: 'هویت و تاریخچه',
             body: (it['full'] ?? it['text']) as String,
@@ -60,7 +60,7 @@ class TimelineBody extends StatelessWidget {
                 Expanded(child: Text(it['text'] as String, maxLines: 3, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.7))),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                   Text('فصل ${_toFa(i + 1)} · مطالعه', style: TextStyle(color: theme.blue, fontSize: 11, fontWeight: FontWeight.w700)),
-                  Icon(Icons.arrow_back, size: 13, color: theme.blue),
+                  Icon(Icons.arrow_back_rounded, size: 13, color: theme.blue),
                 ]),
               ]),
             ]),
@@ -78,11 +78,11 @@ class PeopleBody extends StatelessWidget {
   const PeopleBody({super.key, required this.theme, required this.items});
 
   static const _categoryMeta = {
-    'سیاست و رهبری': Icons.account_balance,
-    'حقوق بشر و جامعه مدنی': Icons.shield,
-    'علم و پژوهش': Icons.menu_book,
-    'هنر و ادبیات': Icons.palette,
-    'ورزش': Icons.emoji_events,
+    'سیاست و رهبری': Icons.account_balance_rounded,
+    'حقوق بشر و جامعه مدنی': Icons.shield_rounded,
+    'علم و پژوهش': Icons.menu_book_rounded,
+    'هنر و ادبیات': Icons.palette_rounded,
+    'ورزش': Icons.emoji_events_rounded,
   };
 
   @override
@@ -100,7 +100,7 @@ class PeopleBody extends StatelessWidget {
         for (final cat in groups) ...[
           if (cat != null) ...[
             Row(children: [
-              StatIconBox(icon: _categoryMeta[cat] ?? Icons.person, color: theme.yellow, size: 26),
+              StatIconBox(icon: _categoryMeta[cat] ?? Icons.person_rounded, color: theme.yellow, size: 26),
               const SizedBox(width: 8),
               Text(cat, style: TextStyle(color: theme.textSecondary, fontSize: 12, fontWeight: FontWeight.w700)),
             ]),
@@ -114,7 +114,7 @@ class PeopleBody extends StatelessWidget {
             itemBuilder: (context, i) {
               final person = items.where((p) => cat == null || p['category'] == cat).toList()[i];
               final color = _categoryMeta.containsKey(cat) ? theme.yellow : theme.blue;
-              final icon = _categoryMeta[cat] ?? Icons.person;
+              final icon = _categoryMeta[cat] ?? Icons.person_rounded;
               return InkWell(
                 borderRadius: BorderRadius.circular(20),
                 onTap: () => Navigator.of(context).push(ArticleScreen.route(
@@ -174,7 +174,7 @@ class IncidentsBody extends StatelessWidget {
             borderRadius: BorderRadius.circular(18),
             onTap: () => Navigator.of(context).push(ArticleScreen.route(
               theme: theme,
-              badge: HzBadge(theme: theme, size: 34, child: Icon(Icons.local_fire_department, size: 15, color: theme.yellow)),
+              badge: HzBadge(theme: theme, size: 34, child: Icon(Icons.local_fire_department_rounded, size: 15, color: theme.yellow)),
               title: it['title'] as String,
               subtitle: '${it['date']} · ${it['location']}',
               body: ((it['full'] as String?)?.isNotEmpty == true ? it['full'] : it['text']) as String,
@@ -190,7 +190,7 @@ class IncidentsBody extends StatelessWidget {
                   item: it,
                   height: (it.imageUrl ?? '').isNotEmpty ? 170 : 56,
                   radius: 0,
-                  fallback: SectionMediaPlaceholder(accent: theme.yellow, icon: Icons.local_fire_department, height: (it.imageUrl ?? '').isNotEmpty ? 170 : 56),
+                  fallback: SectionMediaPlaceholder(accent: theme.yellow, icon: Icons.local_fire_department_rounded, height: (it.imageUrl ?? '').isNotEmpty ? 170 : 56),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 12, 15, 14),
@@ -200,8 +200,8 @@ class IncidentsBody extends StatelessWidget {
                     Text(it['title'] as String, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800, height: 1.5)),
                     const SizedBox(height: 7),
                     Wrap(spacing: 6, runSpacing: 6, children: [
-                      _chip(theme, Icons.location_on, it['location'] as String),
-                      _chip(theme, Icons.groups, it['attacker'] as String),
+                      _chip(theme, Icons.location_on_rounded, it['location'] as String),
+                      _chip(theme, Icons.groups_rounded, it['attacker'] as String),
                     ]),
                     const SizedBox(height: 9),
                     Container(
@@ -215,7 +215,7 @@ class IncidentsBody extends StatelessWidget {
                     const SizedBox(height: 8),
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                       Text('مشاهده‌ی شرح کامل', style: TextStyle(color: theme.blue, fontSize: 11.5, fontWeight: FontWeight.w700)),
-                      Icon(Icons.arrow_back, size: 13, color: theme.blue),
+                      Icon(Icons.arrow_back_rounded, size: 13, color: theme.blue),
                     ]),
                   ]),
                 ),
@@ -264,7 +264,7 @@ class GridBody extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           onTap: () => Navigator.of(context).push(ArticleScreen.route(
             theme: theme,
-            badge: HzBadge(theme: theme, size: 34, child: Icon(Icons.auto_awesome, size: 15, color: theme.aiViolet)),
+            badge: HzBadge(theme: theme, size: 34, child: Icon(Icons.auto_awesome_rounded, size: 15, color: theme.aiViolet)),
             title: it['name'] as String,
             subtitle: 'فرهنگ و زندگی',
             body: (it['full'] ?? it['note']) as String,
@@ -276,7 +276,7 @@ class GridBody extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
             decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(16), border: Border.all(color: theme.glassBorder)),
             child: Row(children: [
-              ContentMediaCover(item: it, height: 32, width: 32, radius: 10, fallback: SectionMediaPlaceholder(accent: theme.aiViolet, icon: Icons.auto_awesome, height: 32, width: 32)),
+              ContentMediaCover(item: it, height: 32, width: 32, radius: 10, fallback: SectionMediaPlaceholder(accent: theme.aiViolet, icon: Icons.auto_awesome_rounded, height: 32, width: 32)),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -285,7 +285,7 @@ class GridBody extends StatelessWidget {
                   Text(it['note'] as String, style: TextStyle(color: theme.textFaint, fontSize: 12, height: 1.6)),
                 ]),
               ),
-              Icon(Icons.chevron_left, size: 16, color: theme.textFaint),
+              Icon(Icons.chevron_left_rounded, size: 16, color: theme.textFaint),
             ]),
           ),
         ).staggered(i);
@@ -320,7 +320,7 @@ class TracksBody extends StatelessWidget {
               fallback: Container(
                 width: 32, height: 32,
                 decoration: BoxDecoration(shape: BoxShape.circle, color: theme.blue),
-                child: const Icon(Icons.play_arrow, size: 16, color: Colors.white),
+                child: const Icon(Icons.play_arrow_rounded, size: 16, color: Colors.white),
               ),
             ),
             const SizedBox(width: 12),
@@ -331,7 +331,7 @@ class TracksBody extends StatelessWidget {
               ]),
             ),
             Row(children: [
-              Icon(Icons.access_time, size: 11, color: theme.textFaint),
+              Icon(Icons.access_time_rounded, size: 11, color: theme.textFaint),
               const SizedBox(width: 4),
               Text(it['duration'] as String, style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
             ]),
@@ -441,7 +441,7 @@ class _RegionsBodyState extends State<RegionsBody> {
               const SizedBox(height: 10),
             ],
             Row(children: [
-              Icon(Icons.location_on, size: 14, color: theme.blue),
+              Icon(Icons.location_on_rounded, size: 14, color: theme.blue),
               const SizedBox(width: 7),
               Expanded(child: Text(active['name'] as String, style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w700))),
             ]),
@@ -470,7 +470,7 @@ class _RegionsBodyState extends State<RegionsBody> {
             padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 11),
             decoration: BoxDecoration(color: theme.bgCard.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(16), border: Border.all(color: theme.glassBorder)),
             child: Row(children: [
-              StatIconBox(icon: Icons.public, color: theme.yellow, size: 30),
+              StatIconBox(icon: Icons.public_rounded, color: theme.yellow, size: 30),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -494,7 +494,7 @@ class _RegionsBodyState extends State<RegionsBody> {
     final full = (r['full'] ?? '').toString();
     Navigator.of(context).push(ArticleScreen.route(
       theme: theme,
-      badge: HzBadge(theme: theme, size: 34, child: Icon(Icons.location_on, size: 15, color: theme.blue)),
+      badge: HzBadge(theme: theme, size: 34, child: Icon(Icons.location_on_rounded, size: 15, color: theme.blue)),
       title: r['name'] as String,
       subtitle: 'نقشه‌ی هزارستان',
       body: full.isNotEmpty ? full : r['note'] as String,
@@ -565,7 +565,7 @@ class PhotosBody extends StatelessWidget {
                   height: double.infinity,
                   width: double.infinity,
                   radius: 0,
-                  fallback: SectionMediaPlaceholder(accent: colors[i % 2], icon: Icons.photo_camera_outlined, height: double.infinity, width: double.infinity),
+                  fallback: SectionMediaPlaceholder(accent: colors[i % 2], icon: Icons.photo_camera_rounded, height: double.infinity, width: double.infinity),
                 ),
               ),
             ),
@@ -597,7 +597,7 @@ class PhotosBody extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            leading: IconButton(icon: const Icon(Icons.close, color: Colors.white), onPressed: () => Navigator.of(context).pop()),
+            leading: IconButton(icon: const Icon(Icons.close_rounded, color: Colors.white), onPressed: () => Navigator.of(context).pop()),
             title: Text(caption, style: const TextStyle(color: Colors.white, fontSize: 13)),
           ),
           body: Column(children: [
@@ -606,7 +606,7 @@ class PhotosBody extends StatelessWidget {
                 child: InteractiveViewer(
                   minScale: 0.8,
                   maxScale: 4,
-                  child: Image.network(imageUrl, fit: BoxFit.contain, errorBuilder: (_, __, ___) => const Icon(Icons.broken_image, color: Colors.white54, size: 48)),
+                  child: Image.network(imageUrl, fit: BoxFit.contain, errorBuilder: (_, __, ___) => const Icon(Icons.broken_image_rounded, color: Colors.white54, size: 48)),
                 ),
               ),
             ),

@@ -167,7 +167,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
               child: AppBar(
                 backgroundColor: theme.bgElevated.withValues(alpha: 0.5),
                 elevation: 0,
-                leading: IconButton(icon: Icon(Icons.arrow_forward, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
+                leading: IconButton(icon: Icon(Icons.arrow_forward_rounded, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
                 title: Text('پرونده‌ی کاربر', style: TextStyle(color: theme.textPrimary, fontSize: 14, fontWeight: FontWeight.w800)),
               ),
             ),
@@ -220,12 +220,12 @@ class _UserDetailPageState extends State<UserDetailPage> {
                   const SizedBox(height: 20),
                   Text('اطلاعات پروفایل', style: TextStyle(color: theme.textPrimary, fontSize: 12.5, fontWeight: FontWeight.w800)),
                   const SizedBox(height: 10),
-                  _infoRow(theme, Icons.public, 'کشور محل سکونت', user.country),
-                  _infoRow(theme, Icons.map_outlined, 'ولایت/منطقه‌ی اصلی نیاکان', user.originProvince),
-                  _infoRow(theme, Icons.account_balance_outlined, 'ولسوالی', user.district),
-                  _infoRow(theme, Icons.groups_outlined, 'طایفه', user.tribe),
-                  _infoRow(theme, Icons.translate, 'زبان مادری', user.nativeLanguage),
-                  _infoRow(theme, Icons.access_time, 'تاریخ عضویت', user.joined),
+                  _infoRow(theme, Icons.public_rounded, 'کشور محل سکونت', user.country),
+                  _infoRow(theme, Icons.map_rounded, 'ولایت/منطقه‌ی اصلی نیاکان', user.originProvince),
+                  _infoRow(theme, Icons.account_balance_rounded, 'ولسوالی', user.district),
+                  _infoRow(theme, Icons.groups_rounded, 'طایفه', user.tribe),
+                  _infoRow(theme, Icons.translate_rounded, 'زبان مادری', user.nativeLanguage),
+                  _infoRow(theme, Icons.access_time_rounded, 'تاریخ عضویت', user.joined),
                   if (user.bio.isNotEmpty) ...[
                     const SizedBox(height: 4),
                     Text('یادداشت / درباره‌ی ریشه‌ها', style: TextStyle(color: theme.textFaint, fontSize: 11.5)),
@@ -251,7 +251,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
                     _label(theme, 'نقش کاربر'),
                     HzSelectField(
                       value: roleLabel(user.role),
-                      icon: Icons.admin_panel_settings_outlined,
+                      icon: Icons.admin_panel_settings_rounded,
                       hint: 'نقش',
                       options: UserRole.values.map(roleLabel).toList(),
                       theme: theme,
@@ -266,7 +266,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
                       width: double.infinity,
                       child: ElevatedButton.icon(
                         onPressed: _busy ? null : () => _toggleStatus(app, user),
-                        icon: Icon(user.status == UserStatus.active ? Icons.block : Icons.check, size: 16),
+                        icon: Icon(user.status == UserStatus.active ? Icons.block_rounded : Icons.check_rounded, size: 16),
                         label: Text(user.status == UserStatus.active ? 'مسدودسازی این حساب' : 'فعال‌سازی دوباره‌ی این حساب', style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: user.status == UserStatus.active ? theme.danger : theme.success,
@@ -472,7 +472,7 @@ class _RankSummaryCard extends StatelessWidget {
           backgroundColor: theme.bgElevated,
           title: Text('جایزه‌ی امتیاز به ${user.name}', style: TextStyle(color: theme.textPrimary, fontSize: 15, fontWeight: FontWeight.w800)),
           content: Column(mainAxisSize: MainAxisSize.min, children: [
-            HzTextField(controller: amount, icon: Icons.add_circle_outline, hint: 'مقدار امتیاز (برای کسر، منفی بنویسید)', theme: theme, keyboardType: const TextInputType.numberWithOptions(signed: true)),
+            HzTextField(controller: amount, icon: Icons.add_circle_outline_rounded, hint: 'مقدار امتیاز (برای کسر، منفی بنویسید)', theme: theme, keyboardType: const TextInputType.numberWithOptions(signed: true)),
             const SizedBox(height: 10),
             HzTextField(controller: reason, icon: Icons.notes_rounded, hint: 'دلیل (در اعلان کاربر دیده می‌شود)', theme: theme),
           ]),
