@@ -390,7 +390,7 @@ CREATE INDEX IF NOT EXISTS idx_user_events_day ON user_events (user_id, created_
 ALTER TABLE profiles ADD COLUMN xp_bonus INTEGER NOT NULL DEFAULT 0
 
 -- تأیید ایمیل (حساب‌های موجود و ورود با اپل/شماره، تأییدشده حساب می‌شوند)
-ALTER TABLE users ADD COLUMN email_verified INTEGER NOT NULL DEFAULT 1;
+ALTER TABLE users ADD COLUMN email_verified INTEGER DEFAULT 1;
 ALTER TABLE users ADD COLUMN verify_code_hash TEXT;
 ALTER TABLE users ADD COLUMN verify_expires TEXT;
 ALTER TABLE users ADD COLUMN verify_sent_at TEXT;

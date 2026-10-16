@@ -21,7 +21,7 @@ import { fetchNews, mirrorCommons, prewarmMirror, enrichNews, enrichNewsItem } f
 import legacySeedKeys from "../seed/legacy_seed_keys.json";
 import { allXp, trackEvent, invalidateXp, XP_RULES } from "./xp";
 
-const SCHEMA_VERSION = 7;
+const SCHEMA_VERSION = 8;
 
 const CORS: Record<string, string> = {
   "Access-Control-Allow-Origin": "*",
@@ -41,7 +41,10 @@ let schemaReady: Promise<void> | null = null;
 async function ensureSchema(env: Env) {
   await env.DB.prepare("CREATE TABLE IF NOT EXISTS _meta (key TEXT PRIMARY KEY, value TEXT)").run();
   const row = await env.DB.prepare("SELECT value FROM _meta WHERE key = 'schema_version'").first<{ value: string }>();
-  if (row && Number(row.value) >= SCHEMA_VERSION) return;
+  // ستون‌های تأیید ایمیل باید همیشه باشند (currentUser به آن‌ها وابسته است)
+  const cols = await env.DB.prepare("PRAGMA table_info(users)").all<{ name: string }>();
+  const hasVerify = (cols.results ?? []).some((c) => c.name === "email_verified");
+  if (row && Number(row.value) >= SCHEMA_VERSION && hasVerify) return;
   const statements = (schemaSql as string)
     .split(/;\s*(?:\n|$)/)
     .map((s) => s.replace(/^\s*--.*$/gm, "").trim())
