@@ -19,9 +19,9 @@ workflows:
         script: flutter pub get
       - name: CocoaPods
         script: |
-          cd ios
           flutter precache --ios
-          pod install --repo-update || pod install
+          flutter build ios --config-only --release --no-codesign
+          cd ios && pod install --repo-update
       - name: Use signing profiles
         script: xcode-project use-profiles
       - name: Build IPA
