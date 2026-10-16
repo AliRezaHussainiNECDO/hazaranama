@@ -7,6 +7,7 @@ import '../../core/app_logo.dart';
 import '../../core/widgets.dart';
 import '../../state/app_state.dart';
 import 'blocked_users_screen.dart';
+import 'profile_screen.dart' show confirmLogout;
 
 class AccountSettingsScreen extends StatefulWidget {
   const AccountSettingsScreen({super.key});
@@ -131,6 +132,19 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                 backgroundColor: theme.bgElevated.withValues(alpha: 0.5), elevation: 0,
                 leading: IconButton(icon: Icon(Icons.arrow_forward_rounded, color: theme.textPrimary, size: 20), onPressed: () => Navigator.of(context).pop()),
                 title: Text('تنظیمات حساب', style: TextStyle(color: theme.textPrimary, fontSize: 15, fontWeight: FontWeight.w800)),
+                actions: [
+                  IconButton(
+                    tooltip: 'خروج از حساب',
+                    icon: Icon(Icons.logout_rounded, color: theme.danger, size: 21),
+                    onPressed: () async {
+                      final nav = Navigator.of(context);
+                      final app = context.read<AppState>();
+                      await confirmLogout(context);
+                      if (app.currentUser == null && nav.canPop()) nav.popUntil((r) => r.isFirst);
+                    },
+                  ),
+                  const SizedBox(width: 4),
+                ],
               ),
             ),
           ),

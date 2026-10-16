@@ -42,6 +42,20 @@ class ProfileScreen extends StatelessWidget {
               style: ElevatedButton.styleFrom(backgroundColor: theme.blue, foregroundColor: Colors.white, elevation: 0, padding: const EdgeInsets.symmetric(vertical: 11), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
             ),
           ),
+          const SizedBox(width: 10),
+          Tooltip(
+            message: 'خروج از حساب',
+            child: OutlinedButton(
+              onPressed: () => confirmLogout(context),
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: theme.danger.withValues(alpha: 0.45)),
+                padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 12),
+                minimumSize: Size.zero,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              ),
+              child: Icon(Icons.logout_rounded, size: 18, color: theme.danger),
+            ),
+          ),
         ]).animate(delay: 100.ms).fadeIn(duration: 350.ms).slideY(begin: 0.1, end: 0),
         const SizedBox(height: 20),
         Text('پست‌های من', style: TextStyle(color: theme.textSecondary, fontSize: 12, fontWeight: FontWeight.w700)),
