@@ -1,0 +1,6 @@
+
+::group::✅ Passing tests
+✅ FlagStripe بدون خطا رندر می‌شود
+::endgroup::
+
+🎉 1 test passed.
