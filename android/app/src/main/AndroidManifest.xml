@@ -1,7 +1,17 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET"/>
     <!-- برای نمایش پوش نوتیفیکیشن روی اندروید ۱۳ (API 33) به بالا لازم است -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <!-- سیاست گوگل‌پلی: دسترسی کامل به عکس/ویدیو فقط برای اپ‌های گالری مجاز است.
+         انتخاب عکس و ویدیو با Photo Picker سیستم (image_picker) انجام می‌شود و این مجوزها لازم نیست؛
+         پلاگین‌ها (مثل file_picker) آن‌ها را اضافه می‌کنند، پس این‌جا حذف‌شان می‌کنیم. -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" tools:node="remove"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" tools:node="remove"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" tools:node="remove"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" tools:node="remove"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" tools:node="remove"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:node="remove"/>
     <application
         android:label="هزاره‌نامه"
         android:name="${applicationName}"
