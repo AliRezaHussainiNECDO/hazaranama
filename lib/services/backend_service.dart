@@ -282,7 +282,10 @@ class BackendService {
     final url = _db.storage.from(BackendConfig.avatarsBucket).getPublicUrl(path);
     // یک پارامتر تصادفی برای شکستن کش تصویر مرورگر/فلاتر بعد از هر آپلود تازه
     final bustedUrl = '$url?t=${DateTime.now().millisecondsSinceEpoch}';
-    await updateProfileFields(userId, {'avatar_url': bustedUrl});
+    // سرور بعد از آپلود خودش avatar_url را ثبت می‌کند؛ این فقط پشتیبان است و خطایش نباید آپلود را ناموفق نشان دهد.
+    try {
+      await updateProfileFields(userId, {'avatar_url': bustedUrl});
+    } catch (_) {}
     return bustedUrl;
   }
 

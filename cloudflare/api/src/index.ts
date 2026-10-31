@@ -386,7 +386,15 @@ async function handleUpload(env: Env, req: Request, bucket: string, key: string)
   const type = req.headers.get("content-type") ?? "application/octet-stream";
   if (!req.body) return err(400, "فایل خالی است.");
   await env.MEDIA.put(`${bucket}/${key}`, req.body, { httpMetadata: { contentType: type, cacheControl: "public, max-age=31536000" } });
-  return json({ Key: `${bucket}/${key}` });
+  // عکس پروفایل: نشانی را همین‌جا در پروفایل ثبت می‌کنیم تا به درخواستِ دومِ اپ وابسته نباشد
+  // (قبلاً فایل در R2 ذخیره می‌شد ولی avatar_url گاهی ثبت نمی‌شد).
+  let url: string | undefined;
+  const m = bucket === "avatars" ? key.match(/^([^/]+)\/avatar\.[a-z0-9]+$/i) : null;
+  if (m) {
+    url = `${new URL(req.url).origin}/media/avatars/${key}?t=${Date.now()}`;
+    await env.DB.prepare("UPDATE profiles SET avatar_url = ? WHERE id = ?").bind(url, m[1]).run();
+  }
+  return json({ Key: `${bucket}/${key}`, url });
 }
 
 async function serveMedia(env: Env, req: Request, key: string): Promise<Response> {
